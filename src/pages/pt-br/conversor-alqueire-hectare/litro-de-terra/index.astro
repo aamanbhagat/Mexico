@@ -1,0 +1,156 @@
+---
+import CalculatorLayout from '../../../../layouts/CalculatorLayout.astro';
+import LandConverter, { type ConverterPreset } from '../../../../components/calc/LandConverter';
+import StateTable from '../../../../components/page/br/StateTable.astro';
+import HowWeCalculate from '../../../../components/page/br/HowWeCalculate.astro';
+import LandExamples from '../../../../components/page/br/LandExamples.astro';
+import ConversionTable from '../../../../components/page/br/ConversionTable.astro';
+import OfficialDocs from '../../../../components/page/br/OfficialDocs.astro';
+import LandDisclaimer from '../../../../components/page/br/LandDisclaimer.astro';
+import { landSourceItems, OFFICIAL_DOC_SOURCES } from '../../../../components/page/br/land-sources';
+import { pathFor } from '../../../../i18n/routes';
+import { m2Of } from '../../../../i18n/tools';
+import { UPDATED } from '../../../../content/pt-br/meta';
+import { BR_LAND } from '../../../../lib/params/br';
+import { convertArea, dimsInMeters, ratio, rat, squareSide, toNumber } from '../../../../lib/land-units';
+import { num } from '../../../../content/pt-br/land-text';
+import { fromNumber } from '../../../../lib/land-units/rational';
+import type { FaqItem } from '../../../../lib/seo/jsonld';
+
+const PATH = pathFor('br.litro-de-terra', 'pt-br');
+const HUB = pathFor('br.alqueire-hectare', 'pt-br');
+const preset: ConverterPreset = { from: 'litro', to: 'm2' };
+const u = (id: string) => BR_LAND.byId.get(id)!;
+const L = u('litro');
+const M = u('alqueire-mineiro');
+const perMineiro = Number(num(ratio(M, L)));
+const perPaulista = num(ratio(u('alqueire-paulista'), L));
+const perHa = num(convertArea(rat(1n), u('ha'), L), 2);
+const litroHa = num(convertArea(rat(1n), L, u('ha')), 4);
+const side = num(fromNumber(Math.round(squareSide(L.area) * 10) / 10), 1);
+
+// The alqueire mineiro (220 × 220 m) split into 80 equal parts of 605 m²: 10 columns × 8 rows of 22 × 27,5 m.
+const [mw] = dimsInMeters(BR_LAND, M)!.map(toNumber) as [number, number];
+const COLS = 10;
+const ROWS = perMineiro / COLS;
+const cw = mw / COLS;
+const ch = mw / ROWS;
+
+const faq: FaqItem[] = [
+  {
+    q: '1 litro de terra equivale a quantos metros quadrados?',
+    a: `${m2Of('litro')}. É a área que se planta com um litro de milho debulhado. O valor vem da divisão do alqueire: ${perMineiro} litros no alqueire mineiro (${m2Of('alqueire-mineiro')}) e ${perPaulista} no paulista (${m2Of('alqueire-paulista')}).`,
+  },
+  {
+    q: '1 litro de terra equivale a quantos hectares?',
+    a: `${litroHa} ha. Um hectare tem cerca de ${perHa} litros de terra.`,
+  },
+  {
+    q: '1 litro de terra equivale a quantos metros?',
+    a: `Litro de terra é área, não comprimento. Se fosse um quadrado, teria cerca de ${side} m de lado (${side} × ${side} ≈ 605 m²). Na prática o formato depende do terreno.`,
+  },
+  {
+    q: '1 litro de terra equivale a quantos kg?',
+    a: 'Nenhum: o litro de terra não é peso. O nome vem do litro de semente de milho usado para plantar a área, mas a medida que vale é a área, 605 m². O peso de um litro de semente varia com o grão e não muda o tamanho do terreno.',
+  },
+  {
+    q: 'Quantos litros de terra tem um alqueire?',
+    a: `${perMineiro} litros no alqueire mineiro ou goiano e ${perPaulista} no paulista. Uma quarta (um quarto de alqueire) tem ${perMineiro / 4} litros no mineiro.`,
+  },
+  {
+    q: 'Onde se usa o litro de terra?',
+    a: 'Sobretudo em Minas Gerais, Goiás, São Paulo e no Paraná, em escrituras antigas e na conversa do campo. Em documentos oficiais a área aparece em hectares.',
+  },
+];
+---
+
+<CalculatorLayout
+  pageKey="br.litro-de-terra"
+  locale="pt-br"
+  tool="terra"
+  icon="litro"
+  title={`Litro de terra: ${m2Of('litro')}. Quantos litros tem um alqueire`}
+  description={`1 litro de terra = ${m2Of('litro')} (${litroHa} ha). O alqueire mineiro tem ${perMineiro} litros e o paulista ${perPaulista}. Converta litro de terra em m² e hectare, com fontes.`}
+  h1="Litro de terra em metros quadrados"
+  lede={`1 litro de terra tem ${m2Of('litro')}, a área que se planta com um litro de milho. São ${perMineiro} litros num alqueire mineiro e ${perPaulista} num paulista; um hectare tem cerca de ${perHa} litros.`}
+  updated={UPDATED}
+  appName="Conversor de litro de terra"
+  appCategory="UtilitiesApplication"
+  faq={faq}
+  sourceItems={landSourceItems(['litro', 'alqueire-mineiro', 'alqueire-paulista', 'ha'])}
+  extraSources={OFFICIAL_DOC_SOURCES}
+  parents={[{ name: 'Conversor de alqueire em hectare', path: HUB }]}
+>
+  <LandConverter client:load preset={preset} />
+
+  <section class="section" aria-labelledby="litros-no-alqueire">
+    <h2 id="litros-no-alqueire">Um alqueire mineiro, {perMineiro} litros</h2>
+    <div class="prose">
+      <p>
+        O alqueire mineiro de 220 × 220 m dividido em {perMineiro} partes iguais de {m2Of('litro')}. As fontes dão só a área do litro, não o
+        formato; a divisão em {COLS} × {ROWS} é ilustrativa. Metade do quadrado, {perPaulista} litros, é um alqueire paulista.
+      </p>
+    </div>
+    <figure class="scale-figure litro-figure">
+      <svg
+        viewBox={`0 0 ${mw} ${mw}`}
+        role="img"
+        aria-label={`Quadrado de 220 por 220 metros dividido em ${perMineiro} litros de terra; a metade de baixo, ${perPaulista} litros, destacada como alqueire paulista.`}
+      >
+        <rect class="scale-figure__ground" x="0" y="0" width={mw} height={mw}></rect>
+        <rect class="scale-figure__unit" x="0" y={mw / 2} width={mw} height={mw / 2}></rect>
+        {
+          Array.from({ length: COLS - 1 }, (_, i) => (
+            <line class="scale-figure__grid-line" x1={(i + 1) * cw} y1="0" x2={(i + 1) * cw} y2={mw} />
+          ))
+        }
+        {
+          Array.from({ length: ROWS - 1 }, (_, i) => (
+            <line class="scale-figure__grid-line" x1="0" y1={(i + 1) * ch} x2={mw} y2={(i + 1) * ch} />
+          ))
+        }
+        <rect class="scale-figure__ha" x="0" y={mw - 100} width="100" height="100"></rect>
+      </svg>
+      <figcaption class="scale-figure__legend">
+        <span class="legend-item"
+          ><span class="scale-plan__key scale-plan__key--unit" aria-hidden="true"></span>{perPaulista} litros = alqueire paulista</span
+        >
+        <span class="legend-item"
+          ><span class="scale-plan__key scale-plan__key--ha" aria-hidden="true"></span>1 hectare ≈ {perHa} litros</span
+        >
+      </figcaption>
+    </figure>
+  </section>
+
+  <StateTable highlight={['MG', 'GO', 'SP', 'PR']} />
+
+  <HowWeCalculate slot="how" amount="12" from="litro" to="m2" />
+
+  <LandExamples slot="examples" keys={['litros12', 'litrosPorMineiro', 'litrosPorPaulista']} preset={preset} path={PATH} />
+
+  <Fragment slot="extra">
+    <ConversionTable
+      id="tabela-litros"
+      title="Litro de terra em m² e hectare: tabela"
+      rowLabel="Litros de terra"
+      amounts={[1, 2, 5, 10, 20, 40, 50, 80, 100]}
+      columns={[
+        { from: 'litro', to: 'm2', label: 'Metros quadrados' },
+        { from: 'litro', to: 'ha', label: 'Hectares' },
+        { from: 'litro', to: 'alqueire-mineiro', label: 'Alqueires mineiros' },
+      ]}
+    />
+    <OfficialDocs />
+  </Fragment>
+
+  <LandDisclaimer slot="disclaimer" />
+</CalculatorLayout>
+
+<style>
+  .litro-figure svg {
+    display: block;
+    width: 100%;
+    max-width: 22rem;
+    height: auto;
+  }
+</style>

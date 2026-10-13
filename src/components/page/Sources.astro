@@ -2,7 +2,7 @@
 import { PARAM_FILES, type ParamId } from '../../lib/params/registry';
 import { formatDateLong } from '../../lib/ui/format';
 import { getLocale, type LocaleCode } from '../../i18n/locales';
-import { ui } from '../../i18n/ui';
+import { siteUi } from '../../i18n/ui';
 
 export interface ExtraSource {
   title: string;
@@ -10,15 +10,26 @@ export interface ExtraSource {
   note?: string | undefined;
 }
 
+/** A source prepared by the page (e.g. from a land-unit catalog): title, link, one meta line, verification state. */
+export interface SourceItem {
+  title: string;
+  url: string;
+  meta: string;
+  /** undefined = not a registry value (no verification label). */
+  verified?: boolean | undefined;
+}
+
 interface Props {
-  /** Registry parameters used on this page; the version in force on `asOf` is cited. */
-  params: ParamId[];
-  asOf: string;
+  /** Registry parameters used on this page (any country); the version in force on `asOf` is cited. */
+  params?: ParamId[] | undefined;
+  asOf?: string | undefined;
+  /** Sources prepared by the page, listed after the registry parameters. */
+  items?: SourceItem[] | undefined;
   extra?: ExtraSource[] | undefined;
   locale?: LocaleCode | undefined;
 }
-const { params, asOf, extra = [], locale = 'es-mx' } = Astro.props;
-const t = ui(locale).sourceMeta;
+const { params = [], asOf = '', items = [], extra = [], locale = 'es-mx' } = Astro.props;
+const ui = siteUi(locale);
 const intl = getLocale(locale).intl;
 
 const cited = params.map((id) => {
@@ -36,9 +47,35 @@ const cited = params.map((id) => {
           {version.source_title}
         </a>
         <span class="sources__meta">
-          {file.name} · {t.inForceFrom} {formatDateLong(version.effective_from, intl)} · {t.consulted}{' '}
+          {file.name} · {ui.sourceMeta.effectiveFrom} {formatDateLong(version.effective_from, intl)} · {ui.sourceMeta.retrievedOn}{' '}
           {formatDateLong(version.retrieved_on, intl)} ·{' '}
-          {version.verified ? <span class="verify verify--ok">{t.verified}</span> : <span class="verify verify--pending">{t.pending}</span>}
+          {version.verified ? (
+            <span class="verify verify--ok">{ui.sourceMeta.verified}</span>
+          ) : (
+            <span class="verify verify--pending">{ui.sourceMeta.pending}</span>
+          )}
+        </span>
+      </li>
+    ))
+  }
+  {
+    items.map((s) => (
+      <li>
+        <a href={s.url} rel="noopener" target="_blank">
+          {s.title}
+        </a>
+        <span class="sources__meta">
+          {s.meta}
+          {s.verified !== undefined && (
+            <>
+              {' · '}
+              {s.verified ? (
+                <span class="verify verify--ok">{ui.sourceMeta.verified}</span>
+              ) : (
+                <span class="verify verify--pending">{ui.sourceMeta.pending}</span>
+              )}
+            </>
+          )}
         </span>
       </li>
     ))

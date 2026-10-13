@@ -1,0 +1,111 @@
+---
+import CalculatorLayout from '../../../../layouts/CalculatorLayout.astro';
+import LandConverter, { type ConverterPreset } from '../../../../components/calc/LandConverter';
+import StateTable from '../../../../components/page/br/StateTable.astro';
+import ScaleFigure from '../../../../components/page/br/ScaleFigure.astro';
+import HowWeCalculate from '../../../../components/page/br/HowWeCalculate.astro';
+import LandExamples from '../../../../components/page/br/LandExamples.astro';
+import ConversionTable from '../../../../components/page/br/ConversionTable.astro';
+import OfficialDocs from '../../../../components/page/br/OfficialDocs.astro';
+import LandDisclaimer from '../../../../components/page/br/LandDisclaimer.astro';
+import { landSourceItems, OFFICIAL_DOC_SOURCES } from '../../../../components/page/br/land-sources';
+import { pathFor } from '../../../../i18n/routes';
+import { brHa, haOf, m2Of } from '../../../../i18n/tools';
+import { UPDATED } from '../../../../content/pt-br/meta';
+import { BR_LAND } from '../../../../lib/params/br';
+import { convertArea, div, mul, ratio, rat, sub } from '../../../../lib/land-units';
+import { num } from '../../../../content/pt-br/land-text';
+import type { FaqItem } from '../../../../lib/seo/jsonld';
+
+const PATH = pathFor('br.tarefa-hectare', 'pt-br');
+const HUB = pathFor('br.alqueire-hectare', 'pt-br');
+const preset: ConverterPreset = { from: 'tarefa-baiana', to: 'ha' };
+const u = (id: string) => BR_LAND.byId.get(id)!;
+const perHa = (id: string) => num(convertArea(rat(1n), u('ha'), u(id)), 2);
+const haOf4 = (id: string) => `${brHa(id, 4)}${String.fromCharCode(160)}ha`;
+const alse = u('tarefa-al-se');
+const t25 = u('tarefa-25x25');
+const gap = num(sub(alse.area, t25.area), 0);
+const pct = num(mul(div(sub(alse.area, t25.area), alse.area), rat(100n)), 1);
+
+const faq: FaqItem[] = [
+  {
+    q: 'Quantos metros quadrados tem uma tarefa?',
+    a: `Depende do estado. A tarefa baiana tem ${m2Of('tarefa-baiana')} (30 × 30 braças); a cearense, ${m2Of('tarefa-cearense')}; em Alagoas e Sergipe, ${m2Of('tarefa-al-se')} pela tabela oficial ou ${m2Of('tarefa-25x25')} na tarefa de 25 × 25 braças.`,
+  },
+  {
+    q: 'Quanto é 1 tarefa em hectare?',
+    a: `A baiana tem ${haOf4('tarefa-baiana')}; a cearense, ${haOf4('tarefa-cearense')}; a de Alagoas e Sergipe, ${haOf4('tarefa-al-se')} (ou ${haOf4('tarefa-25x25')}).`,
+  },
+  {
+    q: 'Quantas tarefas tem um hectare?',
+    a: `Cerca de ${perHa('tarefa-baiana')} tarefas baianas, ${perHa('tarefa-cearense')} cearenses ou ${perHa('tarefa-al-se')} de Alagoas e Sergipe. Há páginas que invertem a conta e dizem que uma tarefa tem 2,3 ha: é o contrário.`,
+  },
+  {
+    q: `A tarefa sergipana tem ${m2Of('tarefa-al-se')}, 3.052 m² ou ${m2Of('tarefa-25x25')}?`,
+    a: `A tabela oficial histórica do INDA traz ${m2Of('tarefa-al-se')} para Alagoas e Sergipe; muitas páginas usam 3.052 m², diferença de 1 m². Outra tradição, da zona canavieira, usa a tarefa de 25 × 25 braças, ${m2Of('tarefa-25x25')}: ${gap} m² (${pct} %) a menos. Os dígitos trocados parecem erro de digitação, mas as duas medidas existem.`,
+  },
+  {
+    q: 'Como se mede uma tarefa em braças?',
+    a: 'Na Bahia, 30 × 30 braças, ou 66 × 66 metros (a braça tem 2,20 m). Em Arraias (TO), pesquisadores registraram a tarefa como quatro quadras de 15 braças de lado, o que dá a mesma área. Em Alagoas, 25 × 25 braças, ou 55 × 55 m.',
+  },
+  {
+    q: 'Quantas tarefas tem um alqueire baiano?',
+    a: `Cerca de ${num(ratio(u('alqueire-baiano'), u('tarefa-baiana')), 2)} tarefas baianas no alqueire de ${haOf('alqueire-baiano')}.`,
+  },
+];
+---
+
+<CalculatorLayout
+  pageKey="br.tarefa-hectare"
+  locale="pt-br"
+  tool="terra"
+  icon="tarefa"
+  title="Tarefa em hectare: baiana, cearense e de Alagoas e Sergipe"
+  description={`1 tarefa baiana = ${m2Of('tarefa-baiana')} (${haOf4('tarefa-baiana')}); cearense = ${m2Of('tarefa-cearense')}; em Alagoas e Sergipe, ${m2Of('tarefa-al-se')} ou ${m2Of('tarefa-25x25')}. Converta tarefa em hectare, com fontes.`}
+  h1="Tarefa em hectare"
+  lede={`A tarefa muda de estado para estado. Na Bahia tem ${m2Of('tarefa-baiana')} (30 × 30 braças, ${haOf4('tarefa-baiana')}); no Ceará, ${m2Of('tarefa-cearense')}; em Alagoas e Sergipe, ${m2Of('tarefa-al-se')} pela tabela oficial ou ${m2Of('tarefa-25x25')} (25 × 25 braças).`}
+  updated={UPDATED}
+  appName="Conversor de tarefa em hectare"
+  appCategory="UtilitiesApplication"
+  faq={faq}
+  sourceItems={landSourceItems(['tarefa-baiana', 'tarefa-cearense', 'tarefa-al-se', 'tarefa-25x25', 'quadra-15', 'ha'])}
+  extraSources={OFFICIAL_DOC_SOURCES}
+  parents={[{ name: 'Conversor de alqueire em hectare', path: HUB }]}
+>
+  <LandConverter client:load preset={preset} />
+
+  <section class="section" aria-labelledby="tarefas-em-escala">
+    <h2 id="tarefas-em-escala">As tarefas ao lado de um hectare</h2>
+    <div class="prose">
+      <p>
+        Todas as tarefas cabem num hectare com folga. Para a cearense e a de Alagoas e Sergipe as fontes dão só a área; desenhamos um
+        quadrado de área igual.
+      </p>
+    </div>
+    <ScaleFigure units={['tarefa-baiana', 'tarefa-cearense', 'tarefa-al-se', 'tarefa-25x25']} caption="Tarefa" />
+  </section>
+
+  <StateTable highlight={['BA', 'CE', 'AL', 'SE', 'TO']} />
+
+  <HowWeCalculate slot="how" amount="10" from="tarefa-baiana" to="ha" />
+
+  <LandExamples slot="examples" keys={['tarefasBaianas10', 'tarefasCearenses5', 'tarefasAlSe20']} preset={preset} path={PATH} />
+
+  <Fragment slot="extra">
+    <ConversionTable
+      id="tabela-tarefas"
+      title="Tarefa em hectare: tabela de 1 a 100"
+      rowLabel="Tarefas"
+      columns={[
+        { from: 'tarefa-baiana', to: 'ha', label: 'Baiana (ha)' },
+        { from: 'tarefa-cearense', to: 'ha', label: 'Cearense (ha)' },
+        { from: 'tarefa-al-se', to: 'ha', label: 'AL e SE (ha)' },
+        { from: 'tarefa-25x25', to: 'ha', label: '25 × 25 braças (ha)' },
+      ]}
+    />
+    <OfficialDocs />
+  </Fragment>
+
+  <LandDisclaimer slot="disclaimer" />
+</CalculatorLayout>

@@ -1,13 +1,16 @@
 // Post-build guard rails. Fails the build when something that must never ship is in dist/.
-import { existsSync, readdirSync, statSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 const DIST = 'dist';
 const problems = [];
 
 // 1. Unpublished locales must not produce pages (their folders are reserved, not live).
-// Keep in sync with `published: false` in src/i18n/locales.ts (tests/unit/utils.test.ts checks it).
-const unpublished = ['pt-br', 'ja', 'pl', 'de', 'es-es', 'en', 'tr'];
+//    The list is read from the locale registry so publishing a locale is a one-line change.
+const registry = readFileSync('src/i18n/locales.ts', 'utf8');
+const entries = [...registry.matchAll(/code: '([a-z-]+)',[\s\S]*?published: (true|false)/g)];
+if (entries.length !== (registry.match(/code: '/g) ?? []).length) problems.push('Could not read every locale in src/i18n/locales.ts');
+const unpublished = entries.filter((m) => m[2] === 'false').map((m) => m[1]);
 for (const code of unpublished) {
   if (existsSync(join(DIST, code))) problems.push(`Unpublished locale folder found in dist/: /${code}/`);
 }

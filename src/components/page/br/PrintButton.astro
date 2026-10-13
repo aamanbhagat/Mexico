@@ -1,0 +1,46 @@
+---
+/** "Imprimir tabela": prints only the section this button sits in (see the print stylesheet). */
+---
+
+<div class="print-row">
+  <button type="button" class="btn btn--quiet" data-print-table>
+    <svg
+      class="icon"
+      viewBox="0 0 24 24"
+      width="20"
+      height="20"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.75"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M7 9V4h10v5"></path>
+      <rect x="4" y="9" width="16" height="7" rx="1.5"></rect>
+      <path d="M7 14h10v6H7z"></path>
+    </svg>
+    <slot>Imprimir tabela</slot>
+  </button>
+</div>
+
+<script>
+  for (const button of document.querySelectorAll<HTMLButtonElement>('[data-print-table]')) {
+    button.addEventListener('click', () => {
+      const section = button.closest<HTMLElement>('[data-printable]');
+      const root = document.documentElement;
+      root.dataset['print'] = 'tabela';
+      if (section) section.dataset['printTarget'] = '';
+      window.addEventListener(
+        'afterprint',
+        () => {
+          delete root.dataset['print'];
+          if (section) delete section.dataset['printTarget'];
+        },
+        { once: true },
+      );
+      window.print();
+    });
+  }
+</script>

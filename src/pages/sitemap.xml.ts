@@ -2,11 +2,12 @@ import type { APIRoute } from 'astro';
 import { absoluteUrl } from '../config/site';
 import { alternatesFor, liveRoutes } from '../i18n/routes';
 import { UPDATED as UPDATED_MX } from '../content/es-mx/meta';
+import { UPDATED as UPDATED_BR } from '../content/pt-br/meta';
 import { UPDATED as UPDATED_ID } from '../content/id/meta';
 import type { LocaleCode } from '../i18n/locales';
 
 /** Last editorial update per locale (each locale bumps its own content/<locale>/meta.ts). */
-const UPDATED: Partial<Record<LocaleCode, string>> = { 'es-mx': UPDATED_MX, id: UPDATED_ID };
+const UPDATED: Partial<Record<LocaleCode, string>> = { 'es-mx': UPDATED_MX, 'pt-br': UPDATED_BR, id: UPDATED_ID };
 
 /**
  * XML sitemap with hreflang alternates (xhtml:link) for every live route. Unpublished

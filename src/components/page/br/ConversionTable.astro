@@ -1,0 +1,81 @@
+---
+/**
+ * Quick-reference table (1, 2, 3 … 100) computed at build time with exact arithmetic. Each column
+ * converts the row's quantity from one unit to another. Printable on its own: it answers
+ * "2 alqueires em hectare" without touching the converter.
+ */
+import PrintButton from './PrintButton.astro';
+import { BR_LAND } from '../../../lib/params/br';
+import { convertArea, rat } from '../../../lib/land-units';
+import { isExact, num } from '../../../content/pt-br/land-text';
+
+interface Column {
+  from: string;
+  to: string;
+  label: string;
+}
+
+interface Props {
+  id: string;
+  title: string;
+  /** Header of the first column (what the row numbers count). */
+  rowLabel: string;
+  columns: Column[];
+  amounts?: number[];
+  intro?: string;
+}
+const { id, title, rowLabel, columns, amounts = [1, 2, 3, 4, 5, 10, 20, 50, 100], intro } = Astro.props;
+const unit = (uid: string) => {
+  const u = BR_LAND.byId.get(uid);
+  if (!u) throw new Error(`Unknown land unit ${uid}`);
+  return u;
+};
+const rows = amounts.map((a) => ({
+  a,
+  values: columns.map((c) => convertArea(rat(BigInt(a)), unit(c.from), unit(c.to))),
+}));
+---
+
+<section class="section" aria-labelledby={id} data-printable>
+  <h2 id={id}>{title}</h2>
+  {
+    intro && (
+      <div class="prose">
+        <p>{intro}</p>
+      </div>
+    )
+  }
+  <PrintButton />
+  <div class="table-scroll" tabindex="0" role="region" aria-label={title}>
+    <table class="data-table">
+      <caption class="sr-only">{title}</caption>
+      <thead>
+        <tr>
+          <th scope="col">{rowLabel}</th>
+          {
+            columns.map((c) => (
+              <th scope="col" class="num">
+                {c.label}
+              </th>
+            ))
+          }
+        </tr>
+      </thead>
+      <tbody>
+        {
+          rows.map((r) => (
+            <tr>
+              <th scope="row">{r.a}</th>
+              {r.values.map((v) => (
+                <td class="num">
+                  {isExact(v) ? '' : '≈ '}
+                  {num(v)}
+                </td>
+              ))}
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+</section>

@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import StationIcon from '../../components/page/StationIcon.astro';
-import { pathFor, type PageKey } from '../../i18n/routes';
+import { pathFor } from '../../i18n/routes';
+import { toolsFor } from '../../i18n/tools';
 import { absoluteUrl, SITE } from '../../config/site';
 import { mxParam } from '../../lib/params/mx';
 import { formatDateLong, formatMoney } from '../../lib/ui/format';
@@ -12,40 +13,7 @@ const uma = mxParam('mx.uma', AS_OF);
 const smG = mxParam('mx.salario-minimo.general', AS_OF);
 const smZ = mxParam('mx.salario-minimo.zlfn', AS_OF);
 
-type Tool = 'aguinaldo' | 'finiquito' | 'liquidacion' | 'prima-vacacional' | 'vacaciones' | 'uma';
-const tools: { key: PageKey; tool: Tool; name: string; what: string }[] = [
-  {
-    key: 'mx.aguinaldo',
-    tool: 'aguinaldo',
-    name: 'Aguinaldo',
-    what: 'Cuánto te toca antes del 20 de diciembre, proporcional y neto de ISR.',
-  },
-  {
-    key: 'mx.finiquito',
-    tool: 'finiquito',
-    name: 'Finiquito',
-    what: 'Lo que te deben al renunciar: aguinaldo, vacaciones y prima vacacional.',
-  },
-  {
-    key: 'mx.liquidacion',
-    tool: 'liquidacion',
-    name: 'Liquidación',
-    what: 'Despido injustificado: 3 meses, 20 días por año y prima de antigüedad.',
-  },
-  {
-    key: 'mx.prima-vacacional',
-    tool: 'prima-vacacional',
-    name: 'Prima vacacional',
-    what: 'El 25 % extra sobre tus días de vacaciones y su parte exenta.',
-  },
-  { key: 'mx.vacaciones', tool: 'vacaciones', name: 'Vacaciones', what: 'Días que te tocan por antigüedad con la reforma de 2023.' },
-  {
-    key: 'mx.uma-salario-minimo',
-    tool: 'uma',
-    name: 'UMA y salario mínimo 2026',
-    what: 'Valores oficiales vigentes, tabla de ISR y montos exentos.',
-  },
-];
+const tools = toolsFor('es-mx');
 
 const jsonLd = [
   { '@context': 'https://schema.org', '@type': 'WebSite', name: SITE.name, url: absoluteUrl('/es-mx/'), inLanguage: 'es-MX' },
@@ -87,7 +55,7 @@ const jsonLd = [
           tools.map((t) => (
             <li data-tool={t.tool}>
               <a href={pathFor(t.key, 'es-mx')}>
-                <StationIcon tool={t.tool} />
+                <StationIcon tool={t.icon} />
                 <span class="line-map__text">
                   <span class="line-map__name">{t.name}</span>
                   <span class="line-map__what">{t.what}</span>

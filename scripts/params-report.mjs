@@ -12,6 +12,17 @@ for (const country of readdirSync(DIR)) {
   for (const file of readdirSync(join(DIR, country)).sort()) {
     const p = JSON.parse(readFileSync(join(DIR, country, file), 'utf8'));
     for (const v of p.versions) {
+      // Land-unit catalogs: one row per unit, each with its own source and verification state.
+      if (Array.isArray(v.value?.units)) {
+        for (const u of v.value.units) {
+          if (onlyUnverified && u.verified) continue;
+          const dims = u.dims ? ` (${u.dims.join(' × ')} braças)` : '';
+          console.log(
+            `| \`${p.id}:${u.id}\` | customary | ${u.m2} m²${dims} | ${u.verified ? 'yes' : '**no**'} | [${u.source_title.replace(/\|/g, '\\|')}](${u.source_url}) |`,
+          );
+        }
+        continue;
+      }
       if (onlyUnverified && v.verified) continue;
       const json = JSON.stringify(v.value);
       const value = Array.isArray(v.value)

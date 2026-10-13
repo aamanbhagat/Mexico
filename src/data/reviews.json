@@ -1,5 +1,5 @@
 {
-  "$comment": "Review status per page (or page family for /id/: id.weton covers the 35 weton pages, id.kalender every calendar page). The badge on each page is rendered from this file and never hard-coded. Set status to \"reviewed\" only with the reviewer's name, credentials and date. MX pages need a labour lawyer/payroll accountant; ID-01 pages a Javanese-calendar specialist (penanggalan Jawa).",
+  "$comment": "Review status per page or page family (id.weton covers the weton pages, id.kalender every calendar page). The badge on each page is rendered from this file and never hard-coded. Set status to \"reviewed\" only with the reviewer's name, credentials and date. kind: \"legal\" (labour, tax, pension — CLAUDE.md §8, the default), \"technical\" (e.g. land units: a licensed surveyor/agrimensor or agronomist) or \"expert\" (domain specialist, e.g. a Javanese-calendar specialist — penanggalan Jawa — for /id/).",
   "mx.aguinaldo": {
     "status": "pending",
     "reviewer": null,
@@ -36,26 +36,86 @@
     "credentials": null,
     "reviewed_on": null
   },
+  "br.alqueire-hectare": {
+    "status": "pending",
+    "kind": "technical",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
+  "br.alqueire-paulista": {
+    "status": "pending",
+    "kind": "technical",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
+  "br.alqueire-mineiro-goiano": {
+    "status": "pending",
+    "kind": "technical",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
+  "br.alqueire-baiano": {
+    "status": "pending",
+    "kind": "technical",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
+  "br.alqueire-do-norte": {
+    "status": "pending",
+    "kind": "technical",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
+  "br.tarefa-hectare": {
+    "status": "pending",
+    "kind": "technical",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
+  "br.litro-de-terra": {
+    "status": "pending",
+    "kind": "technical",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
+  "br.hectare-alqueire": {
+    "status": "pending",
+    "kind": "technical",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
   "id.weton": {
     "status": "pending",
+    "kind": "expert",
     "reviewer": null,
     "credentials": null,
     "reviewed_on": null
   },
   "id.weton.jodoh": {
     "status": "pending",
+    "kind": "expert",
     "reviewer": null,
     "credentials": null,
     "reviewed_on": null
   },
   "id.weton.hari-ini": {
     "status": "pending",
+    "kind": "expert",
     "reviewer": null,
     "credentials": null,
     "reviewed_on": null
   },
   "id.kalender": {
     "status": "pending",
+    "kind": "expert",
     "reviewer": null,
     "credentials": null,
     "reviewed_on": null

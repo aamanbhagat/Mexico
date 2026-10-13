@@ -1,42 +1,42 @@
 ---
 import type { LocaleCode } from '../../i18n/locales';
 import { pathFor } from '../../i18n/routes';
-import { ui } from '../../i18n/ui';
 import { SITE } from '../../config/site';
 import ThemeToggle from './ThemeToggle.astro';
+import { siteUi } from '../../i18n/ui';
 import { BUILD_DAY, KALENDER_YEARS } from '../../content/id/meta';
 
 interface Props {
   locale: LocaleCode;
 }
 const { locale } = Astro.props;
-const t = ui(locale);
 const home = pathFor('home', locale);
+const ui = siteUi(locale);
 const year = Number(BUILD_DAY.slice(0, 4));
 const kalenderYear = (KALENDER_YEARS as readonly number[]).includes(year) ? year : KALENDER_YEARS[0];
-const nav =
+// `wide` is only shown when there is room (the 390 px header holds brand, two links and the toggle).
+const nav: { href: string; label: string; wide?: string }[] =
   locale === 'id'
     ? [
         { href: pathFor('id.weton', 'id'), label: 'Weton' },
         { href: pathFor(`id.kalender.${kalenderYear}`, 'id'), label: 'Kalender', wide: ' Jawa' },
       ]
-    : [{ href: home, label: 'Calculadoras' }];
-// `wide` is only shown when there is room (the 390 px header holds brand, two links and the toggle).
+    : [{ href: home, label: ui.nav }];
 ---
 
 <header class="site-header">
   <div class="wrap site-header__inner">
-    <a class="brand" href={home} aria-label={`${SITE.name}, ${t.brandHome}`}>
+    <a class="brand" href={home} aria-label={ui.homeAria(SITE.name)}>
       <span class="brand__mark" aria-hidden="true"><i></i><i></i><i></i></span>
       <span>{SITE.name}</span>
     </a>
     <div class="header-actions">
-      <nav class="header-nav" aria-label={t.mainNav}>
+      <nav class="header-nav" aria-label={ui.mainNav}>
         {
           nav.map((l) => (
             <a href={l.href}>
               {l.label}
-              {'wide' in l && <span class="nav-wide">{l.wide}</span>}
+              {l.wide && <span class="nav-wide">{l.wide}</span>}
             </a>
           ))
         }

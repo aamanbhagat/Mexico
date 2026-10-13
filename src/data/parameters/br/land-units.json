@@ -1,0 +1,750 @@
+{
+  "id": "br.land-units",
+  "name": "Medidas agrárias regionais do Brasil",
+  "unit": "m²",
+  "description": "Catálogo das medidas de terra não decimais ainda usadas em escrituras, anúncios e na conversa do campo: alqueires, tarefas, litro de terra, quadras e braça quadrada, cada variante com o valor em metros quadrados, onde é registrada e a fonte. Os valores são costumeiros, não legais: nenhuma lei federal em vigor define o alqueire. Onde as fontes discordam, todas as variantes ficam no catálogo e a divergência é explicada.",
+  "versions": [
+    {
+      "value": {
+        "linear": {
+          "id": "braca",
+          "name": "braça",
+          "plural": "braças",
+          "meters": "2.2",
+          "source": "inda-1966",
+          "notes": "A tabela INDA/MDA converte todas as dimensões com 1 braça = 2,20 m (10 palmos). O artigo da Bolema (SciELO) registra o mesmo valor em uso em Arraias (TO). Não é a braça inglesa (fathom, 1,8288 m)."
+        },
+        "rounding": {
+          "mode": "half-even",
+          "standard": "ABNT NBR 5891:2014 — Regras de arredondamento na numeração decimal",
+          "url": "https://normas.com.br/visualizar/abnt-nbr-nm/5276/abnt-nbr5891-regras-de-arredondamento-na-numeracao-decimal",
+          "notes": "Quando o algarismo seguinte ao último conservado é 5 seguido só de zeros, arredonda-se para o par mais próximo. As contas são exatas (frações) e só o número mostrado é arredondado."
+        },
+        "sources": {
+          "inda-1966": {
+            "short": "Tabela INDA/MDA",
+            "title": "Tabela de medidas agrárias não decimais — Ministério da Agricultura (Serviço de Estatística da Produção, set. 1946), compilada pelo INDA em nov. 1966 (cópia no Ipeadata)",
+            "url": "https://www.ipeadata.gov.br/doc/TABELA_MEDIDA_AGRARIA_NAO_DECIMAL.pdf",
+            "kind": "oficial-historica",
+            "retrieved_on": "2026-10-13",
+            "opened": false,
+            "notes": "Fonte oficial mais próxima de um padrão: compilação do Instituto Nacional de Desenvolvimento Agrário (antecessor do INCRA) a partir do levantamento de 1946 do Ministério da Agricultura. Lista cada medida em braças, metros e hectares e os estados onde aparece. As linhas citadas aqui foram lidas em trechos indexados do PDF e em cópias (forest-gis.com, muner.com.br); o PDF não abriu no ambiente de build."
+          },
+          "ibge-1948": {
+            "short": "IBGE 1948",
+            "title": "Unidades agrárias não decimais em uso no Brasil — Ministério da Agricultura, Serviço de Estatística da Produção (Serviço Gráfico do IBGE, 1948)",
+            "url": "https://biblioteca.ibge.gov.br/index.php/biblioteca-catalogo?view=detalhes&id=249155",
+            "kind": "oficial-historica",
+            "retrieved_on": "2026-10-13",
+            "opened": false,
+            "notes": "Publicação de 105 páginas com as unidades por município. É o documento primário a conferir antes de marcar qualquer valor como verificado; não foi possível abri-lo no ambiente de build."
+          },
+          "ibge-rbg-1950": {
+            "short": "IBGE 1950",
+            "title": "IBGE — Revista Brasileira de Geografia, jul.–set. 1950: \"Cada alqueire paulista equivale a 5,98 acres ou 24 200 m²\"",
+            "url": "https://biblioteca.ibge.gov.br/visualizacao/periodicos/115/rbg_1950_v12_n3.pdf",
+            "kind": "oficial-historica",
+            "retrieved_on": "2026-10-13",
+            "opened": false,
+            "notes": "Frase lida no trecho indexado do PDF do IBGE."
+          },
+          "iea-sp": {
+            "short": "IEA-SP",
+            "title": "Instituto de Economia Agrícola (Secretaria de Agricultura de SP) — Informações Econômicas, convenções: \"alq. = alqueire paulista (2,42 ha)\"",
+            "url": "https://iea.agricultura.sp.gov.br/ftpiea/IE/2016/ie-0816.pdf",
+            "kind": "oficial",
+            "retrieved_on": "2026-10-13",
+            "opened": false,
+            "notes": "A mesma convenção aparece nas edições de 2017 e 2018/2019 da revista do IEA. É a única fonte estadual vigente que encontramos definindo um alqueire."
+          },
+          "canal-rural": {
+            "short": "Canal Rural",
+            "title": "Canal Rural — Especialistas mostram como é realizado o processo de medição de terras",
+            "url": "https://www.canalrural.com.br/programas/especialistas-mostram-como-realizado-processo-medicao-terras-26577/",
+            "kind": "imprensa",
+            "retrieved_on": "2026-10-13",
+            "opened": false,
+            "notes": "O topógrafo Júlio César Teixeira explica que um litro de terra são 605 m², que o alqueire mineiro tem 80 litros e o paulista, 40."
+          },
+          "bolema": {
+            "short": "Bolema",
+            "title": "Bolema (SciELO) — Saberes quilombolas: um estudo no processo de produção da farinha de mandioca",
+            "url": "https://www.scielo.br/j/bolema/a/LM5VKtbPWQSbVdnFcb5pjZs/?lang=pt",
+            "kind": "academica",
+            "retrieved_on": "2026-10-13",
+            "opened": false,
+            "notes": "Comunidade Lagoa da Pedra, Arraias (TO): 1 braça = 2,2 m; 1 quadra tem 15 braças de lado; 1 tarefa = 4 quadras = 4.356 m²."
+          },
+          "vidya": {
+            "short": "Vidya",
+            "title": "Vizolli e Mendes (2016) — Braça, quadro e tarefa: um modo de efetuar medida de terras. Vidya, v. 36, n. 1, p. 69-78",
+            "url": "https://periodicos.ufn.edu.br/index.php/VIDYA/article/view/1388",
+            "kind": "academica",
+            "retrieved_on": "2026-10-13",
+            "opened": false,
+            "notes": "Mesma comunidade de Arraias (TO). Registra que os quilombolas usam braça, quadro e tarefa mesmo conhecendo o hectare."
+          },
+          "ufal-questao": {
+            "short": "UFAL",
+            "title": "UFAL — questão de concurso: \"na região de plantio de cana de Alagoas (…) uma tarefa equivale à área de 25 braças por 25 braças\" (braça de 2,20 m)",
+            "url": "https://www.qconcursos.com/questoes-de-concursos/questoes/6b3a0dfdfdb",
+            "kind": "academica",
+            "retrieved_on": "2026-10-13",
+            "opened": false,
+            "notes": "Enunciado de prova elaborado pela Universidade Federal de Alagoas; serve como registro do costume local, não como norma."
+          },
+          "ufpe-glossario": {
+            "short": "UFPE",
+            "title": "UFPE — dissertação (Centro de Filosofia e Ciências Humanas), glossário de medidas: alqueire de capacidade com 160 litros no Alto Sertão da Bahia e 80 litros no sul",
+            "url": "https://repositorio.ufpe.br/bitstream/123456789/7313/1/arquivo7676_1.pdf",
+            "kind": "academica",
+            "retrieved_on": "2026-10-13",
+            "opened": false,
+            "notes": "Explica por que o alqueire varia: era uma medida de capacidade (sementes) antes de virar medida de área. Também registra a tarefa de 3.052 m² em Alagoas e Sergipe."
+          },
+          "calculadorarural": {
+            "short": "Calculadora Rural",
+            "title": "Calculadora Rural — 1 alqueire em hectares: 2,42, 4,84 ou 9,68? Tabela por estado",
+            "url": "https://calculadorarural.com.br/blog/tabela-alqueire-hectare-estados",
+            "kind": "comercial",
+            "retrieved_on": "2026-10-13",
+            "opened": false,
+            "notes": "Atribui o paulista a SP, PR e MS; o mineiro a MG, RJ e ES; o goiano a GO, TO e MT; o baiano à BA; o do Norte a MA, PI, CE e PA. Não cita fonte."
+          },
+          "calculeonline": {
+            "short": "Calcule Online",
+            "title": "Calcule Online — Conversor de alqueires (paulista, mineiro, goiano, baiano)",
+            "url": "https://www.calculeonline.com/calculadora-conversao-alqueires",
+            "kind": "comercial",
+            "retrieved_on": "2026-10-13",
+            "opened": false,
+            "notes": "Atribui o alqueire do Norte a CE, RN, PB, PE, AL e SE e o baiano a BA, PI e MA. Não cita fonte."
+          },
+          "agroadvance": {
+            "short": "Agroadvance",
+            "title": "Agroadvance — Alqueire, hectare, acre e módulo fiscal: 4 medidas de terra",
+            "url": "https://agroadvance.com.br/blog-alqueire-hectare-acre-modulo-fiscal/",
+            "kind": "comercial",
+            "retrieved_on": "2026-10-13",
+            "opened": false,
+            "notes": "Dá o alqueire do Norte como 27.200 m² (Pará, Amazonas) e o alqueirão como 19,36 ha."
+          },
+          "aegro": {
+            "short": "Aegro",
+            "title": "Aegro — Hectare: guia completo de medidas e conversão",
+            "url": "https://aegro.com.br/blog/hectare/",
+            "kind": "comercial",
+            "retrieved_on": "2026-10-13",
+            "opened": false,
+            "notes": "Diz que o alqueire paulista predomina em SP, PR e partes de MT e MS."
+          },
+          "agrotec": {
+            "short": "Agrotec",
+            "title": "Agrotec Imobiliária no Agro — Quanto custa um alqueire de terra: os 4 alqueires",
+            "url": "https://agrotecimobiliarianoagro.com.br/quanto-custa-um-alqueire-de-terra",
+            "kind": "comercial",
+            "retrieved_on": "2026-10-13",
+            "opened": false,
+            "notes": "Chama o mineiro de geométrico (MG, GO, RJ) e dá ao baiano de 9,68 ha também o nome de alqueirão — nome que outras fontes reservam para 19,36 ha."
+          },
+          "converterem": {
+            "short": "Converter Em",
+            "title": "Converter Em — Tarefa para metros quadrados, a medida do Nordeste",
+            "url": "https://www.converterem.com.br/medidas-agrarias/tarefa-para-metros-quadrados/",
+            "kind": "comercial",
+            "retrieved_on": "2026-10-13",
+            "opened": false,
+            "notes": "Tarefa baiana de 30 × 30 braças = 4.356 m²; lembra que o valor varia por localidade."
+          },
+          "raaplaw": {
+            "short": "Raap Law",
+            "title": "Raap Law — Unidades de medidas agrárias",
+            "url": "https://raaplaw.com.br/unidades-de-medidas-agrarias/",
+            "kind": "comercial",
+            "retrieved_on": "2026-10-13",
+            "opened": false,
+            "notes": "Dá as tarefas alagoana e sergipana como 3.025 m²."
+          },
+          "focorural": {
+            "short": "Foco Rural",
+            "title": "Foco Rural — Hectare ou alqueire: qual medida de terra usar?",
+            "url": "https://focorural.com/2022/07/01/hectare-ou-alqueire-qual-medida-de-terra-usar/",
+            "kind": "comercial",
+            "retrieved_on": "2026-10-13",
+            "opened": false,
+            "notes": "Quadra quadrada de 17.424 m² e quadra de sesmaria de 871.200 m²."
+          },
+          "mario-bento": {
+            "short": "Mário Bento",
+            "title": "Mário Bento — Começando a entender a minha terra I (quadra de 132 m de frente por 6.600 m de fundo)",
+            "url": "https://mariobento.blogspot.com/2010/10/comecando-entender-minha-terra_593.html",
+            "kind": "comercial",
+            "retrieved_on": "2026-10-13",
+            "opened": false,
+            "notes": "Blog de história regional (RS). Um comentário no mesmo post associa a quadra de 132 × 132 m às lavouras de arroz do Sul."
+          },
+          "exame": {
+            "short": "Exame",
+            "title": "Exame — O que é alqueire: veja diferenças da medida em SP, MG, GO e BA",
+            "url": "https://exame.com/agro/o-que-e-alqueire-veja-diferencas-da-medida-em-sp-mg-go-e-ba/",
+            "kind": "imprensa",
+            "retrieved_on": "2026-10-13",
+            "opened": false,
+            "notes": "A tabela publicada dá 1,93 ha para o alqueirão (193.600 m² são 19,36 ha): exemplo de erro de vírgula que circula."
+          },
+          "inmetro-qgum": {
+            "short": "Inmetro",
+            "title": "Inmetro — Quadro Geral de Unidades de Medida no Brasil",
+            "url": "https://www.gov.br/inmetro/pt-br/centrais-de-conteudo/publicacoes/documentos-tecnicos-em-metrologia/quadro-geral-de-unidades-de-medida-no-brasil.pdf",
+            "kind": "oficial",
+            "retrieved_on": "2026-10-13",
+            "opened": false,
+            "notes": "Unidades legais no Brasil (Resolução Conmetro 11/1988). O metro quadrado é a unidade SI de área; o hectare (1 ha = 10⁴ m²) é aceito para uso com o SI."
+          },
+          "nist-811": {
+            "short": "NIST",
+            "title": "NIST Special Publication 811 — Guide for the Use of the International System of Units, Appendix B (acre)",
+            "url": "https://www.nist.gov/pml/special-publication-811",
+            "kind": "oficial",
+            "retrieved_on": "2026-10-13",
+            "opened": false,
+            "notes": "Acre internacional = 43.560 pés² = 4.046,856 422 4 m² (exato, com o pé internacional de 0,3048 m). O acre de levantamento dos EUA (survey acre) foi descontinuado em 2023."
+          }
+        },
+        "units": [
+          {
+            "id": "ha",
+            "family": "base",
+            "name": "Hectare",
+            "plural": "hectares",
+            "symbol": "ha",
+            "m2": "10000",
+            "regions": [],
+            "region_label": "Unidade oficial em todo o país",
+            "source_url": "https://www.gov.br/inmetro/pt-br/centrais-de-conteudo/publicacoes/documentos-tecnicos-em-metrologia/quadro-geral-de-unidades-de-medida-no-brasil.pdf",
+            "source_title": "Inmetro — Quadro Geral de Unidades de Medida no Brasil",
+            "retrieved_on": "2026-10-13",
+            "verified": false,
+            "sources": ["inmetro-qgum"],
+            "also_reported": [],
+            "notes": "Definição exata (1 ha = 100 m × 100 m). Marcado como não verificado só porque o PDF do Inmetro não abriu no ambiente de build."
+          },
+          {
+            "id": "m2",
+            "family": "base",
+            "name": "Metro quadrado",
+            "plural": "metros quadrados",
+            "symbol": "m²",
+            "m2": "1",
+            "regions": [],
+            "region_label": "Unidade SI de área",
+            "source_url": "https://www.gov.br/inmetro/pt-br/centrais-de-conteudo/publicacoes/documentos-tecnicos-em-metrologia/quadro-geral-de-unidades-de-medida-no-brasil.pdf",
+            "source_title": "Inmetro — Quadro Geral de Unidades de Medida no Brasil",
+            "retrieved_on": "2026-10-13",
+            "verified": false,
+            "sources": ["inmetro-qgum"],
+            "also_reported": [],
+            "notes": "Unidade SI. Marcado como não verificado só porque o PDF do Inmetro não abriu no ambiente de build."
+          },
+          {
+            "id": "acre",
+            "family": "base",
+            "name": "Acre",
+            "plural": "acres",
+            "symbol": "ac",
+            "m2": "4046.8564224",
+            "regions": [],
+            "region_label": "Medida anglo-americana, usada em anúncios para estrangeiros",
+            "source_url": "https://www.nist.gov/pml/special-publication-811",
+            "source_title": "NIST Special Publication 811 — Guide for the Use of the International System of Units, Appendix B",
+            "retrieved_on": "2026-10-13",
+            "verified": false,
+            "sources": ["nist-811"],
+            "also_reported": [{ "m2": "4046.873", "where": "EUA (survey acre, descontinuado em 2023)", "source": "nist-811" }],
+            "notes": "Acre internacional, exato: 43.560 × 0,3048² m². Conferido por aritmética; documento do NIST não aberto no ambiente de build."
+          },
+          {
+            "id": "alqueire-paulista",
+            "family": "alqueire",
+            "name": "Alqueire paulista",
+            "plural": "alqueires paulistas",
+            "symbol": "alq. paulista",
+            "m2": "24200",
+            "dims": [50, 100],
+            "regions": ["SP", "PR", "MS", "MT"],
+            "region_label": "São Paulo, Paraná, Mato Grosso do Sul e partes de Mato Grosso",
+            "source_url": "https://iea.agricultura.sp.gov.br/ftpiea/IE/2016/ie-0816.pdf",
+            "source_title": "Instituto de Economia Agrícola (SP) — Informações Econômicas: alqueire paulista (2,42 ha)",
+            "retrieved_on": "2026-10-13",
+            "verified": false,
+            "sources": ["iea-sp", "ibge-rbg-1950", "inda-1966", "canal-rural", "calculadorarural", "aegro"],
+            "also_reported": [],
+            "notes": "Valor sem divergência entre as fontes: 50 × 100 braças = 110 × 220 m = 24.200 m² = 2,42 ha. Confirmado pela convenção do IEA (órgão do Estado de SP), pela Revista Brasileira de Geografia do IBGE (1950) e pela linha 11 da tabela INDA/MDA. Equivale a 40 litros de terra de 605 m²."
+          },
+          {
+            "id": "alqueire-mineiro",
+            "family": "alqueire",
+            "name": "Alqueire mineiro ou goiano",
+            "plural": "alqueires mineiros ou goianos",
+            "symbol": "alq. mineiro",
+            "m2": "48400",
+            "dims": [100, 100],
+            "regions": ["MG", "GO", "TO", "RJ", "ES", "BA", "MT"],
+            "region_label": "Minas Gerais, Goiás, Tocantins, Rio de Janeiro, Espírito Santo e partes de Mato Grosso (também chamado de alqueire geométrico)",
+            "source_url": "https://www.ipeadata.gov.br/doc/TABELA_MEDIDA_AGRARIA_NAO_DECIMAL.pdf",
+            "source_title": "Tabela de medidas agrárias não decimais (Ministério da Agricultura 1946; INDA 1966) — linha 12, Alqueire Mineiro, 100 × 100 braças, 4,84 ha",
+            "retrieved_on": "2026-10-13",
+            "verified": false,
+            "sources": ["inda-1966", "canal-rural", "calculadorarural", "agrotec"],
+            "also_reported": [],
+            "notes": "100 × 100 braças = 220 × 220 m = 48.400 m² = 4,84 ha; o dobro do paulista. O goiano tem o mesmo valor do mineiro em todas as fontes consultadas. A tabela INDA/MDA também registra esta medida na Bahia. Uma única página diz 24.200 m² para o Espírito Santo; não encontramos outra fonte que a confirme."
+          },
+          {
+            "id": "alqueire-baiano",
+            "family": "alqueire",
+            "name": "Alqueire baiano",
+            "plural": "alqueires baianos",
+            "symbol": "alq. baiano",
+            "m2": "96800",
+            "dims": [100, 200],
+            "regions": ["BA", "PI", "MA", "MG", "MT"],
+            "region_label": "Bahia; também citado no Piauí e no Maranhão. A tabela INDA/MDA registra esta medida em MG e MT",
+            "source_url": "https://www.ipeadata.gov.br/doc/TABELA_MEDIDA_AGRARIA_NAO_DECIMAL.pdf",
+            "source_title": "Tabela de medidas agrárias não decimais (Ministério da Agricultura 1946; INDA 1966) — alqueire de 100 × 200 braças, 9,68 ha",
+            "retrieved_on": "2026-10-13",
+            "verified": false,
+            "sources": ["inda-1966", "calculadorarural", "calculeonline", "agrotec"],
+            "also_reported": [
+              { "m2": "48400", "where": "BA (tabela INDA/MDA lista o alqueire de 100 × 100 braças na Bahia)", "source": "inda-1966" },
+              { "m2": "43560", "where": "uma página de conteúdo (sem fonte; equivale a 10 tarefas baianas)", "source": "" }
+            ],
+            "notes": "100 × 200 braças = 220 × 440 m = 96.800 m² = 9,68 ha. O nome \"baiano\" vem das fontes atuais; a tabela INDA/MDA lista a medida de 9,68 ha em MG e MT e lista o alqueire de 4,84 ha (100 × 100) na Bahia. Por isso há páginas que dão 4,84 ha para o alqueire baiano. Mostramos as duas e deixamos a escolha com quem tem o documento."
+          },
+          {
+            "id": "alqueire-norte",
+            "family": "alqueire",
+            "name": "Alqueire do Norte",
+            "plural": "alqueires do Norte",
+            "symbol": "alq. do Norte",
+            "m2": "27225",
+            "dims": [75, 75],
+            "regions": ["PA", "AM", "MA", "PI", "CE", "RN", "PB", "PE", "AL", "SE"],
+            "region_label": "Norte e Nordeste (as listas de estados variam entre as fontes)",
+            "source_url": "https://www.ipeadata.gov.br/doc/TABELA_MEDIDA_AGRARIA_NAO_DECIMAL.pdf",
+            "source_title": "Tabela de medidas agrárias não decimais (Ministério da Agricultura 1946; INDA 1966) — alqueire de 75 × 75 braças, 2,72 ha, \"todos\" os estados",
+            "retrieved_on": "2026-10-13",
+            "verified": false,
+            "sources": ["inda-1966", "calculadorarural", "calculeonline", "agroadvance"],
+            "also_reported": [
+              { "m2": "27200", "where": "várias páginas (arredondamento de 2,72 ha)", "source": "agroadvance" },
+              { "m2": "96800", "where": "páginas que confundem o do Norte com o baiano", "source": "" }
+            ],
+            "notes": "75 × 75 braças = 165 × 165 m = 27.225 m² ≈ 2,72 ha. A tabela INDA/MDA o registra em todos (ou quase todos) os estados; as fontes atuais o associam ao Norte e ao Nordeste, mas discordam da lista: MA, PI, CE e PA (Calculadora Rural); CE, RN, PB, PE, AL e SE (Calcule Online); PA e AM (Agroadvance). 27.200 m² é só o arredondamento de 2,72 ha."
+          },
+          {
+            "id": "alqueirao",
+            "family": "alqueire",
+            "name": "Alqueirão",
+            "plural": "alqueirões",
+            "symbol": "alqueirão",
+            "m2": "193600",
+            "dims": [200, 200],
+            "regions": ["MG", "BA", "GO"],
+            "region_label": "Norte e Nordeste de Minas Gerais, sul da Bahia e Goiás",
+            "source_url": "https://www.ipeadata.gov.br/doc/TABELA_MEDIDA_AGRARIA_NAO_DECIMAL.pdf",
+            "source_title": "Tabela de medidas agrárias não decimais (Ministério da Agricultura 1946; INDA 1966) — alqueire de 440 × 440 m, 19,36 ha (MG, BA, GO)",
+            "retrieved_on": "2026-10-13",
+            "verified": false,
+            "sources": ["inda-1966", "agroadvance", "exame"],
+            "also_reported": [
+              { "m2": "96800", "where": "páginas que chamam o baiano de alqueirão", "source": "agrotec" },
+              { "m2": "19360", "where": "tabela publicada pela Exame (1,93 ha, erro de vírgula)", "source": "exame" }
+            ],
+            "notes": "200 × 200 braças = 440 × 440 m = 193.600 m² = 19,36 ha, quatro alqueires mineiros. O nome é usado para medidas diferentes: há quem chame de alqueirão o baiano de 9,68 ha."
+          },
+          {
+            "id": "alqueire-50x75",
+            "family": "alqueire",
+            "name": "Alqueire de 50 × 75 braças",
+            "plural": "alqueires de 50 × 75 braças",
+            "symbol": "alq. 50×75",
+            "m2": "18150",
+            "dims": [50, 75],
+            "regions": ["MG", "MT"],
+            "region_label": "Registro histórico em Minas Gerais e Mato Grosso",
+            "source_url": "https://www.ipeadata.gov.br/doc/TABELA_MEDIDA_AGRARIA_NAO_DECIMAL.pdf",
+            "source_title": "Tabela de medidas agrárias não decimais (Ministério da Agricultura 1946; INDA 1966) — alqueire de 50 × 75 braças, 1,82 ha (MG, MT)",
+            "retrieved_on": "2026-10-13",
+            "verified": false,
+            "sources": ["inda-1966"],
+            "also_reported": [],
+            "notes": "110 × 165 m = 18.150 m² ≈ 1,82 ha. Só aparece na tabela INDA/MDA; raro hoje."
+          },
+          {
+            "id": "alqueire-50x50",
+            "family": "alqueire",
+            "name": "Alqueire de 50 × 50 braças",
+            "plural": "alqueires de 50 × 50 braças",
+            "symbol": "alq. 50×50",
+            "m2": "12100",
+            "dims": [50, 50],
+            "regions": ["SP", "MG"],
+            "region_label": "Registro histórico em São Paulo e Minas Gerais",
+            "source_url": "https://www.ipeadata.gov.br/doc/TABELA_MEDIDA_AGRARIA_NAO_DECIMAL.pdf",
+            "source_title": "Tabela de medidas agrárias não decimais (Ministério da Agricultura 1946; INDA 1966) — alqueire de 50 × 50 braças, 1,21 ha (SP, MG)",
+            "retrieved_on": "2026-10-13",
+            "verified": false,
+            "sources": ["inda-1966"],
+            "also_reported": [],
+            "notes": "110 × 110 m = 12.100 m² = 1,21 ha. Tem a mesma área da quarta do alqueire mineiro (¼ de 48.400 m²). Uma cópia da tabela atribui a linha a SP e MS em vez de SP e MG."
+          },
+          {
+            "id": "tarefa-baiana",
+            "family": "tarefa",
+            "name": "Tarefa baiana",
+            "plural": "tarefas baianas",
+            "symbol": "tarefa (BA)",
+            "m2": "4356",
+            "dims": [30, 30],
+            "regions": ["BA", "TO"],
+            "region_label": "Bahia; registrada também em comunidades de Arraias (TO)",
+            "source_url": "https://www.scielo.br/j/bolema/a/LM5VKtbPWQSbVdnFcb5pjZs/?lang=pt",
+            "source_title": "Bolema (SciELO) — Saberes quilombolas: 1 tarefa = 4 quadras de 15 braças = 4.356 m²",
+            "retrieved_on": "2026-10-13",
+            "verified": false,
+            "sources": ["bolema", "vidya", "converterem"],
+            "also_reported": [],
+            "notes": "30 × 30 braças = 66 × 66 m = 4.356 m² ≈ 0,44 ha. É a tarefa citada para a Bahia (cacau, cana, mandioca) e a medida registrada em pesquisa acadêmica em Arraias (TO). Um hectare tem cerca de 2,3 tarefas baianas; há páginas que invertem a relação e dizem que uma tarefa tem 2,3 ha."
+          },
+          {
+            "id": "tarefa-cearense",
+            "family": "tarefa",
+            "name": "Tarefa cearense",
+            "plural": "tarefas cearenses",
+            "symbol": "tarefa (CE)",
+            "m2": "3630",
+            "regions": ["CE"],
+            "region_label": "Ceará",
+            "source_url": "https://www.ipeadata.gov.br/doc/TABELA_MEDIDA_AGRARIA_NAO_DECIMAL.pdf",
+            "source_title": "Tabela de medidas agrárias não decimais (Ministério da Agricultura 1946; INDA 1966) — linha 67, Tarefa, 3.630 m², 0,36 ha (CE)",
+            "retrieved_on": "2026-10-13",
+            "verified": false,
+            "sources": ["inda-1966", "ufpe-glossario"],
+            "also_reported": [],
+            "notes": "3.630 m² ≈ 0,36 ha. As fontes concordam."
+          },
+          {
+            "id": "tarefa-al-se",
+            "family": "tarefa",
+            "name": "Tarefa alagoana e sergipana",
+            "plural": "tarefas alagoanas e sergipanas",
+            "symbol": "tarefa (AL/SE)",
+            "m2": "3053",
+            "regions": ["AL", "SE"],
+            "region_label": "Alagoas e Sergipe (valor da tabela oficial)",
+            "source_url": "https://www.ipeadata.gov.br/doc/TABELA_MEDIDA_AGRARIA_NAO_DECIMAL.pdf",
+            "source_title": "Tabela de medidas agrárias não decimais (Ministério da Agricultura 1946; INDA 1966) — linha 66, Tarefa, 3.053 m² (AL, SE)",
+            "retrieved_on": "2026-10-13",
+            "verified": false,
+            "sources": ["inda-1966", "ufpe-glossario"],
+            "also_reported": [
+              { "m2": "3052", "where": "várias páginas e o glossário da UFPE", "source": "ufpe-glossario" },
+              { "m2": "3025", "where": "tarefa de 25 × 25 braças (ver variante própria)", "source": "raaplaw" }
+            ],
+            "notes": "A linha 66 da tabela INDA/MDA traz 3.053 m² (a coluna de hectares imprime 0,03, um erro: 3.053 m² são 0,31 ha). Muitas páginas usam 3.052 m², diferença de 1 m² (0,03 %). Outra corrente usa 3.025 m² (25 × 25 braças), cadastrada como variante separada."
+          },
+          {
+            "id": "tarefa-25x25",
+            "family": "tarefa",
+            "name": "Tarefa de 25 × 25 braças",
+            "plural": "tarefas de 25 × 25 braças",
+            "symbol": "tarefa 25×25",
+            "m2": "3025",
+            "dims": [25, 25],
+            "regions": ["AL", "SE"],
+            "region_label": "Zona canavieira de Alagoas e Sergipe",
+            "source_url": "https://www.qconcursos.com/questoes-de-concursos/questoes/6b3a0dfdfdb",
+            "source_title": "UFAL — questão de concurso: tarefa de 25 × 25 braças (braça de 2,20 m) na região canavieira de Alagoas",
+            "retrieved_on": "2026-10-13",
+            "verified": false,
+            "sources": ["ufal-questao", "raaplaw"],
+            "also_reported": [],
+            "notes": "25 × 25 braças = 55 × 55 m = 3.025 m² ≈ 0,30 ha. Difere 28 m² (0,9 %) da tarefa de 3.053 m² da tabela INDA/MDA. Os dígitos trocados (3.025 × 3.052) fazem parecer erro de digitação, mas as 25 × 25 braças justificam o valor."
+          },
+          {
+            "id": "litro",
+            "family": "litro",
+            "name": "Litro de terra",
+            "plural": "litros de terra",
+            "symbol": "litro",
+            "m2": "605",
+            "regions": ["MG", "GO", "SP", "PR"],
+            "region_label": "Minas Gerais, Goiás, São Paulo e Paraná (1/80 do alqueire mineiro, 1/40 do paulista)",
+            "source_url": "https://www.canalrural.com.br/programas/especialistas-mostram-como-realizado-processo-medicao-terras-26577/",
+            "source_title": "Canal Rural — Especialistas mostram como é realizado o processo de medição de terras (1 litro de terra = 605 m²)",
+            "retrieved_on": "2026-10-13",
+            "verified": false,
+            "sources": ["canal-rural", "ufpe-glossario"],
+            "also_reported": [],
+            "notes": "Área que se planta com um litro de milho debulhado. 605 m² = 48.400 ÷ 80 = 24.200 ÷ 40, por isso o mesmo litro serve aos dois alqueires. Não é medida de peso: \"um litro de terra\" não tem equivalente em quilos."
+          },
+          {
+            "id": "quadra-gaucha",
+            "family": "quadra",
+            "name": "Quadra gaúcha",
+            "plural": "quadras gaúchas",
+            "symbol": "quadra (RS)",
+            "m2": "17424",
+            "dims": [60, 60],
+            "regions": ["RS"],
+            "region_label": "Rio Grande do Sul (também chamada quadra de campo ou de arroz)",
+            "source_url": "https://www.ipeadata.gov.br/doc/TABELA_MEDIDA_AGRARIA_NAO_DECIMAL.pdf",
+            "source_title": "Tabela de medidas agrárias não decimais (Ministério da Agricultura 1946; INDA 1966) — quadra de 132 × 132 m, ≈ 1,74 ha (RS)",
+            "retrieved_on": "2026-10-13",
+            "verified": false,
+            "sources": ["inda-1966", "focorural", "mario-bento"],
+            "also_reported": [],
+            "notes": "60 × 60 braças = 132 × 132 m = 17.424 m² ≈ 1,74 ha."
+          },
+          {
+            "id": "quadra-sesmaria",
+            "family": "quadra",
+            "name": "Quadra de sesmaria",
+            "plural": "quadras de sesmaria",
+            "symbol": "quadra de sesmaria",
+            "m2": "871200",
+            "dims": [60, 3000],
+            "regions": ["RS"],
+            "region_label": "Rio Grande do Sul (escrituras antigas)",
+            "source_url": "https://mariobento.blogspot.com/2010/10/comecando-entender-minha-terra_593.html",
+            "source_title": "Mário Bento — Começando a entender a minha terra I (quadra de 132 m de frente por 6.600 m de fundo)",
+            "retrieved_on": "2026-10-13",
+            "verified": false,
+            "sources": ["mario-bento", "focorural"],
+            "also_reported": [
+              {
+                "m2": "10890000",
+                "where": "linha \"quadra de sesmaria\" de uma cópia da tabela INDA/MDA (1.089 ha, MG); não conferida",
+                "source": "inda-1966"
+              }
+            ],
+            "notes": "60 braças de frente por 3.000 braças (uma légua) de fundo = 132 × 6.600 m = 871.200 m² = 87,12 ha. Fontes fracas (blog e site de conteúdo) mas coerentes entre si e com a aritmética. Uma cópia da tabela INDA/MDA traz 1.089 ha para MG; não conseguimos conferir essa linha."
+          },
+          {
+            "id": "quadra-15",
+            "family": "quadra",
+            "name": "Quadra de 15 × 15 braças",
+            "plural": "quadras de 15 × 15 braças",
+            "symbol": "quadra 15×15",
+            "m2": "1089",
+            "dims": [15, 15],
+            "regions": ["TO"],
+            "region_label": "Arraias (TO), registro em pesquisa acadêmica",
+            "source_url": "https://www.scielo.br/j/bolema/a/LM5VKtbPWQSbVdnFcb5pjZs/?lang=pt",
+            "source_title": "Bolema (SciELO) — Saberes quilombolas: 1 quadra tem 15 braças de lado",
+            "retrieved_on": "2026-10-13",
+            "verified": false,
+            "sources": ["bolema", "vidya"],
+            "also_reported": [],
+            "notes": "15 × 15 braças = 33 × 33 m = 1.089 m²; quatro quadras fazem uma tarefa de 4.356 m². O nome \"quadra\" designa áreas muito diferentes (de 10 × 10 a 200 × 200 braças), por isso sempre confirme as braças."
+          },
+          {
+            "id": "braca2",
+            "family": "braca",
+            "name": "Braça quadrada",
+            "plural": "braças quadradas",
+            "symbol": "braça²",
+            "m2": "4.84",
+            "dims": [1, 1],
+            "regions": [],
+            "region_label": "Todo o país (base das outras medidas)",
+            "source_url": "https://www.ipeadata.gov.br/doc/TABELA_MEDIDA_AGRARIA_NAO_DECIMAL.pdf",
+            "source_title": "Tabela de medidas agrárias não decimais (Ministério da Agricultura 1946; INDA 1966) — braça de 2,20 m",
+            "retrieved_on": "2026-10-13",
+            "verified": false,
+            "sources": ["inda-1966", "bolema"],
+            "also_reported": [
+              {
+                "m2": "3052",
+                "where": "uma página chama de \"braça quadrada de sesmaria\" a área de 3.052 m² (é a tarefa AL/SE)",
+                "source": ""
+              }
+            ],
+            "notes": "2,2 m × 2,2 m = 4,84 m². A braça brasileira (2,20 m) não é a braça inglesa (fathom, 1,8288 m)."
+          }
+        ],
+        "states": {
+          "AC": { "name": "Acre", "units": [], "defaults": {} },
+          "AL": {
+            "name": "Alagoas",
+            "units": [
+              { "id": "tarefa-al-se", "status": "usual", "sources": ["inda-1966", "ufpe-glossario"] },
+              { "id": "tarefa-25x25", "status": "usual", "sources": ["ufal-questao", "raaplaw"] },
+              { "id": "alqueire-norte", "status": "usual", "sources": ["calculeonline"] }
+            ],
+            "defaults": { "tarefa": "tarefa-al-se", "alqueire": "alqueire-norte" }
+          },
+          "AM": {
+            "name": "Amazonas",
+            "units": [{ "id": "alqueire-norte", "status": "usual", "sources": ["agroadvance"] }],
+            "defaults": { "alqueire": "alqueire-norte" }
+          },
+          "AP": { "name": "Amapá", "units": [], "defaults": {} },
+          "BA": {
+            "name": "Bahia",
+            "units": [
+              { "id": "alqueire-baiano", "status": "usual", "sources": ["calculadorarural", "calculeonline", "agrotec"] },
+              { "id": "alqueire-mineiro", "status": "usual", "sources": ["inda-1966"] },
+              { "id": "alqueirao", "status": "named", "sources": ["inda-1966", "agroadvance"] },
+              { "id": "tarefa-baiana", "status": "usual", "sources": ["converterem"] }
+            ],
+            "defaults": { "alqueire": "alqueire-baiano", "tarefa": "tarefa-baiana" }
+          },
+          "CE": {
+            "name": "Ceará",
+            "units": [
+              { "id": "tarefa-cearense", "status": "usual", "sources": ["inda-1966", "ufpe-glossario"] },
+              { "id": "alqueire-norte", "status": "usual", "sources": ["calculadorarural", "calculeonline"] }
+            ],
+            "defaults": { "tarefa": "tarefa-cearense", "alqueire": "alqueire-norte" }
+          },
+          "DF": { "name": "Distrito Federal", "units": [], "defaults": {} },
+          "ES": {
+            "name": "Espírito Santo",
+            "units": [{ "id": "alqueire-mineiro", "status": "usual", "sources": ["calculadorarural"] }],
+            "defaults": { "alqueire": "alqueire-mineiro" }
+          },
+          "GO": {
+            "name": "Goiás",
+            "units": [
+              { "id": "alqueire-mineiro", "status": "usual", "sources": ["calculadorarural", "agrotec"] },
+              { "id": "alqueirao", "status": "named", "sources": ["inda-1966"] },
+              { "id": "litro", "status": "usual", "sources": ["canal-rural"] }
+            ],
+            "defaults": { "alqueire": "alqueire-mineiro", "litro": "litro" }
+          },
+          "MA": {
+            "name": "Maranhão",
+            "units": [
+              { "id": "alqueire-norte", "status": "usual", "sources": ["calculadorarural"] },
+              { "id": "alqueire-baiano", "status": "usual", "sources": ["calculeonline"] }
+            ],
+            "defaults": {}
+          },
+          "MG": {
+            "name": "Minas Gerais",
+            "units": [
+              { "id": "alqueire-mineiro", "status": "usual", "sources": ["inda-1966", "canal-rural", "calculadorarural"] },
+              { "id": "alqueirao", "status": "named", "sources": ["inda-1966", "agroadvance"] },
+              { "id": "alqueire-baiano", "status": "historical", "sources": ["inda-1966"] },
+              { "id": "alqueire-50x75", "status": "historical", "sources": ["inda-1966"] },
+              { "id": "alqueire-50x50", "status": "historical", "sources": ["inda-1966"] },
+              { "id": "litro", "status": "usual", "sources": ["canal-rural"] }
+            ],
+            "defaults": { "alqueire": "alqueire-mineiro", "litro": "litro" }
+          },
+          "MS": {
+            "name": "Mato Grosso do Sul",
+            "units": [{ "id": "alqueire-paulista", "status": "usual", "sources": ["calculadorarural", "aegro"] }],
+            "defaults": { "alqueire": "alqueire-paulista" }
+          },
+          "MT": {
+            "name": "Mato Grosso",
+            "units": [
+              { "id": "alqueire-paulista", "status": "usual", "sources": ["aegro"] },
+              { "id": "alqueire-mineiro", "status": "usual", "sources": ["calculadorarural"] },
+              { "id": "alqueire-baiano", "status": "historical", "sources": ["inda-1966"] },
+              { "id": "alqueire-50x75", "status": "historical", "sources": ["inda-1966"] }
+            ],
+            "defaults": {}
+          },
+          "PA": {
+            "name": "Pará",
+            "units": [{ "id": "alqueire-norte", "status": "usual", "sources": ["calculadorarural", "agroadvance"] }],
+            "defaults": { "alqueire": "alqueire-norte" }
+          },
+          "PB": {
+            "name": "Paraíba",
+            "units": [{ "id": "alqueire-norte", "status": "usual", "sources": ["calculeonline"] }],
+            "defaults": { "alqueire": "alqueire-norte" }
+          },
+          "PE": {
+            "name": "Pernambuco",
+            "units": [{ "id": "alqueire-norte", "status": "usual", "sources": ["calculeonline"] }],
+            "defaults": { "alqueire": "alqueire-norte" }
+          },
+          "PI": {
+            "name": "Piauí",
+            "units": [
+              { "id": "alqueire-norte", "status": "usual", "sources": ["calculadorarural"] },
+              { "id": "alqueire-baiano", "status": "usual", "sources": ["calculeonline"] }
+            ],
+            "defaults": {}
+          },
+          "PR": {
+            "name": "Paraná",
+            "units": [
+              { "id": "alqueire-paulista", "status": "usual", "sources": ["calculadorarural", "aegro"] },
+              { "id": "litro", "status": "usual", "sources": ["canal-rural"] }
+            ],
+            "defaults": { "alqueire": "alqueire-paulista", "litro": "litro" }
+          },
+          "RJ": {
+            "name": "Rio de Janeiro",
+            "units": [{ "id": "alqueire-mineiro", "status": "usual", "sources": ["calculadorarural", "agrotec"] }],
+            "defaults": { "alqueire": "alqueire-mineiro" }
+          },
+          "RN": {
+            "name": "Rio Grande do Norte",
+            "units": [{ "id": "alqueire-norte", "status": "usual", "sources": ["calculeonline"] }],
+            "defaults": { "alqueire": "alqueire-norte" }
+          },
+          "RO": { "name": "Rondônia", "units": [], "defaults": {} },
+          "RR": { "name": "Roraima", "units": [], "defaults": {} },
+          "RS": {
+            "name": "Rio Grande do Sul",
+            "units": [
+              { "id": "quadra-gaucha", "status": "usual", "sources": ["inda-1966", "focorural"] },
+              { "id": "quadra-sesmaria", "status": "named", "sources": ["mario-bento", "focorural"] }
+            ],
+            "defaults": { "quadra": "quadra-gaucha" }
+          },
+          "SC": { "name": "Santa Catarina", "units": [], "defaults": {} },
+          "SE": {
+            "name": "Sergipe",
+            "units": [
+              { "id": "tarefa-al-se", "status": "usual", "sources": ["inda-1966", "ufpe-glossario"] },
+              { "id": "tarefa-25x25", "status": "usual", "sources": ["raaplaw"] },
+              { "id": "alqueire-norte", "status": "usual", "sources": ["calculeonline"] }
+            ],
+            "defaults": { "tarefa": "tarefa-al-se", "alqueire": "alqueire-norte" }
+          },
+          "SP": {
+            "name": "São Paulo",
+            "units": [
+              { "id": "alqueire-paulista", "status": "usual", "sources": ["iea-sp", "ibge-rbg-1950", "calculadorarural"] },
+              { "id": "alqueire-50x50", "status": "historical", "sources": ["inda-1966"] },
+              { "id": "litro", "status": "usual", "sources": ["canal-rural"] }
+            ],
+            "defaults": { "alqueire": "alqueire-paulista", "litro": "litro" }
+          },
+          "TO": {
+            "name": "Tocantins",
+            "units": [
+              { "id": "alqueire-mineiro", "status": "usual", "sources": ["calculadorarural"] },
+              { "id": "tarefa-baiana", "status": "usual", "sources": ["bolema", "vidya"] },
+              { "id": "quadra-15", "status": "usual", "sources": ["bolema", "vidya"] }
+            ],
+            "defaults": { "alqueire": "alqueire-mineiro", "tarefa": "tarefa-baiana", "quadra": "quadra-15" }
+          }
+        }
+      },
+      "effective_from": "1946-09-01",
+      "source_url": "https://www.ipeadata.gov.br/doc/TABELA_MEDIDA_AGRARIA_NAO_DECIMAL.pdf",
+      "source_title": "Tabela de medidas agrárias não decimais (Ministério da Agricultura, set. 1946; compilação INDA, nov. 1966) — cópia no Ipeadata",
+      "retrieved_on": "2026-10-13",
+      "verified": false,
+      "notes": "Medidas costumeiras não têm data de vigência legal: a data é a do levantamento do Ministério da Agricultura que a tabela INDA/MDA reproduz. Cada variante tem fonte própria em units[]. Nenhum documento primário pôde ser aberto no ambiente de build (política de rede): os valores foram corroborados por trechos indexados e por fontes independentes, por isso todos estão com verified=false até alguém conferir o PDF do Ipeadata e a publicação do IBGE de 1948."
+    }
+  ]
+}

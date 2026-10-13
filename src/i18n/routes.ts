@@ -10,6 +10,15 @@ import { BULAN_SLUGS, KALENDER_YEARS, type BulanSlug } from '../content/id/meta'
  * when the locale is published AND the page lists a path for it.
  */
 type MxKey = 'mx.aguinaldo' | 'mx.finiquito' | 'mx.liquidacion' | 'mx.prima-vacacional' | 'mx.vacaciones' | 'mx.uma-salario-minimo';
+type BrKey =
+  | 'br.alqueire-hectare'
+  | 'br.alqueire-paulista'
+  | 'br.alqueire-mineiro-goiano'
+  | 'br.alqueire-baiano'
+  | 'br.alqueire-do-norte'
+  | 'br.tarefa-hectare'
+  | 'br.litro-de-terra'
+  | 'br.hectare-alqueire';
 export type WetonSlug = `${Lowercase<(typeof DINA)[number]>}-${Lowercase<(typeof PASARAN)[number]>}`;
 type IdKey =
   | 'id.weton'
@@ -18,7 +27,7 @@ type IdKey =
   | `id.weton.${WetonSlug}`
   | `id.kalender.${number}`
   | `id.kalender.${number}.${BulanSlug}`;
-export type PageKey = 'home' | MxKey | IdKey;
+export type PageKey = 'home' | MxKey | BrKey | IdKey;
 
 type RouteDef = Partial<Record<LocaleCode, string>> & { default?: LocaleCode };
 
@@ -57,6 +66,16 @@ export const ROUTES: Readonly<Record<string, RouteDef>> = {
   'mx.prima-vacacional': { 'es-mx': '/es-mx/calculadora-prima-vacacional/', default: 'es-mx' },
   'mx.vacaciones': { 'es-mx': '/es-mx/calculadora-vacaciones/', default: 'es-mx' },
   'mx.uma-salario-minimo': { 'es-mx': '/es-mx/uma-salario-minimo-2026/', default: 'es-mx' },
+  // pt-BR land units (BR-01). No other locale has an equivalent page yet, so hreflang is self-only.
+  'br.alqueire-hectare': { 'pt-br': '/pt-br/conversor-alqueire-hectare/', default: 'pt-br' },
+  'br.alqueire-paulista': { 'pt-br': '/pt-br/conversor-alqueire-hectare/alqueire-paulista/', default: 'pt-br' },
+  'br.alqueire-mineiro-goiano': { 'pt-br': '/pt-br/conversor-alqueire-hectare/alqueire-mineiro-goiano/', default: 'pt-br' },
+  'br.alqueire-baiano': { 'pt-br': '/pt-br/conversor-alqueire-hectare/alqueire-baiano/', default: 'pt-br' },
+  'br.alqueire-do-norte': { 'pt-br': '/pt-br/conversor-alqueire-hectare/alqueire-do-norte/', default: 'pt-br' },
+  'br.tarefa-hectare': { 'pt-br': '/pt-br/conversor-alqueire-hectare/tarefa-em-hectare/', default: 'pt-br' },
+  'br.litro-de-terra': { 'pt-br': '/pt-br/conversor-alqueire-hectare/litro-de-terra/', default: 'pt-br' },
+  'br.hectare-alqueire': { 'pt-br': '/pt-br/hectare-para-alqueire/', default: 'pt-br' },
+  // id (ID-01): weton pages and Javanese calendars; self-only hreflang.
   ...idRoutes,
 };
 

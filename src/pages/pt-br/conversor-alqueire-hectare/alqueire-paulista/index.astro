@@ -1,0 +1,119 @@
+---
+import CalculatorLayout from '../../../../layouts/CalculatorLayout.astro';
+import LandConverter, { type ConverterPreset } from '../../../../components/calc/LandConverter';
+import StateTable from '../../../../components/page/br/StateTable.astro';
+import ScaleFigure from '../../../../components/page/br/ScaleFigure.astro';
+import HowWeCalculate from '../../../../components/page/br/HowWeCalculate.astro';
+import LandExamples from '../../../../components/page/br/LandExamples.astro';
+import ConversionTable from '../../../../components/page/br/ConversionTable.astro';
+import OfficialDocs from '../../../../components/page/br/OfficialDocs.astro';
+import WhyDiverge from '../../../../components/page/br/WhyDiverge.astro';
+import LandDisclaimer from '../../../../components/page/br/LandDisclaimer.astro';
+import { landSourceItems, OFFICIAL_DOC_SOURCES } from '../../../../components/page/br/land-sources';
+import { pathFor } from '../../../../i18n/routes';
+import { brHa, haOf, m2Of } from '../../../../i18n/tools';
+import { UPDATED } from '../../../../content/pt-br/meta';
+import { BR_LAND } from '../../../../lib/params/br';
+import { convertArea, convertPrice, div, ratio, rat } from '../../../../lib/land-units';
+import { brl, num } from '../../../../content/pt-br/land-text';
+import { EXAMPLES } from '../../../../content/pt-br/examples';
+import type { FaqItem } from '../../../../lib/seo/jsonld';
+
+const PATH = pathFor('br.alqueire-paulista', 'pt-br');
+const HUB = pathFor('br.alqueire-hectare', 'pt-br');
+const preset: ConverterPreset = { from: 'alqueire-paulista', to: 'ha' };
+const u = (id: string) => BR_LAND.byId.get(id)!;
+const P = u('alqueire-paulista');
+const acres = num(convertArea(rat(1n), P, u('acre')), 2);
+const litros = num(ratio(P, u('litro')));
+const half = num(div(P.area, rat(2n)), 4);
+const quarta = num(div(P.area, rat(4n)), 4);
+const ex = EXAMPLES.precoPaulista;
+const exPrice = rat(BigInt(ex.price));
+const exPerHa = brl(convertPrice(exPrice, P, u(ex.to)));
+
+const faq: FaqItem[] = [
+  {
+    q: 'Quantos hectares tem um alqueire paulista?',
+    a: `${haOf('alqueire-paulista')}. É um terreno de 50 × 100 braças, ou 110 × 220 metros, que dá ${m2Of('alqueire-paulista')}. Para converter, multiplique os alqueires por ${brHa('alqueire-paulista')}.`,
+  },
+  {
+    q: 'Quantos metros quadrados tem um alqueire paulista?',
+    a: `${m2Of('alqueire-paulista')}: 110 m × 220 m. Meio alqueire paulista são ${half} m², e uma quarta (um quarto de alqueire) ${quarta} m².`,
+  },
+  {
+    q: 'Em quais estados se usa o alqueire paulista?',
+    a: 'Em São Paulo, no Paraná e em Mato Grosso do Sul, segundo as fontes. Em Mato Grosso as fontes divergem: umas citam o paulista, outras o goiano. Na dúvida, veja qual valor aparece na escritura ou no anúncio.',
+  },
+  {
+    q: 'Qual a diferença entre o alqueire paulista e o mineiro?',
+    a: `O mineiro tem o dobro: ${haOf('alqueire-mineiro')} contra ${haOf('alqueire-paulista')}. São Paulo fixou o alqueire em 50 × 100 braças; Minas, em 100 × 100. Confundir os dois dobra (ou corta pela metade) a área de um negócio.`,
+  },
+  {
+    q: 'Quantos litros de terra tem um alqueire paulista?',
+    a: `${litros} litros de 605 m². No alqueire mineiro são 80.`,
+  },
+  {
+    q: 'Quanto é 1 alqueire paulista em acres?',
+    a: `Cerca de ${acres} acres (acre internacional de 4.046,86 m²). O IBGE já dava o mesmo número em 1950: "cada alqueire paulista equivale a 5,98 acres ou 24 200 m²".`,
+  },
+  {
+    q: 'Como passar o preço por alqueire paulista para preço por hectare?',
+    a: `Divida o preço do alqueire por ${brHa('alqueire-paulista')}. ${brl(exPrice)} o alqueire paulista são ${exPerHa} por hectare. O conversor de preço nesta página faz a conta para qualquer alqueire.`,
+  },
+];
+---
+
+<CalculatorLayout
+  pageKey="br.alqueire-paulista"
+  locale="pt-br"
+  tool="terra"
+  icon="alqueire"
+  title={`Alqueire paulista em hectare: ${brHa('alqueire-paulista')} ha (${m2Of('alqueire-paulista')})`}
+  description={`1 alqueire paulista = ${haOf('alqueire-paulista')} = ${m2Of('alqueire-paulista')} (50 × 100 braças). Converta alqueire paulista em hectare, m² e acre e veja onde ele é usado, com fontes.`}
+  h1="Alqueire paulista em hectare"
+  lede={`1 alqueire paulista tem ${haOf('alqueire-paulista')}, ou ${m2Of('alqueire-paulista')}: um terreno de 50 × 100 braças (110 × 220 m). É o alqueire de São Paulo, do Paraná e de Mato Grosso do Sul.`}
+  updated={UPDATED}
+  appName="Conversor de alqueire paulista em hectare"
+  appCategory="UtilitiesApplication"
+  faq={faq}
+  sourceItems={landSourceItems(['alqueire-paulista', 'alqueire-mineiro', 'litro', 'acre', 'ha'])}
+  extraSources={OFFICIAL_DOC_SOURCES}
+  parents={[{ name: 'Conversor de alqueire em hectare', path: HUB }]}
+>
+  <LandConverter client:load preset={preset} />
+
+  <section class="section" aria-labelledby="paulista-em-escala">
+    <h2 id="paulista-em-escala">O alqueire paulista ao lado do mineiro</h2>
+    <div class="prose">
+      <p>
+        Mesma escala, mesmo hectare tracejado no canto. O paulista é meio alqueire mineiro: 50 braças a menos de um lado. É a confusão mais
+        cara do mercado de terras, porque dobra ou corta pela metade a área de um anúncio.
+      </p>
+    </div>
+    <ScaleFigure units={['alqueire-paulista', 'alqueire-mineiro']} caption="Alqueire com as braças da tabela INDA/MDA" />
+  </section>
+
+  <StateTable highlight={['SP', 'PR', 'MS', 'MT']} />
+
+  <HowWeCalculate slot="how" amount="3" from="alqueire-paulista" to="ha" />
+
+  <LandExamples slot="examples" keys={['sitio3Paulistas', 'paulistaEmAcres', 'precoPaulista']} preset={preset} path={PATH} />
+
+  <Fragment slot="extra">
+    <ConversionTable
+      id="tabela-paulista"
+      title="Alqueire paulista em hectare: tabela de 1 a 100"
+      rowLabel="Alqueires paulistas"
+      columns={[
+        { from: 'alqueire-paulista', to: 'ha', label: 'Hectares' },
+        { from: 'alqueire-paulista', to: 'm2', label: 'Metros quadrados' },
+        { from: 'alqueire-paulista', to: 'acre', label: 'Acres' },
+      ]}
+    />
+    <WhyDiverge figure={false} />
+    <OfficialDocs />
+  </Fragment>
+
+  <LandDisclaimer slot="disclaimer" />
+</CalculatorLayout>

@@ -43,7 +43,7 @@ export function webAppLd(args: {
   inLanguage: string;
   dateModified: string;
   country?: string | undefined;
-  /** schema.org applicationCategory; MX payroll tools are FinanceApplication. */
+  /** schema.org applicationCategory (default FinanceApplication). */
   category?: string | undefined;
   currency?: string | undefined;
   browserRequirements?: string | undefined;

@@ -10,7 +10,7 @@ import { defaultJodohMethod, jodohMethods } from '../../lib/params/id';
 import { todayIn } from '../../lib/ui/format';
 import { isoDate, oneOf, type Codec } from '../../lib/ui/url-state';
 import { DatePartsField, Segmented, SelectField } from '../ui/fields';
-import { ACTION_LABELS_ID, ResultActions } from '../ui/result';
+import { ResultActions } from '../ui/result';
 import { CalculatorShell, useUrlState } from '../calc/shared';
 import { BULAN_NAMES, DATE_PART_LABELS, wetonName } from './copy';
 
@@ -83,7 +83,8 @@ function resolve(mode: Mode, date: string, slug: string): Resolved {
 }
 
 const todayJakarta = () => todayIn('Asia/Jakarta');
-const SHELL_LABELS = { form: 'Data dua orang untuk hitungan jodoh', barLink: 'Lihat semua metode' };
+const FORM_LABEL = 'Data dua orang untuk hitungan jodoh';
+const DETAILS_LABEL = 'Lihat semua metode';
 
 function Person({
   title,
@@ -201,8 +202,10 @@ export default function JodohCalculator({ buildDay }: { buildDay: string }) {
         form={form}
         result={null}
         tool="jodoh"
-        labels={SHELL_LABELS}
-        anchor="jodoh-semua"
+        locale="id"
+        formLabel={FORM_LABEL}
+        detailsLabel={DETAILS_LABEL}
+        detailsHref="#jodoh-semua"
       />
     );
   }
@@ -298,7 +301,7 @@ export default function JodohCalculator({ buildDay }: { buildDay: string }) {
       <p class="calc__fine">
         Primbon adalah warisan budaya, bukan ramalan pasti. Banyak keluarga memakainya sebagai bahan pertimbangan, bukan penentu.
       </p>
-      <ResultActions tool="jodoh" labels={ACTION_LABELS_ID} shareTitle={`Weton jodoh ${nameA} dan ${nameB}`} summary={summary} />
+      <ResultActions tool="jodoh" locale="id" shareTitle={`Weton jodoh ${nameA} dan ${nameB}`} summary={summary} />
     </div>
   );
 
@@ -317,8 +320,10 @@ export default function JodohCalculator({ buildDay }: { buildDay: string }) {
       form={form}
       result={result}
       tool="jodoh"
-      labels={SHELL_LABELS}
-      anchor="jodoh-semua"
+      locale="id"
+      formLabel={FORM_LABEL}
+      detailsLabel={DETAILS_LABEL}
+      detailsHref="#jodoh-semua"
     />
   );
 }

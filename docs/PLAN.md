@@ -52,6 +52,36 @@ mid-November). Rules: `CLAUDE.md`.
 - [ ] Parameters flipped to `verified: true` after checking primary sources (owner)
 - [ ] Production `SITE_URL`, brand, Search Console (owner)
 
+## Project 2 — BR-01 land units (pt-BR) ✅ (launch blocked on review — see LAUNCH_CHECKLIST §7)
+
+Source of truth: `docs/research/REPORT.md` opportunity #1 and the 60 BR-01 rows of
+`docs/research/top20_search_volume_keywords.csv`.
+
+- [x] Research: INDA/MDA "tabela de medidas agrárias não decimais" (Ministério da Agricultura
+      1946, INDA 1966), IBGE (RBG 1950; 1948 publication located), IEA-SP, Canal Rural, Bolema/
+      Vidya (Arraias-TO), UFAL, UFPE, NIST, Inmetro, plus the commercial pages that rank. No
+      primary PDF could be opened from the build environment → every value `verified: false`.
+- [x] `src/data/parameters/br/land-units.json`: 19 units (7 alqueires, 4 tarefas, litro, 3 quadras,
+      braça², ha, m², acre) with m², braças, regions, own source, retrieved_on, verified, notes and
+      `also_reported` disagreements; 27 UFs mapped (usual / named / historical) with per-claim sources
+- [x] Generic engine `src/lib/land-units/` (BigInt rationals, ABNT NBR 5891 rounding, locale I/O,
+      catalog validation, area and price conversion) — ready for ID/JP/ES/PL/TR catalogs
+- [x] Golden tests for every BR variant + Python Fraction re-derivation (`tests/golden/land_units.py`)
+- [x] pt-BR locale live: copy, decimal comma/thousands dot, hreflang (homes paired, BR pages
+      self-only), sitemap, OG images, JSON-LD, `/pt-br/` home
+- [x] Shared components localized once (layouts, header, footer, toggle, badge, sources, shell,
+      actions, fields); MX pages unchanged (visual baselines pass)
+- [x] Pages: hub + alqueire paulista, mineiro-goiano, baiano, do Norte, tarefa, litro de terra,
+      hectare-para-alqueire
+- [x] Features: two-way conversion between all units; state selector with value used + source +
+      divergence; per-state table; price normaliser; URL state; copy; share; print (page or table)
+- [x] Content: instant answer, por que os sites divergem, como calculamos, worked examples (same
+      objects as the tests), FAQ from the keywords, sources, last-updated, CAR/ITR/CCIR note
+- [x] `npm run check` green for MX + BR; screenshots in `docs/screenshots/br-01/`
+- [ ] Technical review (agrimensor/topógrafo) recorded in `src/data/reviews.json` (owner)
+- [ ] Primary documents opened and values flipped to `verified: true` (owner, §7.2)
+- [ ] Search Console property for `/pt-br/` (owner, §7.4)
+
 ## Project 3 — ID-01 weton and kalender Jawa (/id/) ✅ built, launch gated (see LAUNCH_CHECKLIST §ID-01)
 
 Source: docs/research/REPORT.md opportunity #4 (ID-01, 51 keywords, 5 heads at 10K–100K); the date
@@ -104,9 +134,15 @@ engine is shared with #8 (ID-09). Hard deadline: kalender Jawa 2027 live and ind
 
 ## Next
 
-1. Close the launch blockers above (MX before the aguinaldo peak; ID-01 Search Console by 15 Nov 2026).
+1. Close the launch blockers: MX before the aguinaldo peak (mid-November); ID-01 Search Console and
+   the kalender Jawa 2027 indexing by 15 Nov 2026; BR-01 has no seasonal deadline but needs the
+   LAUNCH_CHECKLIST §7 review before promotion.
 2. ID-09 on the shared engine: kalkulator umur, selisih hari, kalkulator jadian, hari kerja (uses
    `id.hari-libur`), then konversi Hijriah ↔ Masehi (uses `id.hijri-kemenag`).
-3. PTU calculator (May peak) and prima de antigüedad / SDI pages from the discovery list.
-4. Parameter-update runbook + alert for the December (salario mínimo), January (UMA) and
+3. BR-01 follow-ups: "preço do alqueire por região" page fed by INCRA RAMT/PPR (per hectare) and
+   IEA/Deral data; per-state landing anchors (`#uf-mt`) once Search Console shows demand.
+4. Reuse the land-unit engine for the next locale (ID tumbak/bata or JP 坪/反 — the engine already
+   handles 400/121 m² exactly), and build the PTU calculator (May peak) and prima de antigüedad / SDI
+   pages from the discovery list for MX.
+5. Parameter-update runbook + alert for the December (salario mínimo), January (UMA) and
    September (SKB libur, Kalender Hijriah Indonesia) releases.

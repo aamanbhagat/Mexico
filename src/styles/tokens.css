@@ -82,6 +82,8 @@
   --line-weton: #2b3990;
   --line-jodoh: #9c1f4f;
   --line-kalender: #8a4b0f;
+  /* pt-BR land tools: terra roxa, the red soil of the alqueire paulista country. */
+  --line-terra: #8c2f1c;
   --line-on: #ffffff;
 
   /* Pasaran colours of keblat papat lima pancer (always shown with their names). */
@@ -147,6 +149,7 @@
     --line-jodoh: #ff8fb6;
     --line-kalender: #e0a46a;
     --date-red: #ff8a7a;
+    --line-terra: #f2876b;
     --line-on: #151517;
     --shadow-1: 0 1px 0 rgb(0 0 0 / 0.4);
     --shadow-2: 0 8px 24px -12px rgb(0 0 0 / 0.7);
@@ -182,6 +185,7 @@
   --line-jodoh: #ff8fb6;
   --line-kalender: #e0a46a;
   --date-red: #ff8a7a;
+  --line-terra: #f2876b;
   --line-on: #151517;
   --shadow-1: 0 1px 0 rgb(0 0 0 / 0.4);
   --shadow-2: 0 8px 24px -12px rgb(0 0 0 / 0.7);
@@ -215,6 +219,9 @@
 }
 [data-tool='kalender'] {
   --tool: var(--line-kalender);
+}
+[data-tool='terra'] {
+  --tool: var(--line-terra);
 }
 [data-tool] {
   --accent: var(--tool);

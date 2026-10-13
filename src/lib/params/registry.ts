@@ -4,8 +4,9 @@
  */
 import { MX_PARAM_FILES, type MxParamId } from './mx';
 import { ID_PARAM_FILES, type IdParamId } from './id';
+import { BR_PARAM_FILES, type BrParamId } from './br';
 import type { ParamFile } from './types';
 
-export type ParamId = MxParamId | IdParamId;
+export type ParamId = MxParamId | IdParamId | BrParamId;
 
-export const PARAM_FILES: Record<ParamId, ParamFile> = { ...MX_PARAM_FILES, ...ID_PARAM_FILES };
+export const PARAM_FILES: Record<ParamId, ParamFile> = { ...MX_PARAM_FILES, ...ID_PARAM_FILES, ...BR_PARAM_FILES };

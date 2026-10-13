@@ -9,7 +9,7 @@ import { defaultNeptuTable } from '../../lib/params/id';
 import { formatInteger, todayIn } from '../../lib/ui/format';
 import { isoDate, type Codec } from '../../lib/ui/url-state';
 import { DatePartsField } from '../ui/fields';
-import { ACTION_LABELS_ID, AnimatedNumber, ResultActions } from '../ui/result';
+import { AnimatedNumber, ResultActions } from '../ui/result';
 import { CalculatorShell, useUrlState } from '../calc/shared';
 import SelapanGrid from './SelapanGrid';
 import Keblat from './Keblat';
@@ -24,7 +24,7 @@ const makeDefaults = (): State => ({ date: '' });
 const todayJakarta = () => todayIn('Asia/Jakarta');
 const int = (n: number) => formatInteger(n, 'id-ID');
 
-export const SHELL_LABELS_ID = { form: 'Data untuk menghitung weton', barLink: 'Lihat detail' };
+const FORM_LABEL = 'Data untuk menghitung weton';
 
 export default function WetonCalculator({ buildDay }: { buildDay: string }) {
   const [st, set] = useUrlState(codec, makeDefaults, buildDay, todayJakarta);
@@ -73,8 +73,9 @@ export default function WetonCalculator({ buildDay }: { buildDay: string }) {
         form={form}
         result={null}
         tool="weton"
-        labels={SHELL_LABELS_ID}
-        anchor="weton-hasil"
+        locale="id"
+        formLabel={FORM_LABEL}
+        detailsHref="#weton-hasil"
       />
     );
   }
@@ -149,7 +150,7 @@ export default function WetonCalculator({ buildDay }: { buildDay: string }) {
       </p>
       <ResultActions
         tool="weton"
-        labels={ACTION_LABELS_ID}
+        locale="id"
         shareTitle={`Weton ${name}`}
         shareUrl={() => `${window.location.origin}${comboPath}`}
         summary={() => `${daySummary(day)}\n\nDihitung di ${window.location.href}`}
@@ -173,8 +174,9 @@ export default function WetonCalculator({ buildDay }: { buildDay: string }) {
       form={form}
       result={result}
       tool="weton"
-      labels={SHELL_LABELS_ID}
-      anchor="weton-hasil"
+      locale="id"
+      formLabel={FORM_LABEL}
+      detailsHref="#weton-hasil"
     />
   );
 }

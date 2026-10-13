@@ -71,6 +71,12 @@ interface MoneyFieldProps {
   /** Decimal places shown when not focused. */
   decimals?: 0 | 2;
   autoFocus?: boolean;
+  /** Reads typed text (default: es-MX money). */
+  parse?: (text: string) => number | null;
+  /** Writes the value when the field is not focused (default: es-MX with `decimals`). */
+  format?: (value: number) => string;
+  /** Text shown while editing (default: String(value)). */
+  editText?: (value: number) => string;
 }
 
 /**
@@ -88,29 +94,35 @@ export function MoneyField({
   placeholder,
   name,
   decimals = 2,
+  parse = parseAmount,
+  format,
+  editText = String,
 }: MoneyFieldProps) {
   const id = useId();
   const [focused, setFocused] = useState(false);
-  const [text, setText] = useState(value === null ? '' : String(value));
+  const [text, setText] = useState(value === null ? '' : editText(value));
 
   useEffect(() => {
-    if (!focused) setText(value === null ? '' : String(value));
+    if (!focused) setText(value === null ? '' : editText(value));
+    // editText is a pure formatter; re-running on identity changes would reset typing.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, focused]);
 
-  const display = focused || value === null ? text : decimals === 0 ? String(value) : formatAmount(value);
+  const shown = format ?? ((v: number) => (decimals === 0 ? String(v) : formatAmount(v)));
+  const display = focused || value === null ? text : shown(value);
   const inputRef = useRef<HTMLInputElement>(null);
   useAdoptPreHydrationValue(
     () => inputRef.current?.value ?? null,
     display,
     (dom) => {
       setText(dom);
-      onChange(parseAmount(dom));
+      onChange(parse(dom));
     },
   );
 
   return (
     <FieldShell id={id} label={label} hint={hint} error={error}>
-      <div class="input-affix">
+      <div class={prefix && prefix.length > 1 ? 'input-affix input-affix--wide' : 'input-affix'}>
         {prefix ? (
           <span class="input-affix__prefix" aria-hidden="true">
             {prefix}
@@ -132,13 +144,13 @@ export function MoneyField({
           aria-describedby={describedBy(id, hint, error)}
           onFocus={() => {
             setFocused(true);
-            setText(value === null ? '' : String(value));
+            setText(value === null ? '' : editText(value));
           }}
           onBlur={() => setFocused(false)}
           onInput={(e) => {
             const raw = (e.currentTarget as HTMLInputElement).value;
             setText(raw);
-            onChange(parseAmount(raw));
+            onChange(parse(raw));
           }}
         />
         {suffix ? (
@@ -321,6 +333,90 @@ export function Switch({ label, checked, onChange, hint, name, disabled }: Switc
 
 /* ------------------------------------------------------------------------------------------ */
 
+export interface SelectOption<T extends string> {
+  value: T;
+  label: string;
+}
+
+export interface SelectGroup<T extends string> {
+  label: string;
+  options: readonly SelectOption<T>[];
+}
+
+interface SelectFieldProps<T extends string> {
+  label: string;
+  name: string;
+  value: T;
+  /** Flat options and/or labelled groups (rendered as <optgroup>). */
+  options: readonly (SelectOption<T> | SelectGroup<T>)[];
+  onChange: (value: T) => void;
+  hint?: string | undefined;
+  class?: string | undefined;
+  /** Hide the label visually (still announced). */
+  labelHidden?: boolean;
+}
+
+/** Native <select>: the platform picker on phones, type-ahead and arrow keys everywhere. */
+export function SelectField<T extends string>({
+  label,
+  name,
+  value,
+  options,
+  onChange,
+  hint,
+  class: cls,
+  labelHidden,
+}: SelectFieldProps<T>) {
+  const id = useId();
+  const ref = useRef<HTMLSelectElement>(null);
+  useAdoptPreHydrationValue(
+    () => ref.current?.value ?? null,
+    value,
+    (dom) => onChange(dom as T),
+  );
+  return (
+    <div class={`field field--select ${cls ?? ''}`}>
+      <label class={labelHidden ? 'sr-only' : 'field__label'} for={id}>
+        {label}
+      </label>
+      <div class="select">
+        <select
+          ref={ref}
+          id={id}
+          name={name}
+          class="input select__input"
+          value={value}
+          aria-describedby={hint ? `${id}-hint` : undefined}
+          onChange={(e) => onChange((e.currentTarget as HTMLSelectElement).value as T)}
+        >
+          {options.map((o) =>
+            'options' in o ? (
+              <optgroup label={o.label} key={o.label}>
+                {o.options.map((x) => (
+                  <option value={x.value} key={x.value}>
+                    {x.label}
+                  </option>
+                ))}
+              </optgroup>
+            ) : (
+              <option value={o.value} key={o.value}>
+                {o.label}
+              </option>
+            ),
+          )}
+        </select>
+      </div>
+      {hint ? (
+        <p class="field__hint" id={`${id}-hint`}>
+          {hint}
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------------------------------ */
+
 interface DatePartsProps {
   legend: string;
   name: string;
@@ -468,46 +564,5 @@ export function DatePartsField({ legend, name, value, onChange, monthNames, labe
         </p>
       ) : null}
     </fieldset>
-  );
-}
-
-/* ------------------------------------------------------------------------------------------ */
-
-interface SelectFieldProps<T extends string> {
-  label: string;
-  name: string;
-  value: T;
-  options: readonly Option<T>[];
-  onChange: (value: T) => void;
-  hint?: string | undefined;
-}
-
-/** Native select with the field shell (used for weton day and pasaran pickers). */
-export function SelectField<T extends string>({ label, name, value, options, onChange, hint }: SelectFieldProps<T>) {
-  const id = useId();
-  const ref = useRef<HTMLSelectElement>(null);
-  useAdoptPreHydrationValue(
-    () => ref.current?.value ?? null,
-    value,
-    (dom) => onChange(dom as T),
-  );
-  return (
-    <FieldShell id={id} label={label} hint={hint}>
-      <select
-        ref={ref}
-        id={id}
-        name={name}
-        class="input input--select"
-        value={value}
-        aria-describedby={hint ? `${id}-hint` : undefined}
-        onChange={(e) => onChange((e.currentTarget as HTMLSelectElement).value as T)}
-      >
-        {options.map((o) => (
-          <option key={o.value} value={o.value}>
-            {o.label}
-          </option>
-        ))}
-      </select>
-    </FieldShell>
   );
 }

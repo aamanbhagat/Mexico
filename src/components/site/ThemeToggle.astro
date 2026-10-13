@@ -1,22 +1,22 @@
 ---
 /** Light/dark switch. Follows the OS until the visitor chooses; the choice is kept in localStorage only. */
 import type { LocaleCode } from '../../i18n/locales';
-import { ui } from '../../i18n/ui';
+import { siteUi } from '../../i18n/ui';
 
 interface Props {
   locale: LocaleCode;
 }
-const t = ui(Astro.props.locale);
+const ui = siteUi(Astro.props.locale);
 ---
 
 <button
   class="theme-toggle"
   type="button"
   data-theme-toggle
-  aria-label={t.themeToDark}
-  title={t.themeTitle}
-  data-label-dark={t.themeToDark}
-  data-label-light={t.themeToLight}
+  data-label-dark={ui.themeToDark}
+  data-label-light={ui.themeToLight}
+  aria-label={ui.themeToDark}
+  title={ui.themeTitle}
 >
   <svg
     class="icon-sun"

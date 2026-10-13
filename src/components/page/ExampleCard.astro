@@ -4,7 +4,7 @@
  * The same example objects are asserted in the golden tests, so what is shown is what is tested.
  */
 import type { LocaleCode } from '../../i18n/locales';
-import { ui } from '../../i18n/ui';
+import { siteUi } from '../../i18n/ui';
 import InlineList from './InlineList.astro';
 
 interface Props {
@@ -16,7 +16,7 @@ interface Props {
   locale?: LocaleCode | undefined;
 }
 const { title, story, rows, source, href, locale = 'es-mx' } = Astro.props;
-const t = ui(locale).example;
+const ui = siteUi(locale);
 const sources = Array.isArray(source) ? source : [source];
 ---
 
@@ -34,7 +34,7 @@ const sources = Array.isArray(source) ? source : [source];
     }
   </dl>
   <p class="example__source">
-    {t.source}:{' '}
+    {ui.exampleSource}{' '}
     <InlineList sep="semicolon"
       >{
         sources.map((s) => (
@@ -50,7 +50,7 @@ const sources = Array.isArray(source) ? source : [source];
       href && (
         <>
           {' · '}
-          <a href={href}>{t.open}</a>
+          <a href={href}>{ui.openExample}</a>
         </>
       )
     }

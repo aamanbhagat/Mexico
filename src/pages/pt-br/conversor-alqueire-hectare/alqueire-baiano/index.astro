@@ -1,0 +1,110 @@
+---
+import CalculatorLayout from '../../../../layouts/CalculatorLayout.astro';
+import LandConverter, { type ConverterPreset } from '../../../../components/calc/LandConverter';
+import StateTable from '../../../../components/page/br/StateTable.astro';
+import ScaleFigure from '../../../../components/page/br/ScaleFigure.astro';
+import HowWeCalculate from '../../../../components/page/br/HowWeCalculate.astro';
+import LandExamples from '../../../../components/page/br/LandExamples.astro';
+import ConversionTable from '../../../../components/page/br/ConversionTable.astro';
+import OfficialDocs from '../../../../components/page/br/OfficialDocs.astro';
+import WhyDiverge from '../../../../components/page/br/WhyDiverge.astro';
+import LandDisclaimer from '../../../../components/page/br/LandDisclaimer.astro';
+import { landSourceItems, OFFICIAL_DOC_SOURCES } from '../../../../components/page/br/land-sources';
+import { pathFor } from '../../../../i18n/routes';
+import { brHa, haOf, m2Of } from '../../../../i18n/tools';
+import { UPDATED } from '../../../../content/pt-br/meta';
+import { BR_LAND } from '../../../../lib/params/br';
+import { convertArea, ratio, rat } from '../../../../lib/land-units';
+import { num } from '../../../../content/pt-br/land-text';
+import type { FaqItem } from '../../../../lib/seo/jsonld';
+
+const PATH = pathFor('br.alqueire-baiano', 'pt-br');
+const HUB = pathFor('br.alqueire-hectare', 'pt-br');
+// Opens on Bahia so the divergence between the two values shows right away.
+const preset: ConverterPreset = { from: 'alqueire-baiano', to: 'ha', uf: 'BA' };
+const u = (id: string) => BR_LAND.byId.get(id)!;
+const tarefas = num(ratio(u('alqueire-baiano'), u('tarefa-baiana')), 2);
+const twoAs = (id: string) => num(convertArea(rat(2n), u(id), u('ha')));
+
+const faq: FaqItem[] = [
+  {
+    q: 'Quantos hectares tem um alqueire baiano?',
+    a: `O valor mais citado é ${haOf('alqueire-baiano')} (${m2Of('alqueire-baiano')}), um terreno de 100 × 200 braças, ou 220 × 440 m. Mas a tabela oficial histórica do INDA registra na Bahia o alqueire de ${haOf('alqueire-mineiro')}. Confira no documento: a diferença é o dobro.`,
+  },
+  {
+    q: `Por que alguns sites dizem que o alqueire baiano tem ${haOf('alqueire-mineiro')}?`,
+    a: `Porque a tabela de medidas agrárias do Ministério da Agricultura, compilada pelo INDA, lista o alqueire de 100 × 100 braças (${haOf('alqueire-mineiro')}) entre os usados na Bahia, e lista o de ${haOf('alqueire-baiano')} em Minas e Mato Grosso. Os dois existem; nenhuma lei diz qual vale. Mostramos os dois e deixamos a escolha com quem tem o documento.`,
+  },
+  {
+    q: 'Quantos metros quadrados tem um alqueire baiano?',
+    a: `${m2Of('alqueire-baiano')} no alqueire de 100 × 200 braças, ou ${m2Of('alqueire-mineiro')} se for o de 100 × 100 braças.`,
+  },
+  {
+    q: 'O que é o alqueirão?',
+    a: `Na maioria das fontes, um quadrado de 200 × 200 braças (440 × 440 m): ${m2Of('alqueirao')}, ou ${haOf('alqueirao')}, quatro alqueires mineiros. Aparece no sul da Bahia e no norte de Minas. Algumas páginas chamam de alqueirão o alqueire de ${haOf('alqueire-baiano')}; por isso, sempre confirme as braças.`,
+  },
+  {
+    q: 'Quantas tarefas tem um alqueire baiano?',
+    a: `Cerca de ${tarefas} tarefas baianas de ${m2Of('tarefa-baiana')} no alqueire de ${haOf('alqueire-baiano')}. Na Bahia a tarefa é mais usada que o alqueire para roças pequenas.`,
+  },
+  {
+    q: 'Como converter alqueire baiano em hectare?',
+    a: `Multiplique por ${brHa('alqueire-baiano')} (ou por ${brHa('alqueire-mineiro')}, se o documento usar o alqueire de 100 × 100 braças). 2 alqueires baianos dão ${twoAs('alqueire-baiano')} ha no primeiro caso e ${twoAs('alqueire-mineiro')} ha no segundo.`,
+  },
+];
+---
+
+<CalculatorLayout
+  pageKey="br.alqueire-baiano"
+  locale="pt-br"
+  tool="terra"
+  icon="alqueire"
+  title={`Alqueire baiano em hectare: ${brHa('alqueire-baiano')} ou ${brHa('alqueire-mineiro')} ha?`}
+  description={`O alqueire baiano mais citado tem ${haOf('alqueire-baiano')} (${m2Of('alqueire-baiano')}), mas a tabela oficial do INDA registra na Bahia o de ${haOf('alqueire-mineiro')}. Converta os dois e veja as fontes.`}
+  h1="Alqueire baiano em hectare"
+  lede={`O alqueire baiano mais citado tem ${haOf('alqueire-baiano')} (${m2Of('alqueire-baiano')}, 100 × 200 braças). A tabela oficial histórica do INDA, porém, registra na Bahia o alqueire de ${haOf('alqueire-mineiro')}. Confira no documento qual foi usado: os dois estão abaixo.`}
+  updated={UPDATED}
+  appName="Conversor de alqueire baiano em hectare"
+  appCategory="UtilitiesApplication"
+  faq={faq}
+  sourceItems={landSourceItems(['alqueire-baiano', 'alqueire-mineiro', 'alqueirao', 'tarefa-baiana', 'ha'])}
+  extraSources={OFFICIAL_DOC_SOURCES}
+  parents={[{ name: 'Conversor de alqueire em hectare', path: HUB }]}
+>
+  <LandConverter client:load preset={preset} />
+
+  <section class="section" aria-labelledby="baiano-em-escala">
+    <h2 id="baiano-em-escala">Os alqueires registrados na Bahia, em escala</h2>
+    <div class="prose">
+      <p>
+        O de 100 × 200 braças, o de 100 × 100 e o alqueirão de 200 × 200. Mesmo nome, áreas que vão de {haOf('alqueire-mineiro')} a
+        {haOf('alqueirao')}.
+      </p>
+    </div>
+    <ScaleFigure units={['alqueire-mineiro', 'alqueire-baiano', 'alqueirao']} caption="Alqueire com as braças da tabela INDA/MDA" />
+  </section>
+
+  <StateTable highlight={['BA', 'PI', 'MA']} />
+
+  <HowWeCalculate slot="how" amount="2" from="alqueire-baiano" to="ha" />
+
+  <LandExamples slot="examples" keys={['baiano2', 'baiano2ComoMineiro', 'tarefasBaianas10']} preset={preset} path={PATH} />
+
+  <Fragment slot="extra">
+    <ConversionTable
+      id="tabela-baiano"
+      title="Alqueire baiano em hectare: as duas leituras, de 1 a 100"
+      rowLabel="Alqueires"
+      intro="A primeira coluna usa o alqueire de 100 × 200 braças; a segunda, o de 100 × 100 braças que a tabela INDA/MDA registra na Bahia."
+      columns={[
+        { from: 'alqueire-baiano', to: 'ha', label: `Baiano de ${brHa('alqueire-baiano')} ha` },
+        { from: 'alqueire-mineiro', to: 'ha', label: `Alqueire de ${brHa('alqueire-mineiro')} ha` },
+        { from: 'alqueire-baiano', to: 'tarefa-baiana', label: 'Tarefas baianas' },
+      ]}
+    />
+    <WhyDiverge figure={false} />
+    <OfficialDocs />
+  </Fragment>
+
+  <LandDisclaimer slot="disclaimer" />
+</CalculatorLayout>

@@ -3,36 +3,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import StationIcon from '../../components/page/StationIcon.astro';
 import HariIni from '../../components/weton/HariIni';
 import { absoluteUrl, SITE } from '../../config/site';
-import { BUILD_DAY, KALENDER_YEARS, UPDATED } from '../../content/id/meta';
+import { BUILD_DAY, UPDATED } from '../../content/id/meta';
 import { formatDateLong } from '../../lib/ui/format';
 import { newYearJdn, isoFromJdn } from '../../lib/calendar/javanese';
 import { tanggal } from '../../components/weton/copy';
-import type { StationTool } from '../../components/page/types';
+import { toolsFor } from '../../i18n/tools';
+import { pathFor } from '../../i18n/routes';
 
 const suro1960 = isoFromJdn(newYearJdn(1960));
 const suro1961 = isoFromJdn(newYearJdn(1961));
 
-const tools: { href: string; tool: StationTool; name: string; what: string }[] = [
-  { href: '/id/weton/', tool: 'weton', name: 'Cek weton', what: 'Weton, neptu, wuku, tanggal Jawa dan Hijriah dari tanggal lahir.' },
-  {
-    href: '/id/weton/jodoh/',
-    tool: 'jodoh',
-    name: 'Weton jodoh',
-    what: 'Hasil sisa 8, 7, 5 dan 4 sekaligus, dengan sumber setiap metode.',
-  },
-  {
-    href: '/id/weton/hari-ini/',
-    tool: 'hari-ini',
-    name: 'Weton hari ini',
-    what: 'Pasaran dan tanggal Jawa hari ini, besok dan tujuh hari ke depan.',
-  },
-  ...KALENDER_YEARS.map((y) => ({
-    href: `/id/kalender-jawa/${y}/`,
-    tool: 'kalender' as const,
-    name: `Kalender Jawa ${y}`,
-    what: `Setiap tanggal ${y} dengan pasaran, tanggal Jawa, Hijriah Kemenag dan hari libur. Bisa dicetak.`,
-  })),
-];
+const tools = toolsFor('id').map((t) => ({ href: pathFor(t.key, 'id'), tool: t.tool, icon: t.icon, name: t.name, what: t.what }));
 
 const jsonLd = [
   { '@context': 'https://schema.org', '@type': 'WebSite', name: SITE.name, url: absoluteUrl('/id/'), inLanguage: 'id-ID' },
@@ -76,7 +57,7 @@ const jsonLd = [
           tools.map((t) => (
             <li data-tool={t.tool}>
               <a href={t.href}>
-                <StationIcon tool={t.tool} />
+                <StationIcon tool={t.icon} />
                 <span class="line-map__text">
                   <span class="line-map__name">{t.name}</span>
                   <span class="line-map__what">{t.what}</span>

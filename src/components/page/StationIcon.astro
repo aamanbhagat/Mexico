@@ -1,9 +1,10 @@
 ---
 /** Pictogram per calculator, in the spirit of transit wayfinding: one simple shape per tool. */
-import type { StationTool } from './types';
+import type { Pictogram } from '../../i18n/tools';
 
 interface Props {
-  tool: StationTool;
+  /** Pictogram to draw (a tool name or one of the land-unit shapes). */
+  tool: Pictogram;
 }
 const { tool } = Astro.props;
 ---
@@ -54,6 +55,42 @@ const { tool } = Astro.props;
       tool === 'uma' && (
         <>
           <path d="M4 20V10M10 20V4M16 20v-7M22 20H2" />
+        </>
+      )
+    }
+    {
+      /* A plot split into four quartas: the alqueire. */
+      (tool === 'alqueire' || tool === 'terra') && (
+        <>
+          <rect x="4" y="4" width="16" height="16" rx="1" />
+          <path d="M12 4v16M4 12h16" />
+        </>
+      )
+    }
+    {
+      /* A square with its 100 m side measured: the hectare. */
+      tool === 'hectare' && (
+        <>
+          <rect x="5" y="8" width="14" height="12" rx="1" />
+          <path d="M5 3v3M19 3v3M5 4.5h14" />
+        </>
+      )
+    }
+    {
+      /* Furrows in a field: the tarefa, a day's work. */
+      tool === 'tarefa' && (
+        <>
+          <rect x="4" y="4" width="16" height="16" rx="1" />
+          <path d="M8.5 8v8M12 8v8M15.5 8v8" />
+        </>
+      )
+    }
+    {
+      /* A one-litre seed measure: the litro de terra. */
+      tool === 'litro' && (
+        <>
+          <path d="M6.5 5h11l-1.6 15H8.1z" />
+          <path d="M7.3 10h9.4" />
         </>
       )
     }

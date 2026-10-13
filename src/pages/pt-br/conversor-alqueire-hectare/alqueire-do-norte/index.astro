@@ -1,0 +1,108 @@
+---
+import CalculatorLayout from '../../../../layouts/CalculatorLayout.astro';
+import LandConverter, { type ConverterPreset } from '../../../../components/calc/LandConverter';
+import StateTable from '../../../../components/page/br/StateTable.astro';
+import ScaleFigure from '../../../../components/page/br/ScaleFigure.astro';
+import HowWeCalculate from '../../../../components/page/br/HowWeCalculate.astro';
+import LandExamples from '../../../../components/page/br/LandExamples.astro';
+import ConversionTable from '../../../../components/page/br/ConversionTable.astro';
+import OfficialDocs from '../../../../components/page/br/OfficialDocs.astro';
+import WhyDiverge from '../../../../components/page/br/WhyDiverge.astro';
+import LandDisclaimer from '../../../../components/page/br/LandDisclaimer.astro';
+import { landSourceItems, OFFICIAL_DOC_SOURCES } from '../../../../components/page/br/land-sources';
+import { pathFor } from '../../../../i18n/routes';
+import { brHa, haOf, m2Of } from '../../../../i18n/tools';
+import { UPDATED } from '../../../../content/pt-br/meta';
+import { BR_LAND } from '../../../../lib/params/br';
+import { convertArea, div, rat, sub } from '../../../../lib/land-units';
+import { num } from '../../../../content/pt-br/land-text';
+import type { FaqItem } from '../../../../lib/seo/jsonld';
+
+const PATH = pathFor('br.alqueire-do-norte', 'pt-br');
+const HUB = pathFor('br.alqueire-hectare', 'pt-br');
+const preset: ConverterPreset = { from: 'alqueire-norte', to: 'ha' };
+const u = (id: string) => BR_LAND.byId.get(id)!;
+const N = u('alqueire-norte');
+const exactHa = num(div(N.area, u('ha').area), 4);
+const rounded = u('alqueire-norte').also_reported.find((a) => a.m2 === '27200')!;
+const roundedM2 = num(rat(BigInt(rounded.m2)), 0);
+const lossPer100 = num(sub(convertArea(rat(100n), N, u('m2')), rat(BigInt(rounded.m2) * 100n)), 0);
+const perHa = num(convertArea(rat(1n), u('ha'), N), 4);
+
+const faq: FaqItem[] = [
+  {
+    q: 'Quantos hectares tem um alqueire do Norte?',
+    a: `${exactHa} ha, ou ${m2Of('alqueire-norte')}: um quadrado de 75 × 75 braças (165 × 165 m). Em números redondos, ${haOf('alqueire-norte')}.`,
+  },
+  {
+    q: `O alqueire do Norte tem ${m2Of('alqueire-norte')} ou ${roundedM2} m²?`,
+    a: `${m2Of('alqueire-norte')}, que é o que dão as 75 × 75 braças. ${roundedM2} m² é só o arredondamento de ${haOf('alqueire-norte')}. Parece pouco, mas em 100 alqueires a diferença é de ${lossPer100} m².`,
+  },
+  {
+    q: 'Em quais estados se usa o alqueire do Norte?',
+    a: 'A tabela histórica do INDA registra o alqueire de 75 × 75 braças em praticamente todos os estados. As fontes atuais o associam ao Norte e ao Nordeste, mas cada uma dá uma lista: Maranhão, Piauí, Ceará e Pará; ou Ceará, Rio Grande do Norte, Paraíba, Pernambuco, Alagoas e Sergipe; ou Pará e Amazonas. A tabela por estado mostra cada afirmação com a fonte.',
+  },
+  {
+    q: 'Quantos hectares tem um alqueire no Pará?',
+    a: `As fontes indicam o alqueire do Norte, de ${m2Of('alqueire-norte')} (cerca de ${haOf('alqueire-norte')}). Como há anúncios que usam outros alqueires, confira o valor no documento.`,
+  },
+  {
+    q: `Por que há quem diga que o alqueire do Norte tem ${haOf('alqueire-baiano')}?`,
+    a: `É confusão com o alqueire baiano, de ${haOf('alqueire-baiano')}. Nenhuma das fontes que consultamos define o alqueire do Norte com esse valor.`,
+  },
+  {
+    q: 'Como converter hectare em alqueire do Norte?',
+    a: `Divida os hectares por ${brHa('alqueire-norte', 4)}. Um hectare é ${perHa} alqueire do Norte.`,
+  },
+];
+---
+
+<CalculatorLayout
+  pageKey="br.alqueire-do-norte"
+  locale="pt-br"
+  tool="terra"
+  icon="alqueire"
+  title={`Alqueire do Norte em hectare: ${m2Of('alqueire-norte')} (${brHa('alqueire-norte')} ha)`}
+  description={`1 alqueire do Norte = ${m2Of('alqueire-norte')}, cerca de ${haOf('alqueire-norte')} (75 × 75 braças). Converta para hectare e m² e veja em que estados ele aparece, com fontes.`}
+  h1="Alqueire do Norte em hectare"
+  lede={`1 alqueire do Norte tem ${m2Of('alqueire-norte')}, cerca de ${haOf('alqueire-norte')}: um quadrado de 75 × 75 braças (165 × 165 m). Aparece no Norte e no Nordeste, mas as fontes não concordam sobre a lista de estados.`}
+  updated={UPDATED}
+  appName="Conversor de alqueire do Norte em hectare"
+  appCategory="UtilitiesApplication"
+  faq={faq}
+  sourceItems={landSourceItems(['alqueire-norte', 'alqueire-baiano', 'ha'])}
+  extraSources={OFFICIAL_DOC_SOURCES}
+  parents={[{ name: 'Conversor de alqueire em hectare', path: HUB }]}
+>
+  <LandConverter client:load preset={preset} />
+
+  <section class="section" aria-labelledby="norte-em-escala">
+    <h2 id="norte-em-escala">O alqueire do Norte em escala</h2>
+    <div class="prose">
+      <p>Um quadrado de 75 braças de lado: maior que o paulista, bem menor que o mineiro.</p>
+    </div>
+    <ScaleFigure units={['alqueire-paulista', 'alqueire-norte', 'alqueire-mineiro']} caption="Alqueire com as braças da tabela INDA/MDA" />
+  </section>
+
+  <StateTable highlight={['PA', 'AM', 'MA', 'PI', 'CE', 'RN', 'PB', 'PE', 'AL', 'SE']} />
+
+  <HowWeCalculate slot="how" amount="5" from="alqueire-norte" to="ha" />
+
+  <LandExamples slot="examples" keys={['norte5', 'norte100']} preset={preset} path={PATH} />
+
+  <Fragment slot="extra">
+    <ConversionTable
+      id="tabela-norte"
+      title="Alqueire do Norte em hectare: tabela de 1 a 100"
+      rowLabel="Alqueires do Norte"
+      columns={[
+        { from: 'alqueire-norte', to: 'ha', label: 'Hectares' },
+        { from: 'alqueire-norte', to: 'm2', label: 'Metros quadrados' },
+      ]}
+    />
+    <WhyDiverge figure={false} />
+    <OfficialDocs />
+  </Fragment>
+
+  <LandDisclaimer slot="disclaimer" />
+</CalculatorLayout>

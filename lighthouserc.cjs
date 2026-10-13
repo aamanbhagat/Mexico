@@ -20,6 +20,15 @@ const pages = [
   '/id/kalender-jawa/2026/',
   '/id/kalender-jawa/2027/',
   '/id/kalender-jawa/2027/desember/',
+  '/pt-br/',
+  '/pt-br/conversor-alqueire-hectare/',
+  '/pt-br/conversor-alqueire-hectare/alqueire-paulista/',
+  '/pt-br/conversor-alqueire-hectare/alqueire-mineiro-goiano/',
+  '/pt-br/conversor-alqueire-hectare/alqueire-baiano/',
+  '/pt-br/conversor-alqueire-hectare/alqueire-do-norte/',
+  '/pt-br/conversor-alqueire-hectare/tarefa-em-hectare/',
+  '/pt-br/conversor-alqueire-hectare/litro-de-terra/',
+  '/pt-br/hectare-para-alqueire/',
 ];
 
 module.exports = {

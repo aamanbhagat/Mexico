@@ -8,7 +8,7 @@ test.describe('SEO contract (CLAUDE.md §6)', () => {
       const words = WORDS[route.locale];
       const res = await page.goto(route.path);
       expect(res?.status()).toBe(200);
-      await expect(page.locator('html')).toHaveAttribute('lang', words.lang);
+      await expect(page.locator('html')).toHaveAttribute('lang', route.lang);
 
       const title = await page.title();
       expect(title.length).toBeGreaterThan(20);
@@ -24,9 +24,7 @@ test.describe('SEO contract (CLAUDE.md §6)', () => {
       const hreflangs = await page
         .locator('link[rel="alternate"][hreflang]')
         .evaluateAll((els) => els.map((e) => e.getAttribute('hreflang')));
-      // Locale homes point to each other; tool pages exist in one locale only.
-      if (route.kind === 'home') expect(hreflangs).toEqual(['es-MX', 'id-ID', 'x-default']);
-      else expect(hreflangs).toEqual([route.locale === 'id' ? 'id-ID' : 'es-MX', 'x-default']);
+      expect(hreflangs).toEqual(route.hreflang);
 
       await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /\/og\/(id\/)?[a-z0-9-]+\.png$/);
       await expect(page.locator('h1')).toHaveCount(1);
@@ -41,7 +39,7 @@ test.describe('SEO contract (CLAUDE.md §6)', () => {
       if (route.kind !== 'home') {
         await expect(page.getByText(words.updated, { exact: false }).first()).toBeVisible();
         await expect(page.getByText(words.review).first()).toBeVisible();
-        await expect(page.getByRole('heading', { name: words.sources })).toBeVisible();
+        await expect(page.getByRole('heading', { name: words.sources, exact: true })).toBeVisible();
         expect(await page.locator('.sources a[href^="https://"]').count()).toBeGreaterThanOrEqual(3);
         await expect(page.getByRole('heading', { name: words.faq })).toBeVisible();
         expect(await page.locator('.faq details').count()).toBeGreaterThanOrEqual(5);
@@ -64,7 +62,17 @@ test.describe('SEO contract (CLAUDE.md §6)', () => {
     const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1] ?? '').pathname).sort();
     expect(locs).toEqual(ROUTES.map((r) => r.path).sort());
     expect(xml.match(/hreflang="x-default"/g)?.length).toBe(ROUTES.length);
-    expect(xml.match(/hreflang="id-ID"/g)?.length).toBe(ROUTES.filter((r) => r.locale === 'id').length + 1);
+    // A locale's tag appears on its own pages and on every locale's home (the homes are alternates of each other).
+    const homes = ROUTES.filter((r) => r.kind === 'home').length;
+    for (const [locale, tag] of [
+      ['es-mx', 'es-MX'],
+      ['pt-br', 'pt-BR'],
+      ['id', 'id-ID'],
+    ] as const) {
+      expect(xml.match(new RegExp(`hreflang="${tag}"`, 'g'))?.length, tag).toBe(
+        ROUTES.filter((r) => r.locale === locale).length + homes - 1,
+      );
+    }
   });
 
   test('robots.txt points to the sitemap', async ({ request }) => {
@@ -73,13 +81,20 @@ test.describe('SEO contract (CLAUDE.md §6)', () => {
   });
 
   test('unpublished locales are not built', async ({ request }) => {
-    for (const code of ['pt-br', 'ja', 'pl', 'de', 'es-es', 'en', 'tr']) {
+    for (const code of ['ja', 'pl', 'de', 'es-es', 'en', 'tr']) {
       expect((await request.get(`/${code}/`)).status()).toBe(404);
     }
   });
 
-  test('OG images are real 1200×630 PNGs, including one per weton', async ({ request }) => {
-    for (const path of ['/og/aguinaldo.png', '/og/id/selasa-pon.png', '/og/id/kalender-2027.png', '/og/id/kalender-2027-desember.png']) {
+  test('OG images are real 1200×630 PNGs, including one per weton and calendar', async ({ request }) => {
+    for (const path of [
+      '/og/aguinaldo.png',
+      '/og/alqueire-hectare.png',
+      '/og/alqueire-baiano.png',
+      '/og/id/selasa-pon.png',
+      '/og/id/kalender-2027.png',
+      '/og/id/kalender-2027-desember.png',
+    ]) {
       const res = await request.get(path);
       expect(res.headers()['content-type'], path).toContain('image/png');
       const body = await res.body();
@@ -96,5 +111,23 @@ test.describe('SEO contract (CLAUDE.md §6)', () => {
       images.add(new URL((await page.locator('meta[property="og:image"]').getAttribute('content')) ?? '').pathname);
     }
     for (const path of images) expect((await request.get(path)).status(), path).toBe(200);
+  });
+
+  test('each BR page points to its own OG image', async ({ page }) => {
+    await page.goto('/pt-br/conversor-alqueire-hectare/alqueire-baiano/');
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /\/og\/alqueire-baiano\.png$/);
+    await expect(page.locator('meta[property="og:locale"]')).toHaveAttribute('content', 'pt_BR');
+  });
+
+  test('cross-locale links appear only where hreflang applies', async ({ page }) => {
+    await page.goto('/pt-br/');
+    await expect(page.locator('.site-footer a[hreflang="es-MX"]')).toHaveAttribute('href', /\/es-mx\/$/);
+    await expect(page.locator('.site-footer a[hreflang="id-ID"]')).toHaveAttribute('href', /\/id\/$/);
+    await page.goto('/pt-br/conversor-alqueire-hectare/');
+    await expect(page.locator('.site-footer a[hreflang]')).toHaveCount(0);
+    await page.goto('/es-mx/calculadora-aguinaldo/');
+    await expect(page.locator('.site-footer a[hreflang]')).toHaveCount(0);
+    await page.goto('/id/weton/');
+    await expect(page.locator('.site-footer a[hreflang]')).toHaveCount(0);
   });
 });

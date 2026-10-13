@@ -24,8 +24,13 @@ export function readState<T extends object>(codec: Codec<T>, defaults: T, search
   return out;
 }
 
-export function buildSearch<T extends object>(codec: Codec<T>, state: T, defaults: T): string {
-  const params = new URLSearchParams();
+/**
+ * Query string for `state`, omitting defaults. With `current` (the page's search), parameters the
+ * codec does not own — utm_source, a second tool's keys — are kept as they were.
+ */
+export function buildSearch<T extends object>(codec: Codec<T>, state: T, defaults: T, current = ''): string {
+  const params = new URLSearchParams(current);
+  for (const field of Object.keys(codec) as (keyof T)[]) params.delete(codec[field].key);
   for (const field of Object.keys(codec) as (keyof T)[]) {
     const spec = codec[field];
     if (Object.is(state[field], defaults[field])) continue;

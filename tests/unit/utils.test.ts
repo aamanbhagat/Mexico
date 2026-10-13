@@ -50,6 +50,11 @@ describe('URL state', () => {
   };
   const defaults: S = { salary: null, period: 'mensual', start: '2026-01-01', paid: false };
 
+  it('keeps query parameters it does not own (utm_*, other tools)', () => {
+    const state: S = { salary: 500, period: 'mensual', start: '2026-01-01', paid: false };
+    expect(buildSearch(codec, state, defaults, '?utm_source=x&s=1&p=diario')).toBe('?utm_source=x&s=500');
+  });
+
   it('round-trips state through the query string and omits defaults', () => {
     const state: S = { salary: 500, period: 'diario', start: '2026-06-01', paid: true };
     const search = buildSearch(codec, state, defaults);
@@ -65,36 +70,43 @@ describe('URL state', () => {
 });
 
 describe('locales, routes and hreflang', () => {
-  it('publishes es-MX and id, with the other seven defined', () => {
-    expect(publishedLocales().map((l) => l.code)).toEqual(['es-mx', 'id']);
+  it('publishes es-MX, pt-BR and id, with the other six defined', () => {
+    expect(publishedLocales().map((l) => l.code)).toEqual(['es-mx', 'pt-br', 'id']);
     expect(Object.keys(LOCALES).sort()).toEqual(['de', 'en', 'es-es', 'es-mx', 'id', 'ja', 'pl', 'pt-br', 'tr']);
   });
 
   it('emits hreflang only for live locales plus x-default', () => {
-    expect(alternatesFor('home').map((a) => a.hreflang)).toEqual(['es-MX', 'id-ID', 'x-default']);
+    // The locale homes are alternates of each other; x-default stays on es-MX.
+    expect(alternatesFor('home').map((a) => a.hreflang)).toEqual(['es-MX', 'pt-BR', 'id-ID', 'x-default']);
+    expect(alternatesFor('home').at(-1)?.href).toMatch(/\/es-mx\/$/);
     expect(alternatesFor('mx.aguinaldo').map((a) => a.hreflang)).toEqual(['es-MX', 'x-default']);
     expect(alternatesFor('mx.aguinaldo')[0]?.href).toMatch(/\/es-mx\/calculadora-aguinaldo\/$/);
+    // BR-01 and ID-01 pages have no equivalent in another locale yet: self + x-default only.
+    expect(alternatesFor('br.alqueire-hectare').map((a) => a.hreflang)).toEqual(['pt-BR', 'x-default']);
+    expect(alternatesFor('br.alqueire-hectare')[0]?.href).toMatch(/\/pt-br\/conversor-alqueire-hectare\/$/);
     expect(alternatesFor('id.weton').map((a) => a.hreflang)).toEqual(['id-ID', 'x-default']);
     expect(alternatesFor('id.kalender.2027.desember')[0]?.href).toMatch(/\/id\/kalender-jawa\/2027\/desember\/$/);
   });
 
   it('never lists unpublished locales as live routes', () => {
-    expect(isLive('home', 'pt-br')).toBe(false);
-    expect(liveRoutes().every((r) => r.locale === 'es-mx' || r.locale === 'id')).toBe(true);
-    // es-MX: home + 6 tools. id: home + weton, jodoh, hari ini, 35 weton, 2 years × (1 + 12 months).
+    expect(isLive('home', 'pt-br')).toBe(true);
+    expect(isLive('home', 'id')).toBe(true);
+    expect(isLive('home', 'ja')).toBe(false);
+    const published = new Set(['es-mx', 'pt-br', 'id']);
+    expect(liveRoutes().every((r) => published.has(r.locale))).toBe(true);
+    // es-MX: home + 6 tools. pt-BR: home + 8 land pages.
     expect(liveRoutes().filter((r) => r.locale === 'es-mx')).toHaveLength(7);
+    expect(liveRoutes().filter((r) => r.locale === 'pt-br')).toHaveLength(9);
+    // id: home + weton, jodoh, hari ini, 35 weton, 2 years × (1 + 12 months).
     expect(liveRoutes().filter((r) => r.locale === 'id')).toHaveLength(1 + 3 + 35 + 2 * 13);
     expect(pathFor('mx.uma-salario-minimo', 'es-mx')).toBe('/es-mx/uma-salario-minimo-2026/');
     expect(pathFor('id.weton.selasa-pon', 'id')).toBe('/id/weton/selasa-pon/');
   });
 
-  it('postbuild guards exactly the unpublished locales', () => {
+  it('postbuild reads the unpublished locales from the registry, with no hard-coded copy', () => {
     const src = readFileSync('scripts/postbuild.mjs', 'utf8');
-    const listed = JSON.parse((/const unpublished = (\[[^\]]*\])/.exec(src)?.[1] ?? '[]').replace(/'/g, '"')) as string[];
-    const expected = Object.values(LOCALES)
-      .filter((l) => !l.published)
-      .map((l) => l.code);
-    expect(listed.sort()).toEqual(expected.sort());
+    expect(src).toContain("readFileSync('src/i18n/locales.ts'");
+    expect(src).not.toMatch(/const unpublished = \[/);
   });
 });
 
@@ -107,6 +119,8 @@ describe('legal review badge is data-driven', () => {
       'mx.prima-vacacional',
       'mx.vacaciones',
       'mx.uma-salario-minimo',
+      'br.alqueire-hectare',
+      'br.hectare-alqueire',
       'id.weton',
       'id.weton.jodoh',
       'id.weton.hari-ini',
@@ -114,6 +128,11 @@ describe('legal review badge is data-driven', () => {
     ] as const) {
       expect(reviewFor(key).status).toBe('pending');
     }
+  });
+
+  it('labels land-unit pages as technical review, labour pages as legal review', () => {
+    expect(reviewFor('br.alqueire-hectare').kind).toBe('technical');
+    expect(reviewFor('mx.aguinaldo').kind ?? 'legal').toBe('legal');
   });
 });
 

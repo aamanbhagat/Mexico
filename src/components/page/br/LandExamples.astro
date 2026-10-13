@@ -1,0 +1,55 @@
+---
+/**
+ * Worked examples for a land page. The objects come from src/content/pt-br/examples.ts and are
+ * asserted by tests/unit/land-units/golden.test.ts; figures here are computed by the same engine.
+ */
+import ExampleCard from '../ExampleCard.astro';
+import { EXAMPLES, type ExampleKey } from '../../../content/pt-br/examples';
+import { converterSearch, type ConverterPreset } from '../../calc/LandConverter';
+import { BR_LAND } from '../../../lib/params/br';
+import { convertArea, convertPrice, parseRational } from '../../../lib/land-units';
+import { brl, countOf, isExact, num, singular } from '../../../content/pt-br/land-text';
+
+interface Props {
+  keys: ExampleKey[];
+  preset: ConverterPreset;
+  path: string;
+}
+const { keys, preset, path } = Astro.props;
+const u = (id: string) => BR_LAND.byId.get(id)!;
+
+const cards = keys.map((k) => {
+  const ex = EXAMPLES[k];
+  if (ex.kind === 'area') {
+    const amount = parseRational(ex.amount)!;
+    const from = u(ex.from);
+    const to = u(ex.to);
+    const r = convertArea(amount, from, to);
+    return {
+      ex,
+      rows: [
+        { label: 'Conta', value: `${num(amount)} × ${num(from.area, 4)} m²${to.id === 'm2' ? '' : ` ÷ ${num(to.area, 4)} m²`}` },
+        { label: 'Resultado', value: `${isExact(r) ? '' : '≈ '}${countOf(r, to)}` },
+      ],
+      href: `${path}${converterSearch(preset, { q: Number(ex.amount), de: ex.from, para: ex.to })}`,
+    };
+  }
+  const price = parseRational(ex.price)!;
+  const per = u(ex.per);
+  const to = u(ex.to);
+  const r = convertPrice(price, per, to);
+  return {
+    ex,
+    rows: [
+      { label: 'Preço pedido', value: `${brl(price)} por ${singular(per)}` },
+      { label: 'Conta', value: `${brl(price)} × ${num(to.area, 4)} m² ÷ ${num(per.area, 4)} m²` },
+      { label: `Por ${singular(to)}`, value: brl(r) },
+    ],
+    href: `${path}${converterSearch(preset, { pr: Number(ex.price), pu: ex.per })}#preco-terra`,
+  };
+});
+---
+
+<div class="examples">
+  {cards.map((c) => <ExampleCard title={c.ex.title} story={c.ex.story} rows={c.rows} source={c.ex.source} href={c.href} locale="pt-br" />)}
+</div>
