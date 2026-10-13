@@ -1,0 +1,58 @@
+---
+/** "Por que os sites divergem": the explanation that wins the query, with figures from the catalog. */
+import ScaleFigure from './ScaleFigure.astro';
+import { brHa, haOf, m2Of } from '../../../i18n/tools';
+
+interface Props {
+  /** Show the alqueires drawn to scale. */
+  figure?: boolean;
+}
+const { figure = true } = Astro.props;
+---
+
+<section class="section" aria-labelledby="por-que-divergem">
+  <h2 id="por-que-divergem">Por que os sites divergem</h2>
+  <div class="prose">
+    <p>
+      Procure "alqueire em hectare" e você vai encontrar {brHa('alqueire-paulista')}, {brHa('alqueire-mineiro')}, {brHa('alqueire-baiano')} e
+      {haOf('alqueire-norte')}, às vezes no mesmo site. Não é que alguém errou a conta: são medidas diferentes com o mesmo nome. Os motivos:
+    </p>
+    <ol>
+      <li>
+        <strong>O alqueire nasceu como medida de semente, não de chão.</strong> Era a área que se plantava com um alqueire de milho, e o tamanho
+        do alqueire de grãos mudava de região para região. Em São Paulo firmou-se a área de 50 × 100 braças; em Minas, o dobro, 100 × 100. Por
+        isso o paulista tem {m2Of('alqueire-paulista')} e o mineiro {m2Of('alqueire-mineiro')}.
+      </li>
+      <li>
+        <strong>A tabela oficial não usa os nomes de hoje.</strong> A tabela de medidas agrárias do Ministério da Agricultura, compilada pelo
+        INDA (antecessor do INCRA), lista o alqueire de {haOf('alqueire-baiano')} em Minas e Mato Grosso, e o de {haOf('alqueire-mineiro')}
+        na Bahia. Já os sites atuais chamam o de {haOf('alqueire-baiano')} de "baiano". Os dois valores existem na Bahia, e é daí que vem a briga
+        entre {brHa('alqueire-baiano')} e {haOf('alqueire-mineiro')}.
+      </li>
+      <li>
+        <strong>Arredondamentos e vírgulas fora do lugar.</strong> O alqueire do Norte tem 75 × 75 braças, {m2Of('alqueire-norte')}; quem
+        escreve 27.200 m² arredondou os {haOf('alqueire-norte')}. Há tabelas publicadas que dão 1,93 ha ao alqueirão ({haOf('alqueirao')}) e
+        até a tabela oficial imprime 0,03 ha para a tarefa de Alagoas e Sergipe, que tem {haOf('tarefa-al-se')}.
+      </li>
+      <li>
+        <strong>Nomes iguais para áreas diferentes.</strong> "Alqueirão" é ora {haOf('alqueirao')}, ora {haOf('alqueire-baiano')}. "Quadra"
+        vai de {m2Of('quadra-15')} em Tocantins a {haOf('quadra-sesmaria')} nas escrituras antigas do Rio Grande do Sul.
+      </li>
+      <li>
+        <strong>Nenhuma lei em vigor define o alqueire.</strong> Ele é costume. O que vale no papel é a área em hectares do documento (veja abaixo).
+      </li>
+    </ol>
+    <p>
+      Por isso este conversor pede o estado, mostra o valor usado com a fonte de cada número e avisa quando as fontes não concordam, em vez
+      de escolher um valor sem dizer.
+    </p>
+  </div>
+  {
+    figure && (
+      <ScaleFigure
+        units={['alqueire-paulista', 'alqueire-norte', 'alqueire-mineiro', 'alqueire-baiano', 'alqueirao']}
+        caption="Cada alqueire desenhado com as braças da tabela INDA/MDA (1 braça = 2,20 m)"
+      />
+    )
+  }
+</section>

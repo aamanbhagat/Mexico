@@ -1,13 +1,17 @@
 # Tabula — everyday and business calculators
 
-Multi-country, multi-language calculator site. First product: **Mexico's payroll-payout suite**
-(aguinaldo, finiquito, liquidación, prima vacacional, vacaciones) in es-MX, plus a reference page
-of official 2026 values. Project rules live in [`CLAUDE.md`](CLAUDE.md); the research behind every
+Multi-country, multi-language calculator site. Live locales:
+
+- **es-MX** — Mexico's payroll-payout suite (aguinaldo, finiquito, liquidación, prima vacacional,
+  vacaciones) plus a reference page of official 2026 values.
+- **pt-BR** — BR-01, the land-unit converter: alqueire (paulista, mineiro/goiano, baiano, do Norte,
+  alqueirão…), tarefa, litro de terra, quadra and braça² ↔ hectare, m², acre, with the value used
+  in each state and its source. Project rules live in [`CLAUDE.md`](CLAUDE.md); the research behind every
 page in [`docs/research/`](docs/research/REPORT.md).
 
 ```bash
 npm ci
-npm run dev        # http://localhost:4321/es-mx/
+npm run dev        # http://localhost:4321/es-mx/  ·  http://localhost:4321/pt-br/
 npm run build      # static site in dist/
 npm run check      # the full quality gate (see below)
 ```
@@ -31,21 +35,36 @@ Node 22. Set `SITE_URL` to the production origin when building for production.
 ```
 src/
   config/site.ts               brand, origin (SITE_URL), analytics switches
-  i18n/locales.ts, routes.ts   locale registry (only es-MX published) + hreflang/sitemap helpers
+  i18n/locales.ts, routes.ts   locale registry (es-MX and pt-BR published) + hreflang/sitemap helpers
+  i18n/ui.ts, tools.ts         interface strings per locale; tools registry (homes, footer, related)
   data/parameters/mx/*.json    dated, sourced legal values (UMA, salarios mínimos, ISR tariff…)
+  data/parameters/br/land-units.json  every regional land unit: m², braças, regions, source, verified
   data/reviews.json            legal-review state that drives the badge on each page
   lib/params/                  typed loader: value in force on a date, refuses unknown dates
   lib/engine/mx/               LFT + LISR engine (pure functions)
+  lib/land-units/              country-agnostic land-unit engine: exact rationals, NBR 5891 rounding,
+                               locale number I/O, catalog validation (reused later for ID/JP/ES/PL/TR)
   lib/ui/                      formatting, URL state, PDF writer, analytics events
   components/ui/               field, result and action primitives (Preact)
-  components/calc/             calculator islands
-  content/es-mx/               worked examples shared by pages and golden tests
+  components/calc/             calculator islands; shell.tsx = the shared calculator shell
+  content/es-mx/, pt-br/       worked examples shared by pages and golden tests; pt-BR wording
   layouts/, pages/             Astro templates and routes; og/, sitemap.xml, robots.txt endpoints
 tests/unit/                    Vitest: registry contract, engine golden tests, utilities
 tests/e2e/                     Playwright: SEO, calculators, axe (light/dark), keyboard, visual
-tests/golden/golden.py         independent Decimal re-derivation of every example
+tests/golden/golden.py         independent Decimal re-derivation of every MX example
+tests/golden/land_units.py     independent Fraction re-derivation of every BR example
 docs/                          PLAN, LAUNCH_CHECKLIST, design directions, screenshots
 ```
+
+## Adding or correcting a land unit (pt-BR)
+
+Edit `src/data/parameters/br/land-units.json`: each unit has `m2` (exact; fractions such as
+`400/121` are allowed), optional `dims` in braças, `regions`, its own `source_url`/`source_title`/
+`retrieved_on`/`verified`/`notes`, and `also_reported` for values other sources give. Each state
+lists the units recorded there (`usual`, `named` or `historical`) with the sources of each claim,
+and `defaults` per family only when the sources agree. `npm test` rejects a catalog whose braças do
+not reproduce the area, that links a region one way only, or that cites an unknown source. Bump
+`UPDATED` in `src/content/pt-br/meta.ts`.
 
 ## Adding or updating a legal value
 
@@ -67,5 +86,7 @@ for INP, JS < 70 KB).
 
 Direction **Línea** (transit wayfinding): every calculator is a line with its own color and
 pictogram, every step of the calculation a stop. Decision record and the two rejected directions:
-[`docs/design/DIRECTIONS.md`](docs/design/DIRECTIONS.md). Screenshots of every page:
-[`docs/screenshots/`](docs/screenshots/).
+[`docs/design/DIRECTIONS.md`](docs/design/DIRECTIONS.md); the pt-BR land tools extend it with the
+"terra roxa" line and plots drawn to scale: [`docs/design/BR-01.md`](docs/design/BR-01.md).
+Screenshots of every page: [`docs/screenshots/`](docs/screenshots/) (BR-01 in
+[`docs/screenshots/br-01/`](docs/screenshots/br-01/)).

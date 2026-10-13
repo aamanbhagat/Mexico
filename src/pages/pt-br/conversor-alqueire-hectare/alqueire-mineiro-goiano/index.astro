@@ -1,0 +1,109 @@
+---
+import CalculatorLayout from '../../../../layouts/CalculatorLayout.astro';
+import LandConverter, { type ConverterPreset } from '../../../../components/calc/LandConverter';
+import StateTable from '../../../../components/page/br/StateTable.astro';
+import ScaleFigure from '../../../../components/page/br/ScaleFigure.astro';
+import HowWeCalculate from '../../../../components/page/br/HowWeCalculate.astro';
+import LandExamples from '../../../../components/page/br/LandExamples.astro';
+import ConversionTable from '../../../../components/page/br/ConversionTable.astro';
+import OfficialDocs from '../../../../components/page/br/OfficialDocs.astro';
+import WhyDiverge from '../../../../components/page/br/WhyDiverge.astro';
+import LandDisclaimer from '../../../../components/page/br/LandDisclaimer.astro';
+import { landSourceItems, OFFICIAL_DOC_SOURCES } from '../../../../components/page/br/land-sources';
+import { pathFor } from '../../../../i18n/routes';
+import { brHa, haOf, m2Of } from '../../../../i18n/tools';
+import { UPDATED } from '../../../../content/pt-br/meta';
+import { BR_LAND } from '../../../../lib/params/br';
+import { convertArea, ratio, rat } from '../../../../lib/land-units';
+import { num } from '../../../../content/pt-br/land-text';
+import type { FaqItem } from '../../../../lib/seo/jsonld';
+
+const PATH = pathFor('br.alqueire-mineiro-goiano', 'pt-br');
+const HUB = pathFor('br.alqueire-hectare', 'pt-br');
+const preset: ConverterPreset = { from: 'alqueire-mineiro', to: 'ha' };
+const u = (id: string) => BR_LAND.byId.get(id)!;
+const M = u('alqueire-mineiro');
+const perHa = num(convertArea(rat(1n), u('ha'), M), 4);
+const in120 = num(convertArea(rat(120n), u('ha'), M), 2);
+
+const faq: FaqItem[] = [
+  {
+    q: 'Quantos hectares tem um alqueire mineiro?',
+    a: `${haOf('alqueire-mineiro')}, ou ${m2Of('alqueire-mineiro')}: um quadrado de 100 × 100 braças (220 × 220 m). Para converter, multiplique os alqueires por ${brHa('alqueire-mineiro')}.`,
+  },
+  {
+    q: 'Quantos hectares tem um alqueire goiano?',
+    a: `Também ${haOf('alqueire-mineiro')}. Goiano, mineiro e geométrico são nomes do mesmo alqueire de ${m2Of('alqueire-mineiro')} em todas as fontes que consultamos.`,
+  },
+  {
+    q: 'Quantos hectares tem um alqueire em Minas Gerais?',
+    a: `O alqueire usual em Minas é o de ${haOf('alqueire-mineiro')}. No norte e no nordeste do estado também se fala em alqueirão, de ${haOf('alqueirao')} (quatro alqueires mineiros), e a tabela histórica do INDA registra ainda medidas menores. Se o documento disser só "alqueire", o mais provável é o de ${haOf('alqueire-mineiro')}.`,
+  },
+  {
+    q: 'Como converter hectare em alqueire mineiro ou goiano?',
+    a: `Divida os hectares por ${brHa('alqueire-mineiro')}. Um hectare é ${perHa} alqueire mineiro; 120 ha são cerca de ${in120} alqueires.`,
+  },
+  {
+    q: 'Quantos litros de terra tem um alqueire mineiro?',
+    a: `${num(ratio(M, u('litro')))} litros de 605 m². É por isso que se diz "alqueire de 80 litros" em Minas e Goiás.`,
+  },
+  {
+    q: 'Em quais estados se usa o alqueire mineiro ou goiano?',
+    a: 'Em Minas Gerais, Goiás, Tocantins, Rio de Janeiro e Espírito Santo, segundo as fontes. Em Mato Grosso as fontes divergem entre o goiano e o paulista. A tabela histórica do INDA também o registra na Bahia.',
+  },
+];
+---
+
+<CalculatorLayout
+  pageKey="br.alqueire-mineiro-goiano"
+  locale="pt-br"
+  tool="terra"
+  icon="alqueire"
+  title={`Alqueire mineiro e goiano em hectare: ${brHa('alqueire-mineiro')} ha`}
+  description={`1 alqueire mineiro ou goiano = ${haOf('alqueire-mineiro')} = ${m2Of('alqueire-mineiro')} (100 × 100 braças). Converta para hectare, m² e acre e veja em quais estados ele é usado, com fontes.`}
+  h1="Alqueire mineiro e goiano em hectare"
+  lede={`1 alqueire mineiro, também chamado goiano ou geométrico, tem ${haOf('alqueire-mineiro')}, ou ${m2Of('alqueire-mineiro')}: um quadrado de 100 × 100 braças (220 × 220 m). É o alqueire de Minas Gerais, Goiás, Tocantins, Rio de Janeiro e Espírito Santo.`}
+  updated={UPDATED}
+  appName="Conversor de alqueire mineiro e goiano em hectare"
+  appCategory="UtilitiesApplication"
+  faq={faq}
+  sourceItems={landSourceItems(['alqueire-mineiro', 'alqueirao', 'litro', 'ha'])}
+  extraSources={OFFICIAL_DOC_SOURCES}
+  parent={{ name: 'Conversor de alqueire em hectare', path: HUB }}
+>
+  <LandConverter client:load preset={preset} />
+
+  <section class="section" aria-labelledby="mineiro-em-escala">
+    <h2 id="mineiro-em-escala">Mineiro, paulista e alqueirão na mesma escala</h2>
+    <div class="prose">
+      <p>
+        O mineiro é o quadrado de 100 braças de lado. O paulista é a metade dele; o alqueirão, quatro vezes. O hectare tracejado dá a
+        medida.
+      </p>
+    </div>
+    <ScaleFigure units={['alqueire-paulista', 'alqueire-mineiro', 'alqueirao']} caption="Alqueire com as braças da tabela INDA/MDA" />
+  </section>
+
+  <StateTable highlight={['MG', 'GO', 'TO', 'RJ', 'ES', 'MT']} />
+
+  <HowWeCalculate slot="how" amount="120" from="ha" to="alqueire-mineiro" />
+
+  <LandExamples slot="examples" keys={['fazenda120Goiano', 'litrosPorMineiro', 'precoMineiro']} preset={preset} path={PATH} />
+
+  <Fragment slot="extra">
+    <ConversionTable
+      id="tabela-mineiro"
+      title="Alqueire mineiro e goiano em hectare: tabela de 1 a 100"
+      rowLabel="Alqueires mineiros ou goianos"
+      columns={[
+        { from: 'alqueire-mineiro', to: 'ha', label: 'Hectares' },
+        { from: 'alqueire-mineiro', to: 'm2', label: 'Metros quadrados' },
+        { from: 'alqueire-mineiro', to: 'alqueire-paulista', label: 'Alqueires paulistas' },
+      ]}
+    />
+    <WhyDiverge figure={false} />
+    <OfficialDocs />
+  </Fragment>
+
+  <LandDisclaimer slot="disclaimer" />
+</CalculatorLayout>

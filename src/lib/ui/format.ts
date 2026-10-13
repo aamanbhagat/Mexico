@@ -1,4 +1,4 @@
-/** es-MX formatting helpers shared by islands and static pages. */
+/** Formatting helpers shared by islands and static pages (es-MX by default; dates for any locale). */
 
 const LOCALE = 'es-MX';
 
@@ -6,7 +6,7 @@ const money = new Intl.NumberFormat(LOCALE, { style: 'currency', currency: 'MXN'
 const plain = new Intl.NumberFormat(LOCALE, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const days = new Intl.NumberFormat(LOCALE, { minimumFractionDigits: 0, maximumFractionDigits: 2 });
 const integer = new Intl.NumberFormat(LOCALE, { maximumFractionDigits: 0 });
-const longDate = new Intl.DateTimeFormat(LOCALE, { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+const longDates = new Map<string, Intl.DateTimeFormat>();
 const shortDate = new Intl.DateTimeFormat(LOCALE, { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'UTC' });
 
 /** "$7,500.00" */
@@ -37,9 +37,19 @@ function toDate(iso: string): Date {
   return new Date(Date.UTC(y, m - 1, d));
 }
 
+/** "13 de octubre de 2026" (es-MX) or "13 de outubro de 2026" (pt-BR). */
+export function formatDateLongIn(iso: string, intl: string): string {
+  let f = longDates.get(intl);
+  if (!f) {
+    f = new Intl.DateTimeFormat(intl, { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+    longDates.set(intl, f);
+  }
+  return f.format(toDate(iso));
+}
+
 /** "13 de octubre de 2026" */
 export function formatDateLong(iso: string): string {
-  return longDate.format(toDate(iso));
+  return formatDateLongIn(iso, LOCALE);
 }
 
 /** "13/10/2026" */

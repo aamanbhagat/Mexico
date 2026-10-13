@@ -1,0 +1,95 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import LandConverter, { type ConverterPreset } from '../../../components/calc/LandConverter';
+import StateTable from '../../../components/page/br/StateTable.astro';
+import HowWeCalculate from '../../../components/page/br/HowWeCalculate.astro';
+import LandExamples from '../../../components/page/br/LandExamples.astro';
+import ConversionTable from '../../../components/page/br/ConversionTable.astro';
+import OfficialDocs from '../../../components/page/br/OfficialDocs.astro';
+import WhyDiverge from '../../../components/page/br/WhyDiverge.astro';
+import LandDisclaimer from '../../../components/page/br/LandDisclaimer.astro';
+import { landSourceItems, OFFICIAL_DOC_SOURCES } from '../../../components/page/br/land-sources';
+import { pathFor } from '../../../i18n/routes';
+import { brHa } from '../../../i18n/tools';
+import { UPDATED } from '../../../content/pt-br/meta';
+import { BR_LAND } from '../../../lib/params/br';
+import { convertArea, convertPrice, rat } from '../../../lib/land-units';
+import { brl, num } from '../../../content/pt-br/land-text';
+import type { FaqItem } from '../../../lib/seo/jsonld';
+
+const PATH = pathFor('br.hectare-alqueire', 'pt-br');
+const preset: ConverterPreset = { from: 'ha', to: 'alqueire-paulista' };
+const u = (id: string) => BR_LAND.byId.get(id)!;
+const one = (id: string) => num(convertArea(rat(1n), u('ha'), u(id)), 4);
+const hundred = (id: string) => num(convertArea(rat(100n), u('ha'), u(id)), 2);
+const priceHa = rat(30000n);
+
+const faq: FaqItem[] = [
+  {
+    q: 'Como converter hectare em alqueire?',
+    a: `Divida os hectares pela área do alqueire em hectares: ${brHa('alqueire-paulista')} para o paulista, ${brHa('alqueire-mineiro')} para o mineiro ou goiano, ${brHa('alqueire-baiano')} para o baiano e ${brHa('alqueire-norte', 4)} para o do Norte. Exemplo: 50 ha ÷ ${brHa('alqueire-paulista')} ≈ ${num(convertArea(rat(50n), u('ha'), u('alqueire-paulista')), 2)} alqueires paulistas.`,
+  },
+  {
+    q: '1 hectare é quantos alqueires?',
+    a: `${one('alqueire-paulista')} alqueire paulista, ${one('alqueire-mineiro')} alqueire mineiro ou goiano, ${one('alqueire-baiano')} alqueire baiano ou ${one('alqueire-norte')} alqueire do Norte.`,
+  },
+  {
+    q: 'Hectare para alqueire goiano ou mineiro: como fazer?',
+    a: `Divida por ${brHa('alqueire-mineiro')}. Em Minas Gerais e Goiás o alqueire usual é o de ${brHa('alqueire-mineiro')} ha; 100 hectares são cerca de ${hundred('alqueire-mineiro')} alqueires.`,
+  },
+  {
+    q: 'Quantos alqueires tem 100 hectares?',
+    a: `Cerca de ${hundred('alqueire-paulista')} alqueires paulistas, ${hundred('alqueire-mineiro')} mineiros ou goianos, ${hundred('alqueire-baiano')} baianos ou ${hundred('alqueire-norte')} do Norte.`,
+  },
+  {
+    q: 'O CCIR e o CAR mostram hectares. Como explico a área em alqueires?',
+    a: 'Use a área em hectares do documento e escolha o estado no conversor acima: ele mostra o alqueire usado na região e avisa quando as fontes divergem. Se for negociar, escreva as duas medidas no contrato, deixando claro de qual alqueire se trata.',
+  },
+  {
+    q: 'Como passar o preço por hectare para preço por alqueire?',
+    a: `Multiplique pelo tamanho do alqueire em hectares. ${brl(priceHa)} por hectare são ${brl(convertPrice(priceHa, u('ha'), u('alqueire-paulista')))} por alqueire paulista ou ${brl(convertPrice(priceHa, u('ha'), u('alqueire-mineiro')))} por alqueire mineiro.`,
+  },
+];
+---
+
+<CalculatorLayout
+  pageKey="br.hectare-alqueire"
+  locale="pt-br"
+  tool="terra"
+  icon="hectare"
+  title="Hectare para alqueire: converta pelo alqueire do seu estado"
+  description={`1 hectare = ${one('alqueire-paulista')} alqueire paulista, ${one('alqueire-mineiro')} alqueire mineiro ou goiano, ${one('alqueire-baiano')} baiano e ${one('alqueire-norte')} do Norte. Converta hectares no alqueire do seu estado.`}
+  h1="Hectare para alqueire"
+  lede={`Divida os hectares pelo tamanho do alqueire do seu estado: ${brHa('alqueire-paulista')} (paulista), ${brHa('alqueire-mineiro')} (mineiro ou goiano), ${brHa('alqueire-baiano')} (baiano) ou ${brHa('alqueire-norte', 4)} (do Norte). Um hectare é ${one('alqueire-paulista')} alqueire paulista ou ${one('alqueire-mineiro')} alqueire mineiro.`}
+  updated={UPDATED}
+  appName="Conversor de hectare para alqueire"
+  appCategory="UtilitiesApplication"
+  faq={faq}
+  sourceItems={landSourceItems(['ha', 'alqueire-paulista', 'alqueire-mineiro', 'alqueire-baiano', 'alqueire-norte'])}
+  extraSources={OFFICIAL_DOC_SOURCES}
+>
+  <LandConverter client:load preset={preset} />
+  <StateTable />
+
+  <HowWeCalculate slot="how" amount="50" from="ha" to="alqueire-paulista" />
+
+  <LandExamples slot="examples" keys={['hectares50Paulista', 'hectares50Mineiro', 'hectare1Paulista']} preset={preset} path={PATH} />
+
+  <Fragment slot="extra">
+    <ConversionTable
+      id="tabela-hectares"
+      title="Hectare para alqueire: tabela de 1 a 100 hectares"
+      rowLabel="Hectares"
+      columns={[
+        { from: 'ha', to: 'alqueire-paulista', label: 'Alq. paulista' },
+        { from: 'ha', to: 'alqueire-mineiro', label: 'Alq. mineiro ou goiano' },
+        { from: 'ha', to: 'alqueire-baiano', label: 'Alq. baiano' },
+        { from: 'ha', to: 'alqueire-norte', label: 'Alq. do Norte' },
+      ]}
+    />
+    <WhyDiverge figure={false} />
+    <OfficialDocs />
+  </Fragment>
+
+  <LandDisclaimer slot="disclaimer" />
+</CalculatorLayout>

@@ -1,0 +1,28 @@
+---
+/** Official documents state areas in hectares: the note every land page carries. */
+import { brHa, haOf } from '../../../i18n/tools';
+---
+
+<section class="section" aria-labelledby="documentos-oficiais">
+  <h2 id="documentos-oficiais">Escritura, CAR, ITR e CCIR: vale o hectare</h2>
+  <div class="prose">
+    <p>
+      Alqueire, tarefa e litro servem para conversar, anunciar e ler escrituras antigas. Para qualquer documento oficial, use a área em
+      hectares:
+    </p>
+    <ul>
+      <li><strong>CCIR</strong> (Cadastro de Imóveis Rurais do INCRA): a declaração pede a área em hectares, com quatro casas decimais.</li>
+      <li><strong>ITR</strong>: a DITR, entregue à Receita Federal, informa a área total e a utilização do imóvel em hectares.</li>
+      <li><strong>CAR</strong> (Cadastro Ambiental Rural): registra a área total do imóvel e o número de módulos fiscais.</li>
+      <li>
+        <strong>Matrícula no cartório</strong>: imóveis rurais são descritos pelo georreferenciamento certificado pelo INCRA (Lei
+        6.015/1973, art. 176), com coordenadas e área em hectares.
+      </li>
+    </ul>
+    <p>
+      Se a sua escritura antiga fala em alqueires, a conversão daqui ajuda a entender o tamanho, mas a área que vale é a do levantamento
+      georreferenciado. Uma diferença de {brHa('alqueire-paulista')} para {haOf('alqueire-mineiro')} por alqueire dobra a área: confirme com o
+      cartório ou com um agrimensor antes de assinar.
+    </p>
+  </div>
+</section>

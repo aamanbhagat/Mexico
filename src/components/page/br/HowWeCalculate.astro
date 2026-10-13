@@ -1,0 +1,51 @@
+---
+/** "Como calculamos": the two formulas, the braça behind every unit, exact arithmetic and rounding. */
+import { BR_LAND } from '../../../lib/params/br';
+import { convertArea, convertPrice, dimsInMeters, mul, parseRational } from '../../../lib/land-units';
+import { brl, countOf, num } from '../../../content/pt-br/land-text';
+
+interface Props {
+  /** Worked line: quantity, from, to. */
+  amount: string;
+  from: string;
+  to: string;
+}
+const { amount, from, to } = Astro.props;
+const u = (id: string) => BR_LAND.byId.get(id)!;
+const q = parseRational(amount)!;
+const f = u(from);
+const t = u(to);
+const m2 = mul(q, f.area);
+const result = convertArea(q, f, t);
+const paulista = u('alqueire-paulista');
+const [pw, ph] = dimsInMeters(BR_LAND, paulista)!;
+const ha = u('ha');
+const priceExample = convertPrice(parseRational('72600')!, paulista, ha);
+const braca = num(BR_LAND.linearMeters, 2);
+---
+
+<p>O conversor guarda cada medida em metros quadrados e faz duas contas, sempre na mesma ordem:</p>
+<p class="formula">
+  <b>Área em m²</b> = quantidade × m² da medida de origem<br />
+  <b>Resultado</b> = área em m² ÷ m² da medida de destino
+</p>
+<p>
+  Exemplo: {countOf(q, f)} = {num(q)} × {num(f.area, 4)} m² = {num(m2, 4)} m².{
+    t.id === 'm2' ? '' : ` Dividindo por ${num(t.area, 4)} m², dá ${countOf(result, t)}.`
+  }
+</p>
+<p>
+  As medidas tradicionais são definidas em braças, e a braça vale {braca} m (dez palmos). O alqueire paulista, por exemplo, tem
+  {paulista.dims?.[0]} × {paulista.dims?.[1]} braças: {num(pw)} × {num(ph)} m = {num(paulista.area, 4)} m². Testamos cada valor do catálogo contra
+  as suas braças; se alguém digitar errado, o teste falha antes de a página ir ao ar.
+</p>
+<p class="formula">
+  <b>Preço por hectare</b> = preço por medida × 10.000 ÷ m² da medida<br />
+  {brl(parseRational('72600')!)} por alqueire paulista × 10.000 ÷ {num(paulista.area, 4)} = {brl(priceExample)} por hectare
+</p>
+<p>
+  As contas são feitas com frações exatas, não com a aritmética aproximada do computador. Só o número que aparece na tela é arredondado, na
+  quarta casa decimal (ou mais, para números pequenos), pela regra da ABNT NBR 5891: quando sobra exatamente um 5, arredonda-se para o
+  algarismo par. Se o número mostrado é exato, ele aparece sem o sinal ≈.
+</p>
+<p>O acre é o acre internacional, de {num(u('acre').area, 7)} m².</p>

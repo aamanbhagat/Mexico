@@ -1,0 +1,75 @@
+---
+/**
+ * Small multiples, one per unit, all drawn at the same scale with one hectare (dashed) in the
+ * corner of each plot: sizes and shapes compared at a glance. Values are written under each
+ * plot, so nothing depends on reading the drawing.
+ */
+import { BR_LAND } from '../../../lib/params/br';
+import { dimsInMeters, squareSide, toNumber } from '../../../lib/land-units';
+import { num, sizeOf } from '../../../content/pt-br/land-text';
+import { fromNumber } from '../../../lib/land-units/rational';
+
+interface Props {
+  units: string[];
+  caption: string;
+}
+const { units, caption } = Astro.props;
+const HA = BR_LAND.byId.get('ha')!;
+
+const shapes = units.map((id) => {
+  const u = BR_LAND.byId.get(id);
+  if (!u) throw new Error(`Unknown land unit ${id}`);
+  const dims = dimsInMeters(BR_LAND, u);
+  if (dims) {
+    const [a, b] = dims.map(toNumber) as [number, number];
+    return { u, w: Math.max(a, b), h: Math.min(a, b), drawn: true };
+  }
+  const side = squareSide(u.area);
+  return { u, w: side, h: side, drawn: false };
+});
+const W = Math.max(100, ...shapes.map((s) => s.w));
+const H = Math.max(100, ...shapes.map((s) => s.h));
+const m = (x: number) => num(fromNumber(Math.round(x * 10) / 10), 1);
+// Surveyor's grid every 50 braças (110 m), so empty ground reads as ground, not as a gap.
+const step = 50 * toNumber(BR_LAND.linearMeters);
+const gridX = Array.from({ length: Math.floor(W / step) }, (_, i) => (i + 1) * step).filter((x) => x < W);
+const gridY = Array.from({ length: Math.floor(H / step) }, (_, i) => H - (i + 1) * step).filter((y) => y > 0);
+---
+
+<figure class="scale-figure">
+  <ul class="scale-figure__grid">
+    {
+      shapes.map((s) => (
+        <li class="scale-figure__cell">
+          <svg viewBox={`0 0 ${W} ${H}`} aria-hidden="true" focusable="false">
+            <rect class="scale-figure__ground" x="0" y="0" width={W} height={H} />
+            {gridX.map((x) => (
+              <line class="scale-figure__grid-line" x1={x} y1="0" x2={x} y2={H} />
+            ))}
+            {gridY.map((y) => (
+              <line class="scale-figure__grid-line" x1="0" y1={y} x2={W} y2={y} />
+            ))}
+            <rect class="scale-figure__unit" x="0" y={H - s.h} width={s.w} height={s.h} />
+            <rect class="scale-figure__ha" x="0" y={H - 100} width="100" height="100" />
+          </svg>
+          <span class="scale-figure__name">{s.u.name}</span>
+          <span class="scale-figure__meta">
+            {s.drawn && s.u.dims
+              ? `${s.u.dims[0]} × ${s.u.dims[1]} braças, ${m(s.h)} × ${m(s.w)} m, ${sizeOf(s.u, HA)}`
+              : `${sizeOf(s.u, HA)}, desenhado como quadrado de ${m(s.w)} m (a fonte não dá os lados)`}
+          </span>
+        </li>
+      ))
+    }
+  </ul>
+  <figcaption class="scale-figure__legend">
+    <span class="legend-item">
+      <span class="scale-plan__key scale-plan__key--unit" aria-hidden="true"></span>
+      {caption}
+    </span>
+    <span class="legend-item">
+      <span class="scale-plan__key scale-plan__key--ha" aria-hidden="true"></span>1 hectare (100 × 100 m)
+    </span>
+    <span class="legend-item">Quadriculado: 50 braças (110 m)</span>
+  </figcaption>
+</figure>

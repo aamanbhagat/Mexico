@@ -3,6 +3,8 @@ import type { PageKey } from '../i18n/routes';
 
 export interface ReviewStatus {
   status: 'pending' | 'reviewed';
+  /** "legal" for labour/tax/pension tools (CLAUDE.md §8), "technical" for others (e.g. land units). */
+  kind?: 'legal' | 'technical';
   reviewer: string | null;
   credentials: string | null;
   reviewed_on: string | null;

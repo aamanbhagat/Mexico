@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import { spring } from 'motion';
 import { formatMoney } from '../../lib/ui/format';
 import { track } from '../../lib/ui/analytics';
+import { CALC_UI, type UiLocale } from '../../i18n/ui';
 
 function prefersReducedMotion(): boolean {
   return typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -19,13 +20,18 @@ function prefersReducedMotion(): boolean {
  * will not end at. Instant when the person asked for reduced motion. Assistive tech always
  * gets the exact final value.
  */
+const toCents = (n: number) => Math.round(n * 100) / 100;
+
 export function AnimatedNumber({
   value,
   format = formatMoney,
+  round = toCents,
   class: cls,
 }: {
   value: number;
   format?: (n: number) => string;
+  /** Applied to in-between frames only; the settled frame shows format(value). */
+  round?: ((n: number) => number) | undefined;
   class?: string;
 }) {
   const [shown, setShown] = useState(value);
@@ -62,7 +68,7 @@ export function AnimatedNumber({
 
   return (
     <span class={`money ${cls ?? ''}`}>
-      <span aria-hidden="true">{format(Math.round(shown * 100) / 100)}</span>
+      <span aria-hidden="true">{format(shown === value ? value : round(shown))}</span>
       <span class="sr-only">{format(value)}</span>
     </span>
   );
@@ -134,23 +140,19 @@ interface ActionsProps {
   tool?: string;
   /** Plain-text summary for the clipboard. */
   summary: () => string;
-  /** Builds and downloads the PDF (imported lazily). */
-  onPdf: () => Promise<void>;
+  /** Builds and downloads the PDF (imported lazily). Omit to hide the button. */
+  onPdf?: (() => Promise<void>) | undefined;
+  /** Opens the browser's print dialog (printable table). Omit to hide the button. */
+  onPrint?: (() => void) | undefined;
   shareTitle: string;
   disabled?: boolean;
+  locale?: UiLocale;
 }
 
-type Feedback = '' | 'copied' | 'shared' | 'link' | 'pdf' | 'error';
+type Feedback = '' | 'copied' | 'shared' | 'link' | 'pdf' | 'print' | 'error';
 
-const FEEDBACK: Record<Exclude<Feedback, ''>, string> = {
-  copied: 'Resumen copiado',
-  shared: 'Listo para compartir',
-  link: 'Enlace copiado',
-  pdf: 'PDF descargado',
-  error: 'No se pudo completar. Intenta de nuevo.',
-};
-
-export function ResultActions({ summary, onPdf, shareTitle, disabled, tool = '' }: ActionsProps) {
+export function ResultActions({ summary, onPdf, onPrint, shareTitle, disabled, tool = '', locale = 'es-mx' }: ActionsProps) {
+  const ui = CALC_UI[locale];
   const [feedback, setFeedback] = useState<Feedback>('');
   useEffect(() => {
     if (!feedback) return;
@@ -184,6 +186,7 @@ export function ResultActions({ summary, onPdf, shareTitle, disabled, tool = '' 
     }
   };
   const pdf = async () => {
+    if (!onPdf) return;
     try {
       await onPdf();
       setFeedback('pdf');
@@ -192,31 +195,45 @@ export function ResultActions({ summary, onPdf, shareTitle, disabled, tool = '' 
       setFeedback('error');
     }
   };
+  const print = () => {
+    if (!onPrint) return;
+    setFeedback('print');
+    track('imprimir', tool);
+    onPrint();
+  };
 
   return (
     <div class="actions">
       <div class="actions__row">
         <button type="button" class="btn btn--quiet" onClick={copy} disabled={disabled}>
           <Icon name="copy" />
-          Copiar
+          {ui.copy}
         </button>
         <button type="button" class="btn btn--quiet" onClick={share} disabled={disabled}>
           <Icon name="share" />
-          Compartir
+          {ui.share}
         </button>
-        <button type="button" class="btn btn--quiet" onClick={pdf} disabled={disabled}>
-          <Icon name="pdf" />
-          Descargar PDF
-        </button>
+        {onPdf ? (
+          <button type="button" class="btn btn--quiet" onClick={pdf} disabled={disabled}>
+            <Icon name="pdf" />
+            {ui.pdf}
+          </button>
+        ) : null}
+        {onPrint ? (
+          <button type="button" class="btn btn--quiet" onClick={print} disabled={disabled}>
+            <Icon name="print" />
+            {ui.print}
+          </button>
+        ) : null}
       </div>
       <p class="actions__feedback" role="status" aria-live="polite">
-        {feedback ? FEEDBACK[feedback] : ''}
+        {feedback ? ui.feedback[feedback] : ''}
       </p>
     </div>
   );
 }
 
-export function Icon({ name }: { name: 'copy' | 'share' | 'pdf' | 'info' | 'alert' }) {
+export function Icon({ name }: { name: 'copy' | 'share' | 'pdf' | 'print' | 'info' | 'alert' | 'swap' }) {
   const paths: Record<typeof name, ComponentChildren> = {
     copy: (
       <>
@@ -236,6 +253,21 @@ export function Icon({ name }: { name: 'copy' | 'share' | 'pdf' | 'info' | 'aler
         <path d="M12 4v11" />
         <path d="m8 11 4 4 4-4" />
         <path d="M5 20h14" />
+      </>
+    ),
+    print: (
+      <>
+        <path d="M7 9V4h10v5" />
+        <rect x="4" y="9" width="16" height="7" rx="1.5" />
+        <path d="M7 14h10v6H7z" />
+      </>
+    ),
+    swap: (
+      <>
+        <path d="M8 4v16" />
+        <path d="m4 8 4-4 4 4" />
+        <path d="M16 20V4" />
+        <path d="m12 16 4 4 4-4" />
       </>
     ),
     info: (

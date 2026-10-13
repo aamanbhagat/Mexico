@@ -1,4 +1,4 @@
-import { ROUTES, expect, test } from './fixtures';
+import { PAGE_TEXT, ROUTES, expect, test } from './fixtures';
 
 test.describe('SEO contract (CLAUDE.md §6)', () => {
   test.skip(({ isMobile }) => isMobile, 'markup is identical on mobile');
@@ -7,7 +7,7 @@ test.describe('SEO contract (CLAUDE.md §6)', () => {
     test(`${route.path} has unique metadata, canonical, hreflang and JSON-LD`, async ({ page }) => {
       const res = await page.goto(route.path);
       expect(res?.status()).toBe(200);
-      await expect(page.locator('html')).toHaveAttribute('lang', 'es-MX');
+      await expect(page.locator('html')).toHaveAttribute('lang', route.lang);
 
       const title = await page.title();
       expect(title.length).toBeGreaterThan(20);
@@ -23,7 +23,7 @@ test.describe('SEO contract (CLAUDE.md §6)', () => {
       const hreflangs = await page
         .locator('link[rel="alternate"][hreflang]')
         .evaluateAll((els) => els.map((e) => e.getAttribute('hreflang')));
-      expect(hreflangs).toEqual(['es-MX', 'x-default']);
+      expect(hreflangs).toEqual(route.hreflang);
 
       await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /\/og\/[a-z-]+\.png$/);
       await expect(page.locator('h1')).toHaveCount(1);
@@ -36,11 +36,12 @@ test.describe('SEO contract (CLAUDE.md §6)', () => {
       if (route.kind === 'reference') expect(types).toEqual(['Dataset', 'FAQPage', 'BreadcrumbList']);
 
       if (route.kind !== 'home') {
-        await expect(page.getByText('Actualizado el', { exact: false }).first()).toBeVisible();
-        await expect(page.getByText('Revisión legal: pendiente').first()).toBeVisible();
-        await expect(page.getByRole('heading', { name: 'Fuentes y valores oficiales' })).toBeVisible();
+        const text = PAGE_TEXT[route.lang];
+        await expect(page.getByText(text.updated, { exact: false }).first()).toBeVisible();
+        await expect(page.getByText(text.review).first()).toBeVisible();
+        await expect(page.getByRole('heading', { name: text.sources, exact: true })).toBeVisible();
         expect(await page.locator('.sources a[href^="https://"]').count()).toBeGreaterThanOrEqual(3);
-        await expect(page.getByRole('heading', { name: 'Preguntas frecuentes' })).toBeVisible();
+        await expect(page.getByRole('heading', { name: text.faq })).toBeVisible();
         expect(await page.locator('.faq details').count()).toBeGreaterThanOrEqual(5);
       }
     });
@@ -69,17 +70,34 @@ test.describe('SEO contract (CLAUDE.md §6)', () => {
   });
 
   test('unpublished locales are not built', async ({ request }) => {
-    for (const code of ['pt-br', 'id', 'ja', 'pl', 'de', 'es-es', 'en', 'tr']) {
+    for (const code of ['id', 'ja', 'pl', 'de', 'es-es', 'en', 'tr']) {
       expect((await request.get(`/${code}/`)).status()).toBe(404);
     }
   });
 
   test('OG images are real 1200×630 PNGs', async ({ request }) => {
-    const res = await request.get('/og/aguinaldo.png');
-    expect(res.headers()['content-type']).toContain('image/png');
-    const body = await res.body();
-    expect(body.subarray(1, 4).toString()).toBe('PNG');
-    expect(body.readUInt32BE(16)).toBe(1200);
-    expect(body.readUInt32BE(20)).toBe(630);
+    for (const slug of ['aguinaldo', 'alqueire-hectare', 'alqueire-baiano']) {
+      const res = await request.get(`/og/${slug}.png`);
+      expect(res.headers()['content-type']).toContain('image/png');
+      const body = await res.body();
+      expect(body.subarray(1, 4).toString()).toBe('PNG');
+      expect(body.readUInt32BE(16)).toBe(1200);
+      expect(body.readUInt32BE(20)).toBe(630);
+    }
+  });
+
+  test('each BR page points to its own OG image', async ({ page }) => {
+    await page.goto('/pt-br/conversor-alqueire-hectare/alqueire-baiano/');
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /\/og\/alqueire-baiano\.png$/);
+    await expect(page.locator('meta[property="og:locale"]')).toHaveAttribute('content', 'pt_BR');
+  });
+
+  test('cross-locale links appear only where hreflang applies', async ({ page }) => {
+    await page.goto('/pt-br/');
+    await expect(page.locator('.site-footer a[hreflang="es-MX"]')).toHaveAttribute('href', /\/es-mx\/$/);
+    await page.goto('/pt-br/conversor-alqueire-hectare/');
+    await expect(page.locator('.site-footer a[hreflang]')).toHaveCount(0);
+    await page.goto('/es-mx/calculadora-aguinaldo/');
+    await expect(page.locator('.site-footer a[hreflang]')).toHaveCount(0);
   });
 });

@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { coverage, validateParamFile, versionOn } from '../../src/lib/params/loader';
 import { MX_PARAM_FILES, mxParam, mxValue } from '../../src/lib/params/mx';
+import { BR_PARAM_FILES } from '../../src/lib/params/br';
 import { ParamNotAvailableError } from '../../src/lib/params/types';
 
 const DIR = join(process.cwd(), 'src/data/parameters');
@@ -34,6 +35,13 @@ describe('parameter registry contract (CLAUDE.md §1)', () => {
     for (const { path, json } of files.filter((f) => f.path.startsWith('mx/'))) {
       expect(ids.has((json as { id: string }).id), path).toBe(true);
     }
+  });
+
+  it('registers every br JSON file in the typed registry', () => {
+    const ids = new Set(Object.keys(BR_PARAM_FILES));
+    const br = files.filter((f) => f.path.startsWith('br/'));
+    expect(br.length).toBeGreaterThanOrEqual(1);
+    for (const { path, json } of br) expect(ids.has((json as { id: string }).id), path).toBe(true);
   });
 
   it('rejects a version without a source', () => {
