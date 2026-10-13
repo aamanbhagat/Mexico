@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { buildPdf } from '../../src/lib/ui/pdf';
 import { formatDateLong, formatMoney, parseAmount, todayInMexico } from '../../src/lib/ui/format';
@@ -64,21 +65,36 @@ describe('URL state', () => {
 });
 
 describe('locales, routes and hreflang', () => {
-  it('publishes only es-MX for now, with the other eight defined', () => {
-    expect(publishedLocales().map((l) => l.code)).toEqual(['es-mx']);
+  it('publishes es-MX and id, with the other seven defined', () => {
+    expect(publishedLocales().map((l) => l.code)).toEqual(['es-mx', 'id']);
     expect(Object.keys(LOCALES).sort()).toEqual(['de', 'en', 'es-es', 'es-mx', 'id', 'ja', 'pl', 'pt-br', 'tr']);
   });
 
   it('emits hreflang only for live locales plus x-default', () => {
-    expect(alternatesFor('home').map((a) => a.hreflang)).toEqual(['es-MX', 'x-default']);
+    expect(alternatesFor('home').map((a) => a.hreflang)).toEqual(['es-MX', 'id-ID', 'x-default']);
+    expect(alternatesFor('mx.aguinaldo').map((a) => a.hreflang)).toEqual(['es-MX', 'x-default']);
     expect(alternatesFor('mx.aguinaldo')[0]?.href).toMatch(/\/es-mx\/calculadora-aguinaldo\/$/);
+    expect(alternatesFor('id.weton').map((a) => a.hreflang)).toEqual(['id-ID', 'x-default']);
+    expect(alternatesFor('id.kalender.2027.desember')[0]?.href).toMatch(/\/id\/kalender-jawa\/2027\/desember\/$/);
   });
 
   it('never lists unpublished locales as live routes', () => {
     expect(isLive('home', 'pt-br')).toBe(false);
-    expect(liveRoutes().every((r) => r.locale === 'es-mx')).toBe(true);
-    expect(liveRoutes()).toHaveLength(7);
+    expect(liveRoutes().every((r) => r.locale === 'es-mx' || r.locale === 'id')).toBe(true);
+    // es-MX: home + 6 tools. id: home + weton, jodoh, hari ini, 35 weton, 2 years × (1 + 12 months).
+    expect(liveRoutes().filter((r) => r.locale === 'es-mx')).toHaveLength(7);
+    expect(liveRoutes().filter((r) => r.locale === 'id')).toHaveLength(1 + 3 + 35 + 2 * 13);
     expect(pathFor('mx.uma-salario-minimo', 'es-mx')).toBe('/es-mx/uma-salario-minimo-2026/');
+    expect(pathFor('id.weton.selasa-pon', 'id')).toBe('/id/weton/selasa-pon/');
+  });
+
+  it('postbuild guards exactly the unpublished locales', () => {
+    const src = readFileSync('scripts/postbuild.mjs', 'utf8');
+    const listed = JSON.parse((/const unpublished = (\[[^\]]*\])/.exec(src)?.[1] ?? '[]').replace(/'/g, '"')) as string[];
+    const expected = Object.values(LOCALES)
+      .filter((l) => !l.published)
+      .map((l) => l.code);
+    expect(listed.sort()).toEqual(expected.sort());
   });
 });
 

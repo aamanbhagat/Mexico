@@ -8,8 +8,8 @@ export interface ReviewStatus {
   reviewed_on: string | null;
 }
 
-/** Legal review state for a page, from src/data/reviews.json (never faked in templates). */
-export function reviewFor(key: PageKey): ReviewStatus {
+/** Review state for a page or page family, from src/data/reviews.json (never faked in templates). */
+export function reviewFor(key: PageKey | string): ReviewStatus {
   const entry = (reviews as unknown as Record<string, ReviewStatus | undefined>)[key];
   if (!entry) return { status: 'pending', reviewer: null, credentials: null, reviewed_on: null };
   // A "reviewed" entry without a named reviewer and date is treated as pending.

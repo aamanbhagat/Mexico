@@ -2,46 +2,76 @@
 import type { LocaleCode } from '../../i18n/locales';
 import { pathFor } from '../../i18n/routes';
 import { SITE } from '../../config/site';
+import { KALENDER_YEARS } from '../../content/id/meta';
 
 interface Props {
   locale: LocaleCode;
 }
 const { locale } = Astro.props;
-const links = [
-  { href: pathFor('mx.aguinaldo', locale), label: 'Aguinaldo' },
-  { href: pathFor('mx.finiquito', locale), label: 'Finiquito' },
-  { href: pathFor('mx.liquidacion', locale), label: 'Liquidación' },
-  { href: pathFor('mx.prima-vacacional', locale), label: 'Prima vacacional' },
-  { href: pathFor('mx.vacaciones', locale), label: 'Vacaciones' },
-];
+
+interface Column {
+  title: string;
+  links: { href: string; label: string }[];
+}
+
+const content: { blurb: string; columns: Column[] } =
+  locale === 'id'
+    ? {
+        blurb:
+          'Alat hitung dan kalender dengan metode dan sumber yang jelas di setiap halaman. Semua perhitungan berjalan di perangkatmu: tanggal lahir yang kamu masukkan tidak kami kirim ke server mana pun.',
+        columns: [
+          {
+            title: 'Weton',
+            links: [
+              { href: pathFor('id.weton', locale), label: 'Cek weton' },
+              { href: pathFor('id.weton.jodoh', locale), label: 'Weton jodoh' },
+              { href: pathFor('id.weton.hari-ini', locale), label: 'Weton hari ini' },
+            ],
+          },
+          {
+            title: 'Kalender Jawa',
+            links: KALENDER_YEARS.map((y) => ({ href: pathFor(`id.kalender.${y}`, locale), label: `Kalender Jawa ${y}` })),
+          },
+        ],
+      }
+    : {
+        blurb:
+          'Calculadoras con la ley y los valores oficiales vigentes, citados en cada página. Tus datos se procesan en tu navegador: no los enviamos a ningún servidor.',
+        columns: [
+          {
+            title: 'Calculadoras laborales',
+            links: [
+              { href: pathFor('mx.aguinaldo', locale), label: 'Aguinaldo' },
+              { href: pathFor('mx.finiquito', locale), label: 'Finiquito' },
+              { href: pathFor('mx.liquidacion', locale), label: 'Liquidación' },
+              { href: pathFor('mx.prima-vacacional', locale), label: 'Prima vacacional' },
+              { href: pathFor('mx.vacaciones', locale), label: 'Vacaciones' },
+            ],
+          },
+          { title: 'Datos oficiales', links: [{ href: pathFor('mx.uma-salario-minimo', locale), label: 'UMA y salario mínimo 2026' }] },
+        ],
+      };
 ---
 
 <footer class="site-footer">
   <div class="wrap site-footer__grid">
     <div>
       <h2>{SITE.name}</h2>
-      <p>
-        Calculadoras con la ley y los valores oficiales vigentes, citados en cada página. Tus datos se procesan en tu navegador: no los
-        enviamos a ningún servidor.
-      </p>
+      <p>{content.blurb}</p>
     </div>
-    <div>
-      <h2>Calculadoras laborales</h2>
-      <ul>
-        {
-          links.map((l) => (
-            <li>
-              <a href={l.href}>{l.label}</a>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-    <div>
-      <h2>Datos oficiales</h2>
-      <ul>
-        <li><a href={pathFor('mx.uma-salario-minimo', locale)}>UMA y salario mínimo 2026</a></li>
-      </ul>
-    </div>
+    {
+      content.columns.map((c) => (
+        <div>
+          <h2>{c.title}</h2>
+          <ul>
+            {c.links.map((l) => (
+              <li>
+                <a href={l.href}>{l.label}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
   </div>
 </footer>

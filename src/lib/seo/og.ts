@@ -36,6 +36,44 @@ export interface OgSpec {
   color: string;
   footer: string;
   siteName: string;
+  /** Optional 7 × 5 neptu grid (weton cards): values per row/column and the crossing cell. */
+  selapan?: { values: number[][]; row: number; col: number } | undefined;
+}
+
+/** The weton crossing drawn as in the page: the active row and column as lines, one filled station. */
+function selapanGraphic(spec: NonNullable<OgSpec['selapan']>, color: string): Node {
+  const cell = 52;
+  const size = 42;
+  const lines = [
+    h('div', { position: 'absolute', left: 0, top: spec.row * cell + cell / 2 - 4, width: 5 * cell, height: 8, background: color }),
+    h('div', { position: 'absolute', top: 0, left: spec.col * cell + cell / 2 - 4, width: 8, height: 7 * cell, background: color }),
+  ];
+  const circles = spec.values.flatMap((row, r) =>
+    row.map((v, c) => {
+      const on = r === spec.row && c === spec.col;
+      const line = r === spec.row || c === spec.col;
+      return h(
+        'div',
+        {
+          position: 'absolute',
+          left: c * cell + (cell - size) / 2,
+          top: r * cell + (cell - size) / 2,
+          width: size,
+          height: size,
+          borderRadius: size,
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: on ? 24 : 20,
+          fontWeight: on ? 800 : 400,
+          color: on ? '#ffffff' : line ? '#000000' : '#6b6b67',
+          background: on ? color : '#ffffff',
+          border: line && !on ? `6px solid ${color}` : '0',
+        },
+        String(v),
+      );
+    }),
+  );
+  return h('div', { position: 'relative', width: 5 * cell, height: 7 * cell, flex: 'none' }, ...lines, ...circles);
 }
 
 export async function renderOg(spec: OgSpec): Promise<Buffer> {
@@ -69,9 +107,14 @@ export async function renderOg(spec: OgSpec): Promise<Buffer> {
       { flexDirection: 'column', justifyContent: 'space-between', padding: '64px 72px 56px 24px', width: 1050 },
       h(
         'div',
-        { flexDirection: 'column', gap: 24 },
-        h('div', { fontSize: 76, fontWeight: 800, lineHeight: 1.02, letterSpacing: -2 }, spec.title),
-        h('div', { fontSize: 34, fontWeight: 400, color: '#3d3d3a', lineHeight: 1.3 }, spec.subtitle),
+        { justifyContent: 'space-between', alignItems: 'flex-start', gap: 40 },
+        h(
+          'div',
+          { flexDirection: 'column', gap: 24, flex: 1 },
+          h('div', { fontSize: spec.selapan ? 70 : 76, fontWeight: 800, lineHeight: 1.02, letterSpacing: -2 }, spec.title),
+          h('div', { fontSize: 34, fontWeight: 400, color: '#3d3d3a', lineHeight: 1.3 }, spec.subtitle),
+        ),
+        ...(spec.selapan ? [selapanGraphic(spec.selapan, spec.color)] : []),
       ),
       h(
         'div',

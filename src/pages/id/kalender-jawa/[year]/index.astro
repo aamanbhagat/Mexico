@@ -1,0 +1,250 @@
+---
+/**
+ * Full-year Javanese calendar. Static and printable: all 12 months are in the HTML; months below
+ * the fold are skipped by the renderer until scrolled near (content-visibility), so the page stays
+ * fast on phones. Days open a detail dialog when JavaScript is available.
+ */
+import type { GetStaticPaths } from 'astro';
+import CalculatorLayout from '../../../../layouts/CalculatorLayout.astro';
+import MonthGrid from '../../../../components/kalender/MonthGrid.astro';
+import KalenderToolbar from '../../../../components/kalender/KalenderToolbar.astro';
+import DayDialog from '../../../../components/kalender/DayDialog.astro';
+import { BULAN, BULAN_SLUGS, KALENDER_YEARS, UPDATED } from '../../../../content/id/meta';
+import { ID_DISCLAIMER, ID_RELATED, ID_SOURCES } from '../../../../content/id/shared';
+import { jawaMarkerOf, yearModel } from '../../../../lib/weton/kalender';
+import { holidayVersionOf } from '../../../../lib/params/id';
+import { jawaShort, tanggal, tanggalHari, hijriShort } from '../../../../components/weton/copy';
+import type { FaqItem } from '../../../../lib/seo/jsonld';
+
+export const getStaticPaths = (() =>
+  KALENDER_YEARS.map((year) => ({ params: { year: String(year) }, props: { year } }))) satisfies GetStaticPaths;
+
+interface Props {
+  year: number;
+}
+const { year } = Astro.props;
+const model = yearModel(year);
+const days = model.months.flatMap((m) => m.days);
+const firstDay = days[0]!;
+const lastDay = days[days.length - 1]!;
+const suro = model.suro;
+const jumatKliwon = model.months.flatMap((m) => m.jumatKliwon);
+const selasaKliwon = model.months.flatMap((m) => m.selasaKliwon);
+const markers = days.filter((d) => jawaMarkerOf(d)).map((d) => ({ d, label: jawaMarkerOf(d) as string }));
+const holidays = model.months.flatMap((m) => m.holidays);
+const libur = holidays.filter((h) => h.holiday.kind === 'libur');
+const hasSkb = Boolean(holidayVersionOf(year));
+const jawaYears = [...new Set(days.map((d) => `${d.javanese.year} ${d.javanese.tahun}`))];
+const suroText = suro
+  .map((s) => {
+    const d = days.find((x) => x.iso === s.iso);
+    return `1 Suro ${s.year} jatuh pada ${d?.weton.dina} ${d?.weton.pasaran}, ${tanggal(s.iso)}`;
+  })
+  .join('; ');
+const monthOf = (iso: string) => `/id/kalender-jawa/${year}/${BULAN_SLUGS[Number(iso.slice(5, 7)) - 1]}/`;
+
+const faq: FaqItem[] = [
+  ...suro.map((s) => ({
+    q: `Kapan 1 Suro ${year}?`,
+    a: `1 Suro ${s.year} Jawa jatuh pada ${tanggalHari(s.iso)} (${days.find((d) => d.iso === s.iso)?.weton.dina} ${days.find((d) => d.iso === s.iso)?.weton.pasaran}). Karena hari Jawa berganti saat magrib, malam 1 Suro adalah malam sebelumnya. Tahun Baru Islam (1 Muharam) bisa jatuh sehari lebih awal menurut Kemenag.`,
+  })),
+  {
+    q: `Tahun ${year} tahun Jawa apa?`,
+    a: `Tahun ${year} mencakup tahun Jawa ${jawaYears.join(' dan ')}, dalam windu ${firstDay.javanese.windu}. ${suroText}.`,
+  },
+  {
+    q: `Berapa kali Jumat Kliwon di ${year}?`,
+    a: `Ada ${jumatKliwon.length} kali: ${jumatKliwon.map((d) => tanggal(d.iso).replace(` ${year}`, '')).join(', ')}. Malam Jumat Kliwon adalah Kamis malam sebelumnya.`,
+  },
+  {
+    q: `Kenapa tanggal Jawa di kalender lain kadang berbeda satu hari?`,
+    a: 'Kami memakai aturan kalender Sultan Agung dengan kurup Asapon, sama seperti kalender Kementerian Agama. Sebagian kalender menyamakan tanggal Jawa dengan tanggal Hijriah, dan komunitas Aboge menghitung sehari lebih lambat, sehingga tanggalnya bisa bergeser satu hari.',
+  },
+  {
+    q: `Apakah kalender Jawa ${year} ini bisa dicetak?`,
+    a: 'Bisa. Tekan "Cetak kalender" di atas (atau menu cetak di browser): setiap halaman A4 memuat dua bulan, tanpa menu dan tombol, dengan hari Minggu dan libur tetap merah.',
+  },
+  {
+    q: 'Bagaimana mengonversi tanggal Jawa ke tanggal Masehi?',
+    a: 'Cari bulan Jawanya di kalender ini: setiap kotak memuat tanggal Masehi besar dan tanggal Jawa di kiri bawah. Untuk tanggal lahir di tahun lain, pakai kalkulator weton, yang menghitung tanggal Jawa untuk tahun 1900–2100.',
+  },
+];
+---
+
+<CalculatorLayout
+  pageKey={`id.kalender.${year}`}
+  locale="id"
+  tool="kalender"
+  reviewKey="id.kalender"
+  crumb={`Kalender Jawa ${year}`}
+  ogSlug={`id/kalender-${year}`}
+  title={`Kalender Jawa ${year} Lengkap dengan Weton, Pasaran dan Hijriah`}
+  description={`Kalender Jawa ${year} Januari sampai Desember: weton dan pasaran setiap tanggal, tanggal Jawa ${jawaYears.map((y) => y.split(' ')[0]).join('–')}, Hijriah Kemenag, libur nasional dan 1 Suro.`}
+  h1={`Kalender Jawa ${year} lengkap dengan weton dan pasaran`}
+  lede={`${suroText}. Setiap tanggal ${year} di bawah memuat pasaran, tanggal Jawa dan tanggal Hijriah versi Kemenag.`}
+  updated={UPDATED}
+  appName={`Kalender Jawa ${year}`}
+  appCategory="ReferenceApplication"
+  faq={faq}
+  sourceParams={['id.hijri-kemenag', 'id.hari-libur', 'id.weton-methods']}
+  extraSources={ID_SOURCES.calendar}
+  asOf={`${year}-06-30`}
+  hasExamples={false}
+  howTitle="Cara membaca kalender Jawa ini"
+  related={ID_RELATED}
+>
+  <KalenderToolbar year={year} />
+  <div class="kal-year">
+    {model.months.map((m) => <MonthGrid model={m} />)}
+  </div>
+  <DayDialog />
+
+  <Fragment slot="how">
+    <p>
+      Setiap kotak berisi tanggal Masehi (angka besar), pasaran (Legi, Pahing, Pon, Wage, Kliwon), tanggal Jawa di kiri bawah dan tanggal
+      Hijriah di kanan bawah. Pada hari pertama bulan Jawa, nama bulannya ditulis lengkap.
+    </p>
+    <ul>
+      <li>
+        <strong>Pasaran</strong> berputar setiap 5 hari; gabungan hari dan pasaran adalah weton, yang terulang setiap 35 hari.
+      </li>
+      <li>
+        <strong>Tanggal Jawa</strong> mengikuti kalender Sultan Agung, kurup Asapon (seperti kalender Kemenag). Bulan Jawa berumur 30 dan 29 hari
+        bergantian; tahun Ehe, Dal dan Jimakir punya bulan Besar 30 hari.
+      </li>
+      <li>
+        <strong>Tanggal Hijriah</strong> mengikuti awal bulan dari Kemenag; tanda ≈ berarti awal bulannya masih perkiraan.
+      </li>
+      <li>
+        <strong>Merah</strong>: hari Minggu dan libur nasional menurut SKB 3 Menteri {year}{
+          hasSkb ? '' : ' (belum terbit; hanya hari Minggu)'
+        }.
+      </li>
+    </ul>
+    <p class="formula">
+      <b>Pasaran</b> = sisa (selisih hari dari 17-08-1945 ÷ 5): 0 Legi, 1 Pahing, 2 Pon, 3 Wage, 4 Kliwon<br />
+      <b>Bulan Jawa</b>: Suro 30, Sapar 29, Mulud 30, Bakdamulud 29, Jumadilawal 30, Jumadilakir 29, Rejeb 30, Ruwah 29, Pasa 30, Sawal 29,
+      Sela 30, Besar 29 (30 pada tahun panjang)
+    </p>
+  </Fragment>
+
+  <Fragment slot="extra">
+    <section class="section" aria-labelledby="penting">
+      <h2 id="penting">Tanggal penting {year}</h2>
+      <div class="table-scroll" tabindex="0" role="region" aria-label={`Tanggal penting ${year}`}>
+        <table class="data-table">
+          <caption>Libur nasional, cuti bersama dan tanggal Jawa penting, urut tanggal</caption>
+          <thead>
+            <tr>
+              <th scope="col">Tanggal</th>
+              <th scope="col">Weton</th>
+              <th scope="col">Keterangan</th>
+              <th scope="col">Tanggal Jawa</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              [
+                ...holidays.map((h) => ({ d: h.day, label: h.holiday.name, kind: h.holiday.kind })),
+                ...markers.map((m) => ({ d: m.d, label: m.label, kind: 'jawa' as const })),
+              ]
+                .sort((a, b) => a.d.iso.localeCompare(b.d.iso))
+                .map((r) => (
+                  <tr class={r.kind === 'libur' ? 'kal-row-libur' : undefined}>
+                    <th scope="row">
+                      <a href={monthOf(r.d.iso)}>{tanggalHari(r.d.iso)}</a>
+                    </th>
+                    <td>
+                      {r.d.weton.dina} {r.d.weton.pasaran}
+                    </td>
+                    <td>
+                      {r.label}
+                      {r.kind === 'cuti' ? '' : r.kind === 'jawa' ? ' (kalender Jawa)' : ''}
+                    </td>
+                    <td>{jawaShort(r.d.javanese)}</td>
+                  </tr>
+                ))
+            }
+          </tbody>
+        </table>
+      </div>
+      <p class="calc__fine">
+        {libur.length} hari libur nasional{hasSkb ? ' menurut SKB 3 Menteri' : ''}. Tanggal Jawa penting dihitung dari kalender Jawa
+        (Asapon); acara adat seperti grebeg mengikuti pengumuman keraton.
+      </p>
+    </section>
+
+    <section class="section" aria-labelledby="bulan-jawa">
+      <h2 id="bulan-jawa">Bulan Jawa yang dimulai di {year}</h2>
+      <div class="table-scroll" tabindex="0" role="region" aria-label={`Bulan Jawa ${year}`}>
+        <table class="data-table">
+          <caption>Tanggal 1 setiap bulan Jawa dan wetonnya</caption>
+          <thead>
+            <tr>
+              <th scope="col">Bulan Jawa</th>
+              <th scope="col">Tanggal 1</th>
+              <th scope="col">Weton</th>
+              <th scope="col" class="num">Umur</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              model.jawaMonths.map((d) => (
+                <tr>
+                  <th scope="row">
+                    {d.javanese.monthName} {d.javanese.year}
+                  </th>
+                  <td>
+                    <a href={monthOf(d.iso)}>{tanggal(d.iso)}</a>
+                  </td>
+                  <td>
+                    {d.weton.dina} {d.weton.pasaran}
+                  </td>
+                  <td class="num">{d.javanese.daysInMonth} hari</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="kliwon">
+      <h2 id="kliwon">Jumat Kliwon dan Selasa Kliwon {year}</h2>
+      <div class="prose">
+        <p>
+          <strong>Jumat Kliwon</strong> ({jumatKliwon.length} kali; malamnya jatuh pada Kamis malam sebelumnya):{' '}
+          {jumatKliwon.map((d) => tanggal(d.iso).replace(` ${year}`, '')).join(', ')}.
+        </p>
+        <p>
+          <strong>Selasa Kliwon</strong> atau Anggara Kasih ({selasaKliwon.length} kali): {
+            selasaKliwon.map((d) => tanggal(d.iso).replace(` ${year}`, '')).join(', ')
+          }.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="bulanan">
+      <h2 id="bulanan">Kalender Jawa {year} per bulan</h2>
+      <ul class="pill-list">
+        {
+          BULAN.map((b, i) => (
+            <li>
+              <a href={`/id/kalender-jawa/${year}/${BULAN_SLUGS[i]}/`}>
+                {b} {year}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="calc__fine">
+        Tanggal Hijriah 1 Januari {year}: {hijriShort(firstDay.hijri)}; 31 Desember {year}: {hijriShort(lastDay.hijri)}.
+      </p>
+    </section>
+  </Fragment>
+
+  <Fragment slot="disclaimer">
+    <p>{ID_DISCLAIMER.kalender}</p>
+    <p>{ID_DISCLAIMER.hijri}</p>
+  </Fragment>
+</CalculatorLayout>

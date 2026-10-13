@@ -134,23 +134,51 @@ interface ActionsProps {
   tool?: string;
   /** Plain-text summary for the clipboard. */
   summary: () => string;
-  /** Builds and downloads the PDF (imported lazily). */
-  onPdf: () => Promise<void>;
+  /** Builds and downloads the PDF (imported lazily). Omit to hide the PDF button. */
+  onPdf?: (() => Promise<void>) | undefined;
   shareTitle: string;
+  /** URL to share; defaults to the current address (which carries the inputs). */
+  shareUrl?: (() => string) | undefined;
   disabled?: boolean;
+  labels?: ActionLabels | undefined;
 }
 
 type Feedback = '' | 'copied' | 'shared' | 'link' | 'pdf' | 'error';
 
-const FEEDBACK: Record<Exclude<Feedback, ''>, string> = {
-  copied: 'Resumen copiado',
-  shared: 'Listo para compartir',
-  link: 'Enlace copiado',
-  pdf: 'PDF descargado',
-  error: 'No se pudo completar. Intenta de nuevo.',
+export interface ActionLabels {
+  copy: string;
+  share: string;
+  pdf: string;
+  feedback: Record<Exclude<Feedback, ''>, string>;
+}
+
+const LABELS_ES: ActionLabels = {
+  copy: 'Copiar',
+  share: 'Compartir',
+  pdf: 'Descargar PDF',
+  feedback: {
+    copied: 'Resumen copiado',
+    shared: 'Listo para compartir',
+    link: 'Enlace copiado',
+    pdf: 'PDF descargado',
+    error: 'No se pudo completar. Intenta de nuevo.',
+  },
 };
 
-export function ResultActions({ summary, onPdf, shareTitle, disabled, tool = '' }: ActionsProps) {
+export const ACTION_LABELS_ID: ActionLabels = {
+  copy: 'Salin',
+  share: 'Bagikan',
+  pdf: 'Unduh PDF',
+  feedback: {
+    copied: 'Ringkasan disalin',
+    shared: 'Siap dibagikan',
+    link: 'Tautan disalin',
+    pdf: 'PDF diunduh',
+    error: 'Gagal. Coba lagi.',
+  },
+};
+
+export function ResultActions({ summary, onPdf, shareTitle, shareUrl, disabled, tool = '', labels = LABELS_ES }: ActionsProps) {
   const [feedback, setFeedback] = useState<Feedback>('');
   useEffect(() => {
     if (!feedback) return;
@@ -168,7 +196,7 @@ export function ResultActions({ summary, onPdf, shareTitle, disabled, tool = '' 
     }
   };
   const share = async () => {
-    const url = window.location.href;
+    const url = shareUrl ? shareUrl() : window.location.href;
     try {
       if (typeof navigator.share === 'function') {
         await navigator.share({ title: shareTitle, url });
@@ -184,6 +212,7 @@ export function ResultActions({ summary, onPdf, shareTitle, disabled, tool = '' 
     }
   };
   const pdf = async () => {
+    if (!onPdf) return;
     try {
       await onPdf();
       setFeedback('pdf');
@@ -198,19 +227,21 @@ export function ResultActions({ summary, onPdf, shareTitle, disabled, tool = '' 
       <div class="actions__row">
         <button type="button" class="btn btn--quiet" onClick={copy} disabled={disabled}>
           <Icon name="copy" />
-          Copiar
+          {labels.copy}
         </button>
         <button type="button" class="btn btn--quiet" onClick={share} disabled={disabled}>
           <Icon name="share" />
-          Compartir
+          {labels.share}
         </button>
-        <button type="button" class="btn btn--quiet" onClick={pdf} disabled={disabled}>
-          <Icon name="pdf" />
-          Descargar PDF
-        </button>
+        {onPdf ? (
+          <button type="button" class="btn btn--quiet" onClick={pdf} disabled={disabled}>
+            <Icon name="pdf" />
+            {labels.pdf}
+          </button>
+        ) : null}
       </div>
       <p class="actions__feedback" role="status" aria-live="polite">
-        {feedback ? FEEDBACK[feedback] : ''}
+        {feedback ? labels.feedback[feedback] : ''}
       </p>
     </div>
   );

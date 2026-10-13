@@ -42,7 +42,11 @@ export function webAppLd(args: {
   path: string;
   inLanguage: string;
   dateModified: string;
-  country?: string;
+  country?: string | undefined;
+  /** schema.org applicationCategory; MX payroll tools are FinanceApplication. */
+  category?: string | undefined;
+  currency?: string | undefined;
+  browserRequirements?: string | undefined;
 }) {
   return {
     '@context': 'https://schema.org',
@@ -51,12 +55,12 @@ export function webAppLd(args: {
     description: args.description,
     url: absoluteUrl(args.path),
     inLanguage: args.inLanguage,
-    applicationCategory: 'FinanceApplication',
+    applicationCategory: args.category ?? 'FinanceApplication',
     operatingSystem: 'Any',
-    browserRequirements: 'Requiere JavaScript para recalcular en vivo.',
+    browserRequirements: args.browserRequirements ?? 'Requiere JavaScript para recalcular en vivo.',
     isAccessibleForFree: true,
     dateModified: args.dateModified,
-    offers: { '@type': 'Offer', price: '0', priceCurrency: 'MXN' },
+    offers: { '@type': 'Offer', price: '0', priceCurrency: args.currency ?? 'MXN' },
     publisher: { '@type': 'Organization', name: SITE.name, url: absoluteUrl('/') },
     ...(args.country ? { areaServed: { '@type': 'Country', name: args.country } } : {}),
   };

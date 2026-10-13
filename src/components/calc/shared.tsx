@@ -25,6 +25,7 @@ export function useUrlState<T extends object>(
   codec: Codec<T>,
   makeDefaults: (today: string) => T,
   buildDay: string,
+  todayFn: () => string = todayInMexico,
 ): [T, (patch: Partial<T>) => void, string] {
   const [today, setToday] = useState(buildDay);
   const defaults = useRef<T>(makeDefaults(buildDay));
@@ -32,7 +33,7 @@ export function useUrlState<T extends object>(
   const ready = useRef(false);
 
   useEffect(() => {
-    const now = todayInMexico();
+    const now = todayFn();
     defaults.current = makeDefaults(now);
     setToday(now);
     const initial = makeDefaults(buildDay);
@@ -101,10 +102,34 @@ interface ShellProps {
   tool: string;
   /** How the headline figure is written (money by default). */
   format?: (n: number) => string;
+  /** Replaces the animated figure when the answer is not a number (e.g. a weton name). */
+  display?: ComponentChildren;
+  /** Text announced and shown in the mobile bar instead of format(headline). */
+  headlineText?: string | undefined;
+  /** Interface words (default es-MX). */
+  labels?: { form: string; barLink: string } | undefined;
+  /** Id of the element the mobile bar links to (default `${tool}-desglose`). */
+  anchor?: string | undefined;
 }
 
-export function CalculatorShell({ resultLabel, headline, headlineNote, empty, form, result, tool, format = formatMoney }: ShellProps) {
-  const announcement = useAnnouncement(headline === null ? '' : `${resultLabel}: ${format(headline)}`);
+const SHELL_LABELS_ES = { form: 'Datos para el cálculo', barLink: 'Ver desglose' };
+
+export function CalculatorShell({
+  resultLabel,
+  headline,
+  headlineNote,
+  empty,
+  form,
+  result,
+  tool,
+  format = formatMoney,
+  display,
+  headlineText,
+  labels = SHELL_LABELS_ES,
+  anchor,
+}: ShellProps) {
+  const text = headline === null ? '' : (headlineText ?? format(headline));
+  const announcement = useAnnouncement(headline === null ? '' : `${resultLabel}: ${text}`);
   // One "calculo" event per page view, the first time a result appears (completion-rate KPI).
   const counted = useRef(false);
   useEffect(() => {
@@ -115,7 +140,7 @@ export function CalculatorShell({ resultLabel, headline, headlineNote, empty, fo
   }, [headline, announcement, tool]);
   return (
     <div class="calc" data-tool={tool}>
-      <form class="calc__form" onSubmit={(e) => e.preventDefault()} aria-label="Datos para el cálculo" noValidate>
+      <form class="calc__form" onSubmit={(e) => e.preventDefault()} aria-label={labels.form} noValidate>
         {form}
       </form>
       <section class="calc__result" aria-labelledby={`${tool}-result-title`}>
@@ -127,9 +152,7 @@ export function CalculatorShell({ resultLabel, headline, headlineNote, empty, fo
             <p class="result-head__empty">{empty}</p>
           ) : (
             <>
-              <p class="result-head__amount">
-                <AnimatedNumber value={headline} format={format} />
-              </p>
+              <p class="result-head__amount">{display ?? <AnimatedNumber value={headline} format={format} />}</p>
               {headlineNote ? <p class="result-head__note">{headlineNote}</p> : null}
             </>
           )}
@@ -141,9 +164,9 @@ export function CalculatorShell({ resultLabel, headline, headlineNote, empty, fo
       </section>
       <div class="result-bar" aria-hidden={headline === null ? 'true' : undefined}>
         <span class="result-bar__label">{resultLabel}</span>
-        <span class="result-bar__amount">{headline === null ? '—' : format(headline)}</span>
-        <a class="result-bar__link" href={`#${tool}-desglose`} tabIndex={headline === null ? -1 : undefined}>
-          Ver desglose
+        <span class="result-bar__amount">{headline === null ? '—' : text}</span>
+        <a class="result-bar__link" href={`#${anchor ?? `${tool}-desglose`}`} tabIndex={headline === null ? -1 : undefined}>
+          {labels.barLink}
         </a>
       </div>
     </div>

@@ -1,0 +1,183 @@
+---
+import CalculatorLayout from '../../../../layouts/CalculatorLayout.astro';
+import ExampleCard from '../../../../components/page/ExampleCard.astro';
+import JodohCalculator from '../../../../components/weton/JodohCalculator';
+import { JODOH_EXAMPLES } from '../../../../content/id/examples';
+import { BUILD_DAY, UPDATED } from '../../../../content/id/meta';
+import { ID_DISCLAIMER, ID_RELATED } from '../../../../content/id/shared';
+import { jodohAll, neptuOfWeton } from '../../../../lib/weton';
+import { idReference, jodohMethods, wetonMethodsData } from '../../../../lib/params/id';
+import { wetonSlug } from '../../../../lib/calendar/javanese';
+import type { FaqItem } from '../../../../lib/seo/jsonld';
+
+const methods = jodohMethods();
+const notImplemented = wetonMethodsData().not_implemented;
+const ref = (key: string) => idReference('id.weton-methods', key);
+
+const examples = JODOH_EXAMPLES.map((ex) => {
+  const all = jodohAll(ex.a, ex.b);
+  const na = neptuOfWeton(ex.a).total;
+  const nb = neptuOfWeton(ex.b).total;
+  return {
+    ex,
+    rows: [
+      { label: `${ex.a.dina} ${ex.a.pasaran} + ${ex.b.dina} ${ex.b.pasaran}`, value: `${na} + ${nb} = ${na + nb}` },
+      ...all.map((o) => ({ label: o.method.short, value: o.result.label })),
+    ],
+    href: `/id/weton/jodoh/?ma=weton&wa=${wetonSlug(ex.a.dina, ex.a.pasaran)}&mb=weton&wb=${wetonSlug(ex.b.dina, ex.b.pasaran)}`,
+    sources: ex.sources,
+  };
+});
+
+const usedRefs = [...new Set([...methods.flatMap((m) => m.refs), ...notImplemented.flatMap((m) => m.refs)])];
+
+const faq: FaqItem[] = [
+  {
+    q: 'Bagaimana cara menghitung weton jodoh?',
+    a: 'Hitung neptu weton masing-masing (neptu hari + neptu pasaran), jumlahkan keduanya, lalu bagi dengan angka pembagi metode yang dipakai. Sisa pembagian itulah yang dibaca. Dengan metode sisa 8, misalnya Selasa Legi (8) dan Minggu Pahing (14): 22 dibagi 8 sisa 6, yaitu Padu. Sisa 0 dihitung sama dengan angka pembaginya.',
+  },
+  {
+    q: 'Metode mana yang paling benar?',
+    a: 'Tidak ada satu metode yang diakui semua orang; tiap buku primbon dan tiap daerah bisa berbeda. Kami menjadikan sisa 8 (Pegat sampai Pesthi) sebagai bawaan karena paling banyak dipakai di media dan kalkulator lain, tetapi hasil sisa 7, sisa 5 dan sisa 4 tetap ditampilkan agar kamu bisa membandingkan.',
+  },
+  {
+    q: 'Kenapa hasil weton jodoh di situs lain berbeda?',
+    a: 'Biasanya karena tiga hal: pembagi yang dipakai berbeda (8, 7, 5 atau 4), urutan nama hasilnya berbeda (misalnya pada metode sisa 7), atau tanggal lahirnya dikonversi ke weton dengan kalender yang berbeda. Di halaman ini metode dan sumbernya selalu terlihat.',
+  },
+  {
+    q: 'Apa arti Pegat, Ratu, Jodoh, Topo, Tinari, Padu, Sujanan dan Pesthi?',
+    a: 'Dalam metode sisa 8: Pegat dibaca rawan berpisah, Ratu dihargai lingkungan, Jodoh saling cocok, Topo berat di awal lalu membaik, Tinari mudah rezeki, Padu sering berselisih paham, Sujanan rawan curiga atau orang ketiga, dan Pesthi rukun serta langgeng.',
+  },
+  {
+    q: 'Kalau hasilnya Pegat atau Pati, apakah tidak boleh menikah?',
+    a: 'Hitungan weton bukan syarat sah perkawinan menurut hukum negara, dan tafsirnya berbeda antarmetode: pasangan yang sama bisa Pesthi di satu metode dan Pati di metode lain. Banyak keluarga memakainya sebagai bahan pertimbangan, memilih hari pernikahan yang baik, atau mengadakan doa dan selamatan. Keputusan tetap ada pada kedua calon dan keluarganya.',
+  },
+  {
+    q: 'Apakah ada metode weton jodoh Walisongo?',
+    a: 'Kami belum menemukan sumber tertulis yang menjelaskan metode hitungan jodoh yang dinisbatkan kepada Walisongo, jadi metode itu tidak kami tampilkan. Jika kamu punya rujukan bukunya, kami akan memeriksanya.',
+  },
+  {
+    q: 'Bisakah menghitung kalau hanya tahu wetonnya?',
+    a: 'Bisa. Pilih "Sudah tahu weton" untuk salah satu atau kedua orang, lalu pilih hari dan pasarannya. Tanggal lahir tidak wajib diisi.',
+  },
+];
+---
+
+<CalculatorLayout
+  pageKey="id.weton.jodoh"
+  locale="id"
+  tool="jodoh"
+  reviewKey="id.weton.jodoh"
+  crumb="Weton jodoh"
+  parents={[{ name: 'Weton', path: '/id/weton/' }]}
+  title="Hitung Weton Jodoh Online: Semua Metode Primbon dan Sumbernya"
+  description="Cek weton jodoh dari tanggal lahir atau weton: hasil metode sisa 8 (Pegat sampai Pesthi), sisa 7, sisa 5 dan sisa 4 sekaligus, lengkap dengan cara hitung dan sumber."
+  h1="Hitung weton jodoh"
+  lede="Jumlahkan neptu weton kedua orang, bagi dengan angka pembagi, lalu baca sisanya. Primbon punya beberapa metode yang hasilnya sering berbeda; di sini semuanya tampil berdampingan, lengkap dengan sumbernya."
+  updated={UPDATED}
+  appName="Kalkulator weton jodoh"
+  appCategory="UtilitiesApplication"
+  faq={faq}
+  sourceParams={['id.weton-methods']}
+  extraSources={usedRefs.map((k) => ({ title: ref(k).title, url: ref(k).url }))}
+  asOf={UPDATED}
+  howTitle="Cara menghitung weton jodoh"
+  related={ID_RELATED}
+>
+  <JodohCalculator client:load buildDay={BUILD_DAY} />
+
+  <Fragment slot="how">
+    <ol>
+      <li>Hitung neptu weton masing-masing: neptu hari ditambah neptu pasaran.</li>
+      <li>Jumlahkan neptu kedua orang.</li>
+      <li>Bagi jumlahnya dengan angka pembagi metode (8, 7, 5 atau 4). Jika habis dibagi, sisanya dihitung sama dengan pembagi.</li>
+      <li>Baca arti sisa itu pada daftar metode di bawah.</li>
+    </ol>
+    <p class="formula">
+      <b>Jumlah</b> = neptu orang pertama + neptu orang kedua<br />
+      <b>Sisa</b> = jumlah − pembagi × bagian bulat (jumlah ÷ pembagi); sisa 0 dihitung = pembagi
+    </p>
+    <p>
+      Neptu hari: Minggu 5, Senin 4, Selasa 3, Rabu 7, Kamis 8, Jumat 6, Sabtu 9. Neptu pasaran: Legi 5, Pahing 9, Pon 7, Wage 4, Kliwon 8.
+      Belum tahu weton? <a href="/id/weton/">Cek weton dari tanggal lahir</a>.
+    </p>
+  </Fragment>
+
+  <div slot="examples" class="examples">
+    {
+      examples.map(({ ex, rows, href, sources }) => (
+        <ExampleCard title={ex.title} story={ex.story} rows={rows} source={sources} href={href} locale="id" />
+      ))
+    }
+  </div>
+
+  <section slot="extra" class="section" aria-labelledby="metode">
+    <h2 id="metode">Metode yang kami tampilkan</h2>
+    <div class="prose">
+      <p>
+        Setiap metode di bawah dipakai oleh paling sedikit dua sumber yang bisa kamu periksa. Kami tidak menambah, mengurangi atau mengubah
+        urutan hasilnya; jika sumber berbeda, perbedaannya kami tulis.
+      </p>
+    </div>
+    {
+      methods.map((m) => (
+        <article class="method" id={`metode-${m.id}`} aria-labelledby={`metode-${m.id}-judul`}>
+          <h3 id={`metode-${m.id}-judul`}>
+            {m.name}
+            {m.default ? ' (bawaan)' : ''}
+          </h3>
+          {m.why_default && <p>{m.why_default}</p>}
+          <ul class="method__results">
+            {m.results.map((r) => (
+              <li>
+                <b>{r.remainder}</b>
+                <strong>{r.label}</strong>
+                <span>{r.summary}</span>
+              </li>
+            ))}
+          </ul>
+          <p class="calc__fine">{m.zero_note}</p>
+          <p class="conflict">{m.conflicts}</p>
+          <p class="calc__fine">
+            Sumber:{' '}
+            {m.refs.map((k, i) => (
+              <>
+                {i > 0 && '; '}
+                <a href={ref(k).url} rel="noopener" target="_blank">
+                  {ref(k).title}
+                </a>
+              </>
+            ))}
+          </p>
+        </article>
+      ))
+    }
+    {
+      notImplemented.map((n) => (
+        <article class="method" id={`metode-${n.id}`} aria-labelledby={`metode-${n.id}-judul`}>
+          <h3 id={`metode-${n.id}-judul`}>Belum kami tampilkan: {n.name}</h3>
+          <p>{n.reason}</p>
+          <p class="calc__fine">
+            Sumber parsial:{' '}
+            {n.refs.map((k, i) => (
+              <>
+                {i > 0 && '; '}
+                <a href={ref(k).url} rel="noopener" target="_blank">
+                  {ref(k).title}
+                </a>
+              </>
+            ))}
+          </p>
+        </article>
+      ))
+    }
+  </section>
+
+  <Fragment slot="disclaimer">
+    <p>{ID_DISCLAIMER.weton}</p>
+    <p>
+      Hasil hitungan jodoh adalah tafsir primbon yang berbeda antarmetode. Pertimbangkan bersama keluarga dan, bila perlu, tokoh adat atau
+      agama yang kamu percaya.
+    </p>
+  </Fragment>
+</CalculatorLayout>

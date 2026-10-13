@@ -6,7 +6,8 @@ const DIST = 'dist';
 const problems = [];
 
 // 1. Unpublished locales must not produce pages (their folders are reserved, not live).
-const unpublished = ['pt-br', 'id', 'ja', 'pl', 'de', 'es-es', 'en', 'tr'];
+// Keep in sync with `published: false` in src/i18n/locales.ts (tests/unit/utils.test.ts checks it).
+const unpublished = ['pt-br', 'ja', 'pl', 'de', 'es-es', 'en', 'tr'];
 for (const code of unpublished) {
   if (existsSync(join(DIST, code))) problems.push(`Unpublished locale folder found in dist/: /${code}/`);
 }

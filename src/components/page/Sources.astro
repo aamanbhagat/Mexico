@@ -1,6 +1,8 @@
 ---
-import { MX_PARAM_FILES, type MxParamId } from '../../lib/params/mx';
+import { PARAM_FILES, type ParamId } from '../../lib/params/registry';
 import { formatDateLong } from '../../lib/ui/format';
+import { getLocale, type LocaleCode } from '../../i18n/locales';
+import { ui } from '../../i18n/ui';
 
 export interface ExtraSource {
   title: string;
@@ -10,14 +12,17 @@ export interface ExtraSource {
 
 interface Props {
   /** Registry parameters used on this page; the version in force on `asOf` is cited. */
-  params: MxParamId[];
+  params: ParamId[];
   asOf: string;
   extra?: ExtraSource[] | undefined;
+  locale?: LocaleCode | undefined;
 }
-const { params, asOf, extra = [] } = Astro.props;
+const { params, asOf, extra = [], locale = 'es-mx' } = Astro.props;
+const t = ui(locale).sourceMeta;
+const intl = getLocale(locale).intl;
 
 const cited = params.map((id) => {
-  const file = MX_PARAM_FILES[id];
+  const file = PARAM_FILES[id];
   const version = [...file.versions].reverse().find((v) => v.effective_from <= asOf) ?? file.versions[file.versions.length - 1];
   return { file, version: version! };
 });
@@ -31,12 +36,9 @@ const cited = params.map((id) => {
           {version.source_title}
         </a>
         <span class="sources__meta">
-          {file.name} · vigente desde el {formatDateLong(version.effective_from)} · consultado el {formatDateLong(version.retrieved_on)} ·{' '}
-          {version.verified ? (
-            <span class="verify verify--ok">verificado contra la fuente oficial</span>
-          ) : (
-            <span class="verify verify--pending">verificación contra el documento oficial pendiente</span>
-          )}
+          {file.name} · {t.inForceFrom} {formatDateLong(version.effective_from, intl)} · {t.consulted}{' '}
+          {formatDateLong(version.retrieved_on, intl)} ·{' '}
+          {version.verified ? <span class="verify verify--ok">{t.verified}</span> : <span class="verify verify--pending">{t.pending}</span>}
         </span>
       </li>
     ))

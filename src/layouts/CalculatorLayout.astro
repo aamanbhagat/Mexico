@@ -1,26 +1,28 @@
 ---
 /**
- * Page template for every calculator: answer-first hero, the island, "Cómo se calcula",
- * worked examples, FAQ, sources, last-updated date, disclaimer and the data-driven review badge.
- * Emits WebApplication + FAQPage + BreadcrumbList JSON-LD (CLAUDE.md §6).
+ * Page template for every tool: answer-first hero, the island, "how it works", worked examples,
+ * FAQ, sources, last-updated date, disclaimer and the data-driven review badge.
+ * Emits WebApplication (or Dataset) + FAQPage + BreadcrumbList JSON-LD (CLAUDE.md §6).
+ * Locale-specific words come from src/i18n/ui.ts; the Mexico disclaimer and related links are the
+ * defaults for es-MX, other locales pass their own through the `disclaimer` slot and `related`.
  */
 import BaseLayout from './BaseLayout.astro';
 import ReviewBadge from '../components/page/ReviewBadge.astro';
 import StationIcon from '../components/page/StationIcon.astro';
+import type { RelatedLink, StationTool } from '../components/page/types';
 import Faq from '../components/page/Faq.astro';
 import Sources, { type ExtraSource } from '../components/page/Sources.astro';
 import { pathFor, type PageKey } from '../i18n/routes';
-import type { LocaleCode } from '../i18n/locales';
-import { breadcrumbLd, datasetLd, faqLd, webAppLd, type FaqItem } from '../lib/seo/jsonld';
-import type { MxParamId } from '../lib/params/mx';
+import { getLocale, type LocaleCode } from '../i18n/locales';
+import { ui } from '../i18n/ui';
+import { breadcrumbLd, datasetLd, faqLd, webAppLd, type Crumb, type FaqItem } from '../lib/seo/jsonld';
+import type { ParamId } from '../lib/params/registry';
 import { formatDateLong } from '../lib/ui/format';
-
-type Tool = 'aguinaldo' | 'finiquito' | 'liquidacion' | 'prima-vacacional' | 'vacaciones' | 'uma';
 
 interface Props {
   pageKey: PageKey;
   locale: LocaleCode;
-  tool: Tool;
+  tool: StationTool;
   /** <title> */
   title: string;
   description: string;
@@ -31,7 +33,7 @@ interface Props {
   updated: string;
   appName: string;
   faq: FaqItem[];
-  sourceParams: MxParamId[];
+  sourceParams: ParamId[];
   extraSources?: ExtraSource[] | undefined;
   /** Date used to pick which parameter version to cite. */
   asOf: string;
@@ -44,33 +46,56 @@ interface Props {
   schema?: 'app' | 'dataset' | undefined;
   /** Heading of the "how" section. */
   howTitle?: string | undefined;
+  /** Breadcrumb trail between home and this page. */
+  parents?: Crumb[] | undefined;
+  /** Short name of this page in the breadcrumb (defaults to the H1). */
+  crumb?: string | undefined;
+  /** Related tools; defaults to the Mexico payout suite for es-MX. */
+  related?: RelatedLink[] | undefined;
+  /** Key in src/data/reviews.json (defaults to pageKey; a family key such as "id.weton"). */
+  reviewKey?: string | undefined;
+  /** Generated OG image slug (defaults to the tool). */
+  ogSlug?: string | undefined;
+  /** schema.org applicationCategory (defaults to FinanceApplication). */
+  appCategory?: string | undefined;
 }
 
 const p = Astro.props;
+const t = ui(p.locale);
+const loc = getLocale(p.locale);
 const path = p.pathOverride ?? pathFor(p.pageKey, p.locale);
 const home = pathFor('home', p.locale);
-const crumbs = [
-  { name: 'Inicio', path: home },
-  { name: p.h1, path },
-];
+const crumbs: Crumb[] = [{ name: t.home, path: home }, ...(p.parents ?? []), { name: p.crumb ?? p.h1, path }];
+const country = p.locale === 'id' ? 'Indonesia' : 'México';
 const jsonLd = [
   p.schema === 'dataset'
     ? datasetLd({ name: p.appName, description: p.description, path, dateModified: p.updated })
-    : webAppLd({ name: p.appName, description: p.description, path, inLanguage: 'es-MX', dateModified: p.updated, country: 'México' }),
+    : webAppLd({
+        name: p.appName,
+        description: p.description,
+        path,
+        inLanguage: loc.hreflang,
+        dateModified: p.updated,
+        country,
+        category: p.appCategory,
+        currency: loc.currency,
+        browserRequirements: t.browserRequirements,
+      }),
   faqLd(p.faq),
   breadcrumbLd(crumbs),
 ];
 
-const related: { key: PageKey; label: string; tool: Tool }[] = (
-  [
-    { key: 'mx.aguinaldo', label: 'Calculadora de aguinaldo', tool: 'aguinaldo' },
-    { key: 'mx.finiquito', label: 'Calculadora de finiquito', tool: 'finiquito' },
-    { key: 'mx.liquidacion', label: 'Calculadora de liquidación', tool: 'liquidacion' },
-    { key: 'mx.prima-vacacional', label: 'Calculadora de prima vacacional', tool: 'prima-vacacional' },
-    { key: 'mx.vacaciones', label: 'Calculadora de vacaciones', tool: 'vacaciones' },
-    { key: 'mx.uma-salario-minimo', label: 'UMA y salario mínimo 2026', tool: 'uma' },
-  ] as const
-).filter((r) => r.key !== p.pageKey);
+const mxRelated: RelatedLink[] = [
+  { href: pathFor('mx.aguinaldo', 'es-mx'), label: 'Calculadora de aguinaldo', tool: 'aguinaldo' },
+  { href: pathFor('mx.finiquito', 'es-mx'), label: 'Calculadora de finiquito', tool: 'finiquito' },
+  { href: pathFor('mx.liquidacion', 'es-mx'), label: 'Calculadora de liquidación', tool: 'liquidacion' },
+  { href: pathFor('mx.prima-vacacional', 'es-mx'), label: 'Calculadora de prima vacacional', tool: 'prima-vacacional' },
+  { href: pathFor('mx.vacaciones', 'es-mx'), label: 'Calculadora de vacaciones', tool: 'vacaciones' },
+  { href: pathFor('mx.uma-salario-minimo', 'es-mx'), label: 'UMA y salario mínimo 2026', tool: 'uma' },
+];
+const related = (p.related ?? (p.locale === 'es-mx' ? mxRelated : [])).filter((r) => r.href !== path);
+const hasDisclaimerSlot = Astro.slots.has('disclaimer');
+const reviewKey = p.reviewKey ?? p.pageKey;
 ---
 
 <BaseLayout
@@ -79,7 +104,7 @@ const related: { key: PageKey; label: string; tool: Tool }[] = (
   locale={p.locale}
   pageKey={p.pageKey}
   path={path}
-  ogSlug={p.tool}
+  ogSlug={p.ogSlug ?? (p.locale === 'es-mx' ? p.tool : `${p.locale}/${p.tool}`)}
   jsonLd={jsonLd}
   tool={p.tool}
   direction={p.direction}
@@ -87,10 +112,16 @@ const related: { key: PageKey; label: string; tool: Tool }[] = (
 >
   <slot name="head" slot="head" />
   <div class="wrap">
-    <nav class="breadcrumbs" aria-label="Ruta de navegación">
+    <nav class="breadcrumbs" aria-label={t.breadcrumbs}>
       <ol>
-        <li><a href={home}>Inicio</a></li>
-        <li aria-current="page">{p.h1}</li>
+        {
+          crumbs.slice(0, -1).map((c) => (
+            <li>
+              <a href={c.path}>{c.name}</a>
+            </li>
+          ))
+        }
+        <li aria-current="page">{p.crumb ?? p.h1}</li>
       </ol>
     </nav>
 
@@ -101,15 +132,15 @@ const related: { key: PageKey; label: string; tool: Tool }[] = (
       </div>
       <p class="hero__lede">{p.lede}</p>
       <p class="hero__meta">
-        <span>Actualizado el <time datetime={p.updated}>{formatDateLong(p.updated)}</time></span>
-        <ReviewBadge pageKey={p.pageKey} />
+        <span>{t.updatedOn} <time datetime={p.updated}>{formatDateLong(p.updated, loc.intl)}</time></span>
+        <ReviewBadge pageKey={reviewKey} locale={p.locale} />
       </p>
     </header>
 
     <slot />
 
     <section class="section" aria-labelledby="como-se-calcula">
-      <h2 id="como-se-calcula">{p.howTitle ?? 'Cómo se calcula'}</h2>
+      <h2 id="como-se-calcula">{p.howTitle ?? t.how}</h2>
       <div class="prose">
         <slot name="how" />
       </div>
@@ -118,7 +149,7 @@ const related: { key: PageKey; label: string; tool: Tool }[] = (
     {
       p.hasExamples !== false && (
         <section class="section" aria-labelledby="ejemplos">
-          <h2 id="ejemplos">Ejemplos resueltos</h2>
+          <h2 id="ejemplos">{t.examples}</h2>
           <slot name="examples" />
         </section>
       )
@@ -127,46 +158,59 @@ const related: { key: PageKey; label: string; tool: Tool }[] = (
     <slot name="extra" />
 
     <section class="section" aria-labelledby="preguntas">
-      <h2 id="preguntas">Preguntas frecuentes</h2>
+      <h2 id="preguntas">{t.faq}</h2>
       <Faq items={p.faq} />
     </section>
 
     <section class="section" aria-labelledby="fuentes">
-      <h2 id="fuentes">Fuentes y valores oficiales</h2>
-      <Sources params={p.sourceParams} asOf={p.asOf} extra={p.extraSources} />
+      <h2 id="fuentes">{t.sources}</h2>
+      <slot name="sources-intro" />
+      <Sources params={p.sourceParams} asOf={p.asOf} extra={p.extraSources} locale={p.locale} />
     </section>
 
     <section class="section" aria-labelledby="aviso">
       <div class="disclaimer">
-        <h2 id="aviso">Aviso importante</h2>
-        <p>
-          Este cálculo es una estimación informativa con base en la Ley Federal del Trabajo, la Ley del ISR y los valores oficiales vigentes
-          en la fecha indicada. No sustituye asesoría legal ni fiscal: tu contrato, un convenio o una resolución pueden darte más. La
-          retención real de ISR depende de la nómina de tu empresa y se ajusta en tu declaración anual.
-        </p>
-        <p>
-          Si tienes un conflicto laboral, la <a href="https://www.gob.mx/profedet" rel="noopener" target="_blank"
-            >Procuraduría Federal de la Defensa del Trabajo (PROFEDET)</a
-          > te asesora y representa gratis.
-        </p>
-        <p><ReviewBadge pageKey={p.pageKey} /></p>
+        <h2 id="aviso">{t.notice}</h2>
+        {
+          hasDisclaimerSlot ? (
+            <slot name="disclaimer" />
+          ) : (
+            <>
+              <p>
+                Este cálculo es una estimación informativa con base en la Ley Federal del Trabajo, la Ley del ISR y los valores oficiales
+                vigentes en la fecha indicada. No sustituye asesoría legal ni fiscal: tu contrato, un convenio o una resolución pueden darte
+                más. La retención real de ISR depende de la nómina de tu empresa y se ajusta en tu declaración anual.
+              </p>
+              <p>
+                Si tienes un conflicto laboral, la{' '}
+                <a href="https://www.gob.mx/profedet" rel="noopener" target="_blank">
+                  Procuraduría Federal de la Defensa del Trabajo (PROFEDET)
+                </a>{' '}
+                te asesora y representa gratis.
+              </p>
+            </>
+          )
+        }
+        <p><ReviewBadge pageKey={reviewKey} locale={p.locale} /></p>
       </div>
     </section>
 
-    <section class="section" aria-labelledby="relacionadas">
-      <h2 id="relacionadas">Otras calculadoras</h2>
-      <ul class="related">
-        {
-          related.map((r) => (
-            <li>
-              <a href={pathFor(r.key, p.locale)} data-tool={r.tool}>
-                <span class="dot" aria-hidden="true" />
-                {r.label}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </section>
+    {
+      related.length > 0 && (
+        <section class="section" aria-labelledby="relacionadas">
+          <h2 id="relacionadas">{t.related}</h2>
+          <ul class="related">
+            {related.map((r) => (
+              <li>
+                <a href={r.href} data-tool={r.tool}>
+                  <span class="dot" aria-hidden="true" />
+                  {r.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
   </div>
 </BaseLayout>

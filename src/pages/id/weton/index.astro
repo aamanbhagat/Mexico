@@ -1,0 +1,157 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import ExampleCard from '../../../components/page/ExampleCard.astro';
+import WetonCalculator from '../../../components/weton/WetonCalculator';
+import SelapanGrid from '../../../components/weton/SelapanGrid';
+import { WETON_EXAMPLES } from '../../../content/id/examples';
+import { BUILD_DAY, UPDATED } from '../../../content/id/meta';
+import { ID_RELATED, ID_SOURCES, ID_DISCLAIMER } from '../../../content/id/shared';
+import { wetonDay } from '../../../lib/weton';
+import { defaultNeptuTable } from '../../../lib/params/id';
+import { DINA, PASARAN, wetonSlug } from '../../../lib/calendar/javanese';
+import { jawaShort, tanggal } from '../../../components/weton/copy';
+import type { FaqItem } from '../../../lib/seo/jsonld';
+
+const table = defaultNeptuTable();
+const examples = WETON_EXAMPLES.map((ex) => {
+  const d = wetonDay(ex.iso);
+  return {
+    ex,
+    rows: [
+      { label: 'Tanggal', value: tanggal(ex.iso) },
+      { label: 'Tanggal Jawa', value: jawaShort(d.javanese) },
+      { label: 'Wuku', value: d.wuku.name },
+      { label: 'Neptu', value: `${d.neptu.dina} + ${d.neptu.pasaran} = ${d.neptu.total}` },
+      { label: 'Weton', value: `${d.weton.dina} ${d.weton.pasaran}` },
+    ],
+    href: `/id/weton/?t=${ex.iso}`,
+  };
+});
+
+const faq: FaqItem[] = [
+  {
+    q: 'Bagaimana cara menghitung weton dari tanggal lahir?',
+    a: 'Cari dulu hari lahir (dina) dan pasarannya. Pasaran berulang setiap 5 hari: Legi, Pahing, Pon, Wage, Kliwon. Hitung selisih hari dari tanggal yang pasarannya sudah diketahui, misalnya 17 Agustus 1945 (Jumat Legi), lalu bagi 5: sisa 0 berarti Legi, 1 Pahing, 2 Pon, 3 Wage, 4 Kliwon. Gabungan hari dan pasaran itulah wetonmu, misalnya Selasa Pon.',
+  },
+  {
+    q: 'Berapa nilai neptu setiap hari dan pasaran?',
+    a: 'Neptu hari: Minggu 5, Senin 4, Selasa 3, Rabu 7, Kamis 8, Jumat 6, Sabtu 9. Neptu pasaran: Legi 5, Pahing 9, Pon 7, Wage 4, Kliwon 8. Neptu weton adalah jumlah keduanya, jadi paling kecil 7 (Selasa Wage) dan paling besar 18 (Sabtu Pahing). Semua sumber yang kami periksa memakai nilai yang sama.',
+  },
+  {
+    q: 'Saya lahir malam hari. Wetonnya ikut hari itu atau hari berikutnya?',
+    a: 'Dalam tradisi Jawa hari berganti saat matahari terbenam, bukan tengah malam. Karena itu sebagian keluarga memakai weton hari berikutnya untuk bayi yang lahir setelah magrib. Kalkulator ini menghitung tanggal Masehi apa adanya; kalau kamu lahir setelah magrib, cek juga tanggal sesudahnya dan tanyakan kebiasaan di keluargamu.',
+  },
+  {
+    q: 'Apakah tanggal Jawa di sini sama dengan kalender Kemenag?',
+    a: 'Ya. Kami memakai hitungan kalender Sultan Agung dengan kurup Asapon, sama seperti kalender Kementerian Agama dan Keraton. Contohnya 1 Suro 1960 jatuh pada Rabu Kliwon 17 Juni 2026. Beberapa situs menyamakan tanggal Jawa dengan tanggal Hijriah sehingga hasilnya bisa selisih satu hari; komunitas Aboge juga menghitung sehari lebih lambat, dan kami menuliskan versi Aboge di hasil bila berbeda.',
+  },
+  {
+    q: 'Kenapa tanggal Jawa dan tanggal Hijriah bisa berbeda?',
+    a: 'Kalender Jawa memakai aturan hitungan tetap (bulan 30 dan 29 hari, tiga tahun panjang dalam satu windu), sedangkan awal bulan Hijriah di Indonesia ditetapkan Kemenag berdasarkan posisi hilal dan sidang isbat. Akibatnya 1 Suro dan 1 Muharam sering selisih satu hari, seperti pada 2026: 1 Muharam 1448 H jatuh 16 Juni, 1 Suro 1960 jatuh 17 Juni.',
+  },
+  {
+    q: 'Apa itu wuku?',
+    a: 'Wuku adalah siklus 30 minggu (210 hari) yang dimulai setiap hari Minggu, dari Sinta sampai Watugunung. Siklus ini sama dengan pawukon di Bali: misalnya wuku Galungan memuat Hari Raya Galungan yang jatuh pada Rabu Kliwon.',
+  },
+  {
+    q: 'Apakah weton menentukan sifat dan nasib seseorang?',
+    a: 'Weton dan primbon adalah warisan budaya Jawa yang dipakai untuk memahami tradisi, misalnya selamatan weton atau memilih hari baik. Tafsir watak berbeda-beda antarbuku primbon dan tidak bisa dibuktikan secara ilmiah. Pakailah sebagai bahan renungan dan budaya, bukan kepastian.',
+  },
+  {
+    q: 'Apakah tanggal lahir yang saya masukkan disimpan?',
+    a: 'Tidak. Weton dihitung di perangkatmu, tanpa daftar dan tanpa mengirim data ke server. Jika kamu membagikan tautan hasil, tautan itu memuat tanggal yang kamu isi, jadi bagikan hanya kepada orang yang kamu percaya.',
+  },
+];
+
+const slugs = DINA.flatMap((d) => PASARAN.map((p) => ({ name: `${d} ${p}`, href: `/id/weton/${wetonSlug(d, p)}/` })));
+---
+
+<CalculatorLayout
+  pageKey="id.weton"
+  locale="id"
+  tool="weton"
+  reviewKey="id.weton"
+  crumb="Cek weton"
+  title="Cek Weton Lahir Online: Hitung Weton Jawa dan Neptu"
+  description="Hitung weton dari tanggal lahir: hari, pasaran, neptu, wuku, serta tanggal Jawa dan Hijriah versi Kemenag. Metode dan sumbernya ditampilkan."
+  h1="Cek weton dari tanggal lahir"
+  lede="Weton adalah gabungan hari lahir dan pasaran Jawa, misalnya Selasa Pon, dan neptunya jumlah nilai keduanya: 3 + 7 = 10. Masukkan tanggal lahir untuk melihat weton, neptu, wuku, serta tanggal Jawa dan Hijriahnya."
+  updated={UPDATED}
+  appName="Kalkulator weton Jawa"
+  appCategory="UtilitiesApplication"
+  faq={faq}
+  sourceParams={['id.weton-methods', 'id.hijri-kemenag']}
+  extraSources={ID_SOURCES.calendar}
+  asOf={UPDATED}
+  howTitle="Cara menghitung weton"
+  related={ID_RELATED}
+>
+  <WetonCalculator client:load buildDay={BUILD_DAY} />
+
+  <Fragment slot="how">
+    <p>Ada tiga langkah, dan semuanya bisa dihitung dengan tangan:</p>
+    <ol>
+      <li>
+        <strong>Hari (dina)</strong> dari tanggal Masehi.
+      </li>
+      <li>
+        <strong>Pasaran</strong>: siklus 5 hari Legi, Pahing, Pon, Wage, Kliwon. Hitung selisih hari dari 17 Agustus 1945 (Jumat Legi), lalu
+        bagi 5.
+      </li>
+      <li>
+        <strong>Neptu</strong>: nilai hari ditambah nilai pasaran, dari tabel di bawah.
+      </li>
+    </ol>
+    <p class="formula">
+      <b>Pasaran</b> = sisa (selisih hari dari 17-08-1945 ÷ 5): 0 Legi, 1 Pahing, 2 Pon, 3 Wage, 4 Kliwon<br />
+      <b>Neptu weton</b> = neptu hari + neptu pasaran<br />
+      <b>Wuku ke-</b> = bagian bulat dari [sisa (selisih hari dari Minggu 01-11-2026 ÷ 210) ÷ 7] + 1, dari 1 Sinta sampai 30 Watugunung
+    </p>
+    <div class="table-scroll" tabindex="0" role="region" aria-label="Tabel neptu weton">
+      <SelapanGrid
+        table={table}
+        caption="Tabel neptu: hari di baris, pasaran di kolom, neptu weton di setiap sel"
+        hrefFor={(w) => `/id/weton/${wetonSlug(w.dina, w.pasaran)}/`}
+      />
+    </div>
+    <h3>Tanggal Jawa (kalender Sultan Agung)</h3>
+    <p>
+      Bulan Jawa berganti 30 dan 29 hari, dari Suro sampai Besar. Satu windu berisi delapan tahun: Alip, Ehe, Jimawal, Je, Dal, Be, Wawu dan
+      Jimakir. Ehe, Dal dan Jimakir adalah tahun panjang (355 hari, bulan Besar 30 hari); tahun lainnya 354 hari. Setiap 120 tahun (satu
+      kurup) satu hari dihapus. Sejak 1 Suro 1867 Jawa (24 Maret 1936) berlaku kurup Asapon, yang dipakai Keraton dan Kemenag; kurup
+      berikutnya, Anenhing, dimulai 26 Agustus 2052.
+    </p>
+    <h3>Tanggal Hijriah</h3>
+    <p>
+      Untuk 2026–2027 kami memakai tanggal awal bulan dari Kementerian Agama (Kalender Hijriah Indonesia dan hasil sidang isbat). Di luar
+      rentang itu kami memakai hisab urfi (aritmetika) dan menandainya dengan ≈ karena bisa selisih satu atau dua hari.
+    </p>
+  </Fragment>
+
+  <div slot="examples" class="examples">
+    {
+      examples.map(({ ex, rows, href }) => (
+        <ExampleCard title={ex.title} story={ex.story} rows={rows} source={ex.sources} href={href} locale="id" />
+      ))
+    }
+  </div>
+
+  <section slot="extra" class="section" aria-labelledby="semua-weton">
+    <h2 id="semua-weton">Semua 35 weton</h2>
+    <p class="prose">Setiap weton punya halaman sendiri: tanggalnya di 2026–2027, neptu, watak menurut primbon, dan kecocokan jodohnya.</p>
+    <ul class="pill-list">
+      {
+        slugs.map((s) => (
+          <li>
+            <a href={s.href}>{s.name}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <Fragment slot="disclaimer">
+    <p>{ID_DISCLAIMER.weton}</p>
+    <p>{ID_DISCLAIMER.hijri}</p>
+  </Fragment>
+</CalculatorLayout>

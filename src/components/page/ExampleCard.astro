@@ -3,16 +3,20 @@
  * A worked example: the story, the key inputs and the engine's results computed at build time.
  * The same example objects are asserted in the golden tests, so what is shown is what is tested.
  */
-import type { ExampleSource } from '../../content/es-mx/examples';
+import type { LocaleCode } from '../../i18n/locales';
+import { ui } from '../../i18n/ui';
 
 interface Props {
   title: string;
   story: string;
   rows: { label: string; value: string }[];
-  source: ExampleSource;
-  href?: string;
+  source: { label: string; url: string } | { label: string; url: string }[];
+  href?: string | undefined;
+  locale?: LocaleCode | undefined;
 }
-const { title, story, rows, source, href } = Astro.props;
+const { title, story, rows, source, href, locale = 'es-mx' } = Astro.props;
+const t = ui(locale).example;
+const sources = Array.isArray(source) ? source : [source];
 ---
 
 <article class="example">
@@ -29,12 +33,22 @@ const { title, story, rows, source, href } = Astro.props;
     }
   </dl>
   <p class="example__source">
-    Fuente: <a href={source.url} rel="noopener" target="_blank">{source.label}</a>
+    {t.source}:{' '}
+    {
+      sources.map((s, i) => (
+        <>
+          {i > 0 && '; '}
+          <a href={s.url} rel="noopener" target="_blank">
+            {s.label}
+          </a>
+        </>
+      ))
+    }
     {
       href && (
         <>
           {' · '}
-          <a href={href}>Abrir en la calculadora</a>
+          <a href={href}>{t.open}</a>
         </>
       )
     }

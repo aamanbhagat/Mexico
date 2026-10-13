@@ -318,3 +318,196 @@ export function Switch({ label, checked, onChange, hint, name, disabled }: Switc
     </div>
   );
 }
+
+/* ------------------------------------------------------------------------------------------ */
+
+interface DatePartsProps {
+  legend: string;
+  name: string;
+  /** ISO date, or '' when empty. */
+  value: string;
+  /** Called with the ISO date when the three parts form a real date, otherwise null. */
+  onChange: (iso: string | null) => void;
+  monthNames: readonly string[];
+  labels: { day: string; month: string; year: string; choose: string };
+  hint?: string | undefined;
+  error?: string | undefined;
+  /** Use the browser's birthday autofill (bday-day/-month/-year). */
+  birthday?: boolean;
+}
+
+interface Parts {
+  d: string;
+  m: string;
+  y: string;
+}
+
+const pad2 = (n: string) => n.padStart(2, '0');
+
+function partsOf(iso: string): Parts {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso);
+  return m ? { y: m[1] as string, m: String(Number(m[2])), d: String(Number(m[3])) } : { d: '', m: '', y: '' };
+}
+
+function isoOf(p: Parts): string | null {
+  if (!/^\d{1,2}$/.test(p.d) || !/^\d{1,2}$/.test(p.m) || !/^\d{4}$/.test(p.y)) return null;
+  const iso = `${p.y}-${pad2(p.m)}-${pad2(p.d)}`;
+  const date = new Date(`${iso}T00:00:00Z`);
+  return !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === iso ? iso : null;
+}
+
+/**
+ * A memorable date (birth date) as three fields: day and year open the numeric keypad, the month
+ * is a native select with localized names. Easier than a calendar picker for dates decades ago,
+ * and every part is a real labelled control for screen readers and autofill.
+ */
+export function DatePartsField({ legend, name, value, onChange, monthNames, labels, hint, error, birthday = true }: DatePartsProps) {
+  const id = useId();
+  const [parts, setParts] = useState<Parts>(() => partsOf(value));
+  const rowRef = useRef<HTMLDivElement>(null);
+
+  // Follow external changes (URL state, examples) unless the fields already say the same date.
+  useEffect(() => {
+    if (value && isoOf(parts) !== value) setParts(partsOf(value));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+
+  const update = (patch: Partial<Parts>) => {
+    const next = { ...parts, ...patch };
+    setParts(next);
+    onChange(isoOf(next));
+  };
+
+  useAdoptPreHydrationValue(
+    () => {
+      const el = rowRef.current;
+      if (!el) return null;
+      const [d, m, y] = ['d', 'm', 'y'].map((k) => (el.querySelector(`[data-part="${k}"]`) as HTMLInputElement | null)?.value ?? '');
+      return JSON.stringify({ d, m, y });
+    },
+    JSON.stringify(parts),
+    (dom) => update(JSON.parse(dom) as Parts),
+  );
+
+  const described = error ? `${id}-error` : hint ? `${id}-hint` : undefined;
+  return (
+    <fieldset class={`field date-parts ${error ? 'field--invalid' : ''}`} aria-describedby={described}>
+      <legend class="field__label">{legend}</legend>
+      <div class="date-parts__row" ref={rowRef}>
+        <div class="date-parts__item date-parts__item--day">
+          <label class="date-parts__label" for={`${id}-d`}>
+            {labels.day}
+          </label>
+          <input
+            id={`${id}-d`}
+            name={`${name}-d`}
+            data-part="d"
+            class="input input--num"
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            maxLength={2}
+            autoComplete={birthday ? 'bday-day' : 'off'}
+            enterKeyHint="next"
+            value={parts.d}
+            aria-invalid={error ? 'true' : undefined}
+            onInput={(e) => update({ d: (e.currentTarget as HTMLInputElement).value.replace(/\D/g, '').slice(0, 2) })}
+          />
+        </div>
+        <div class="date-parts__item date-parts__item--month">
+          <label class="date-parts__label" for={`${id}-m`}>
+            {labels.month}
+          </label>
+          <select
+            id={`${id}-m`}
+            name={`${name}-m`}
+            data-part="m"
+            class="input input--select"
+            autoComplete={birthday ? 'bday-month' : 'off'}
+            value={parts.m}
+            aria-invalid={error ? 'true' : undefined}
+            onChange={(e) => update({ m: (e.currentTarget as HTMLSelectElement).value })}
+          >
+            <option value="">{labels.choose}</option>
+            {monthNames.map((n, i) => (
+              <option key={n} value={String(i + 1)}>
+                {n}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div class="date-parts__item date-parts__item--year">
+          <label class="date-parts__label" for={`${id}-y`}>
+            {labels.year}
+          </label>
+          <input
+            id={`${id}-y`}
+            name={`${name}-y`}
+            data-part="y"
+            class="input input--num"
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            maxLength={4}
+            autoComplete={birthday ? 'bday-year' : 'off'}
+            enterKeyHint="done"
+            value={parts.y}
+            aria-invalid={error ? 'true' : undefined}
+            onInput={(e) => update({ y: (e.currentTarget as HTMLInputElement).value.replace(/\D/g, '').slice(0, 4) })}
+          />
+        </div>
+      </div>
+      {hint && !error ? (
+        <p class="field__hint" id={`${id}-hint`}>
+          {hint}
+        </p>
+      ) : null}
+      {error ? (
+        <p class="field__error" id={`${id}-error`} role="alert">
+          {error}
+        </p>
+      ) : null}
+    </fieldset>
+  );
+}
+
+/* ------------------------------------------------------------------------------------------ */
+
+interface SelectFieldProps<T extends string> {
+  label: string;
+  name: string;
+  value: T;
+  options: readonly Option<T>[];
+  onChange: (value: T) => void;
+  hint?: string | undefined;
+}
+
+/** Native select with the field shell (used for weton day and pasaran pickers). */
+export function SelectField<T extends string>({ label, name, value, options, onChange, hint }: SelectFieldProps<T>) {
+  const id = useId();
+  const ref = useRef<HTMLSelectElement>(null);
+  useAdoptPreHydrationValue(
+    () => ref.current?.value ?? null,
+    value,
+    (dom) => onChange(dom as T),
+  );
+  return (
+    <FieldShell id={id} label={label} hint={hint}>
+      <select
+        ref={ref}
+        id={id}
+        name={name}
+        class="input input--select"
+        value={value}
+        aria-describedby={hint ? `${id}-hint` : undefined}
+        onChange={(e) => onChange((e.currentTarget as HTMLSelectElement).value as T)}
+      >
+        {options.map((o) => (
+          <option key={o.value} value={o.value}>
+            {o.label}
+          </option>
+        ))}
+      </select>
+    </FieldShell>
+  );
+}

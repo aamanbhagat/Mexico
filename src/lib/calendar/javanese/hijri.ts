@@ -74,14 +74,16 @@ export function hijriDate(jdn: number, table: readonly HijriMonthStart[] = []): 
     while (i + 1 < table.length && (table[i + 1] as HijriMonthStart).startJdn <= jdn) i += 1;
     const m = table[i] as HijriMonthStart;
     const next = table[i + 1] as HijriMonthStart;
+    const day = jdn - m.startJdn + 1;
     return {
-      day: jdn - m.startJdn + 1,
+      day,
       month: m.month,
       monthName: BULAN_HIJRIAH[m.month - 1] as BulanHijriah,
       year: m.year,
       basis: m.basis,
-      // A "perkiraan" start, or a month whose end is only estimated, can shift by a day.
-      approx: m.basis === 'perkiraan' || next.basis === 'perkiraan',
+      // An estimated start moves the whole month by up to a day. An estimated end only puts the
+      // 30th in doubt (it may be the 1st of the next month): days 1–29 of a known month are certain.
+      approx: m.basis === 'perkiraan' || (next.basis === 'perkiraan' && day >= 30),
     };
   }
   const t = tabularHijri(jdn);

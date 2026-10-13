@@ -21,7 +21,7 @@ import {
 } from './cycles';
 import { hijriDate, type HijriDate, type HijriMonthStart } from './hijri';
 import { daysInGregorianMonth, isoFromJdn, jdnFromIso, jdnFromYmd, parseIso } from './jdn';
-import { javaneseDate, type JavaneseConvention, type JavaneseDate } from './sultan-agungan';
+import { javaneseDate, javaneseYearsStartingIn, newYearJdn, type JavaneseConvention, type JavaneseDate } from './sultan-agungan';
 
 export * from './names';
 export * from './jdn';
@@ -80,6 +80,13 @@ export function dayInfo(iso: string, opts: CalendarOptions): DayInfo {
   const err = checkDate(iso);
   if (err) throw new RangeError(`${err}: ${iso}`);
   return dayInfoJdn(jdnFromIso(iso), opts);
+}
+
+/** Javanese years whose 1 Suro falls in a Gregorian year, with the date of 1 Suro. */
+export function suroInYear(year: number): { year: number; iso: string }[] {
+  const start = jdnFromYmd({ y: year, m: 1, d: 1 });
+  const end = jdnFromYmd({ y: year, m: 12, d: 31 });
+  return javaneseYearsStartingIn(year, start, end).map((y) => ({ year: y, iso: isoFromJdn(newYearJdn(y)) }));
 }
 
 /** Every day of a Gregorian month (1–12), in order. */

@@ -1,0 +1,39 @@
+---
+/** Month shortcuts, "today" and print for the calendar pages. The last two appear once JS runs. */
+import { BULAN, BULAN_SLUGS } from '../../content/id/meta';
+
+interface Props {
+  /** Year page: month anchors on the page. Month page: links to the other months. */
+  year: number;
+  current?: number | undefined;
+}
+const { year, current } = Astro.props;
+---
+
+<div class="kal-toolbar">
+  <nav class="kal-toolbar__months" aria-label={`Bulan ${year}`}>
+    <ul>
+      {
+        BULAN.map((b, i) => (
+          <li>
+            <a
+              href={current ? `/id/kalender-jawa/${year}/${BULAN_SLUGS[i]}/` : `#${BULAN_SLUGS[i]}`}
+              aria-current={current === i + 1 ? 'page' : undefined}
+              aria-label={`${b} ${year}`}
+            >
+              {b.slice(0, 3)}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+  <div class="kal-toolbar__actions">
+    <a class="btn btn--quiet" href="#" data-today-link hidden>Hari ini</a>
+    <button type="button" class="btn btn--quiet" data-print hidden>Cetak kalender</button>
+  </div>
+  <p class="kal-legend">
+    <span class="kal-legend__item"><b class="kal-red">Merah</b>: Minggu dan libur nasional.</span>
+    <span class="kal-legend__item">Kiri bawah: tanggal Jawa. Kanan bawah: tanggal Hijriah (≈ perkiraan).</span>
+  </p>
+</div>

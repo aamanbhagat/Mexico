@@ -523,6 +523,9 @@ describe('Hijri date', () => {
   it('flags estimated months and the arithmetical fallback as approximate', () => {
     expect(hijriDate(jdnFromIso('2026-10-13'), table)).toMatchObject({ approx: false, basis: 'kalender-kemenag' });
     expect(hijriDate(jdnFromIso('2027-01-20'), table)).toMatchObject({ day: 12, monthName: 'Syakban', approx: true });
+    // Rajab 1448 starts on a known date (SKB); only its 30th depends on the estimated 1 Syakban.
+    expect(hijriDate(jdnFromIso('2027-01-07'), table)).toMatchObject({ day: 29, monthName: 'Rajab', approx: false });
+    expect(hijriDate(jdnFromIso('2027-01-08'), table)).toMatchObject({ day: 30, monthName: 'Rajab', approx: true });
     const outside = hijriDate(jdnFromIso('1945-08-17'), table);
     expect(outside).toMatchObject({ basis: 'hisab-urfi', approx: true, year: 1364, monthName: 'Ramadan' });
     // Republika: 9 Ramadan 1364. The tabular calendar is one day off, which is why it is flagged.
@@ -615,5 +618,16 @@ describe('jodoh methods', () => {
         }
       }
     }
+  });
+});
+
+describe('Javanese new years inside a Gregorian year', () => {
+  it('finds 1 Suro 1960 in 2026 and 1 Suro 1961 in 2027', async () => {
+    const { suroInYear } = await import('../../../src/lib/calendar/javanese');
+    expect(suroInYear(2026)).toEqual([{ year: 1960, iso: '2026-06-17' }]);
+    expect(suroInYear(2027)).toEqual([{ year: 1961, iso: '2027-06-06' }]);
+    // Roughly every 33 years two Javanese years start in one Gregorian year.
+    const twice = Array.from({ length: 80 }, (_, i) => 1990 + i).filter((y) => suroInYear(y).length === 2);
+    expect(twice.length).toBeGreaterThanOrEqual(2);
   });
 });

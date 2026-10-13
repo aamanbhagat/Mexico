@@ -154,3 +154,16 @@ export function monthStartJdn(year: number, month: number, convention: JavaneseC
   for (let i = 0; i < month - 1; i += 1) jdn += MONTH_LENGTHS[i] as number;
   return jdn;
 }
+
+/**
+ * Javanese years whose 1 Suro falls inside a Gregorian year (usually one; two about every
+ * 33 years because the lunar year is 11 days shorter).
+ */
+export function javaneseYearsStartingIn(gregorianYear: number, startJdnOfYear: number, endJdnOfYear: number): number[] {
+  const out: number[] = [];
+  for (const y of [gregorianYear - 67, gregorianYear - 66, gregorianYear - 65]) {
+    const jdn = newYearJdn(y);
+    if (jdn >= startJdnOfYear && jdn <= endJdnOfYear) out.push(y);
+  }
+  return out;
+}

@@ -1,5 +1,7 @@
 import { absoluteUrl } from '../config/site';
 import { LOCALES, type LocaleCode } from './locales';
+import { DINA, PASARAN, wetonSlug } from '../lib/calendar/javanese/names';
+import { BULAN_SLUGS, KALENDER_YEARS, type BulanSlug } from '../content/id/meta';
 
 /**
  * Route registry: every page has a stable key and a native slug per locale.
@@ -7,12 +9,36 @@ import { LOCALES, type LocaleCode } from './locales';
  * same page has different paths per locale. A locale/page pair is live only
  * when the locale is published AND the page lists a path for it.
  */
-export type PageKey =
-  'home' | 'mx.aguinaldo' | 'mx.finiquito' | 'mx.liquidacion' | 'mx.prima-vacacional' | 'mx.vacaciones' | 'mx.uma-salario-minimo';
+type MxKey = 'mx.aguinaldo' | 'mx.finiquito' | 'mx.liquidacion' | 'mx.prima-vacacional' | 'mx.vacaciones' | 'mx.uma-salario-minimo';
+export type WetonSlug = `${Lowercase<(typeof DINA)[number]>}-${Lowercase<(typeof PASARAN)[number]>}`;
+type IdKey =
+  | 'id.weton'
+  | 'id.weton.jodoh'
+  | 'id.weton.hari-ini'
+  | `id.weton.${WetonSlug}`
+  | `id.kalender.${number}`
+  | `id.kalender.${number}.${BulanSlug}`;
+export type PageKey = 'home' | MxKey | IdKey;
 
 type RouteDef = Partial<Record<LocaleCode, string>> & { default?: LocaleCode };
 
-export const ROUTES: Record<PageKey, RouteDef> = {
+const idRoutes: Record<string, RouteDef> = {
+  'id.weton': { id: '/id/weton/', default: 'id' },
+  'id.weton.jodoh': { id: '/id/weton/jodoh/', default: 'id' },
+  'id.weton.hari-ini': { id: '/id/weton/hari-ini/', default: 'id' },
+};
+for (const dina of DINA) {
+  for (const pasaran of PASARAN) {
+    const slug = wetonSlug(dina, pasaran);
+    idRoutes[`id.weton.${slug}`] = { id: `/id/weton/${slug}/`, default: 'id' };
+  }
+}
+for (const year of KALENDER_YEARS) {
+  idRoutes[`id.kalender.${year}`] = { id: `/id/kalender-jawa/${year}/`, default: 'id' };
+  for (const bulan of BULAN_SLUGS) idRoutes[`id.kalender.${year}.${bulan}`] = { id: `/id/kalender-jawa/${year}/${bulan}/`, default: 'id' };
+}
+
+export const ROUTES: Readonly<Record<string, RouteDef>> = {
   home: {
     'es-mx': '/es-mx/',
     'pt-br': '/pt-br/',
@@ -31,16 +57,23 @@ export const ROUTES: Record<PageKey, RouteDef> = {
   'mx.prima-vacacional': { 'es-mx': '/es-mx/calculadora-prima-vacacional/', default: 'es-mx' },
   'mx.vacaciones': { 'es-mx': '/es-mx/calculadora-vacaciones/', default: 'es-mx' },
   'mx.uma-salario-minimo': { 'es-mx': '/es-mx/uma-salario-minimo-2026/', default: 'es-mx' },
+  ...idRoutes,
 };
 
+function route(key: PageKey): RouteDef {
+  const r = ROUTES[key];
+  if (!r) throw new Error(`Unknown route "${key}"`);
+  return r;
+}
+
 export function pathFor(key: PageKey, locale: LocaleCode): string {
-  const path = ROUTES[key][locale];
+  const path = route(key)[locale];
   if (!path) throw new Error(`Route "${key}" has no path for locale "${locale}"`);
   return path;
 }
 
 export function isLive(key: PageKey, locale: LocaleCode): boolean {
-  return Boolean(ROUTES[key][locale]) && LOCALES[locale].published;
+  return Boolean(ROUTES[key]?.[locale]) && LOCALES[locale].published;
 }
 
 export interface Alternate {
@@ -54,17 +87,17 @@ export interface Alternate {
  * flipping `published` and adding the path.
  */
 export function alternatesFor(key: PageKey): Alternate[] {
-  const route = ROUTES[key];
+  const r = route(key);
   const out: Alternate[] = [];
   for (const code of Object.keys(LOCALES) as LocaleCode[]) {
-    const path = route[code];
+    const path = r[code];
     if (path && LOCALES[code].published) {
       out.push({ hreflang: LOCALES[code].hreflang, href: absoluteUrl(path) });
     }
   }
-  const def = route.default;
-  if (def && route[def] && LOCALES[def].published) {
-    out.push({ hreflang: 'x-default', href: absoluteUrl(route[def]) });
+  const def = r.default;
+  if (def && r[def] && LOCALES[def].published) {
+    out.push({ hreflang: 'x-default', href: absoluteUrl(r[def]) });
   }
   return out;
 }
@@ -74,7 +107,7 @@ export function liveRoutes(): { key: PageKey; locale: LocaleCode; path: string }
   const out: { key: PageKey; locale: LocaleCode; path: string }[] = [];
   for (const key of Object.keys(ROUTES) as PageKey[]) {
     for (const code of Object.keys(LOCALES) as LocaleCode[]) {
-      const path = ROUTES[key][code];
+      const path = ROUTES[key]?.[code];
       if (path && LOCALES[code].published) out.push({ key, locale: code, path });
     }
   }

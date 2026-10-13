@@ -78,7 +78,20 @@
   --line-prima-vacacional: #007a44;
   --line-vacaciones: #8a6400;
   --line-uma: #6b4423;
+  /* Indonesia (ID-01): batik dyes — nila (indigo), soga (brown) and a deep rose for jodoh. */
+  --line-weton: #2b3990;
+  --line-jodoh: #9c1f4f;
+  --line-kalender: #8a4b0f;
   --line-on: #ffffff;
+
+  /* Pasaran colours of keblat papat lima pancer (always shown with their names). */
+  --pasaran-legi: #ffffff;
+  --pasaran-pahing: #c62d1f;
+  --pasaran-pon: #e3a600;
+  --pasaran-wage: #000000;
+  --pasaran-kliwon: conic-gradient(var(--pasaran-wage) 0 25%, var(--pasaran-legi) 0 50%, var(--pasaran-pahing) 0 75%, var(--pasaran-pon) 0);
+  /* Indonesian calendars print Sundays and holidays in red ("tanggal merah"). */
+  --date-red: #c0271b;
 
   /* ---- Color: light ------------------------------------------------------------------- */
   color-scheme: light;
@@ -130,6 +143,10 @@
     --line-prima-vacacional: #43c987;
     --line-vacaciones: #e5b53a;
     --line-uma: #d5a37a;
+    --line-weton: #9aa6ff;
+    --line-jodoh: #ff8fb6;
+    --line-kalender: #e0a46a;
+    --date-red: #ff8a7a;
     --line-on: #151517;
     --shadow-1: 0 1px 0 rgb(0 0 0 / 0.4);
     --shadow-2: 0 8px 24px -12px rgb(0 0 0 / 0.7);
@@ -161,6 +178,10 @@
   --line-prima-vacacional: #43c987;
   --line-vacaciones: #e5b53a;
   --line-uma: #d5a37a;
+  --line-weton: #9aa6ff;
+  --line-jodoh: #ff8fb6;
+  --line-kalender: #e0a46a;
+  --date-red: #ff8a7a;
   --line-on: #151517;
   --shadow-1: 0 1px 0 rgb(0 0 0 / 0.4);
   --shadow-2: 0 8px 24px -12px rgb(0 0 0 / 0.7);
@@ -184,6 +205,16 @@
 }
 [data-tool='uma'] {
   --tool: var(--line-uma);
+}
+[data-tool='weton'],
+[data-tool='hari-ini'] {
+  --tool: var(--line-weton);
+}
+[data-tool='jodoh'] {
+  --tool: var(--line-jodoh);
+}
+[data-tool='kalender'] {
+  --tool: var(--line-kalender);
 }
 [data-tool] {
   --accent: var(--tool);
