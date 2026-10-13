@@ -5,6 +5,7 @@
  */
 import type { LocaleCode } from '../../i18n/locales';
 import { ui } from '../../i18n/ui';
+import InlineList from './InlineList.astro';
 
 interface Props {
   title: string;
@@ -34,16 +35,17 @@ const sources = Array.isArray(source) ? source : [source];
   </dl>
   <p class="example__source">
     {t.source}:{' '}
-    {
-      sources.map((s, i) => (
-        <>
-          {i > 0 && '; '}
-          <a href={s.url} rel="noopener" target="_blank">
-            {s.label}
-          </a>
-        </>
-      ))
-    }
+    <InlineList sep="semicolon"
+      >{
+        sources.map((s) => (
+          <span>
+            <a href={s.url} rel="noopener" target="_blank">
+              {s.label}
+            </a>
+          </span>
+        ))
+      }</InlineList
+    >
     {
       href && (
         <>

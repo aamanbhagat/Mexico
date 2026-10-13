@@ -73,13 +73,41 @@ function openDay(iso: string, dialog: HTMLDialogElement) {
   dialog.showModal();
 }
 
+/**
+ * One Tab stop per month (today, else the 1st); arrow keys move by day and week, Home/End jump to
+ * the first/last day. Without this script every day is simply a button in the Tab order.
+ */
+function rovingFocus() {
+  for (const grid of document.querySelectorAll<HTMLTableElement>('.kal-grid')) {
+    const buttons = [...grid.querySelectorAll<HTMLButtonElement>('.kal-day__btn')];
+    if (!buttons.length) continue;
+    const current = buttons.find((b) => b.hasAttribute('aria-current')) ?? buttons[0];
+    for (const b of buttons) b.tabIndex = b === current ? 0 : -1;
+    grid.addEventListener('keydown', (e) => {
+      const i = buttons.indexOf(e.target as HTMLButtonElement);
+      if (i < 0) return;
+      const step: Record<string, number> = { ArrowRight: 1, ArrowLeft: -1, ArrowDown: 7, ArrowUp: -7 };
+      let next = i;
+      if (e.key in step) next = Math.min(buttons.length - 1, Math.max(0, i + (step[e.key] as number)));
+      else if (e.key === 'Home') next = 0;
+      else if (e.key === 'End') next = buttons.length - 1;
+      else return;
+      e.preventDefault();
+      const target = buttons[next] as HTMLButtonElement;
+      for (const b of buttons) b.tabIndex = b === target ? 0 : -1;
+      target.focus();
+    });
+  }
+}
+
 function init() {
   markToday();
+  rovingFocus();
   const dialog = document.querySelector<HTMLDialogElement>('#kal-dialog');
   if (dialog && typeof dialog.showModal === 'function') {
     document.addEventListener('click', (e) => {
-      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.kal-day__btn');
-      if (btn?.dataset['iso']) openDay(btn.dataset['iso'], dialog);
+      const cell = (e.target as HTMLElement).closest<HTMLTableCellElement>('.kal-day__btn')?.closest('td');
+      if (cell?.dataset['iso']) openDay(cell.dataset['iso'], dialog);
     });
     // A click on the backdrop (outside the panel) closes the dialog.
     dialog.addEventListener('click', (e) => {

@@ -1,13 +1,16 @@
 # Tabula — everyday and business calculators
 
-Multi-country, multi-language calculator site. First product: **Mexico's payroll-payout suite**
-(aguinaldo, finiquito, liquidación, prima vacacional, vacaciones) in es-MX, plus a reference page
-of official 2026 values. Project rules live in [`CLAUDE.md`](CLAUDE.md); the research behind every
+Multi-country, multi-language calculator site. Live locales:
+
+- **es-MX** — Mexico's payroll-payout suite (aguinaldo, finiquito, liquidación, prima vacacional,
+  vacaciones) plus a reference page of official 2026 values.
+- **id** — weton and Javanese calendar (ID-01): cek weton, weton jodoh with every method side by side,
+  weton hari ini, 35 weton pages and printable *kalender Jawa* 2026–2027 (year + month pages). Project rules live in [`CLAUDE.md`](CLAUDE.md); the research behind every
 page in [`docs/research/`](docs/research/REPORT.md).
 
 ```bash
 npm ci
-npm run dev        # http://localhost:4321/es-mx/
+npm run dev        # http://localhost:4321/es-mx/ and /id/
 npm run build      # static site in dist/
 npm run check      # the full quality gate (see below)
 ```
@@ -31,18 +34,25 @@ Node 22. Set `SITE_URL` to the production origin when building for production.
 ```
 src/
   config/site.ts               brand, origin (SITE_URL), analytics switches
-  i18n/locales.ts, routes.ts   locale registry (only es-MX published) + hreflang/sitemap helpers
+  i18n/locales.ts, routes.ts   locale registry (es-MX and id published) + hreflang/sitemap helpers
+  i18n/ui.ts                   interface strings of the shared chrome, per locale
   data/parameters/mx/*.json    dated, sourced legal values (UMA, salarios mínimos, ISR tariff…)
+  data/parameters/id/*.json    weton methods, Kemenag Hijri month starts, SKB holidays (with sources)
   data/reviews.json            legal-review state that drives the badge on each page
   lib/params/                  typed loader: value in force on a date, refuses unknown dates
   lib/engine/mx/               LFT + LISR engine (pure functions)
+  lib/calendar/javanese/       Javanese calendar engine: pasaran, neptu, wuku, Sultan Agungan date
+                               (kurup), Hijri (Kemenag table) — shared with the ID-09 date tools
+  lib/weton/                   jodoh methods, calendar page models
   lib/ui/                      formatting, URL state, PDF writer, analytics events
   components/ui/               field, result and action primitives (Preact)
-  components/calc/             calculator islands
-  content/es-mx/               worked examples shared by pages and golden tests
+  components/calc/             calculator islands (es-MX)
+  components/weton/, kalender/ weton islands, crossing neptu grid, month grids (id)
+  content/es-mx/, content/id/  worked examples shared by pages and golden tests
   layouts/, pages/             Astro templates and routes; og/, sitemap.xml, robots.txt endpoints
 tests/unit/                    Vitest: registry contract, engine golden tests, utilities
 tests/e2e/                     Playwright: SEO, calculators, axe (light/dark), keyboard, visual
+tests/unit/calendar/           Javanese calendar golden dates (each with ≥ 2 cited sources)
 tests/golden/golden.py         independent Decimal re-derivation of every example
 docs/                          PLAN, LAUNCH_CHECKLIST, design directions, screenshots
 ```

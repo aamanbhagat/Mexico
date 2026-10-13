@@ -1,6 +1,7 @@
 ---
 import CalculatorLayout from '../../../../layouts/CalculatorLayout.astro';
 import ExampleCard from '../../../../components/page/ExampleCard.astro';
+import InlineList from '../../../../components/page/InlineList.astro';
 import JodohCalculator from '../../../../components/weton/JodohCalculator';
 import { JODOH_EXAMPLES } from '../../../../content/id/examples';
 import { BUILD_DAY, UPDATED } from '../../../../content/id/meta';
@@ -140,14 +141,15 @@ const faq: FaqItem[] = [
           <p class="conflict">{m.conflicts}</p>
           <p class="calc__fine">
             Sumber:{' '}
-            {m.refs.map((k, i) => (
-              <>
-                {i > 0 && '; '}
-                <a href={ref(k).url} rel="noopener" target="_blank">
-                  {ref(k).title}
-                </a>
-              </>
-            ))}
+            <InlineList sep="semicolon">
+              {m.refs.map((k) => (
+                <span>
+                  <a href={ref(k).url} rel="noopener" target="_blank">
+                    {ref(k).title}
+                  </a>
+                </span>
+              ))}
+            </InlineList>
           </p>
         </article>
       ))
@@ -159,14 +161,15 @@ const faq: FaqItem[] = [
           <p>{n.reason}</p>
           <p class="calc__fine">
             Sumber parsial:{' '}
-            {n.refs.map((k, i) => (
-              <>
-                {i > 0 && '; '}
-                <a href={ref(k).url} rel="noopener" target="_blank">
-                  {ref(k).title}
-                </a>
-              </>
-            ))}
+            <InlineList sep="semicolon">
+              {n.refs.map((k) => (
+                <span>
+                  <a href={ref(k).url} rel="noopener" target="_blank">
+                    {ref(k).title}
+                  </a>
+                </span>
+              ))}
+            </InlineList>
           </p>
         </article>
       ))

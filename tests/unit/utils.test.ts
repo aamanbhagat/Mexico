@@ -107,6 +107,10 @@ describe('legal review badge is data-driven', () => {
       'mx.prima-vacacional',
       'mx.vacaciones',
       'mx.uma-salario-minimo',
+      'id.weton',
+      'id.weton.jodoh',
+      'id.weton.hari-ini',
+      'id.kalender',
     ] as const) {
       expect(reviewFor(key).status).toBe('pending');
     }

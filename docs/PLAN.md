@@ -1,7 +1,8 @@
 # Plan and running checklist
 
 Source of truth for priorities: `docs/research/REPORT.md` (MX-01 is opportunity #2; aguinaldo must
-be live before the November–December peak). Rules: `CLAUDE.md`.
+be live before the November–December peak; ID-01 is #4, kalender Jawa 2027 must be indexable by
+mid-November). Rules: `CLAUDE.md`.
 
 ## Phase 1 — Foundation ✅
 
@@ -11,7 +12,7 @@ be live before the November–December peak). Rules: `CLAUDE.md`.
 - [x] Scripts: `dev`, `build`, `check` (+ `test`, `test:e2e`, `lhci`, `budget`, `screenshots`,
       `params:report`)
 - [x] ESLint (TS, Astro, jsx-a11y, hooks) + Prettier; GitHub Actions running `npm run check` on PRs
-- [x] Locale registry: es-MX live; pt-BR, id, ja, pl, de, es-ES, en, tr defined, unpublished,
+- [x] Locale registry: es-MX and id live; pt-BR, ja, pl, de, es-ES, en, tr defined, unpublished,
       guarded by `scripts/postbuild.mjs`
 - [x] hreflang + sitemap helpers (`src/i18n/routes.ts`, `/sitemap.xml`, `/robots.txt`)
 - [x] Parameter registry `src/data/parameters/mx/*.json` + typed loader that picks the version in
@@ -51,8 +52,61 @@ be live before the November–December peak). Rules: `CLAUDE.md`.
 - [ ] Parameters flipped to `verified: true` after checking primary sources (owner)
 - [ ] Production `SITE_URL`, brand, Search Console (owner)
 
+## Project 3 — ID-01 weton and kalender Jawa (/id/) ✅ built, launch gated (see LAUNCH_CHECKLIST §ID-01)
+
+Source: docs/research/REPORT.md opportunity #4 (ID-01, 51 keywords, 5 heads at 10K–100K); the date
+engine is shared with #8 (ID-09). Hard deadline: kalender Jawa 2027 live and indexable by mid-November 2026.
+
+- [x] Research with sources (search only: the build environment cannot open the pages): calendar
+      rules, kurup, windu, Kemenag Hijri month starts 1447–1449, SKB 2026/2027, jodoh methods, keblat,
+      pangarasan — conflicts recorded below and in the data files
+- [x] Engine `src/lib/calendar/javanese/` (pure, reusable by ID-09): JDN, dina, pasaran, neptu, wuku,
+      Sultan Agungan date with kurup Aboge → Asapon → Anenhing and the Aboge convention, Hijri from the
+      Kemenag table with tabular fallback flagged ≈, month grids, weton date lists
+- [x] Golden tests: 38 dates, each with ≥ 2 cited sources (today, 1 Suro 1958–1961, leap Besar 1959,
+      kurup boundaries 1936/2052, isbat dates, Galungan/Kuningan wuku), plus rule tests (159 unit tests)
+- [x] Registry `src/data/parameters/id/`: `weton-methods.json` (neptu table, jodoh sisa 8 default,
+      sisa 7, 5, 4, the not-implemented sisa 9, keblat, pangarasan), `hijri-kemenag.json` (basis per
+      month), `hari-libur.json` (SKB 2026, 2027); typed loader `src/lib/params/id.ts`
+- [x] Locale `id` published: hreflang (locale homes), sitemap, per-locale lastmod, shared chrome
+      localized through `src/i18n/ui.ts` (es-MX output unchanged)
+- [x] Pages (65): /id/, /id/weton/, /id/weton/jodoh/, /id/weton/hari-ini/, 35 × /id/weton/{hari}-{pasaran}/,
+      /id/kalender-jawa/{2026,2027}/ + 24 month pages
+- [x] Features: crossing neptu grid, method switcher with all methods visible, birth-date field with
+      numeric keypads, copy/share, OG card per weton/tool/year/month, printable calendars (2 months per
+      A4), day dialog, today marks refreshed on the device, daily rebuild workflow
+- [x] Quality: axe (light/dark, 390/1440) zero violations on all 72 pages, no horizontal scroll at 390 px,
+      visual baselines per /id/ template, ID e2e suite, Lighthouse budgets on 8 /id/ pages
+- [x] Screenshots `docs/screenshots/id-01/`
+- [ ] Javanese-calendar specialist review recorded in `src/data/reviews.json` (owner)
+- [ ] Kemenag/SKB values flipped to `verified: true` from the primary PDFs (owner)
+- [ ] Search Console URL-prefix property for /id/ and indexing requests (owner, before 15 Nov 2026)
+
+### ID-01 source conflicts and how they are handled
+
+| Topic | Conflict | Handling |
+|---|---|---|
+| 1 Suro 1960 | Kemenag calendar (detik, GNFI, Katadata July): Rabu Kliwon 17 Jun 2026. Katadata (June), Unesa calendar: 16 Jun (aligned to 1 Muharam). | Asapon arithmetic = Kemenag (17 Jun). FAQ explains the Hijri-aligned variant. |
+| 1 Suro 1959 | Kompas TV (Kemenag): 27 Jun 2025. GNFI table: "30 Besar 1958" on 27 Jun, 1 Suro on 28 Jun. | Kemenag. 28 Jun is the Aboge date; "30 Besar" is impossible (Je is a short year). |
+| Aboge vs Asapon | Aboge communities run one day behind. | Keraton/Kemenag (Asapon) by default; the Aboge date is shown under the result when it differs. |
+| Leap years | No conflict found: GNFI and the EPJ paper both give Ehe, Dal, Jimakir (355 days). | Used as is; it is also the only set that reproduces the kurup names (Alip Rebo Wage → Selasa Pon). |
+| Asapon start | 24 Mar 1936 (GNFI, Walisongo thesis) vs 17 Feb 1936 (one secondary source). | 24 Mar 1936 (Selasa Pon, as the kurup name requires). |
+| Anenhing start | Sources: Asapon ends 25 or 26 Aug 2052; Anenhing starts 27 Aug. | 26 Aug 2052, the only Senin Pahing (kurup name); documented in a test. |
+| Hijri 13 Oct 2026 | detik prints 1 Jumadilawal 1448 (copies the Javanese day); Katadata/Alhabib: 1 Jumadilawal = 12 Oct. | Kemenag table (2 Jumadilawal on 13 Oct). |
+| Hijri Dec 2026 | kalenderku.id uses Muhammadiyah KHGT (22 Jumadilakhir on 1 Dec); Mamikos/Kemenag: 21. | Kemenag only; KHGT never used. |
+| Jodoh sisa 7 | One detik article swaps Satriya Wirang (4) and Lebu Katiup Angin (6). | Order used by Popbela and detik's other list; conflict shown on the page. |
+| Jodoh sisa 4 | Spellings Gentho/Gonto, Punggel/Punggul. | Gentho/Punggel, noted. |
+| Jodoh sisa 5 | Sources omit the remainder 0 rule; some mention Gedhong/Lungguh variants without a full table. | Sri, Dana, Lara, Pati, Lungguh (kumparan citing Betaljemur + Popbela); 0 = 5, noted. |
+| Jodoh sisa 9 per person | Only partial tables (pairs with remainder 1). | Not implemented; shown as such with the partial sources. |
+| "Walisongo" method | No written source found. | Not implemented; FAQ says so. |
+| Pangarasan | Neptu 10: Aras Pepet (detik) vs "Pandita Mbangun Teki" (social media only); neptu 11: Aras Tuding (detik, Ki Totok Yasmiran via ITERA) vs Lakuning Setan (Portal Pati); 14/15 lists inconsistent within JawaPos. | Both written labels shown with sources; social-media-only labels not shown; meanings only where a source gives one. |
+| 2027 holidays | Idul Adha 17 May / Waisak 20 May (Metro TV, JawaPos) vs only cuti 18/19 May (Antara, Katadata); 6 vs 8 cuti bersama. | 17 and 20 May libur, 8 cuti (Setneg count); `verified: false`. |
+
 ## Next
 
-1. Close the launch blockers above before mid-November (aguinaldo season).
-2. PTU calculator (May peak) and prima de antigüedad / SDI pages from the discovery list.
-3. Parameter-update runbook + alert for the December (salario mínimo) and January (UMA) releases.
+1. Close the launch blockers above (MX before the aguinaldo peak; ID-01 Search Console by 15 Nov 2026).
+2. ID-09 on the shared engine: kalkulator umur, selisih hari, kalkulator jadian, hari kerja (uses
+   `id.hari-libur`), then konversi Hijriah ↔ Masehi (uses `id.hijri-kemenag`).
+3. PTU calculator (May peak) and prima de antigüedad / SDI pages from the discovery list.
+4. Parameter-update runbook + alert for the December (salario mínimo), January (UMA) and
+   September (SKB libur, Kalender Hijriah Indonesia) releases.

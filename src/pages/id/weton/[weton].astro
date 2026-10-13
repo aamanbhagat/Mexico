@@ -8,6 +8,7 @@ import type { GetStaticPaths } from 'astro';
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import SelapanGrid from '../../../components/weton/SelapanGrid';
 import Keblat from '../../../components/weton/Keblat';
+import InlineList from '../../../components/page/InlineList.astro';
 import { BULAN_SLUGS, KALENDER_YEARS, UPDATED } from '../../../content/id/meta';
 import { ID_DISCLAIMER, ID_RELATED, ID_SOURCES } from '../../../content/id/shared';
 import { WETON_NOTES } from '../../../content/id/weton-notes';
@@ -46,6 +47,7 @@ const groups = method.results
 const jodohHref = (o: Weton) => `/id/weton/jodoh/?ma=weton&wa=${slug}&mb=weton&wb=${wetonSlug(o.dina, o.pasaran)}`;
 
 const notes = WETON_NOTES[slug] ?? [];
+const pangarasanText = pangarasan.labels.map((l) => (l.meaning ? `${l.label}, ${l.meaning}` : l.label)).join(' atau ');
 const pRefs = pangarasan.labels.flatMap((l) => l.refs.map((k) => idReference('id.weton-methods', k)));
 const label = (x: Weton) => `${x.dina} ${x.pasaran}`;
 const goodLabels = new Set(method.results.filter((r) => r.tone === 'baik').map((r) => r.label));
@@ -146,14 +148,15 @@ const faq: FaqItem[] = [
         <dt>Neptu sama</dt>
         <dd>
           {siblings.length === 0 && 'tidak ada'}
-          {
-            siblings.map((s, i) => (
-              <>
-                {i > 0 ? ', ' : ''}
-                <a href={`/id/weton/${wetonSlug(s.dina, s.pasaran)}/`}>{label(s)}</a>
-              </>
-            ))
-          }
+          <InlineList
+            >{
+              siblings.map((x) => (
+                <span>
+                  <a href={`/id/weton/${wetonSlug(x.dina, x.pasaran)}/`}>{label(x)}</a>
+                </span>
+              ))
+            }</InlineList
+          >
         </dd>
       </div>
       <div>
@@ -178,15 +181,7 @@ const faq: FaqItem[] = [
     {
       pangarasan.labels.length > 0 ? (
         <p>
-          Untuk neptu {neptu.total}, istilah watak (pangarasan) yang dipakai sumber kami:{' '}
-          {pangarasan.labels.map((l, i) => (
-            <>
-              {i > 0 && ' atau '}
-              <strong>{l.label}</strong>
-              {l.meaning && <>, {l.meaning}</>}
-            </>
-          ))}
-          .
+          Untuk neptu {neptu.total}, istilah watak (pangarasan) yang dipakai sumber kami: {pangarasanText}.
         </p>
       ) : (
         <p>Kami belum menemukan istilah pangarasan untuk neptu {neptu.total} di sumber tertulis.</p>
@@ -204,14 +199,15 @@ const faq: FaqItem[] = [
           {n.text}{' '}
           <span class="calc__fine">
             (
-            {n.sources.map((s, i) => (
-              <>
-                {i > 0 && '; '}
-                <a href={s.url} rel="noopener" target="_blank">
-                  {s.label.split(' — ')[0]}
-                </a>
-              </>
-            ))}
+            <InlineList sep="semicolon">
+              {n.sources.map((x) => (
+                <span>
+                  <a href={x.url} rel="noopener" target="_blank">
+                    {x.label.split(' — ')[0]}
+                  </a>
+                </span>
+              ))}
+            </InlineList>
             )
           </span>
         </p>

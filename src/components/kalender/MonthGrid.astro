@@ -24,6 +24,16 @@ const name = `${BULAN[model.month - 1]} ${model.year}`;
 const H = level === 2 ? 'h2' : 'h3';
 const headId = `${slug}-${model.year}-judul`;
 const short = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+/** What a screen reader says for a day: one clean sentence instead of the visual fragments. */
+function spoken(d: (typeof model.days)[number]): string {
+  const extra = [...d.holidays.map((h) => h.name), jawaMarkerOf(d)].filter(Boolean);
+  return [
+    `${d.weton.dina} ${Number(d.iso.slice(8))} ${name}, ${d.weton.pasaran}`,
+    `tanggal Jawa ${d.javanese.day} ${d.javanese.monthName} ${d.javanese.year}`,
+    `Hijriah ${d.hijri.approx ? 'kira-kira ' : ''}${d.hijri.day} ${d.hijri.monthName} ${d.hijri.year}`,
+    ...extra,
+  ].join(', ');
+}
 ---
 
 <section class={`kal-month kal-month--${size}`} id={slug} aria-labelledby={headId}>
@@ -68,31 +78,22 @@ const short = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
                   ]}
                   data-iso={d.iso}
                 >
-                  <button type="button" class="kal-day__btn" data-iso={d.iso}>
-                    <span class="sr-only">{d.weton.dina} </span>
-                    <span class="kal-day__n">{Number(d.iso.slice(8))}</span>
-                    <span class="sr-only"> {name},</span>
-                    <span class="kal-day__pasaran">{d.weton.pasaran}</span>
-                    <span class="sr-only">, tanggal Jawa</span>
-                    <span class="kal-day__jawa">
+                  <button type="button" class="kal-day__btn">
+                    <span class="sr-only">{spoken(d)}</span>
+                    <span class="kal-day__n" aria-hidden="true">
+                      {Number(d.iso.slice(8))}
+                    </span>
+                    <span class="kal-day__pasaran" aria-hidden="true">
+                      {d.weton.pasaran}
+                    </span>
+                    <span class="kal-day__jawa" aria-hidden="true">
                       {d.javanese.day}
                       {d.javanese.day === 1 && <span class="kal-day__mname"> {d.javanese.monthName}</span>}
-                      <span class="sr-only">
-                        {' '}
-                        {d.javanese.day === 1 ? '' : d.javanese.monthName} {d.javanese.year},
-                      </span>
                     </span>
-                    <span class="sr-only"> Hijriah</span>
-                    <span class="kal-day__hijri">
+                    <span class="kal-day__hijri" aria-hidden="true">
                       {d.hijri.approx ? '≈' : ''}
                       {d.hijri.day}
-                      <span class="sr-only">
-                        {' '}
-                        {d.hijri.monthName} {d.hijri.year}
-                      </span>
                     </span>
-                    {d.holidays.length > 0 && <span class="sr-only">. {d.holidays.map((h) => h.name).join(', ')}</span>}
-                    {jawaMarkerOf(d) && <span class="sr-only">. {jawaMarkerOf(d)}</span>}
                   </button>
                 </td>
               ) : (

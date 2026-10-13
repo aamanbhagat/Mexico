@@ -1743,6 +1743,7 @@
 /* Weton pages (/id/weton/{hari}-{pasaran}/) */
 .weton-page-top {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-5);
   align-items: start;
 }
@@ -1863,6 +1864,7 @@
  * ========================================================================================== */
 .kal-toolbar {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-3);
   padding-block: var(--space-3);
   border-block: 1px solid var(--rule);
@@ -1908,6 +1910,8 @@
   display: flex;
   gap: var(--space-2);
   flex-wrap: wrap;
+  /* The buttons appear once JavaScript runs: keep their row so nothing below moves (CLS). */
+  min-height: 2.75rem;
 }
 .kal-toolbar__actions [hidden] {
   display: none;
@@ -1926,6 +1930,7 @@
 
 .kal-year {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-7);
   padding-top: var(--space-5);
 }
@@ -1942,6 +1947,8 @@
 }
 .kal-month {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
   gap: var(--space-3);
   align-content: start;
   scroll-margin-top: var(--space-5);
@@ -2258,4 +2265,12 @@
   .kal-day__mname {
     display: inline;
   }
+}
+
+/* Inline sequences with generated separators (see src/components/page/InlineList.astro). */
+.inline-list--comma > :not(:last-child)::after {
+  content: ', ';
+}
+.inline-list--semicolon > :not(:last-child)::after {
+  content: '; ';
 }

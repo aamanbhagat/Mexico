@@ -1,0 +1,13 @@
+---
+/**
+ * An inline sequence ("a, b, c" or "a; b; c") whose separators come from CSS, so template line
+ * breaks never leak a space before the comma. Phrasing content only (valid inside <p>): children
+ * are <span> elements.
+ */
+interface Props {
+  sep?: 'comma' | 'semicolon';
+}
+const { sep = 'comma' } = Astro.props;
+---
+
+<span class:list={['inline-list', `inline-list--${sep}`]}><slot /></span>

@@ -13,10 +13,13 @@ for (const country of readdirSync(DIR)) {
     const p = JSON.parse(readFileSync(join(DIR, country, file), 'utf8'));
     for (const v of p.versions) {
       if (onlyUnverified && v.verified) continue;
+      const json = JSON.stringify(v.value);
       const value = Array.isArray(v.value)
         ? `${v.value.length} rows`
-        : typeof v.value === 'object'
-          ? JSON.stringify(v.value)
+        : typeof v.value === 'object' && v.value !== null
+          ? json.length <= 80
+            ? json
+            : `{ ${Object.keys(v.value).join(', ')} }`
           : String(v.value);
       const range = `${v.effective_from} → ${v.effective_to ?? 'open'}`;
       console.log(
