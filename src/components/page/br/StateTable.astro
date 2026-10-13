@@ -87,16 +87,19 @@ const rows = states.map(([code, s]) => {
                     ))}
               </td>
               <td role="cell" data-label="Fontes">
-                {r.sources.length === 0
-                  ? '—'
-                  : r.sources.map((s, i) => (
-                      <Fragment>
-                        {i > 0 && <span>, </span>}
+                {r.sources.length === 0 ? (
+                  '—'
+                ) : (
+                  <ul class="inline-list">
+                    {r.sources.map((s) => (
+                      <li>
                         <a href={s.url} rel="noopener" target="_blank">
                           {s.short}
                         </a>
-                      </Fragment>
+                      </li>
                     ))}
+                  </ul>
+                )}
               </td>
             </tr>
           ))

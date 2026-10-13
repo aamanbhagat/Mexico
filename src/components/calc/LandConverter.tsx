@@ -35,6 +35,7 @@ import {
   isExact,
   num,
   numFromFloat,
+  shortUnit,
   singular,
   sizeOf,
 } from '../../content/pt-br/land-text';
@@ -429,7 +430,10 @@ export default function LandConverter({ preset }: { preset: ConverterPreset }) {
         locale="pt-br"
         resultLabel={`Em ${to.plural}`}
         headline={result ? toNumber(result) : null}
-        format={(n) => `${numFromFloat(n, places)} ${to.symbol}`}
+        format={(n) => {
+          const shown = numFromFloat(n, places);
+          return `${shown} ${shortUnit(to, shown)}`;
+        }}
         round={(n) => n}
         headlineNote={result && amount ? `${countOf(amount, from)} = ${countOf(result, to, places)}` : undefined}
         empty={st.q === null ? 'Digite a área para converter.' : 'Use um número positivo.'}

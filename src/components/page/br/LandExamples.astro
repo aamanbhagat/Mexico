@@ -28,7 +28,7 @@ const cards = keys.map((k) => {
     return {
       ex,
       rows: [
-        { label: 'Conta', value: `${num(amount)} × ${num(from.area, 4)} m² ÷ ${num(to.area, 4)} m²` },
+        { label: 'Conta', value: `${num(amount)} × ${num(from.area, 4)} m²${to.id === 'm2' ? '' : ` ÷ ${num(to.area, 4)} m²`}` },
         { label: 'Resultado', value: `${isExact(r) ? '' : '≈ '}${countOf(r, to)}` },
       ],
       href: `${path}${converterSearch(preset, { q: Number(ex.amount), de: ex.from, para: ex.to })}`,

@@ -38,6 +38,23 @@ export function countOf(amount: Rational, unit: CompiledUnit, max?: number): str
   return `${shown} ${plural.select(n) === 'one' ? singular(unit) : unit.plural}`;
 }
 
+const SHORT: Record<string, { one: string; other: string }> = {
+  alqueire: { one: 'alq.', other: 'alq.' },
+  tarefa: { one: 'tarefa', other: 'tarefas' },
+  litro: { one: 'litro', other: 'litros' },
+  quadra: { one: 'quadra', other: 'quadras' },
+  braca: { one: 'braça²', other: 'braças²' },
+};
+
+/** Short unit for a big headline figure ("ha", "alq.", "tarefas"); the label above names the variant. */
+export function shortUnit(unit: CompiledUnit, shown: string): string {
+  if (unit.family === 'base') return unit.symbol;
+  const forms = SHORT[unit.family];
+  if (!forms) return unit.symbol;
+  const n = Number(shown.replace(/\./g, '').replace(',', '.').replace('−', '-'));
+  return plural.select(n) === 'one' ? forms.one : forms.other;
+}
+
 /** "24.200 m²" or "2,42 ha" — the size of one unit, in the clearest of the two. */
 export function sizeOf(unit: CompiledUnit, ha: CompiledUnit): string {
   if (cmp(unit.area, ha.area) >= 0) return `${num(div(unit.area, ha.area), 4)}${NBSP}ha`;

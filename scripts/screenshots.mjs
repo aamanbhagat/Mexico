@@ -1,6 +1,7 @@
 // Captures every live page at 390 px and 1440 px, light and dark, into docs/screenshots/
 // so the owner can review the design without running the app.
-//   npm run build && npm run screenshots   (starts `astro preview` itself if needed)
+//   npm run build && npm run screenshots          (starts `astro preview` itself if needed)
+//   npm run screenshots -- br-01                  (only pages whose folder starts with br-01)
 // Each page gets an above-the-fold shot and a full-page shot (sticky mobile bar hidden there,
 // since a fixed element would otherwise be painted mid-page).
 import { spawn } from 'node:child_process';
@@ -17,7 +18,32 @@ const pages = [
   { path: '/es-mx/calculadora-prima-vacacional/', slug: 'prima-vacacional', query: '?s=15000&i=2022-05-02' },
   { path: '/es-mx/calculadora-vacaciones/', slug: 'vacaciones', query: '?s=15000&i=2019-03-04' },
   { path: '/es-mx/uma-salario-minimo-2026/', slug: 'uma-salario-minimo', query: '' },
-];
+  // BR-01 (pt-BR land units)
+  { path: '/pt-br/', slug: 'br-01/inicio', query: '', lang: 'pt-BR' },
+  {
+    path: '/pt-br/conversor-alqueire-hectare/',
+    slug: 'br-01/conversor-alqueire-hectare',
+    query: '?q=3&uf=BA&de=alqueire-baiano&pr=500000',
+    lang: 'pt-BR',
+  },
+  { path: '/pt-br/conversor-alqueire-hectare/alqueire-paulista/', slug: 'br-01/alqueire-paulista', query: '?q=3', lang: 'pt-BR' },
+  {
+    path: '/pt-br/conversor-alqueire-hectare/alqueire-mineiro-goiano/',
+    slug: 'br-01/alqueire-mineiro-goiano',
+    query: '?q=10&uf=MG',
+    lang: 'pt-BR',
+  },
+  { path: '/pt-br/conversor-alqueire-hectare/alqueire-baiano/', slug: 'br-01/alqueire-baiano', query: '', lang: 'pt-BR' },
+  { path: '/pt-br/conversor-alqueire-hectare/alqueire-do-norte/', slug: 'br-01/alqueire-do-norte', query: '?q=5&uf=PA', lang: 'pt-BR' },
+  {
+    path: '/pt-br/conversor-alqueire-hectare/tarefa-em-hectare/',
+    slug: 'br-01/tarefa-em-hectare',
+    query: '?q=10&uf=SE&de=tarefa-al-se',
+    lang: 'pt-BR',
+  },
+  { path: '/pt-br/conversor-alqueire-hectare/litro-de-terra/', slug: 'br-01/litro-de-terra', query: '?q=12', lang: 'pt-BR' },
+  { path: '/pt-br/hectare-para-alqueire/', slug: 'br-01/hectare-para-alqueire', query: '?q=50&uf=MT&pr=30000', lang: 'pt-BR' },
+].filter((p) => !process.argv[2] || p.slug.startsWith(process.argv[2]));
 const widths = [
   { w: 390, h: 844 },
   { w: 1440, h: 900 },
@@ -39,6 +65,7 @@ if (!(await up())) {
 
 const executablePath = existsSync('/opt/pw-browsers/chromium') ? '/opt/pw-browsers/chromium' : undefined;
 const browser = await chromium.launch({ ...(executablePath ? { executablePath } : {}), args: ['--lang=es-MX'] });
+// Each context sets its own locale; --lang only sets the default for native controls.
 let count = 0;
 for (const p of pages) {
   mkdirSync(`${OUT}/${p.slug}`, { recursive: true });
@@ -49,7 +76,7 @@ for (const p of pages) {
         deviceScaleFactor: 1,
         colorScheme: scheme,
         reducedMotion: 'reduce',
-        locale: 'es-MX',
+        locale: p.lang ?? 'es-MX',
         timezoneId: 'America/Mexico_City',
         isMobile: w < 600,
         hasTouch: w < 600,

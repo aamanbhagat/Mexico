@@ -30,7 +30,9 @@ const braca = num(BR_LAND.linearMeters, 2);
   <b>Resultado</b> = área em m² ÷ m² da medida de destino
 </p>
 <p>
-  Exemplo: {countOf(q, f)} = {num(q)} × {num(f.area, 4)} m² = {num(m2, 4)} m². Dividindo por {num(t.area, 4)} m², dá {countOf(result, t)}.
+  Exemplo: {countOf(q, f)} = {num(q)} × {num(f.area, 4)} m² = {num(m2, 4)} m².{
+    t.id === 'm2' ? '' : ` Dividindo por ${num(t.area, 4)} m², dá ${countOf(result, t)}.`
+  }
 </p>
 <p>
   As medidas tradicionais são definidas em braças, e a braça vale {braca} m (dez palmos). O alqueire paulista, por exemplo, tem
