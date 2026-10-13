@@ -38,7 +38,8 @@ function spoken(d: (typeof model.days)[number]): string {
 
 <section class={`kal-month kal-month--${size}`} id={slug} aria-labelledby={headId}>
   <header class="kal-month__head">
-    <H id={headId} class="kal-month__name">
+    {/* On a month page the h1 already names the month: keep the heading for screen readers only. */}
+    <H id={headId} class:list={['kal-month__name', { 'sr-only': size === 'month' }]}>
       {linkMonth ? <a href={`/id/kalender-jawa/${model.year}/${slug}/`}>{name}</a> : name}
     </H>
     <p class="kal-month__span">
