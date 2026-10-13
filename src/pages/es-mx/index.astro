@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import StationIcon from '../../components/page/StationIcon.astro';
-import { pathFor, type PageKey } from '../../i18n/routes';
+import { pathFor } from '../../i18n/routes';
+import { toolsFor } from '../../i18n/tools';
 import { absoluteUrl, SITE } from '../../config/site';
 import { mxParam } from '../../lib/params/mx';
 import { formatDateLong, formatMoney } from '../../lib/ui/format';
@@ -12,40 +13,7 @@ const uma = mxParam('mx.uma', AS_OF);
 const smG = mxParam('mx.salario-minimo.general', AS_OF);
 const smZ = mxParam('mx.salario-minimo.zlfn', AS_OF);
 
-type Tool = 'aguinaldo' | 'finiquito' | 'liquidacion' | 'prima-vacacional' | 'vacaciones' | 'uma';
-const tools: { key: PageKey; tool: Tool; name: string; what: string }[] = [
-  {
-    key: 'mx.aguinaldo',
-    tool: 'aguinaldo',
-    name: 'Aguinaldo',
-    what: 'Cuánto te toca antes del 20 de diciembre, proporcional y neto de ISR.',
-  },
-  {
-    key: 'mx.finiquito',
-    tool: 'finiquito',
-    name: 'Finiquito',
-    what: 'Lo que te deben al renunciar: aguinaldo, vacaciones y prima vacacional.',
-  },
-  {
-    key: 'mx.liquidacion',
-    tool: 'liquidacion',
-    name: 'Liquidación',
-    what: 'Despido injustificado: 3 meses, 20 días por año y prima de antigüedad.',
-  },
-  {
-    key: 'mx.prima-vacacional',
-    tool: 'prima-vacacional',
-    name: 'Prima vacacional',
-    what: 'El 25 % extra sobre tus días de vacaciones y su parte exenta.',
-  },
-  { key: 'mx.vacaciones', tool: 'vacaciones', name: 'Vacaciones', what: 'Días que te tocan por antigüedad con la reforma de 2023.' },
-  {
-    key: 'mx.uma-salario-minimo',
-    tool: 'uma',
-    name: 'UMA y salario mínimo 2026',
-    what: 'Valores oficiales vigentes, tabla de ISR y montos exentos.',
-  },
-];
+const tools = toolsFor('es-mx');
 
 const jsonLd = [
   { '@context': 'https://schema.org', '@type': 'WebSite', name: SITE.name, url: absoluteUrl('/es-mx/'), inLanguage: 'es-MX' },
@@ -87,7 +55,7 @@ const jsonLd = [
           tools.map((t) => (
             <li data-tool={t.tool}>
               <a href={pathFor(t.key, 'es-mx')}>
-                <StationIcon tool={t.tool} />
+                <StationIcon tool={t.icon} />
                 <span class="line-map__text">
                   <span class="line-map__name">{t.name}</span>
                   <span class="line-map__what">{t.what}</span>
@@ -148,53 +116,3 @@ const jsonLd = [
     </section>
   </div>
 </BaseLayout>
-
-<style>
-  .home-hero h1 {
-    max-width: 18ch;
-  }
-  .line-map {
-    list-style: none;
-    padding: 0;
-    margin: var(--space-4) 0 0;
-    display: grid;
-    border-top: 2px solid var(--rule-strong);
-  }
-  .line-map li {
-    border-bottom: 1px solid var(--rule);
-  }
-  .line-map a {
-    display: flex;
-    align-items: center;
-    gap: var(--space-4);
-    padding-block: var(--space-4);
-    text-decoration: none;
-  }
-  .line-map a:hover .line-map__name {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-  }
-  .line-map :global(.station-icon) {
-    margin: 0;
-  }
-  .line-map__text {
-    display: grid;
-    gap: 2px;
-  }
-  .line-map__name {
-    font-size: var(--text-lg);
-    font-weight: var(--display-weight);
-    font-stretch: var(--display-stretch);
-    line-height: 1.2;
-  }
-  .line-map__what {
-    color: var(--ink-2);
-    font-size: var(--text-sm);
-  }
-  @media (min-width: 60rem) {
-    .line-map {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      column-gap: var(--space-7);
-    }
-  }
-</style>

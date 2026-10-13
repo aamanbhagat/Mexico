@@ -1,0 +1,107 @@
+---
+/**
+ * Per-state reference table: the alqueire people mean in each UF (with divergence flagged),
+ * other units recorded there and the sources for each claim. Printable on its own.
+ */
+import PrintButton from './PrintButton.astro';
+import { BR_LAND } from '../../../lib/params/br';
+import { regionDiverges, regionVariants } from '../../../lib/land-units';
+import { sizeOf } from '../../../content/pt-br/land-text';
+
+interface Props {
+  /** Heading level id (anchor). */
+  id?: string;
+  /** States to highlight (e.g. the paulista page highlights SP, PR, MS). */
+  highlight?: string[];
+}
+const { id = 'tabela-por-estado', highlight = [] } = Astro.props;
+const HA = BR_LAND.byId.get('ha')!;
+const states = Object.entries(BR_LAND.raw.states).sort((a, b) => a[1].name.localeCompare(b[1].name, 'pt-BR'));
+
+const rows = states.map(([code, s]) => {
+  const usual = regionVariants(BR_LAND, code, 'alqueire', ['usual']);
+  const named = regionVariants(BR_LAND, code, 'alqueire', ['named', 'historical']);
+  const others = regionVariants(BR_LAND, code).filter((v) => v.unit.family !== 'alqueire');
+  const sourceIds = [...new Set(s.units.flatMap((u) => u.sources))];
+  return {
+    code,
+    name: s.name,
+    usual,
+    diverges: regionDiverges(BR_LAND, code, 'alqueire'),
+    named,
+    others,
+    sources: sourceIds.map((sid) => BR_LAND.raw.sources[sid]!),
+  };
+});
+---
+
+<section class="section" aria-labelledby={id} data-printable>
+  <h2 id={id}>Alqueire por estado: valor e fonte</h2>
+  <div class="prose">
+    <p>
+      O que cada fonte registra em cada estado. Quando duas fontes dão valores diferentes para o alqueire do mesmo estado, a linha mostra os
+      dois e o conversor avisa. Medidas com nome próprio (alqueirão, quadra de sesmaria) e as que só aparecem na tabela histórica do INDA
+      ficam na coluna ao lado.
+    </p>
+  </div>
+  <PrintButton />
+  <div class="table-scroll" tabindex="0" role="region" aria-label="Tabela de alqueires por estado">
+    <table class="data-table state-table" role="table">
+      <caption class="sr-only">Alqueire e outras medidas agrárias registradas em cada estado, com as fontes</caption>
+      <thead role="rowgroup">
+        <tr role="row">
+          <th scope="col" role="columnheader">Estado</th>
+          <th scope="col" role="columnheader">Alqueire</th>
+          <th scope="col" role="columnheader">Outras medidas registradas</th>
+          <th scope="col" role="columnheader">Fontes</th>
+        </tr>
+      </thead>
+      <tbody role="rowgroup">
+        {
+          rows.map((r) => (
+            <tr class={highlight.includes(r.code) ? 'highlight-row' : undefined} id={`uf-${r.code.toLowerCase()}`} role="row">
+              <th scope="row" role="rowheader">
+                {r.name} ({r.code})
+              </th>
+              <td role="cell" data-label="Alqueire">
+                {r.usual.length === 0 ? (
+                  <span class="state-table__alt">Sem registro nas fontes</span>
+                ) : (
+                  r.usual.map((v) => (
+                    <span class="state-table__val">
+                      {v.unit.name}: <strong class="num">{sizeOf(v.unit, HA)}</strong>
+                      <br />
+                    </span>
+                  ))
+                )}
+                {r.diverges && <span class="state-table__flag">Fontes divergem</span>}
+              </td>
+              <td role="cell" data-label="Outras medidas">
+                {r.named.length + r.others.length === 0
+                  ? '—'
+                  : [...r.named, ...r.others].map((v) => (
+                      <span class="state-table__alt">
+                        {v.unit.name}: {sizeOf(v.unit, HA)}
+                        {v.status === 'historical' ? ' (só na tabela histórica)' : ''}
+                      </span>
+                    ))}
+              </td>
+              <td role="cell" data-label="Fontes">
+                {r.sources.length === 0
+                  ? '—'
+                  : r.sources.map((s, i) => (
+                      <Fragment>
+                        {i > 0 && <span>, </span>}
+                        <a href={s.url} rel="noopener" target="_blank">
+                          {s.short}
+                        </a>
+                      </Fragment>
+                    ))}
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+</section>

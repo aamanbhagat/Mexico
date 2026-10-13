@@ -1,9 +1,95 @@
 {
-  "$comment": "Legal review status per page. The badge on each page is rendered from this file and never hard-coded. Set status to \"reviewed\" only with the reviewer's name, credentials and date.",
-  "mx.aguinaldo": { "status": "pending", "reviewer": null, "credentials": null, "reviewed_on": null },
-  "mx.finiquito": { "status": "pending", "reviewer": null, "credentials": null, "reviewed_on": null },
-  "mx.liquidacion": { "status": "pending", "reviewer": null, "credentials": null, "reviewed_on": null },
-  "mx.prima-vacacional": { "status": "pending", "reviewer": null, "credentials": null, "reviewed_on": null },
-  "mx.vacaciones": { "status": "pending", "reviewer": null, "credentials": null, "reviewed_on": null },
-  "mx.uma-salario-minimo": { "status": "pending", "reviewer": null, "credentials": null, "reviewed_on": null }
+  "$comment": "Review status per page. The badge on each page is rendered from this file and never hard-coded. Set status to \"reviewed\" only with the reviewer's name, credentials and date. kind: \"legal\" (labour, tax, pension — CLAUDE.md §8, the default) or \"technical\" (e.g. land units: a licensed surveyor/agrimensor or agronomist).",
+  "mx.aguinaldo": {
+    "status": "pending",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
+  "mx.finiquito": {
+    "status": "pending",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
+  "mx.liquidacion": {
+    "status": "pending",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
+  "mx.prima-vacacional": {
+    "status": "pending",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
+  "mx.vacaciones": {
+    "status": "pending",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
+  "mx.uma-salario-minimo": {
+    "status": "pending",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
+  "br.alqueire-hectare": {
+    "status": "pending",
+    "kind": "technical",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
+  "br.alqueire-paulista": {
+    "status": "pending",
+    "kind": "technical",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
+  "br.alqueire-mineiro-goiano": {
+    "status": "pending",
+    "kind": "technical",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
+  "br.alqueire-baiano": {
+    "status": "pending",
+    "kind": "technical",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
+  "br.alqueire-do-norte": {
+    "status": "pending",
+    "kind": "technical",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
+  "br.tarefa-hectare": {
+    "status": "pending",
+    "kind": "technical",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
+  "br.litro-de-terra": {
+    "status": "pending",
+    "kind": "technical",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
+  "br.hectare-alqueire": {
+    "status": "pending",
+    "kind": "technical",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  }
 }

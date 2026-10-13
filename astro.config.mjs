@@ -27,10 +27,18 @@ function stripParamNotesForClient() {
       if (!isClient || !/[\\/]src[\\/]data[\\/]parameters[\\/].+\.json$/.test(id.split('?')[0] ?? '')) return null;
       const data = JSON.parse(code);
       delete data.description;
-      for (const v of data.versions ?? []) {
-        delete v.notes;
-        delete v.retrieved_on;
-      }
+      // Editorial fields can sit at any depth (land-unit catalogs carry notes per unit and source).
+      /** @param {unknown} node */
+      const strip = (node) => {
+        if (Array.isArray(node)) node.forEach(strip);
+        else if (node && typeof node === 'object') {
+          const o = /** @type {Record<string, unknown>} */ (node);
+          delete o['notes'];
+          delete o['retrieved_on'];
+          Object.values(o).forEach(strip);
+        }
+      };
+      for (const v of data.versions ?? []) strip(v);
       return { code: JSON.stringify(data), map: null };
     },
   };

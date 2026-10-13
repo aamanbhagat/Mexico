@@ -1,47 +1,92 @@
 ---
 import type { LocaleCode } from '../../i18n/locales';
-import { pathFor } from '../../i18n/routes';
+import { LOCALES } from '../../i18n/locales';
+import { alternatesFor, pathFor, type PageKey } from '../../i18n/routes';
 import { SITE } from '../../config/site';
+import { siteUi, type UiLocale } from '../../i18n/ui';
+import { toolsFor } from '../../i18n/tools';
 
 interface Props {
   locale: LocaleCode;
+  /** Current page; its hreflang alternates become the "other countries" links. */
+  pageKey?: PageKey | undefined;
 }
-const { locale } = Astro.props;
-const links = [
-  { href: pathFor('mx.aguinaldo', locale), label: 'Aguinaldo' },
-  { href: pathFor('mx.finiquito', locale), label: 'Finiquito' },
-  { href: pathFor('mx.liquidacion', locale), label: 'Liquidación' },
-  { href: pathFor('mx.prima-vacacional', locale), label: 'Prima vacacional' },
-  { href: pathFor('mx.vacaciones', locale), label: 'Vacaciones' },
-];
+const { locale, pageKey } = Astro.props;
+const ui = siteUi(locale);
+
+// Cross-locale links only where hreflang applies: the alternates of this very page.
+const current = LOCALES[locale].hreflang;
+const others = pageKey
+  ? alternatesFor(pageKey)
+      .filter((a) => a.hreflang !== 'x-default' && a.hreflang !== current)
+      .map((a) => ({ ...a, name: Object.values(LOCALES).find((l) => l.hreflang === a.hreflang)?.name ?? a.hreflang }))
+  : [];
+
+const COPY: Record<UiLocale, { about: string; toolsTitle: string; dataTitle: string; data: { href: string; label: string }[] }> = {
+  'es-mx': {
+    about:
+      'Calculadoras con la ley y los valores oficiales vigentes, citados en cada página. Tus datos se procesan en tu navegador: no los enviamos a ningún servidor.',
+    toolsTitle: 'Calculadoras laborales',
+    dataTitle: 'Datos oficiales',
+    data: [{ href: pathFor('mx.uma-salario-minimo', 'es-mx'), label: 'UMA y salario mínimo 2026' }],
+  },
+  'pt-br': {
+    about:
+      'Conversões com a fonte de cada valor citada na própria página. As contas são feitas no seu navegador: nada do que você digita é enviado para servidor nenhum.',
+    toolsTitle: 'Medidas de terra',
+    dataTitle: 'Para documentos oficiais',
+    data: [{ href: `${pathFor('br.alqueire-hectare', 'pt-br')}#documentos-oficiais`, label: 'CAR, ITR, CCIR e cartório usam hectares' }],
+  },
+};
+const copy = COPY[locale as UiLocale];
+const tools = toolsFor(locale as UiLocale).filter((t) => t.tool !== 'uma');
 ---
 
 <footer class="site-footer">
   <div class="wrap site-footer__grid">
     <div>
       <h2>{SITE.name}</h2>
-      <p>
-        Calculadoras con la ley y los valores oficiales vigentes, citados en cada página. Tus datos se procesan en tu navegador: no los
-        enviamos a ningún servidor.
-      </p>
+      <p>{copy.about}</p>
     </div>
     <div>
-      <h2>Calculadoras laborales</h2>
+      <h2>{copy.toolsTitle}</h2>
       <ul>
         {
-          links.map((l) => (
+          tools.map((t) => (
             <li>
-              <a href={l.href}>{l.label}</a>
+              <a href={pathFor(t.key, locale)}>{t.name}</a>
             </li>
           ))
         }
       </ul>
     </div>
     <div>
-      <h2>Datos oficiales</h2>
+      <h2>{copy.dataTitle}</h2>
       <ul>
-        <li><a href={pathFor('mx.uma-salario-minimo', locale)}>UMA y salario mínimo 2026</a></li>
+        {
+          copy.data.map((d) => (
+            <li>
+              <a href={d.href}>{d.label}</a>
+            </li>
+          ))
+        }
       </ul>
+      {
+        others.length > 0 && (
+          <>
+            <h2 class="site-footer__subhead">{ui.otherCountries}</h2>
+            <ul>
+              {others.map((o) => (
+                <li>
+                  <a href={o.href} hreflang={o.hreflang} lang={o.hreflang}>
+                    {o.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </>
+        )
+      }
     </div>
   </div>
 </footer>

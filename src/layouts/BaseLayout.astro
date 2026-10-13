@@ -5,6 +5,7 @@ import { SITE, absoluteUrl } from '../config/site';
 import { getLocale, type LocaleCode } from '../i18n/locales';
 import { alternatesFor, type PageKey } from '../i18n/routes';
 import { ldJson } from '../lib/seo/jsonld';
+import { siteUi } from '../i18n/ui';
 import SiteHeader from '../components/site/SiteHeader.astro';
 import SiteFooter from '../components/site/SiteFooter.astro';
 
@@ -33,6 +34,7 @@ const alternates = pageKey && !noindex ? alternatesFor(pageKey) : [];
 const ogImage = absoluteUrl(`/og/${ogSlug}.png`);
 const fullTitle = title.includes(SITE.name) ? title : `${title} | ${SITE.name}`;
 const ogLocale = loc.hreflang.replace('-', '_');
+const ui = siteUi(locale);
 // Analytics only from our own origin (a proxied, self-hosted Umami/Plausible), never a third party.
 const analyticsSrc = SITE.analyticsScriptUrl.startsWith('/') ? SITE.analyticsScriptUrl : '';
 ---
@@ -89,11 +91,11 @@ const analyticsSrc = SITE.analyticsScriptUrl.startsWith('/') ? SITE.analyticsScr
     <slot name="head" />
   </head>
   <body data-tool={tool}>
-    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <a class="skip-link" href="#contenido">{ui.skipLink}</a>
     <SiteHeader locale={locale} />
     <main id="contenido" tabindex="-1">
       <slot />
     </main>
-    <SiteFooter locale={locale} />
+    <SiteFooter locale={locale} pageKey={noindex ? undefined : pageKey} />
   </body>
 </html>

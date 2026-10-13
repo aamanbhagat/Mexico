@@ -1,76 +1,93 @@
 ---
 /**
- * Page template for every calculator: answer-first hero, the island, "Cómo se calcula",
+ * Page template for every calculator: answer-first hero, the island, "how we calculate",
  * worked examples, FAQ, sources, last-updated date, disclaimer and the data-driven review badge.
- * Emits WebApplication + FAQPage + BreadcrumbList JSON-LD (CLAUDE.md §6).
+ * Emits WebApplication + FAQPage + BreadcrumbList JSON-LD (CLAUDE.md §6). Strings come from the
+ * locale's dictionary (src/i18n/ui.ts); the related links from the tools registry.
  */
 import BaseLayout from './BaseLayout.astro';
 import ReviewBadge from '../components/page/ReviewBadge.astro';
 import StationIcon from '../components/page/StationIcon.astro';
 import Faq from '../components/page/Faq.astro';
-import Sources, { type ExtraSource } from '../components/page/Sources.astro';
+import Sources, { type ExtraSource, type SourceItem } from '../components/page/Sources.astro';
 import { pathFor, type PageKey } from '../i18n/routes';
-import type { LocaleCode } from '../i18n/locales';
+import { getLocale, type LocaleCode } from '../i18n/locales';
+import { siteUi, type UiLocale } from '../i18n/ui';
+import { toolsFor, type Pictogram, type Tool } from '../i18n/tools';
 import { breadcrumbLd, datasetLd, faqLd, webAppLd, type FaqItem } from '../lib/seo/jsonld';
 import type { MxParamId } from '../lib/params/mx';
-import { formatDateLong } from '../lib/ui/format';
-
-type Tool = 'aguinaldo' | 'finiquito' | 'liquidacion' | 'prima-vacacional' | 'vacaciones' | 'uma';
+import { formatDateLongIn } from '../lib/ui/format';
 
 interface Props {
   pageKey: PageKey;
   locale: LocaleCode;
   tool: Tool;
+  /** Pictogram in the hero (defaults to the tool's). */
+  icon?: Pictogram | undefined;
   /** <title> */
   title: string;
   description: string;
   h1: string;
   /** Short answer under the H1 (the query answered immediately). */
   lede: string;
-  /** ISO date shown as "Actualizado el …" and in dateModified. */
+  /** ISO date shown as "updated on …" and in dateModified. */
   updated: string;
   appName: string;
   faq: FaqItem[];
-  sourceParams: MxParamId[];
+  /** Mexico registry parameters cited in the sources section. */
+  sourceParams?: MxParamId[] | undefined;
+  /** Sources prepared by the page (land-unit catalog entries…). */
+  sourceItems?: SourceItem[] | undefined;
   extraSources?: ExtraSource[] | undefined;
   /** Date used to pick which parameter version to cite. */
-  asOf: string;
+  asOf?: string | undefined;
   direction?: string | undefined;
   noindex?: boolean | undefined;
   pathOverride?: string | undefined;
-  /** Hide the "Ejemplos" heading block when the page has none. */
+  /** Hide the examples block when the page has none. */
   hasExamples?: boolean | undefined;
   /** "dataset" for reference pages (no calculator). */
   schema?: 'app' | 'dataset' | undefined;
+  /** schema.org applicationCategory for the WebApplication. */
+  appCategory?: string | undefined;
   /** Heading of the "how" section. */
   howTitle?: string | undefined;
+  /** Intermediate breadcrumb (hub page) between home and this page. */
+  parent?: { name: string; path: string } | undefined;
 }
 
 const p = Astro.props;
+const ui = siteUi(p.locale);
+const loc = getLocale(p.locale);
 const path = p.pathOverride ?? pathFor(p.pageKey, p.locale);
 const home = pathFor('home', p.locale);
-const crumbs = [
-  { name: 'Inicio', path: home },
-  { name: p.h1, path },
-];
+const crumbs = [{ name: ui.home, path: home }, ...(p.parent ? [p.parent] : []), { name: p.h1, path }];
+
+const LD_LOCALE: Record<UiLocale, { country: string; requirements: string }> = {
+  'es-mx': { country: 'México', requirements: 'Requiere JavaScript para recalcular en vivo.' },
+  'pt-br': { country: 'Brasil', requirements: 'Requer JavaScript para converter em tempo real.' },
+};
+const ld = LD_LOCALE[p.locale as UiLocale];
 const jsonLd = [
   p.schema === 'dataset'
     ? datasetLd({ name: p.appName, description: p.description, path, dateModified: p.updated })
-    : webAppLd({ name: p.appName, description: p.description, path, inLanguage: 'es-MX', dateModified: p.updated, country: 'México' }),
+    : webAppLd({
+        name: p.appName,
+        description: p.description,
+        path,
+        inLanguage: loc.hreflang,
+        dateModified: p.updated,
+        country: ld.country,
+        currency: loc.currency,
+        browserRequirements: ld.requirements,
+        ...(p.appCategory ? { category: p.appCategory } : {}),
+      }),
   faqLd(p.faq),
   breadcrumbLd(crumbs),
 ];
 
-const related: { key: PageKey; label: string; tool: Tool }[] = (
-  [
-    { key: 'mx.aguinaldo', label: 'Calculadora de aguinaldo', tool: 'aguinaldo' },
-    { key: 'mx.finiquito', label: 'Calculadora de finiquito', tool: 'finiquito' },
-    { key: 'mx.liquidacion', label: 'Calculadora de liquidación', tool: 'liquidacion' },
-    { key: 'mx.prima-vacacional', label: 'Calculadora de prima vacacional', tool: 'prima-vacacional' },
-    { key: 'mx.vacaciones', label: 'Calculadora de vacaciones', tool: 'vacaciones' },
-    { key: 'mx.uma-salario-minimo', label: 'UMA y salario mínimo 2026', tool: 'uma' },
-  ] as const
-).filter((r) => r.key !== p.pageKey);
+const related = toolsFor(p.locale as UiLocale).filter((r) => r.key !== p.pageKey);
+const hasDisclaimer = Astro.slots.has('disclaimer');
 ---
 
 <BaseLayout
@@ -79,7 +96,7 @@ const related: { key: PageKey; label: string; tool: Tool }[] = (
   locale={p.locale}
   pageKey={p.pageKey}
   path={path}
-  ogSlug={p.tool}
+  ogSlug={p.pageKey.startsWith('br.') ? p.pageKey.slice(3) : p.tool}
   jsonLd={jsonLd}
   tool={p.tool}
   direction={p.direction}
@@ -87,29 +104,35 @@ const related: { key: PageKey; label: string; tool: Tool }[] = (
 >
   <slot name="head" slot="head" />
   <div class="wrap">
-    <nav class="breadcrumbs" aria-label="Ruta de navegación">
+    <nav class="breadcrumbs" aria-label={ui.breadcrumbs}>
       <ol>
-        <li><a href={home}>Inicio</a></li>
+        {
+          crumbs.slice(0, -1).map((c) => (
+            <li>
+              <a href={c.path}>{c.name}</a>
+            </li>
+          ))
+        }
         <li aria-current="page">{p.h1}</li>
       </ol>
     </nav>
 
     <header class="hero">
       <div class="hero__title-row">
-        <StationIcon tool={p.tool} />
+        <StationIcon tool={p.icon ?? p.tool} />
         <h1>{p.h1}</h1>
       </div>
       <p class="hero__lede">{p.lede}</p>
       <p class="hero__meta">
-        <span>Actualizado el <time datetime={p.updated}>{formatDateLong(p.updated)}</time></span>
-        <ReviewBadge pageKey={p.pageKey} />
+        <span>{ui.updatedOn} <time datetime={p.updated}>{formatDateLongIn(p.updated, loc.intl)}</time></span>
+        <ReviewBadge pageKey={p.pageKey} locale={p.locale} />
       </p>
     </header>
 
     <slot />
 
     <section class="section" aria-labelledby="como-se-calcula">
-      <h2 id="como-se-calcula">{p.howTitle ?? 'Cómo se calcula'}</h2>
+      <h2 id="como-se-calcula">{p.howTitle ?? ui.howTitle}</h2>
       <div class="prose">
         <slot name="how" />
       </div>
@@ -118,7 +141,7 @@ const related: { key: PageKey; label: string; tool: Tool }[] = (
     {
       p.hasExamples !== false && (
         <section class="section" aria-labelledby="ejemplos">
-          <h2 id="ejemplos">Ejemplos resueltos</h2>
+          <h2 id="ejemplos">{ui.examplesTitle}</h2>
           <slot name="examples" />
         </section>
       )
@@ -127,34 +150,44 @@ const related: { key: PageKey; label: string; tool: Tool }[] = (
     <slot name="extra" />
 
     <section class="section" aria-labelledby="preguntas">
-      <h2 id="preguntas">Preguntas frecuentes</h2>
+      <h2 id="preguntas">{ui.faqTitle}</h2>
       <Faq items={p.faq} />
     </section>
 
     <section class="section" aria-labelledby="fuentes">
-      <h2 id="fuentes">Fuentes y valores oficiales</h2>
-      <Sources params={p.sourceParams} asOf={p.asOf} extra={p.extraSources} />
+      <h2 id="fuentes">{ui.sourcesTitle}</h2>
+      <Sources params={p.sourceParams} asOf={p.asOf} items={p.sourceItems} extra={p.extraSources} locale={p.locale} />
     </section>
 
     <section class="section" aria-labelledby="aviso">
       <div class="disclaimer">
-        <h2 id="aviso">Aviso importante</h2>
-        <p>
-          Este cálculo es una estimación informativa con base en la Ley Federal del Trabajo, la Ley del ISR y los valores oficiales vigentes
-          en la fecha indicada. No sustituye asesoría legal ni fiscal: tu contrato, un convenio o una resolución pueden darte más. La
-          retención real de ISR depende de la nómina de tu empresa y se ajusta en tu declaración anual.
-        </p>
-        <p>
-          Si tienes un conflicto laboral, la <a href="https://www.gob.mx/profedet" rel="noopener" target="_blank"
-            >Procuraduría Federal de la Defensa del Trabajo (PROFEDET)</a
-          > te asesora y representa gratis.
-        </p>
-        <p><ReviewBadge pageKey={p.pageKey} /></p>
+        <h2 id="aviso">{ui.disclaimerTitle}</h2>
+        {
+          hasDisclaimer ? (
+            <slot name="disclaimer" />
+          ) : (
+            <>
+              <p>
+                Este cálculo es una estimación informativa con base en la Ley Federal del Trabajo, la Ley del ISR y los valores oficiales
+                vigentes en la fecha indicada. No sustituye asesoría legal ni fiscal: tu contrato, un convenio o una resolución pueden darte
+                más. La retención real de ISR depende de la nómina de tu empresa y se ajusta en tu declaración anual.
+              </p>
+              <p>
+                Si tienes un conflicto laboral, la{' '}
+                <a href="https://www.gob.mx/profedet" rel="noopener" target="_blank">
+                  Procuraduría Federal de la Defensa del Trabajo (PROFEDET)
+                </a>{' '}
+                te asesora y representa gratis.
+              </p>
+            </>
+          )
+        }
+        <p><ReviewBadge pageKey={p.pageKey} locale={p.locale} /></p>
       </div>
     </section>
 
     <section class="section" aria-labelledby="relacionadas">
-      <h2 id="relacionadas">Otras calculadoras</h2>
+      <h2 id="relacionadas">{ui.relatedTitle}</h2>
       <ul class="related">
         {
           related.map((r) => (

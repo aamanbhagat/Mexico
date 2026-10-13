@@ -22,6 +22,7 @@
         },
         "sources": {
           "inda-1966": {
+            "short": "Tabela INDA/MDA",
             "title": "Tabela de medidas agrárias não decimais — Ministério da Agricultura (Serviço de Estatística da Produção, set. 1946), compilada pelo INDA em nov. 1966 (cópia no Ipeadata)",
             "url": "https://www.ipeadata.gov.br/doc/TABELA_MEDIDA_AGRARIA_NAO_DECIMAL.pdf",
             "kind": "oficial-historica",
@@ -30,6 +31,7 @@
             "notes": "Fonte oficial mais próxima de um padrão: compilação do Instituto Nacional de Desenvolvimento Agrário (antecessor do INCRA) a partir do levantamento de 1946 do Ministério da Agricultura. Lista cada medida em braças, metros e hectares e os estados onde aparece. As linhas citadas aqui foram lidas em trechos indexados do PDF e em cópias (forest-gis.com, muner.com.br); o PDF não abriu no ambiente de build."
           },
           "ibge-1948": {
+            "short": "IBGE 1948",
             "title": "Unidades agrárias não decimais em uso no Brasil — Ministério da Agricultura, Serviço de Estatística da Produção (Serviço Gráfico do IBGE, 1948)",
             "url": "https://biblioteca.ibge.gov.br/index.php/biblioteca-catalogo?view=detalhes&id=249155",
             "kind": "oficial-historica",
@@ -38,6 +40,7 @@
             "notes": "Publicação de 105 páginas com as unidades por município. É o documento primário a conferir antes de marcar qualquer valor como verificado; não foi possível abri-lo no ambiente de build."
           },
           "ibge-rbg-1950": {
+            "short": "IBGE 1950",
             "title": "IBGE — Revista Brasileira de Geografia, jul.–set. 1950: \"Cada alqueire paulista equivale a 5,98 acres ou 24 200 m²\"",
             "url": "https://biblioteca.ibge.gov.br/visualizacao/periodicos/115/rbg_1950_v12_n3.pdf",
             "kind": "oficial-historica",
@@ -46,6 +49,7 @@
             "notes": "Frase lida no trecho indexado do PDF do IBGE."
           },
           "iea-sp": {
+            "short": "IEA-SP",
             "title": "Instituto de Economia Agrícola (Secretaria de Agricultura de SP) — Informações Econômicas, convenções: \"alq. = alqueire paulista (2,42 ha)\"",
             "url": "https://iea.agricultura.sp.gov.br/ftpiea/IE/2016/ie-0816.pdf",
             "kind": "oficial",
@@ -54,6 +58,7 @@
             "notes": "A mesma convenção aparece nas edições de 2017 e 2018/2019 da revista do IEA. É a única fonte estadual vigente que encontramos definindo um alqueire."
           },
           "canal-rural": {
+            "short": "Canal Rural",
             "title": "Canal Rural — Especialistas mostram como é realizado o processo de medição de terras",
             "url": "https://www.canalrural.com.br/programas/especialistas-mostram-como-realizado-processo-medicao-terras-26577/",
             "kind": "imprensa",
@@ -62,6 +67,7 @@
             "notes": "O topógrafo Júlio César Teixeira explica que um litro de terra são 605 m², que o alqueire mineiro tem 80 litros e o paulista, 40."
           },
           "bolema": {
+            "short": "Bolema",
             "title": "Bolema (SciELO) — Saberes quilombolas: um estudo no processo de produção da farinha de mandioca",
             "url": "https://www.scielo.br/j/bolema/a/LM5VKtbPWQSbVdnFcb5pjZs/?lang=pt",
             "kind": "academica",
@@ -70,6 +76,7 @@
             "notes": "Comunidade Lagoa da Pedra, Arraias (TO): 1 braça = 2,2 m; 1 quadra tem 15 braças de lado; 1 tarefa = 4 quadras = 4.356 m²."
           },
           "vidya": {
+            "short": "Vidya",
             "title": "Vizolli e Mendes (2016) — Braça, quadro e tarefa: um modo de efetuar medida de terras. Vidya, v. 36, n. 1, p. 69-78",
             "url": "https://periodicos.ufn.edu.br/index.php/VIDYA/article/view/1388",
             "kind": "academica",
@@ -78,6 +85,7 @@
             "notes": "Mesma comunidade de Arraias (TO). Registra que os quilombolas usam braça, quadro e tarefa mesmo conhecendo o hectare."
           },
           "ufal-questao": {
+            "short": "UFAL",
             "title": "UFAL — questão de concurso: \"na região de plantio de cana de Alagoas (…) uma tarefa equivale à área de 25 braças por 25 braças\" (braça de 2,20 m)",
             "url": "https://www.qconcursos.com/questoes-de-concursos/questoes/6b3a0dfdfdb",
             "kind": "academica",
@@ -86,6 +94,7 @@
             "notes": "Enunciado de prova elaborado pela Universidade Federal de Alagoas; serve como registro do costume local, não como norma."
           },
           "ufpe-glossario": {
+            "short": "UFPE",
             "title": "UFPE — dissertação (Centro de Filosofia e Ciências Humanas), glossário de medidas: alqueire de capacidade com 160 litros no Alto Sertão da Bahia e 80 litros no sul",
             "url": "https://repositorio.ufpe.br/bitstream/123456789/7313/1/arquivo7676_1.pdf",
             "kind": "academica",
@@ -94,6 +103,7 @@
             "notes": "Explica por que o alqueire varia: era uma medida de capacidade (sementes) antes de virar medida de área. Também registra a tarefa de 3.052 m² em Alagoas e Sergipe."
           },
           "calculadorarural": {
+            "short": "Calculadora Rural",
             "title": "Calculadora Rural — 1 alqueire em hectares: 2,42, 4,84 ou 9,68? Tabela por estado",
             "url": "https://calculadorarural.com.br/blog/tabela-alqueire-hectare-estados",
             "kind": "comercial",
@@ -102,6 +112,7 @@
             "notes": "Atribui o paulista a SP, PR e MS; o mineiro a MG, RJ e ES; o goiano a GO, TO e MT; o baiano à BA; o do Norte a MA, PI, CE e PA. Não cita fonte."
           },
           "calculeonline": {
+            "short": "Calcule Online",
             "title": "Calcule Online — Conversor de alqueires (paulista, mineiro, goiano, baiano)",
             "url": "https://www.calculeonline.com/calculadora-conversao-alqueires",
             "kind": "comercial",
@@ -110,6 +121,7 @@
             "notes": "Atribui o alqueire do Norte a CE, RN, PB, PE, AL e SE e o baiano a BA, PI e MA. Não cita fonte."
           },
           "agroadvance": {
+            "short": "Agroadvance",
             "title": "Agroadvance — Alqueire, hectare, acre e módulo fiscal: 4 medidas de terra",
             "url": "https://agroadvance.com.br/blog-alqueire-hectare-acre-modulo-fiscal/",
             "kind": "comercial",
@@ -118,6 +130,7 @@
             "notes": "Dá o alqueire do Norte como 27.200 m² (Pará, Amazonas) e o alqueirão como 19,36 ha."
           },
           "aegro": {
+            "short": "Aegro",
             "title": "Aegro — Hectare: guia completo de medidas e conversão",
             "url": "https://aegro.com.br/blog/hectare/",
             "kind": "comercial",
@@ -126,6 +139,7 @@
             "notes": "Diz que o alqueire paulista predomina em SP, PR e partes de MT e MS."
           },
           "agrotec": {
+            "short": "Agrotec",
             "title": "Agrotec Imobiliária no Agro — Quanto custa um alqueire de terra: os 4 alqueires",
             "url": "https://agrotecimobiliarianoagro.com.br/quanto-custa-um-alqueire-de-terra",
             "kind": "comercial",
@@ -134,6 +148,7 @@
             "notes": "Chama o mineiro de geométrico (MG, GO, RJ) e dá ao baiano de 9,68 ha também o nome de alqueirão — nome que outras fontes reservam para 19,36 ha."
           },
           "converterem": {
+            "short": "Converter Em",
             "title": "Converter Em — Tarefa para metros quadrados, a medida do Nordeste",
             "url": "https://www.converterem.com.br/medidas-agrarias/tarefa-para-metros-quadrados/",
             "kind": "comercial",
@@ -142,6 +157,7 @@
             "notes": "Tarefa baiana de 30 × 30 braças = 4.356 m²; lembra que o valor varia por localidade."
           },
           "raaplaw": {
+            "short": "Raap Law",
             "title": "Raap Law — Unidades de medidas agrárias",
             "url": "https://raaplaw.com.br/unidades-de-medidas-agrarias/",
             "kind": "comercial",
@@ -150,6 +166,7 @@
             "notes": "Dá as tarefas alagoana e sergipana como 3.025 m²."
           },
           "focorural": {
+            "short": "Foco Rural",
             "title": "Foco Rural — Hectare ou alqueire: qual medida de terra usar?",
             "url": "https://focorural.com/2022/07/01/hectare-ou-alqueire-qual-medida-de-terra-usar/",
             "kind": "comercial",
@@ -158,6 +175,7 @@
             "notes": "Quadra quadrada de 17.424 m² e quadra de sesmaria de 871.200 m²."
           },
           "mario-bento": {
+            "short": "Mário Bento",
             "title": "Mário Bento — Começando a entender a minha terra I (quadra de 132 m de frente por 6.600 m de fundo)",
             "url": "https://mariobento.blogspot.com/2010/10/comecando-entender-minha-terra_593.html",
             "kind": "comercial",
@@ -166,6 +184,7 @@
             "notes": "Blog de história regional (RS). Um comentário no mesmo post associa a quadra de 132 × 132 m às lavouras de arroz do Sul."
           },
           "exame": {
+            "short": "Exame",
             "title": "Exame — O que é alqueire: veja diferenças da medida em SP, MG, GO e BA",
             "url": "https://exame.com/agro/o-que-e-alqueire-veja-diferencas-da-medida-em-sp-mg-go-e-ba/",
             "kind": "imprensa",
@@ -174,6 +193,7 @@
             "notes": "A tabela publicada dá 1,93 ha para o alqueirão (193.600 m² são 19,36 ha): exemplo de erro de vírgula que circula."
           },
           "inmetro-qgum": {
+            "short": "Inmetro",
             "title": "Inmetro — Quadro Geral de Unidades de Medida no Brasil",
             "url": "https://www.gov.br/inmetro/pt-br/centrais-de-conteudo/publicacoes/documentos-tecnicos-em-metrologia/quadro-geral-de-unidades-de-medida-no-brasil.pdf",
             "kind": "oficial",
@@ -182,6 +202,7 @@
             "notes": "Unidades legais no Brasil (Resolução Conmetro 11/1988). O metro quadrado é a unidade SI de área; o hectare (1 ha = 10⁴ m²) é aceito para uso com o SI."
           },
           "nist-811": {
+            "short": "NIST",
             "title": "NIST Special Publication 811 — Guide for the Use of the International System of Units, Appendix B (acre)",
             "url": "https://www.nist.gov/pml/special-publication-811",
             "kind": "oficial",

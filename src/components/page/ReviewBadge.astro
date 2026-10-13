@@ -1,21 +1,26 @@
 ---
 import type { PageKey } from '../../i18n/routes';
+import type { LocaleCode } from '../../i18n/locales';
+import { siteUi } from '../../i18n/ui';
 import { reviewFor } from '../../lib/reviews';
-import { formatDateLong } from '../../lib/ui/format';
+import { formatDateLongIn } from '../../lib/ui/format';
+import { getLocale } from '../../i18n/locales';
 
 interface Props {
   pageKey: PageKey;
+  locale?: LocaleCode | undefined;
 }
-const review = reviewFor(Astro.props.pageKey);
+const { pageKey, locale = 'es-mx' } = Astro.props;
+const review = reviewFor(pageKey);
+const ui = siteUi(locale);
 ---
 
 {
   review.status === 'reviewed' ? (
     <span class="badge badge--reviewed">
-      Revisado por {review.reviewer}
-      {review.credentials ? `, ${review.credentials}` : ''} el {formatDateLong(review.reviewed_on as string)}
+      {ui.reviewedBy(review.reviewer as string, review.credentials, formatDateLongIn(review.reviewed_on as string, getLocale(locale).intl))}
     </span>
   ) : (
-    <span class="badge badge--pending">Revisión legal: pendiente</span>
+    <span class="badge badge--pending">{ui.reviewPending[review.kind ?? 'legal']}</span>
   )
 }

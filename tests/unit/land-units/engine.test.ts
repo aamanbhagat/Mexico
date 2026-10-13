@@ -129,7 +129,7 @@ describe('catalog validation catches broken data', () => {
   const base: LandUnitCatalog = {
     linear: { id: 'braca', name: 'braça', plural: 'braças', meters: '2.2', source: 's' },
     rounding: { mode: 'half-even', standard: 'ABNT NBR 5891', url: 'https://example.org' },
-    sources: { s: { title: 'Fonte', url: 'https://example.org', kind: 'oficial', retrieved_on: '2026-10-13', opened: false } },
+    sources: { s: { short: 'F', title: 'Fonte', url: 'https://example.org', kind: 'oficial', retrieved_on: '2026-10-13', opened: false } },
     units: [
       {
         id: 'a',

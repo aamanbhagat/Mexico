@@ -9,6 +9,8 @@ import { cmp, div, equals, mul, parseRational, rat, type Rational } from './rati
 export type SourceKind = 'oficial' | 'oficial-historica' | 'academica' | 'imprensa' | 'comercial';
 
 export interface CatalogSource {
+  /** Few-word name for dense tables ("IEA-SP"). */
+  short: string;
   title: string;
   url: string;
   kind: SourceKind;
@@ -99,6 +101,7 @@ export function catalogProblems(c: LandUnitCatalog): string[] {
   if (!c.sources[c.linear.source]) problems.push(`linear.source "${c.linear.source}" is not a known source`);
   for (const [id, s] of Object.entries(c.sources)) {
     if (!/^https:\/\//.test(s.url)) problems.push(`source ${id}: url must be https`);
+    if (!s.short) problems.push(`source ${id}: missing short name`);
     if (!/^\d{4}-\d{2}-\d{2}$/.test(s.retrieved_on)) problems.push(`source ${id}: retrieved_on must be an ISO date`);
   }
   const ids = new Set<string>();
@@ -148,8 +151,13 @@ export function catalogProblems(c: LandUnitCatalog): string[] {
   return problems;
 }
 
-export function compileCatalog(c: LandUnitCatalog): CompiledCatalog {
-  const problems = catalogProblems(c);
+/**
+ * Validates (unless told not to) and converts every area to an exact rational.
+ * The browser skips validation: the build already ran it, and client bundles carry the catalog
+ * without editorial fields (notes, retrieved_on).
+ */
+export function compileCatalog(c: LandUnitCatalog, validate = true): CompiledCatalog {
+  const problems = validate ? catalogProblems(c) : [];
   if (problems.length) throw new Error(`Invalid land-unit catalog:\n - ${problems.join('\n - ')}`);
   const units = c.units.map((u) => ({ ...u, area: parseRational(u.m2) as Rational }));
   return {

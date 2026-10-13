@@ -1,8 +1,23 @@
 ---
 /** Light/dark switch. Follows the OS until the visitor chooses; the choice is kept in localStorage only. */
+import type { LocaleCode } from '../../i18n/locales';
+import { siteUi } from '../../i18n/ui';
+
+interface Props {
+  locale: LocaleCode;
+}
+const ui = siteUi(Astro.props.locale);
 ---
 
-<button class="theme-toggle" type="button" data-theme-toggle aria-label="Cambiar a tema oscuro" title="Cambiar tema">
+<button
+  class="theme-toggle"
+  type="button"
+  data-theme-toggle
+  data-label-dark={ui.themeToDark}
+  data-label-light={ui.themeToLight}
+  aria-label={ui.themeToDark}
+  title={ui.themeTitle}
+>
   <svg
     class="icon-sun"
     viewBox="0 0 24 24"
@@ -43,7 +58,8 @@
   const sync = () => {
     const theme = current();
     root.dataset['theme'] = theme;
-    button?.setAttribute('aria-label', theme === 'dark' ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro');
+    const label = theme === 'dark' ? button?.dataset['labelLight'] : button?.dataset['labelDark'];
+    if (label) button?.setAttribute('aria-label', label);
   };
   sync();
   button?.addEventListener('click', () => {

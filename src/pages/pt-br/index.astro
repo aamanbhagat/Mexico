@@ -1,0 +1,122 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StationIcon from '../../components/page/StationIcon.astro';
+import { pathFor } from '../../i18n/routes';
+import { toolsFor, haOf, m2Of } from '../../i18n/tools';
+import { absoluteUrl, SITE } from '../../config/site';
+import { BR_LAND } from '../../lib/params/br';
+import { formatDateLongIn } from '../../lib/ui/format';
+import { UPDATED } from '../../content/pt-br/meta';
+import { KIND_LABEL } from '../../content/pt-br/land-text';
+
+const tools = toolsFor('pt-br');
+const MAIN = ['alqueire-paulista', 'alqueire-mineiro', 'alqueire-baiano', 'alqueire-norte', 'alqueirao'];
+const rows = MAIN.map((id) => {
+  const u = BR_LAND.byId.get(id)!;
+  return { u, primary: BR_LAND.raw.sources[u.sources[0]!]! };
+});
+
+const jsonLd = [
+  { '@context': 'https://schema.org', '@type': 'WebSite', name: SITE.name, url: absoluteUrl('/pt-br/'), inLanguage: 'pt-BR' },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: tools.map((t, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: t.label,
+      url: absoluteUrl(pathFor(t.key, 'pt-br')),
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title="Medidas de terra: alqueire, hectare, tarefa e litro"
+  description={`Converta alqueire, tarefa, litro de terra e quadra em hectare e m², com o valor usado em cada estado e a fonte de cada número. Alqueire paulista ${haOf('alqueire-paulista')}, mineiro ${haOf('alqueire-mineiro')}.`}
+  locale="pt-br"
+  pageKey="home"
+  path="/pt-br/"
+  ogSlug="br"
+  jsonLd={jsonLd}
+  tool="terra"
+>
+  <div class="wrap">
+    <header class="hero home-hero">
+      <h1>Medidas de terra, com o valor de cada estado</h1>
+      <p class="hero__lede">
+        Alqueire, tarefa, litro de terra e quadra em hectare e metro quadrado. O alqueire muda de estado para estado: aqui você escolhe o
+        seu, vê o valor usado e a fonte de cada número, e é avisado quando as fontes não concordam.
+      </p>
+      <p class="hero__meta"><span>Atualizado em <time datetime={UPDATED}>{formatDateLongIn(UPDATED, 'pt-BR')}</time></span></p>
+    </header>
+
+    <nav aria-labelledby="ferramentas">
+      <h2 id="ferramentas" class="sr-only">Conversores</h2>
+      <ol class="line-map">
+        {
+          tools.map((t) => (
+            <li data-tool={t.tool}>
+              <a href={pathFor(t.key, 'pt-br')}>
+                <StationIcon tool={t.icon} />
+                <span class="line-map__text">
+                  <span class="line-map__name">{t.name}</span>
+                  <span class="line-map__what">{t.what}</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+
+    <section class="section" aria-labelledby="alqueires">
+      <h2 id="alqueires">Os alqueires mais usados</h2>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Tabela dos alqueires mais usados">
+        <table class="data-table">
+          <caption class="sr-only">Área, braças e fonte de cada alqueire</caption>
+          <thead>
+            <tr>
+              <th scope="col">Alqueire</th>
+              <th scope="col" class="num">Área</th>
+              <th scope="col">Braças</th>
+              <th scope="col">Fonte</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              rows.map(({ u, primary }) => (
+                <tr>
+                  <th scope="row">{u.name}</th>
+                  <td class="num">
+                    {haOf(u.id)}
+                    <br />
+                    <span class="state-table__alt">{m2Of(u.id)}</span>
+                  </td>
+                  <td>{u.dims ? `${u.dims[0]} × ${u.dims[1]}` : '—'}</td>
+                  <td>
+                    <a href={u.source_url} rel="noopener" target="_blank">
+                      {primary.short}
+                    </a>
+                    <span class="state-table__alt">{KIND_LABEL[primary.kind]}</span>
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+      <p><a href={`${pathFor('br.alqueire-hectare', 'pt-br')}#tabela-por-estado`}>Ver o alqueire de cada estado, com todas as fontes</a></p>
+    </section>
+
+    <section class="section" aria-labelledby="privacidade">
+      <h2 id="privacidade">Seus dados não saem do seu aparelho</h2>
+      <div class="prose">
+        <p>
+          As contas são feitas no seu navegador. Não pedimos cadastro, não guardamos o que você digita e não usamos cookies de rastreamento.
+          Se compartilhar um resultado, o link leva os números que você digitou: envie só para quem você quiser.
+        </p>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

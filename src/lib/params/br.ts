@@ -23,4 +23,4 @@ export function brParam<K extends BrParamId>(id: K, date: string): ParamVersion<
 }
 
 /** The Brazilian land-unit catalog, validated and compiled to exact rationals. */
-export const BR_LAND: CompiledCatalog = compileCatalog(brParam('br.land-units', LAND_UNITS_AS_OF).value);
+export const BR_LAND: CompiledCatalog = compileCatalog(brParam('br.land-units', LAND_UNITS_AS_OF).value, typeof window === 'undefined');

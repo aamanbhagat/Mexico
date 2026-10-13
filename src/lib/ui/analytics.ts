@@ -6,7 +6,7 @@
 type Umami = { track: (name: string, data?: Record<string, string>) => void };
 type Plausible = (name: string, opts?: { props?: Record<string, string> }) => void;
 
-export type AnalyticsEvent = 'calculo' | 'copiar' | 'compartir' | 'pdf';
+export type AnalyticsEvent = 'calculo' | 'copiar' | 'compartir' | 'pdf' | 'imprimir';
 
 export function track(event: AnalyticsEvent, tool: string): void {
   if (typeof window === 'undefined') return;

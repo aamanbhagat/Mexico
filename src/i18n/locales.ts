@@ -23,7 +23,7 @@ export const LOCALES = {
     currency: 'BRL',
     country: 'BR',
     name: 'Português (Brasil)',
-    published: false,
+    published: true,
   },
   id: {
     code: 'id',

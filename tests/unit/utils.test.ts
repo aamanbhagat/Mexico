@@ -49,6 +49,11 @@ describe('URL state', () => {
   };
   const defaults: S = { salary: null, period: 'mensual', start: '2026-01-01', paid: false };
 
+  it('keeps query parameters it does not own (utm_*, other tools)', () => {
+    const state: S = { salary: 500, period: 'mensual', start: '2026-01-01', paid: false };
+    expect(buildSearch(codec, state, defaults, '?utm_source=x&s=1&p=diario')).toBe('?utm_source=x&s=500');
+  });
+
   it('round-trips state through the query string and omits defaults', () => {
     const state: S = { salary: 500, period: 'diario', start: '2026-06-01', paid: true };
     const search = buildSearch(codec, state, defaults);
@@ -64,20 +69,28 @@ describe('URL state', () => {
 });
 
 describe('locales, routes and hreflang', () => {
-  it('publishes only es-MX for now, with the other eight defined', () => {
-    expect(publishedLocales().map((l) => l.code)).toEqual(['es-mx']);
+  it('publishes es-MX and pt-BR, with the other seven defined', () => {
+    expect(publishedLocales().map((l) => l.code)).toEqual(['es-mx', 'pt-br']);
     expect(Object.keys(LOCALES).sort()).toEqual(['de', 'en', 'es-es', 'es-mx', 'id', 'ja', 'pl', 'pt-br', 'tr']);
   });
 
   it('emits hreflang only for live locales plus x-default', () => {
-    expect(alternatesFor('home').map((a) => a.hreflang)).toEqual(['es-MX', 'x-default']);
+    // The locale homes are alternates of each other; x-default stays on es-MX.
+    expect(alternatesFor('home').map((a) => a.hreflang)).toEqual(['es-MX', 'pt-BR', 'x-default']);
+    expect(alternatesFor('home').at(-1)?.href).toMatch(/\/es-mx\/$/);
+    expect(alternatesFor('mx.aguinaldo').map((a) => a.hreflang)).toEqual(['es-MX', 'x-default']);
     expect(alternatesFor('mx.aguinaldo')[0]?.href).toMatch(/\/es-mx\/calculadora-aguinaldo\/$/);
+    // BR-01 pages have no equivalent in another locale yet: self + x-default only.
+    expect(alternatesFor('br.alqueire-hectare').map((a) => a.hreflang)).toEqual(['pt-BR', 'x-default']);
+    expect(alternatesFor('br.alqueire-hectare')[0]?.href).toMatch(/\/pt-br\/conversor-alqueire-hectare\/$/);
   });
 
   it('never lists unpublished locales as live routes', () => {
-    expect(isLive('home', 'pt-br')).toBe(false);
-    expect(liveRoutes().every((r) => r.locale === 'es-mx')).toBe(true);
-    expect(liveRoutes()).toHaveLength(7);
+    expect(isLive('home', 'pt-br')).toBe(true);
+    expect(isLive('home', 'id')).toBe(false);
+    expect(liveRoutes().every((r) => r.locale === 'es-mx' || r.locale === 'pt-br')).toBe(true);
+    expect(liveRoutes().filter((r) => r.locale === 'es-mx')).toHaveLength(7);
+    expect(liveRoutes().filter((r) => r.locale === 'pt-br')).toHaveLength(9);
     expect(pathFor('mx.uma-salario-minimo', 'es-mx')).toBe('/es-mx/uma-salario-minimo-2026/');
   });
 });
@@ -91,9 +104,16 @@ describe('legal review badge is data-driven', () => {
       'mx.prima-vacacional',
       'mx.vacaciones',
       'mx.uma-salario-minimo',
+      'br.alqueire-hectare',
+      'br.hectare-alqueire',
     ] as const) {
       expect(reviewFor(key).status).toBe('pending');
     }
+  });
+
+  it('labels land-unit pages as technical review, labour pages as legal review', () => {
+    expect(reviewFor('br.alqueire-hectare').kind).toBe('technical');
+    expect(reviewFor('mx.aguinaldo').kind ?? 'legal').toBe('legal');
   });
 });
 
