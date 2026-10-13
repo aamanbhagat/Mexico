@@ -1,0 +1,345 @@
+{
+  "id": "id.weton-methods",
+  "name": "Metode weton: tabel neptu dan hitungan jodoh",
+  "unit": "neptu",
+  "description": "Nilai neptu hari dan pasaran, metode hitungan jodoh (sisa pembagian jumlah neptu), keblat pasaran dan istilah pangarasan, masing-masing dengan sumbernya. Ini data tradisi (primbon), bukan aturan hukum: tidak ada lembaga resmi yang menetapkannya, jadi setiap metode menyebut sumber yang memakainya dan perbedaan antarsumber dicatat, bukan disembunyikan.",
+  "references": {
+    "detik-tata-cara": {
+      "title": "detikJateng — Hitungan Weton Jawa untuk Pernikahan: Tata Cara, Makna, Contoh dan Ramalan",
+      "url": "https://www.detik.com/jateng/budaya/d-6522064/hitungan-weton-jawa-untuk-pernikahan-tata-cara-makna-contoh-dan-ramalan"
+    },
+    "detik-cek-jodoh": {
+      "title": "detikJateng — Cara Cek Kecocokan Jodoh Berdasarkan Weton dan Primbon Jawa untuk Pernikahan",
+      "url": "https://www.detik.com/jateng/budaya/d-8165445/cara-cek-kecocokan-jodoh-berdasarkan-weton-dan-primbon-jawa-untuk-pernikahan"
+    },
+    "detik-arti-topo": {
+      "title": "detikJateng — Arti Topo dalam Hitungan Weton Jawa Terkait Jodoh",
+      "url": "https://www.detik.com/jateng/budaya/d-7374170/arti-topo-dalam-hitungan-weton-jawa-terkait-jodoh"
+    },
+    "detik-istilah": {
+      "title": "detikJateng — Arti Sederet Istilah dalam Kalender Jawa dan Cara Menghitungnya",
+      "url": "https://www.detik.com/jateng/budaya/d-6395780/arti-sederet-istilah-dalam-kalender-jawa-dan-cara-menghitungnya"
+    },
+    "detik-panduan-jodoh": {
+      "title": "detikJogja — Panduan Memilih Jodoh Menurut Primbon Jawa, Begini Cara Hitungnya",
+      "url": "https://www.detik.com/jogja/budaya/d-8523046/panduan-memilih-jodoh-menurut-primbon-jawa-begini-cara-hitungnya"
+    },
+    "popbela-pernikahan": {
+      "title": "Popbela — Hitungan Weton Jawa untuk Pernikahan",
+      "url": "https://www.popbela.com/relationship/married/hitungan-weton-jawa-untuk-pernikahan-1-00-ck827-z7hxf5"
+    },
+    "popbela-pesthi": {
+      "title": "Popbela — Arti Pesthi, Kecocokan Pasangan dalam Hitungan Weton Jawa",
+      "url": "https://www.popbela.com/relationship/married/arti-pesthi-kecocokan-pasangan-hitungan-weton-jawa-untuk-pernikahan-00-ck827-q40gbs"
+    },
+    "popbela-tinari": {
+      "title": "Popbela — Arti Tinari dalam Hitungan Jawa",
+      "url": "https://www.popbela.com/relationship/married/arti-tinari-dalam-hitungan-jawa-00-ck827-k4v52h"
+    },
+    "popbela-ramalan": {
+      "title": "Popbela — Ramalan Jodoh Berdasarkan Weton",
+      "url": "https://www.popbela.com/relationship/married/ramalan-jodoh-berdasarkan-weton-00-jsc25-47t6sd"
+    },
+    "voi-sujanan": {
+      "title": "VOI Jogja — Arti Sujanan dalam Hitungan Jawa untuk Mengetahui Kecocokan Weton",
+      "url": "https://jogja.voi.id/ar/lifestyle/202594/arti-sujanan-dalam-hitungan-jawa-untuk-mengetahui-kecocokan-weton-dalam-primbon-percintaan"
+    },
+    "wetonjawa-arti": {
+      "title": "WetonJawa.com — Arti Hasil Perhitungan Weton Jodoh: Pegat, Ratu, Jodoh, Topo, Tinari, Padu, Sujanan, Pesthi",
+      "url": "https://www.wetonjawa.com/blog/arti-hasil-perhitungan-weton-jodoh"
+    },
+    "kalenderindo-jodoh": {
+      "title": "KalenderIndo.id — Cek Kecocokan Weton Jodoh",
+      "url": "https://kalenderindo.id/weton-jodoh"
+    },
+    "kumparan-jodoh": {
+      "title": "kumparan — Perhitungan Weton: Seberapa Cocok Kamu dengan Pasangan? (mengutip Kitab Primbon Betaljemur Adammakna)",
+      "url": "https://kumparan.com/millennial/perhitungan-weton-seberapa-cocok-kamu-dengan-pasangan-1rgiwFtEkMk"
+    },
+    "unej-petung": {
+      "title": "Repositori Universitas Jember — kajian petung weton (istilah gentho, gembili, sri, punggel)",
+      "url": "https://repository.unej.ac.id/handle/123456789/117935"
+    },
+    "intisari-primbon": {
+      "title": "Intisari — Kitab Primbon Jawa Ungkapkan Perhitungan Weton Jodoh (mengutip Betaljemur Adammakna)",
+      "url": "https://intisari.grid.id/read/032844815/kitab-primbon-jawa-ungkapkan-perhitungan-weton-jodoh-berdasarkan-neptu-weton-lahir-calon-pasangan-ramalkan-bagaimana-kehidupan-rumah-tangga-di-masa-depan?page=all"
+    },
+    "tribunjogja-jodoh": {
+      "title": "Tribunjogja — Cara Menghitung Kecocokan Pasangan Menurut Ramalan Jodoh Primbon Jawa",
+      "url": "https://jogja.tribunnews.com/2024/04/06/cara-menghitung-kecocokan-pasangan-menurut-ramalan-jodoh-primbon-jawa-wajib-tahu-weton-dan-neptunya?page=all"
+    },
+    "itera-neptu": {
+      "title": "Blog ITERA — Neptu, weton dan ragam metode primbon (Saptawara/Pancawara, Pancasuda, Kamarokam)",
+      "url": "https://blog.itera.ac.id/?p=5747"
+    },
+    "gnfi-serbaguna": {
+      "title": "Good News From Indonesia — Cara Mudah Menghitung Neptu Jodoh (mengutip Kitab Primbon Jawa Serbaguna)",
+      "url": "https://www.goodnewsfromindonesia.id/2026/04/13/cara-mudah-menghitung-neptu-jodoh-mencari-hari-baik-dan-roadmap-pernikahan"
+    },
+    "wikipedia-kalender-jawa": {
+      "title": "Wikipedia — Javanese calendar (pancawara, arah dan warna)",
+      "url": "https://en.wikipedia.org/wiki/Javanese_calendar"
+    },
+    "kalenderku-pasaran": {
+      "title": "Kalenderku.id — Pasaran Jawa: Arti Legi, Pahing, Pon, Wage, dan Kliwon",
+      "url": "https://kalenderku.id/blog/pasaran-jawa-legi-pahing-pon-wage-kliwon"
+    },
+    "portalpati-setan": {
+      "title": "Portal Pati (Pikiran Rakyat) — Apa Arti Lakune Setan? Watak Berdasar Neptu dalam Primbon Jawa",
+      "url": "https://portalpati.pikiran-rakyat.com/gaya-hidup/pr-1937569611/apa-arti-lakune-setan-ini-cara-mengetahui-weton-ketahui-fungsi-dan-watak-berdasar-neptu-dalam-primbon-jawa?page=all"
+    },
+    "portalpati-angin": {
+      "title": "Portal Pati (Pikiran Rakyat) — Weton Lakuning Angin Weton Apa?",
+      "url": "https://portalpati.pikiran-rakyat.com/hiburan/pr-1939613975/weton-lakuning-angin-weton-apa-ketahui-makna-karakter-watak-weton-dalam-primbon-jawa"
+    },
+    "jawapos-sabtu-pahing": {
+      "title": "JawaPos — Mengenal Watak dan Kepribadian Pemilik Weton Sabtu Pahing",
+      "url": "https://www.jawapos.com/zodiak/015904553/mengenal-watak-dan-kepribadian-pemilik-weton-sabtu-pahing-benarkah-garang-tapi-penakut"
+    },
+    "jawapos-aras-kembang": {
+      "title": "JawaPos — Misteri Aura Aras Kembang dalam Primbon Jawa",
+      "url": "https://www.jawapos.com/zodiak/2602250259/5-weton-titisan-kama-jaya-dan-ratih-misteri-aura-aras-kembang-dalam-primbon-jawa"
+    },
+    "jawapos-rembulan": {
+      "title": "JawaPos — Weton yang Konon Memiliki Sifat seperti Cahaya Bulan (Lakuning Rembulan)",
+      "url": "https://jawapos.com/zodiak/2607160351/5-weton-yang-konon-memiliki-sifat-seperti-cahaya-bulan-tenang-bijak-dan-berwibawa"
+    },
+    "jawapos-srengenge": {
+      "title": "JawaPos — Weton Lakuning Srengenge Menurut Primbon Jawa",
+      "url": "https://www.jawapos.com/zodiak/2606140057/5-weton-lakuning-srengenge-yang-potensi-sukses-luar-biasa-jadi-pemimpin-menurut-primbon-jawa"
+    },
+    "jatimtimes-kamis-kliwon": {
+      "title": "JatimTIMES — Kalender Jawa Weton Kamis Kliwon 6 Agustus 2026 (pangarasan Lakuning Banyu)",
+      "url": "https://jatimtimes.com/baca/3331348269/20260806/074400/kalender-jawa-weton-kamis-kliwon-6-agustus-2026-hari-baik-berdagang"
+    },
+    "asatunews-kamis-pahing": {
+      "title": "Asatunews — Kamis Pahing 30 April 2026 Memiliki Neptu 17 dengan Watak Lakuning Bumi",
+      "url": "https://www.asatunews.co.id/kalender-jawa-kamis-pahing-30-april-2026-watak-neptu"
+    }
+  },
+  "versions": [
+    {
+      "value": {
+        "neptu_tables": [
+          {
+            "id": "saptawara-pancawara",
+            "name": "Neptu dina dan pasaran (saptawara–pancawara)",
+            "default": true,
+            "dina": { "Minggu": 5, "Senin": 4, "Selasa": 3, "Rabu": 7, "Kamis": 8, "Jumat": 6, "Sabtu": 9 },
+            "pasaran": { "Legi": 5, "Pahing": 9, "Pon": 7, "Wage": 4, "Kliwon": 8 },
+            "refs": ["detik-tata-cara", "detik-cek-jodoh", "itera-neptu", "gnfi-serbaguna", "kumparan-jodoh"],
+            "note": "Kelima sumber memakai nilai yang sama. Kami tidak menemukan tabel neptu dina/pasaran dengan nilai berbeda; yang berbeda antarsitus adalah pembagi dan tafsir sisanya. Primbon juga mengenal hitungan lain (Pancasuda, Kamarokam) dengan aturan sendiri; belum kami tampilkan karena belum menemukan dua sumber yang memuat tabelnya lengkap."
+          }
+        ],
+        "jodoh_methods": [
+          {
+            "id": "sisa-8",
+            "name": "Sisa 8: Pegat sampai Pesthi",
+            "short": "Sisa 8",
+            "divisor": 8,
+            "default": true,
+            "why_default": "Paling banyak dipakai: muncul di detikJateng, Popbela, VOI, WetonJawa.com dan kalkulator KalenderIndo.id.",
+            "refs": ["detik-arti-topo", "popbela-pesthi", "popbela-tinari", "voi-sujanan", "wetonjawa-arti", "kalenderindo-jodoh"],
+            "results": [
+              {
+                "remainder": 1,
+                "label": "Pegat",
+                "tone": "waspada",
+                "summary": "Dalam primbon dibaca rawan masalah yang bisa berujung perpisahan."
+              },
+              {
+                "remainder": 2,
+                "label": "Ratu",
+                "tone": "baik",
+                "summary": "Dibaca sebagai pasangan yang dihargai dan disegani lingkungannya."
+              },
+              { "remainder": 3, "label": "Jodoh", "tone": "baik", "summary": "Dibaca cocok: saling menerima kelebihan dan kekurangan." },
+              {
+                "remainder": 4,
+                "label": "Topo",
+                "tone": "sedang",
+                "summary": "Dibaca berat di awal pernikahan, lalu membaik seiring waktu."
+              },
+              { "remainder": 5, "label": "Tinari", "tone": "baik", "summary": "Dibaca mudah mendapat rezeki dan kebahagiaan." },
+              {
+                "remainder": 6,
+                "label": "Padu",
+                "tone": "sedang",
+                "summary": "Dibaca sering berselisih paham, tetapi tidak harus berpisah."
+              },
+              { "remainder": 7, "label": "Sujanan", "tone": "waspada", "summary": "Dibaca rawan curiga atau orang ketiga." },
+              { "remainder": 8, "label": "Pesthi", "tone": "baik", "summary": "Dibaca rukun, tenteram dan langgeng." }
+            ],
+            "zero_note": "Jika jumlah neptu habis dibagi 8 (sisa 0), sisanya dihitung 8 (Pesthi).",
+            "conflicts": "Urutan dan nama kedelapan hasil sama di semua sumber yang kami periksa; yang berbeda hanya penjelasan maknanya."
+          },
+          {
+            "id": "sisa-7",
+            "name": "Sisa 7: Wasesa Segara sampai Lebu Katiup Angin",
+            "short": "Sisa 7",
+            "divisor": 7,
+            "default": false,
+            "refs": ["detik-cek-jodoh", "popbela-ramalan"],
+            "results": [
+              { "remainder": 1, "label": "Wasesa Segara", "tone": "baik", "summary": "Dibaca lapang hati dan berwibawa, seluas samudra." },
+              {
+                "remainder": 2,
+                "label": "Tunggak Semi",
+                "tone": "baik",
+                "summary": "Dibaca rezekinya tumbuh lagi seperti tunggak yang bersemi."
+              },
+              { "remainder": 3, "label": "Satriya Wibawa", "tone": "baik", "summary": "Dibaca dihormati dan berwibawa." },
+              {
+                "remainder": 4,
+                "label": "Sumur Sinaba",
+                "tone": "baik",
+                "summary": "Dibaca menjadi tempat orang lain bertanya dan menimba ilmu."
+              },
+              { "remainder": 5, "label": "Satriya Wirang", "tone": "waspada", "summary": "Dibaca kerap menanggung malu atau kesusahan." },
+              {
+                "remainder": 6,
+                "label": "Bumi Kapetak",
+                "tone": "sedang",
+                "summary": "Dibaca harus bekerja keras dan sabar menghadapi cobaan."
+              },
+              {
+                "remainder": 7,
+                "label": "Lebu Katiup Angin",
+                "tone": "waspada",
+                "summary": "Dibaca hidupnya mudah berpindah, seperti debu tertiup angin."
+              }
+            ],
+            "zero_note": "Jika jumlah neptu habis dibagi 7 (sisa 0), sisanya dihitung 7.",
+            "conflicts": "Satu artikel detikJateng menukar urutan: Satriya Wirang di sisa 4 dan Lebu Katiup Angin di sisa 6. Kami memakai urutan yang sama dengan Popbela dan daftar detikJateng lainnya."
+          },
+          {
+            "id": "sisa-5",
+            "name": "Sisa 5: Sri, Dana, Lara, Pati, Lungguh",
+            "short": "Sisa 5",
+            "divisor": 5,
+            "default": false,
+            "refs": ["kumparan-jodoh", "popbela-pernikahan"],
+            "results": [
+              { "remainder": 1, "label": "Sri", "tone": "baik", "summary": "Dibaca murah rezeki." },
+              { "remainder": 2, "label": "Dana", "tone": "baik", "summary": "Dibaca berkecukupan secara keuangan." },
+              { "remainder": 3, "label": "Lara", "tone": "waspada", "summary": "Dibaca rumah tangga banyak diuji, termasuk sakit." },
+              {
+                "remainder": 4,
+                "label": "Pati",
+                "tone": "waspada",
+                "summary": "Dibaca sebagai pertanda duka; hasil yang dianggap paling berat."
+              },
+              { "remainder": 5, "label": "Lungguh", "tone": "baik", "summary": "Dibaca kuat dan terpandang (lungguh: kedudukan)." }
+            ],
+            "zero_note": "Jika jumlah neptu habis dibagi 5 (sisa 0), sisanya dihitung 5 (Lungguh).",
+            "conflicts": "Sumber yang kami temukan tidak menyebut sisa 0 secara eksplisit; kami mengikuti kebiasaan metode lain (sisa 0 = pembagi). Beberapa situs menyebut Gedhong atau Lungguh untuk sisa 3, tetapi tanpa tabel lengkap, jadi tidak kami pakai."
+          },
+          {
+            "id": "sisa-4",
+            "name": "Sisa 4: Gentho, Gembili, Sri, Punggel",
+            "short": "Sisa 4",
+            "divisor": 4,
+            "default": false,
+            "refs": ["popbela-pernikahan", "unej-petung"],
+            "results": [
+              { "remainder": 1, "label": "Gentho", "tone": "sedang", "summary": "Dibaca jarang atau sulit dikaruniai anak." },
+              { "remainder": 2, "label": "Gembili", "tone": "baik", "summary": "Dibaca banyak anak." },
+              { "remainder": 3, "label": "Sri", "tone": "baik", "summary": "Dibaca murah rezeki." },
+              {
+                "remainder": 4,
+                "label": "Punggel",
+                "tone": "waspada",
+                "summary": "Dibaca sebagai pertanda duka (salah satu berpulang lebih dulu)."
+              }
+            ],
+            "zero_note": "Jika jumlah neptu habis dibagi 4 (sisa 0), sisanya dihitung 4 (Punggel).",
+            "conflicts": "Ejaan berbeda antarsumber: Gentho/Gonto dan Punggel/Punggul."
+          }
+        ],
+        "not_implemented": [
+          {
+            "id": "sisa-9-per-orang",
+            "name": "Sisa 9 masing-masing (neptu tiap orang dibagi 9, lalu kedua sisanya dicocokkan)",
+            "reason": "Butuh tabel 45 pasangan sisa. Sumber yang kami temukan hanya memuat sebagian (pasangan dengan sisa 1) dan tafsirnya berbeda kata; kami tidak mau melengkapi sisanya dengan tebakan.",
+            "refs": ["intisari-primbon", "tribunjogja-jodoh", "detik-panduan-jodoh"]
+          }
+        ],
+        "keblat": {
+          "refs": ["wikipedia-kalender-jawa", "kalenderku-pasaran", "itera-neptu"],
+          "note": "Keblat papat lima pancer: empat pasaran di empat penjuru, Kliwon di tengah (pancer).",
+          "pasaran": {
+            "Legi": { "arah": "timur", "warna": "putih" },
+            "Pahing": { "arah": "selatan", "warna": "merah" },
+            "Pon": { "arah": "barat", "warna": "kuning" },
+            "Wage": { "arah": "utara", "warna": "hitam" },
+            "Kliwon": { "arah": "tengah (pancer)", "warna": "campuran (manca warna)" }
+          }
+        },
+        "pangarasan": {
+          "note": "Pangarasan adalah istilah watak menurut jumlah neptu. Daftarnya tidak seragam: kami menampilkan setiap istilah dengan sumbernya, dan menandai neptu yang istilahnya berbeda antarsumber.",
+          "entries": [
+            { "neptu": 7, "labels": [{ "label": "Lakuning Bumi", "refs": ["detik-istilah"] }] },
+            { "neptu": 8, "labels": [{ "label": "Lakuning Geni", "refs": ["detik-istilah"] }] },
+            { "neptu": 9, "labels": [{ "label": "Lakuning Angin", "refs": ["detik-istilah", "portalpati-angin"] }] },
+            {
+              "neptu": 10,
+              "labels": [{ "label": "Aras Pepet", "refs": ["detik-istilah"] }],
+              "note": "Sebagian unggahan media sosial menyebut \"Pandita Mbangun Teki\" untuk neptu 10; belum kami temukan di sumber tertulis, jadi tidak kami tampilkan."
+            },
+            {
+              "neptu": 11,
+              "labels": [
+                { "label": "Aras Tuding", "refs": ["detik-istilah", "itera-neptu"] },
+                { "label": "Lakuning Setan", "refs": ["portalpati-setan"] }
+              ]
+            },
+            {
+              "neptu": 12,
+              "labels": [
+                {
+                  "label": "Aras Kembang",
+                  "refs": ["detik-istilah", "jawapos-aras-kembang"],
+                  "meaning": "digambarkan lembut dan menenangkan"
+                }
+              ]
+            },
+            { "neptu": 13, "labels": [{ "label": "Lakuning Lintang", "refs": ["detik-istilah"] }] },
+            {
+              "neptu": 14,
+              "labels": [{ "label": "Lakuning Rembulan", "refs": ["jawapos-rembulan"], "meaning": "digambarkan tenang, bijak dan sabar" }],
+              "note": "Media yang sama juga memasukkan weton dengan neptu lain ke kelompok ini; perlu dicek ke teks primbon."
+            },
+            {
+              "neptu": 15,
+              "labels": [{ "label": "Lakuning Srengenge", "refs": ["itera-neptu"] }],
+              "note": "Satu artikel JawaPos tentang Lakuning Srengenge memuat weton dengan neptu 13, tidak cocok dengan daftar ini."
+            },
+            {
+              "neptu": 16,
+              "labels": [
+                { "label": "Lakuning Banyu", "refs": ["jatimtimes-kamis-kliwon"], "meaning": "digambarkan tenang dan tidak tergesa-gesa" }
+              ]
+            },
+            { "neptu": 17, "labels": [{ "label": "Lakuning Bumi", "refs": ["asatunews-kamis-pahing"] }] },
+            {
+              "neptu": 18,
+              "labels": [
+                {
+                  "label": "Lakuning Geni",
+                  "refs": ["detik-istilah", "jawapos-sabtu-pahing"],
+                  "meaning": "digambarkan berwatak panas dan mudah tersulut"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "effective_from": "1900-01-01",
+      "source_url": "https://www.detik.com/jateng/budaya/d-6522064/hitungan-weton-jawa-untuk-pernikahan-tata-cara-makna-contoh-dan-ramalan",
+      "source_title": "Primbon Jawa melalui media dan kajian yang dikutip per metode (lihat references)",
+      "retrieved_on": "2026-10-13",
+      "verified": false,
+      "notes": "Dikumpulkan lewat mesin pencari pada 13/10/2026; halaman sumber tidak dapat dibuka langsung dari lingkungan build (kebijakan jaringan), jadi isi dicocokkan dari ringkasan hasil pencarian dua sumber atau lebih per metode. Belum dicocokkan dengan teks Kitab Primbon Betaljemur Adammakna (cetak). Tandai verified=true hanya setelah dicek ke buku primbon oleh peninjau budaya."
+    }
+  ]
+}

@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { coverage, validateParamFile, versionOn } from '../../src/lib/params/loader';
 import { MX_PARAM_FILES, mxParam, mxValue } from '../../src/lib/params/mx';
+import { ID_PARAM_FILES } from '../../src/lib/params/id';
 import { ParamNotAvailableError } from '../../src/lib/params/types';
 
 const DIR = join(process.cwd(), 'src/data/parameters');
@@ -33,6 +34,23 @@ describe('parameter registry contract (CLAUDE.md §1)', () => {
     const ids = new Set(Object.keys(MX_PARAM_FILES));
     for (const { path, json } of files.filter((f) => f.path.startsWith('mx/'))) {
       expect(ids.has((json as { id: string }).id), path).toBe(true);
+    }
+  });
+
+  it('registers every id JSON file in the typed registry, and every cited reference exists', () => {
+    const ids = new Set(Object.keys(ID_PARAM_FILES));
+    for (const { path, json } of files.filter((f) => f.path.startsWith('id/'))) {
+      expect(ids.has((json as { id: string }).id), path).toBe(true);
+      const refs = (json as { references?: Record<string, { url: string; title: string }> }).references ?? {};
+      for (const [key, ref] of Object.entries(refs)) {
+        expect(ref.url, `${path} › ${key}`).toMatch(/^https:\/\//);
+        expect(ref.title.length, `${path} › ${key}`).toBeGreaterThan(5);
+      }
+      // Every "refs": ["key"] anywhere in the file points to a declared reference.
+      for (const m of JSON.stringify((json as { versions: unknown }).versions).matchAll(/"refs":\[([^\]]*)\]/g)) {
+        for (const key of (m[1] ?? '').split(',').filter(Boolean))
+          expect(Object.hasOwn(refs, JSON.parse(key)), `${path} › ${key}`).toBe(true);
+      }
     }
   });
 

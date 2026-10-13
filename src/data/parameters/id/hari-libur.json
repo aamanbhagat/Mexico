@@ -1,0 +1,103 @@
+{
+  "id": "id.hari-libur",
+  "name": "Hari libur nasional dan cuti bersama (SKB 3 Menteri)",
+  "unit": "tanggal",
+  "description": "Daftar hari libur nasional dan cuti bersama per tahun menurut Surat Keputusan Bersama Menteri Agama, Menteri Ketenagakerjaan dan Menteri PANRB. Tanggal hari raya Islam mengikuti keputusan Menteri Agama (sidang isbat) bila berbeda dari SKB.",
+  "references": {
+    "skb-2026": {
+      "title": "Setneg — Inilah SKB 3 Menteri Libur Nasional dan Cuti Bersama 2026 (SKB No. 1497, 2, 5 Tahun 2025)",
+      "url": "https://www.setneg.go.id/baca/index/inilah_skb_3_menteri_libur_nasional_dan_cuti_bersama_2026"
+    },
+    "bisnis-2026": {
+      "title": "Bisnis.com — Daftar Lengkap Hari Libur Nasional dan Cuti Bersama Tahun 2026",
+      "url": "https://kabar24.bisnis.com/read/20260101/15/1940910/daftar-lengkap-hari-libur-nasional-dan-cuti-bersama-tahun-2026-banyak-long-weekend"
+    },
+    "skb-2027": {
+      "title": "Setneg — Inilah SKB 3 Menteri Libur Nasional dan Cuti Bersama 2027 (ditandatangani 15 September 2026)",
+      "url": "https://setneg.go.id/baca/index/inilah_skb_3_menteri_libur_nasional_dan_cuti_bersama_2027"
+    },
+    "metrotv-2027": {
+      "title": "Metro TV — Daftar Hari Libur Nasional dan Cuti Bersama 2027",
+      "url": "https://www.metrotvnews.com/read/kWDCzMJ3-daftar-hari-libur-nasional-dan-cuti-bersama-2027"
+    },
+    "katadata-2027": {
+      "title": "Katadata — Daftar Long Weekend 2027 (cuti bersama 2027)",
+      "url": "https://katadata.co.id/lifestyle/varia/6aab70674840d/daftar-long-weekend-2027-ada-6-libur-panjang-dari-januari-desember"
+    }
+  },
+  "versions": [
+    {
+      "value": [
+        { "date": "2026-01-01", "name": "Tahun Baru 2026 Masehi", "kind": "libur" },
+        { "date": "2026-01-16", "name": "Isra Mikraj Nabi Muhammad SAW", "kind": "libur" },
+        { "date": "2026-02-16", "name": "Cuti bersama Tahun Baru Imlek", "kind": "cuti" },
+        { "date": "2026-02-17", "name": "Tahun Baru Imlek 2577 Kongzili", "kind": "libur" },
+        { "date": "2026-03-18", "name": "Cuti bersama Hari Suci Nyepi", "kind": "cuti" },
+        { "date": "2026-03-19", "name": "Hari Suci Nyepi Tahun Baru Saka 1948", "kind": "libur" },
+        { "date": "2026-03-20", "name": "Cuti bersama Idulfitri 1447 H", "kind": "cuti" },
+        { "date": "2026-03-21", "name": "Idulfitri 1447 H", "kind": "libur" },
+        { "date": "2026-03-22", "name": "Idulfitri 1447 H", "kind": "libur" },
+        { "date": "2026-03-23", "name": "Cuti bersama Idulfitri 1447 H", "kind": "cuti" },
+        { "date": "2026-03-24", "name": "Cuti bersama Idulfitri 1447 H", "kind": "cuti" },
+        { "date": "2026-04-03", "name": "Wafat Yesus Kristus", "kind": "libur" },
+        { "date": "2026-04-05", "name": "Kebangkitan Yesus Kristus (Paskah)", "kind": "libur" },
+        { "date": "2026-05-01", "name": "Hari Buruh Internasional", "kind": "libur" },
+        { "date": "2026-05-14", "name": "Kenaikan Yesus Kristus", "kind": "libur" },
+        { "date": "2026-05-15", "name": "Cuti bersama Kenaikan Yesus Kristus", "kind": "cuti" },
+        { "date": "2026-05-27", "name": "Iduladha 1447 H", "kind": "libur" },
+        { "date": "2026-05-28", "name": "Cuti bersama Iduladha 1447 H", "kind": "cuti" },
+        { "date": "2026-05-31", "name": "Hari Raya Waisak 2570 BE", "kind": "libur" },
+        { "date": "2026-06-01", "name": "Hari Lahir Pancasila", "kind": "libur" },
+        { "date": "2026-06-16", "name": "Tahun Baru Islam 1448 H", "kind": "libur" },
+        { "date": "2026-08-17", "name": "Hari Kemerdekaan Republik Indonesia", "kind": "libur" },
+        { "date": "2026-08-25", "name": "Maulid Nabi Muhammad SAW", "kind": "libur" },
+        { "date": "2026-12-24", "name": "Cuti bersama Kelahiran Yesus Kristus", "kind": "cuti" },
+        { "date": "2026-12-25", "name": "Kelahiran Yesus Kristus (Natal)", "kind": "libur" }
+      ],
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "source_url": "https://www.setneg.go.id/baca/index/inilah_skb_3_menteri_libur_nasional_dan_cuti_bersama_2026",
+      "source_title": "SKB 3 Menteri tentang Hari Libur Nasional dan Cuti Bersama Tahun 2026",
+      "retrieved_on": "2026-10-13",
+      "verified": false,
+      "notes": "17 hari libur (Idulfitri dua hari) dan 8 cuti bersama menurut Setneg dan Bisnis.com; beberapa media menghitung 16 hari libur karena Idulfitri dihitung satu. Tanggal Imlek, Nyepi, Paskah, Kenaikan dan Waisak dicocokkan dari ringkasan hasil pencarian, bukan dari teks SKB (tidak dapat dibuka dari lingkungan build)."
+    },
+    {
+      "value": [
+        { "date": "2027-01-01", "name": "Tahun Baru 2027 Masehi", "kind": "libur" },
+        { "date": "2027-01-05", "name": "Isra Mikraj Nabi Muhammad SAW (1448 H)", "kind": "libur" },
+        { "date": "2027-02-05", "name": "Cuti bersama Tahun Baru Imlek", "kind": "cuti" },
+        { "date": "2027-02-06", "name": "Tahun Baru Imlek 2578 Kongzili", "kind": "libur" },
+        { "date": "2027-03-08", "name": "Hari Suci Nyepi Tahun Baru Saka 1949", "kind": "libur" },
+        { "date": "2027-03-09", "name": "Cuti bersama Idulfitri 1448 H", "kind": "cuti" },
+        { "date": "2027-03-10", "name": "Idulfitri 1448 H", "kind": "libur" },
+        { "date": "2027-03-11", "name": "Idulfitri 1448 H", "kind": "libur" },
+        { "date": "2027-03-12", "name": "Cuti bersama Idulfitri 1448 H", "kind": "cuti" },
+        { "date": "2027-03-15", "name": "Cuti bersama Idulfitri 1448 H", "kind": "cuti" },
+        { "date": "2027-03-25", "name": "Cuti bersama Wafat Yesus Kristus", "kind": "cuti" },
+        { "date": "2027-03-26", "name": "Wafat Yesus Kristus", "kind": "libur" },
+        { "date": "2027-03-28", "name": "Kebangkitan Yesus Kristus (Paskah)", "kind": "libur" },
+        { "date": "2027-05-01", "name": "Hari Buruh Internasional", "kind": "libur" },
+        { "date": "2027-05-06", "name": "Kenaikan Yesus Kristus", "kind": "libur" },
+        { "date": "2027-05-17", "name": "Iduladha 1448 H", "kind": "libur" },
+        { "date": "2027-05-18", "name": "Cuti bersama Iduladha 1448 H", "kind": "cuti" },
+        { "date": "2027-05-19", "name": "Cuti bersama Hari Raya Waisak", "kind": "cuti" },
+        { "date": "2027-05-20", "name": "Hari Raya Waisak 2571 BE", "kind": "libur" },
+        { "date": "2027-06-01", "name": "Hari Lahir Pancasila", "kind": "libur" },
+        { "date": "2027-06-06", "name": "Tahun Baru Islam 1449 H", "kind": "libur" },
+        { "date": "2027-08-15", "name": "Maulid Nabi Muhammad SAW", "kind": "libur" },
+        { "date": "2027-08-17", "name": "Hari Kemerdekaan Republik Indonesia", "kind": "libur" },
+        { "date": "2027-12-24", "name": "Cuti bersama Kelahiran Yesus Kristus", "kind": "cuti" },
+        { "date": "2027-12-25", "name": "Kelahiran Yesus Kristus (Natal)", "kind": "libur" },
+        { "date": "2027-12-26", "name": "Isra Mikraj Nabi Muhammad SAW (1449 H)", "kind": "libur" }
+      ],
+      "effective_from": "2027-01-01",
+      "effective_to": "2027-12-31",
+      "source_url": "https://setneg.go.id/baca/index/inilah_skb_3_menteri_libur_nasional_dan_cuti_bersama_2027",
+      "source_title": "SKB 3 Menteri tentang Hari Libur Nasional dan Cuti Bersama Tahun 2027",
+      "retrieved_on": "2026-10-13",
+      "verified": false,
+      "notes": "18 hari libur dan 8 cuti bersama (SKB ditandatangani 15/09/2026). Iduladha 17 Mei dan Waisak 20 Mei dari Metro TV dan JawaPos; Antara dan Katadata hanya menyebut cuti bersama 18 dan 19 Mei. Isra Mikraj muncul dua kali (5 Jan untuk 1448 H, 26 Des untuk 1449 H). Media berbeda soal jumlah cuti bersama (6 vs 8); dipakai 8 menurut Setneg. Cocokkan dengan lampiran SKB sebelum verified=true."
+    }
+  ]
+}

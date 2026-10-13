@@ -1,0 +1,155 @@
+{
+  "id": "id.hijri-kemenag",
+  "name": "Awal bulan Hijriah menurut Kemenag RI",
+  "unit": "tanggal Masehi awal bulan",
+  "description": "Tanggal 1 setiap bulan Hijriah seperti ditetapkan atau dicetak Kementerian Agama RI (Kalender Hijriah Indonesia, kriteria MABIMS; sidang isbat untuk Ramadan, Syawal dan Zulhijah). Setiap bulan diberi dasar: isbat, kalender-kemenag, skb (tersirat dari tanggal libur SKB 3 Menteri) atau perkiraan (baru dari sumber sekunder, bisa bergeser sehari). Di luar tabel ini mesin memakai hisab urfi dan menandai hasilnya sebagai perkiraan.",
+  "references": {
+    "alhabib-id-2026": {
+      "title": "Alhabib — Kalender Hijriah Indonesia 2026 M (1447–1448 H), tabel awal bulan berdasarkan rilis Kemenag",
+      "url": "https://www.al-habib.info/kalender-islam/indonesia/kalender-hijriah-indonesia-2026-m.htm"
+    },
+    "kalender365-rajab": {
+      "title": "Kalender365.id — Bulan Rajab 2026 (mengacu Kalender Hijriah Indonesia Kemenag)",
+      "url": "https://kalender365.id/bulan-rajab-2026-jatuh-pada-tanggal/"
+    },
+    "kemenag-dki-ramadan": {
+      "title": "Kanwil Kemenag DKI Jakarta — Pemerintah Tetapkan 1 Ramadan 1447 H Jatuh pada 19 Februari 2026",
+      "url": "https://dki.kemenag.go.id/berita/pemerintah-tetapkan-1-ramadan-1447-h-jatuh-pada-19-februari-2026-0pIkk"
+    },
+    "fimela-syawal": {
+      "title": "Fimela — Hasil sidang isbat: Idul Fitri 1447 H jatuh pada Sabtu, 21 Maret 2026",
+      "url": "https://www.fimela.com/info/read/6301432/kapan-lebaran-2026-ini-dia-hasil-sidang-isbat-idul-fitri-jatuh-pada-sabtu-21-maret"
+    },
+    "idxchannel-zulkaidah": {
+      "title": "IDX Channel — Data Hisab Kemenag: Iduladha Jatuh pada 27 Mei 2026 (29 Zulkaidah 1447 H = 17 Mei 2026)",
+      "url": "https://www.idxchannel.com/syariah/data-hisab-kemenag-iduladha-jatuh-pada-27-mei-2026/all"
+    },
+    "bisnis-zulhijah": {
+      "title": "Bisnis.com — Hasil Sidang Isbat: 1 Zulhijah Jatuh pada Senin 18 Mei 2026, Iduladha 27 Mei 2026",
+      "url": "https://kabar24.bisnis.com/read/20260517/15/1974295/hasil-sidang-isbat-1-zulhijah-jatuh-pada-senin-18-mei-2026-iduladha-27-mei-2026"
+    },
+    "kompastv-muharam": {
+      "title": "Kompas TV — Kapan 1 Muharam 2026? Cek Jadwal Resmi Kemenag",
+      "url": "https://www.kompas.tv/info-publik/674802/kapan-1-muharam-2026-cek-jadwal-resmi-kemenag-dan-ketentuan-libur-skb-3-menteri"
+    },
+    "tirto-safar": {
+      "title": "Tirto — Bulan Safar 2026 Jatuh Tanggal Berapa",
+      "url": "https://tirto.id/bulan-safar-2026-jatuh-tanggal-berapa-kapan-keutamaan-amalannya-hzGZ"
+    },
+    "nu-safar": {
+      "title": "NU Online — LF PBNU Umumkan 1 Safar 1448 H Jatuh pada Kamis, 16 Juli 2026",
+      "url": "https://nu.or.id/nasional/lf-pbnu-umumkan-1-safar-1448-h-jatuh-pada-kamis-16-juli-2026-eVPpT"
+    },
+    "nu-rabiulakhir": {
+      "title": "NU Online — Istikmal, LF PBNU: Awal Rabiul Akhir 1448 H",
+      "url": "https://nu.or.id/nasional/istikmal-lf-pbnu-awal-rabiul-akhir-1448-h-jatuh-lusa-NYuXB"
+    },
+    "katadata-oktober-2026": {
+      "title": "Katadata — Kalender Hijriah Oktober 2026 (1 Jumadilawal 1448 H = 12 Oktober 2026)",
+      "url": "https://katadata.co.id/lifestyle/varia/6abb1df54857e/kalender-hijriah-oktober-2026-lengkap-dengan-jadwal-puasa-sunah"
+    },
+    "detik-1447-1448": {
+      "title": "detikHikmah — Kalender Hijriah 1447–1448 H: Jadwal Puasa dan Hari Besar Islam",
+      "url": "https://www.detik.com/hikmah/khazanah/d-8261375/kalender-hijriah-1447-1448-h-jadwal-puasa-dan-hari-besar-islam-lengkap"
+    },
+    "skb-2026": {
+      "title": "Setneg — SKB 3 Menteri Libur Nasional dan Cuti Bersama 2026",
+      "url": "https://www.setneg.go.id/baca/index/inilah_skb_3_menteri_libur_nasional_dan_cuti_bersama_2026"
+    },
+    "skb-2027": {
+      "title": "Setneg — SKB 3 Menteri Libur Nasional dan Cuti Bersama 2027",
+      "url": "https://setneg.go.id/baca/index/inilah_skb_3_menteri_libur_nasional_dan_cuti_bersama_2027"
+    },
+    "metrotv-2027": {
+      "title": "Metro TV — Daftar Hari Libur Nasional dan Cuti Bersama 2027",
+      "url": "https://www.metrotvnews.com/read/kWDCzMJ3-daftar-hari-libur-nasional-dan-cuti-bersama-2027"
+    },
+    "gnfi-isra-2027": {
+      "title": "Good News From Indonesia — Isra Mikraj 2027 (27 Rajab 1449 H = 26 Desember 2027)",
+      "url": "https://www.goodnewsfromindonesia.id/2026/09/16/isra-mikraj-2027"
+    },
+    "alhabib-penting-2027": {
+      "title": "Alhabib — Daftar Tanggal Penting Kalender Hijriah 2027 M",
+      "url": "https://www.al-habib.info/kalender-islam/tanggal-penting-kalender-islam.htm?y=2027"
+    },
+    "detik-hijriah-2027": {
+      "title": "detikNews — Kalender Hijriah 2027, Catat Tanggal Pentingnya",
+      "url": "https://news.detik.com/berita/d-8694893/kalender-hijriah-2027-catat-tanggal-pentingnya"
+    },
+    "alhabib-global-2027": {
+      "title": "Alhabib — Kalender Islam (Hijriyah) 2027 M, versi Global (bukan Kemenag; dipakai sebagai perkiraan)",
+      "url": "https://www.al-habib.info/kalender-islam/global_pdf/kalender-islam-global-tahun-2027-m.pdf"
+    }
+  },
+  "versions": [
+    {
+      "value": {
+        "hijri_year": 1447,
+        "months": [
+          { "month": 7, "start": "2025-12-21", "basis": "kalender-kemenag", "refs": ["kalender365-rajab", "alhabib-id-2026"] },
+          { "month": 8, "start": "2026-01-20", "basis": "kalender-kemenag", "refs": ["alhabib-id-2026", "kalender365-rajab"] },
+          { "month": 9, "start": "2026-02-19", "basis": "isbat", "refs": ["kemenag-dki-ramadan"] },
+          { "month": 10, "start": "2026-03-21", "basis": "isbat", "refs": ["fimela-syawal", "skb-2026"] },
+          { "month": 11, "start": "2026-04-19", "basis": "kalender-kemenag", "refs": ["idxchannel-zulkaidah", "alhabib-id-2026"] },
+          { "month": 12, "start": "2026-05-18", "basis": "isbat", "refs": ["bisnis-zulhijah"] }
+        ]
+      },
+      "effective_from": "2025-12-21",
+      "effective_to": "2026-06-15",
+      "source_url": "https://www.al-habib.info/kalender-islam/indonesia/kalender-hijriah-indonesia-2026-m.htm",
+      "source_title": "Kalender Hijriah Indonesia 2026 (Kemenag) dan hasil sidang isbat 1447 H, via sumber yang dikutip per bulan",
+      "retrieved_on": "2026-10-13",
+      "verified": false,
+      "notes": "Tabel dimulai di Rajab 1447 karena halaman kalender mencakup 2026–2027. Ramadan, Syawal dan Zulhijah dari hasil sidang isbat (Muhammadiyah: 18 Feb dan 20 Mar 2026, berbeda sehari). PDF Kalender Hijriah Indonesia 2026 dari Kemenag tidak dapat dibuka dari lingkungan build; cocokkan per bulan lalu set verified=true."
+    },
+    {
+      "value": {
+        "hijri_year": 1448,
+        "months": [
+          { "month": 1, "start": "2026-06-16", "basis": "kalender-kemenag", "refs": ["kompastv-muharam", "alhabib-id-2026", "skb-2026"] },
+          { "month": 2, "start": "2026-07-16", "basis": "kalender-kemenag", "refs": ["tirto-safar", "nu-safar"] },
+          { "month": 3, "start": "2026-08-14", "basis": "skb", "refs": ["skb-2026", "alhabib-id-2026"] },
+          { "month": 4, "start": "2026-09-13", "basis": "kalender-kemenag", "refs": ["alhabib-id-2026", "nu-rabiulakhir"] },
+          { "month": 5, "start": "2026-10-12", "basis": "kalender-kemenag", "refs": ["katadata-oktober-2026", "alhabib-id-2026"] },
+          { "month": 6, "start": "2026-11-11", "basis": "kalender-kemenag", "refs": ["alhabib-id-2026", "detik-1447-1448"] },
+          { "month": 7, "start": "2026-12-10", "basis": "skb", "refs": ["skb-2027", "alhabib-id-2026"] },
+          { "month": 8, "start": "2027-01-09", "basis": "perkiraan", "refs": ["alhabib-penting-2027", "detik-hijriah-2027"] },
+          { "month": 9, "start": "2027-02-08", "basis": "perkiraan", "refs": ["alhabib-penting-2027", "detik-hijriah-2027"] },
+          { "month": 10, "start": "2027-03-10", "basis": "skb", "refs": ["skb-2027", "metrotv-2027"] },
+          { "month": 11, "start": "2027-04-08", "basis": "perkiraan", "refs": [] },
+          { "month": 12, "start": "2027-05-08", "basis": "skb", "refs": ["metrotv-2027", "skb-2027"] }
+        ]
+      },
+      "effective_from": "2026-06-16",
+      "effective_to": "2027-06-05",
+      "source_url": "https://www.al-habib.info/kalender-islam/indonesia/kalender-hijriah-indonesia-2026-m.htm",
+      "source_title": "Kalender Hijriah Indonesia 2026–2027 (Kemenag) dan SKB 3 Menteri 2026/2027, via sumber yang dikutip per bulan",
+      "retrieved_on": "2026-10-13",
+      "verified": false,
+      "notes": "Bulan berdasar 'skb' disimpulkan dari tanggal libur: Maulid 25 Agu 2026 = 12 Rabiulawal; Isra Mikraj 5 Jan 2027 = 27 Rajab; Idulfitri 10 Mar 2027 = 1 Syawal; Iduladha 17 Mei 2027 = 10 Zulhijah. Syakban dan Ramadan 1448 dari prakiraan (ijtimak 6 Feb 2027 pukul 22.56 WIB, Syakban digenapkan 30 hari); 1 Ramadan menunggu sidang isbat. Zulkaidah 1448 belum ditemukan di sumber mana pun: dipakai hisab urfi (8 Apr 2027), bisa 9 Apr."
+    },
+    {
+      "value": {
+        "hijri_year": 1449,
+        "months": [
+          { "month": 1, "start": "2027-06-06", "basis": "skb", "refs": ["skb-2027", "metrotv-2027"] },
+          { "month": 2, "start": "2027-07-05", "basis": "perkiraan", "refs": ["alhabib-global-2027"] },
+          { "month": 3, "start": "2027-08-04", "basis": "skb", "refs": ["metrotv-2027", "skb-2027"] },
+          { "month": 4, "start": "2027-09-02", "basis": "perkiraan", "refs": ["alhabib-global-2027"] },
+          { "month": 5, "start": "2027-10-01", "basis": "perkiraan", "refs": ["alhabib-global-2027"] },
+          { "month": 6, "start": "2027-10-31", "basis": "perkiraan", "refs": ["alhabib-global-2027"] },
+          { "month": 7, "start": "2027-11-30", "basis": "skb", "refs": ["gnfi-isra-2027", "skb-2027"] },
+          { "month": 8, "start": "2027-12-30", "basis": "perkiraan", "refs": [] },
+          { "month": 9, "start": "2028-01-29", "basis": "perkiraan", "refs": [] }
+        ]
+      },
+      "effective_from": "2027-06-06",
+      "effective_to": "2028-01-28",
+      "source_url": "https://setneg.go.id/baca/index/inilah_skb_3_menteri_libur_nasional_dan_cuti_bersama_2027",
+      "source_title": "SKB 3 Menteri 2027 (1 Muharam, Maulid, Isra Mikraj 1449 H) dan prakiraan untuk bulan lainnya",
+      "retrieved_on": "2026-10-13",
+      "verified": false,
+      "notes": "1 Muharam 6 Jun 2027, Maulid 15 Agu 2027 (12 Rabiulawal) dan Isra Mikraj 26 Des 2027 (27 Rajab) dari SKB 3 Menteri 2027. Safar sampai Jumadilakhir 1449 memakai kalender global Alhabib sebagai perkiraan (kalender global memulai Rajab 29 Nov, sehari lebih awal dari SKB). Syakban 1449 diperkirakan 30 Des 2027; entri Ramadan 1449 hanya penutup Syakban. Ganti dengan Kalender Hijriah Indonesia 2027 dari Kemenag."
+    }
+  ]
+}
