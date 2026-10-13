@@ -321,7 +321,8 @@ export default function LandConverter({ preset }: { preset: ConverterPreset }) {
   const from = unit(st.de);
   const to = unit(st.para);
   const focus = from.family !== 'base' ? from : to.family !== 'base' ? to : null;
-  const amount = st.q === null ? null : fromNumber(st.q);
+  // A negative area is an input error, never a result.
+  const amount = st.q === null || st.q < 0 ? null : fromNumber(st.q);
   const result = amount ? convertArea(amount, from, to) : null;
   const places = result ? autoDecimals(result) : 4;
 

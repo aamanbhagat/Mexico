@@ -51,6 +51,14 @@ test.describe('alqueire converter', () => {
     await expect(notice.getByRole('button')).toHaveCount(2);
   });
 
+  test('refuses a negative area instead of converting it', async ({ page }) => {
+    await page.goto(HUB);
+    await page.getByLabel('Área').fill('-3');
+    await expect(page.locator('.result-head__empty')).toHaveText('Use um número positivo.');
+    await expect(page.getByText('Use um número positivo.', { exact: true }).first()).toBeVisible();
+    await expect(page.locator('.calc__result .result-head__amount')).toHaveCount(0);
+  });
+
   test('says when a state has no record of the unit', async ({ page }) => {
     await page.goto(`${HUB}?uf=RS`);
     await expect(page.locator('.unit-card')).toContainText('Não encontramos registro de alqueire no Rio Grande do Sul');
