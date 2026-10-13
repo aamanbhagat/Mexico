@@ -1,0 +1,54 @@
+---
+import { MX_PARAM_FILES, type MxParamId } from '../../lib/params/mx';
+import { formatDateLong } from '../../lib/ui/format';
+
+export interface ExtraSource {
+  title: string;
+  url: string;
+  note?: string | undefined;
+}
+
+interface Props {
+  /** Registry parameters used on this page; the version in force on `asOf` is cited. */
+  params: MxParamId[];
+  asOf: string;
+  extra?: ExtraSource[] | undefined;
+}
+const { params, asOf, extra = [] } = Astro.props;
+
+const cited = params.map((id) => {
+  const file = MX_PARAM_FILES[id];
+  const version = [...file.versions].reverse().find((v) => v.effective_from <= asOf) ?? file.versions[file.versions.length - 1];
+  return { file, version: version! };
+});
+---
+
+<ul class="sources">
+  {
+    cited.map(({ file, version }) => (
+      <li>
+        <a href={version.source_url} rel="noopener" target="_blank">
+          {version.source_title}
+        </a>
+        <span class="sources__meta">
+          {file.name} · vigente desde el {formatDateLong(version.effective_from)} · consultado el {formatDateLong(version.retrieved_on)} ·{' '}
+          {version.verified ? (
+            <span class="verify verify--ok">verificado contra la fuente oficial</span>
+          ) : (
+            <span class="verify verify--pending">verificación contra el documento oficial pendiente</span>
+          )}
+        </span>
+      </li>
+    ))
+  }
+  {
+    extra.map((s) => (
+      <li>
+        <a href={s.url} rel="noopener" target="_blank">
+          {s.title}
+        </a>
+        {s.note && <span class="sources__meta">{s.note}</span>}
+      </li>
+    ))
+  }
+</ul>

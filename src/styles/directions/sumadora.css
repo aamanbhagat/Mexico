@@ -1,0 +1,219 @@
+/*
+ * Direction C — "Sumadora": the desk adding machine of every Mexican despacho contable.
+ * Instrument Sans for the interface, Martian Mono for the printed tape. The result prints
+ * on a paper roll: black ink for income, red ribbon for deductions, a T on the total.
+ * Lab only (not shipped): see docs/design/DIRECTIONS.md.
+ */
+:root[data-direction='sumadora'] {
+  --font-sans: var(--font-instrument), 'Instrument Sans', Arial, sans-serif;
+  --font-display: var(--font-instrument), 'Instrument Sans', Arial, sans-serif;
+  --font-num: var(--font-martian), 'Martian Mono', 'Courier New', monospace;
+  --display-stretch: 100%;
+  --display-weight: 700;
+  --strong-weight: 600;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --bg: #e2e5e7;
+  --surface: #f6f7f7;
+  --surface-2: #eceef0;
+  --surface-3: #dfe3e6;
+  --ink: #1b1d20;
+  --ink-2: #4c5258;
+  --ink-3: #646a71;
+  --rule: #c3c9ce;
+  --rule-strong: #1b1d20;
+  --negative: #c1121f;
+  --key: #ffffff;
+  --key-edge: #b7bec4;
+  --machine: #2b2f34;
+  --machine-ink: #e7e9eb;
+  --tape: #fffef8;
+  --tape-ink: #1b1d20;
+  --line-aguinaldo: #0e6a4d;
+  --line-finiquito: #0e6a4d;
+  --line-liquidacion: #0e6a4d;
+  --line-prima-vacacional: #0e6a4d;
+  --line-vacaciones: #0e6a4d;
+  --line-uma: #0e6a4d;
+  --line-on: #ffffff;
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-direction='sumadora']:not([data-theme='light']) {
+    --bg: #1b1e21;
+    --surface: #24282c;
+    --surface-2: #2c3035;
+    --surface-3: #353a40;
+    --ink: #e9ebed;
+    --ink-2: #b6bcc2;
+    --ink-3: #969ca3;
+    --rule: #3c4248;
+    --rule-strong: #e9ebed;
+    --key: #2e3338;
+    --key-edge: #151719;
+    --machine: #111315;
+    --line-aguinaldo: #49c99a;
+    --line-on: #0d1f18;
+    --negative: #c1121f;
+  }
+}
+
+:root[data-direction='sumadora'] .station-icon {
+  border-radius: var(--radius-md);
+}
+:root[data-direction='sumadora'] .input {
+  background: var(--key);
+  border: 1px solid var(--key-edge);
+  box-shadow: 0 3px 0 var(--key-edge);
+  border-radius: var(--radius-md);
+}
+:root[data-direction='sumadora'] .input:focus-visible {
+  box-shadow:
+    0 3px 0 var(--key-edge),
+    0 0 0 3px var(--focus);
+}
+:root[data-direction='sumadora'] .input--num {
+  font-family: var(--font-num);
+  font-weight: 500;
+}
+:root[data-direction='sumadora'] .segmented__track {
+  background: transparent;
+  border: 0;
+  padding: 0 0 3px;
+  gap: var(--space-2);
+}
+:root[data-direction='sumadora'] .segmented__option span {
+  background: var(--key);
+  border: 1px solid var(--key-edge);
+  box-shadow: 0 3px 0 var(--key-edge);
+  border-radius: var(--radius-md);
+  color: var(--ink);
+  transition:
+    transform var(--dur-1) var(--ease-out),
+    box-shadow var(--dur-1) var(--ease-out),
+    background-color var(--dur-1) var(--ease-out);
+}
+:root[data-direction='sumadora'] .segmented__option input:checked + span {
+  background: var(--tool);
+  color: var(--line-on);
+  border-color: var(--tool);
+  box-shadow: 0 1px 0 var(--key-edge);
+  transform: translateY(2px);
+}
+
+/* The machine and its paper roll */
+:root[data-direction='sumadora'] .calc__result {
+  background: var(--machine);
+  color: var(--machine-ink);
+  border: 0;
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-4) var(--space-6);
+}
+:root[data-direction='sumadora'] .result-head {
+  padding-inline: var(--space-2);
+}
+:root[data-direction='sumadora'] .result-head__label,
+:root[data-direction='sumadora'] .result-head__note {
+  color: color-mix(in srgb, var(--machine-ink) 75%, transparent);
+}
+:root[data-direction='sumadora'] .result-head__amount {
+  font-family: var(--font-num);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  color: #9cf2c8;
+}
+:root[data-direction='sumadora'] .breakdown {
+  background: var(--tape);
+  color: var(--tape-ink);
+  font-family: var(--font-num);
+  font-size: var(--text-sm);
+  -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 14px 100%;
+  mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 14px 100%;
+  padding-bottom: 10px;
+}
+:root[data-direction='sumadora'] .breakdown__caption {
+  color: color-mix(in srgb, var(--machine-ink) 75%, transparent);
+  font-family: var(--font-sans);
+  padding-inline: var(--space-2);
+}
+:root[data-direction='sumadora'] .breakdown__row > * {
+  padding: var(--space-2) var(--space-3);
+}
+:root[data-direction='sumadora'] .breakdown__concept {
+  padding-left: var(--space-4);
+}
+:root[data-direction='sumadora'] .breakdown__concept::before,
+:root[data-direction='sumadora'] .breakdown__concept::after {
+  display: none;
+}
+:root[data-direction='sumadora'] .breakdown__label {
+  font-weight: 500;
+}
+:root[data-direction='sumadora'] .breakdown__detail,
+:root[data-direction='sumadora'] .breakdown__refs {
+  color: #5b6168;
+}
+:root[data-direction='sumadora'] .breakdown__amount {
+  font-weight: 500;
+  color: var(--tape-ink);
+}
+:root[data-direction='sumadora'] .breakdown__amount::after {
+  content: ' +';
+  color: #5b6168;
+}
+:root[data-direction='sumadora'] .breakdown__row--exempt .breakdown__amount::after,
+:root[data-direction='sumadora'] .breakdown__row--subtotal .breakdown__amount::after {
+  content: ' ◇';
+}
+:root[data-direction='sumadora'] .breakdown__row--deduction .breakdown__amount,
+:root[data-direction='sumadora'] .breakdown__row--deduction .breakdown__label {
+  color: var(--negative);
+}
+:root[data-direction='sumadora'] .breakdown__row--deduction .breakdown__amount::after {
+  content: ' −';
+  color: var(--negative);
+}
+:root[data-direction='sumadora'] .breakdown__row--total > * {
+  border-top: 1px dashed #8b9197;
+}
+:root[data-direction='sumadora'] .breakdown__row--total .breakdown__amount::after {
+  content: ' T';
+  color: var(--tape-ink);
+}
+:root[data-direction='sumadora'] .breakdown__row--total .breakdown__label,
+:root[data-direction='sumadora'] .breakdown__row--total .breakdown__amount {
+  font-size: var(--text-md);
+  font-weight: 700;
+}
+:root[data-direction='sumadora'] .calc__fine {
+  color: color-mix(in srgb, var(--machine-ink) 75%, transparent);
+  padding-inline: var(--space-2);
+}
+:root[data-direction='sumadora'] .btn--quiet {
+  color: var(--machine-ink);
+  border-color: color-mix(in srgb, var(--machine-ink) 50%, transparent);
+}
+:root[data-direction='sumadora'] .btn--quiet:hover {
+  background: rgb(255 255 255 / 0.08);
+}
+:root[data-direction='sumadora'] .actions__feedback {
+  color: #9cf2c8;
+}
+:root[data-direction='sumadora'] .result-bar {
+  background: var(--machine);
+  border-top: 0;
+}
+:root[data-direction='sumadora'] .result-bar__amount {
+  font-family: var(--font-num);
+  font-weight: 600;
+  color: #9cf2c8;
+}
+:root[data-direction='sumadora'] .example,
+:root[data-direction='sumadora'] .formula {
+  border-color: var(--tool);
+  background: var(--surface);
+}
+:root[data-direction='sumadora'] .example dd {
+  font-family: var(--font-num);
+  font-weight: 500;
+}

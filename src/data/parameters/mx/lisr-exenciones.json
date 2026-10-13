@@ -1,0 +1,23 @@
+{
+  "id": "mx.lisr.exenciones",
+  "name": "Ingresos exentos de ISR (artículo 93, fracciones XIII y XIV LISR)",
+  "unit": "veces la UMA diaria",
+  "description": "Aguinaldo hasta 30 UMA al año; prima vacacional hasta 15 UMA al año; PTU hasta 15 UMA; pagos por separación (indemnizaciones y prima de antigüedad) hasta 90 UMA por año de servicio, contando como año completo toda fracción de más de seis meses.",
+  "versions": [
+    {
+      "value": {
+        "aguinaldo_uma": 30,
+        "prima_vacacional_uma": 15,
+        "ptu_uma": 15,
+        "separation_uma_per_year": 90,
+        "separation_round_up_after_months": 6
+      },
+      "effective_from": "2016-01-28",
+      "source_url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LISR.pdf",
+      "source_title": "Ley del Impuesto sobre la Renta, artículo 93, fracciones XIII y XIV (Cámara de Diputados, texto vigente)",
+      "retrieved_on": "2026-10-13",
+      "verified": false,
+      "notes": "La ley dice 'salario mínimo general del área geográfica'; desde la reforma de desindexación (DOF 27/01/2016, https://dof.gob.mx/nota_detalle.php?codigo=5423663&fecha=27/01/2016) esas referencias se entienden hechas a la UMA, criterio que aplica el SAT y que confirmó un tribunal colegiado para la fr. XIII. Fecha de vigencia = día siguiente a la publicación del decreto. Documento primario no abierto desde el entorno de build."
+    }
+  ]
+}

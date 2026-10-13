@@ -1,0 +1,23 @@
+---
+import type { FaqItem } from '../../lib/seo/jsonld';
+
+interface Props {
+  items: FaqItem[];
+}
+const { items } = Astro.props;
+---
+
+<div class="faq">
+  {
+    items.map((f) => (
+      <details>
+        <summary>{f.q}</summary>
+        <div class="faq__answer">
+          {f.a.split('\n\n').map((p) => (
+            <p>{p}</p>
+          ))}
+        </div>
+      </details>
+    ))
+  }
+</div>

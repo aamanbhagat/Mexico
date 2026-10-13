@@ -1,0 +1,59 @@
+---
+/** Light/dark switch. Follows the OS until the visitor chooses; the choice is kept in localStorage only. */
+---
+
+<button class="theme-toggle" type="button" data-theme-toggle aria-label="Cambiar a tema oscuro" title="Cambiar tema">
+  <svg
+    class="icon-sun"
+    viewBox="0 0 24 24"
+    width="20"
+    height="20"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <circle cx="12" cy="12" r="4"></circle>
+    <path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path>
+  </svg>
+  <svg
+    class="icon-moon"
+    viewBox="0 0 24 24"
+    width="20"
+    height="20"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"></path>
+  </svg>
+</button>
+
+<script>
+  const root = document.documentElement;
+  const button = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  const media = window.matchMedia('(prefers-color-scheme: dark)');
+  const current = () => (root.dataset['theme'] ?? (media.matches ? 'dark' : 'light')) as 'light' | 'dark';
+  const sync = () => {
+    const theme = current();
+    root.dataset['theme'] = theme;
+    button?.setAttribute('aria-label', theme === 'dark' ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro');
+  };
+  sync();
+  button?.addEventListener('click', () => {
+    const next = current() === 'dark' ? 'light' : 'dark';
+    root.dataset['theme'] = next;
+    try {
+      localStorage.setItem('theme', next);
+    } catch {
+      /* private mode: the choice lasts for this page only */
+    }
+    sync();
+  });
+</script>

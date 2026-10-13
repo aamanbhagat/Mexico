@@ -1,0 +1,9 @@
+{
+  "$comment": "Legal review status per page. The badge on each page is rendered from this file and never hard-coded. Set status to \"reviewed\" only with the reviewer's name, credentials and date.",
+  "mx.aguinaldo": { "status": "pending", "reviewer": null, "credentials": null, "reviewed_on": null },
+  "mx.finiquito": { "status": "pending", "reviewer": null, "credentials": null, "reviewed_on": null },
+  "mx.liquidacion": { "status": "pending", "reviewer": null, "credentials": null, "reviewed_on": null },
+  "mx.prima-vacacional": { "status": "pending", "reviewer": null, "credentials": null, "reviewed_on": null },
+  "mx.vacaciones": { "status": "pending", "reviewer": null, "credentials": null, "reviewed_on": null },
+  "mx.uma-salario-minimo": { "status": "pending", "reviewer": null, "credentials": null, "reviewed_on": null }
+}

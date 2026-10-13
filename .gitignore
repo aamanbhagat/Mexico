@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.astro/
+.lighthouseci/
+playwright-report/
+test-results/
+coverage/
+*.log
+.DS_Store
+.env
+.env.*
+!.env.example
+.wrangler/
+.vercel/

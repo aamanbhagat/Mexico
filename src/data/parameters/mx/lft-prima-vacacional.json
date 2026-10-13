@@ -1,0 +1,17 @@
+{
+  "id": "mx.lft.prima-vacacional",
+  "name": "Prima vacacional mínima (artículo 80 LFT)",
+  "unit": "% del salario de los días de vacaciones",
+  "description": "Prima no menor al 25 % sobre los salarios que correspondan durante el periodo de vacaciones.",
+  "versions": [
+    {
+      "value": { "min_pct": 25 },
+      "effective_from": "1970-05-01",
+      "source_url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf",
+      "source_title": "Ley Federal del Trabajo, artículo 80 (Cámara de Diputados, texto vigente)",
+      "retrieved_on": "2026-10-13",
+      "verified": false,
+      "notes": "Citado por CCL Sinaloa (cclsinaloa.gob.mx) con ejemplo numérico. Documento primario no abierto desde el entorno de build."
+    }
+  ]
+}

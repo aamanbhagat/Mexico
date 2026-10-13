@@ -1,0 +1,195 @@
+/*
+ * Direction B — "Sobre de raya": the manila pay envelope Mexican workers were paid in.
+ * Bitter (slab, by Huerta Tipográfica) + Courier Prime for typed amounts; form fields as
+ * fill-in lines; the result is the envelope, the review badge is a rubber stamp.
+ * Lab only (not shipped): see docs/design/DIRECTIONS.md.
+ */
+:root[data-direction='sobre'] {
+  --font-sans: var(--font-bitter), 'Bitter', Georgia, serif;
+  --font-display: var(--font-bitter), 'Bitter', Georgia, serif;
+  --font-num: var(--font-courier), 'Courier Prime', 'Courier New', monospace;
+  --display-stretch: 100%;
+  --display-weight: 700;
+  --strong-weight: 600;
+  --radius-sm: 2px;
+  --radius-md: 2px;
+  --radius-lg: 3px;
+
+  --bg: #f1f2ee;
+  --surface: #ffffff;
+  --surface-2: #e7e9e3;
+  --surface-3: #dcdfd7;
+  --ink: #22252a;
+  --ink-2: #4f545b;
+  --ink-3: #686d75;
+  --rule: #c6cad0;
+  --rule-strong: #22252a;
+  --negative: #a1241a;
+  --envelope: #e6c574;
+  --envelope-2: #d9b45c;
+  --envelope-ink: #2a200c;
+  --ballpoint: #1e3a8a;
+  --line-aguinaldo: #1e3a8a;
+  --line-finiquito: #1e3a8a;
+  --line-liquidacion: #1e3a8a;
+  --line-prima-vacacional: #1e3a8a;
+  --line-vacaciones: #1e3a8a;
+  --line-uma: #1e3a8a;
+  --line-on: #ffffff;
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-direction='sobre']:not([data-theme='light']) {
+    --bg: #17191c;
+    --surface: #1f2226;
+    --surface-2: #272b30;
+    --surface-3: #30353b;
+    --ink: #eceef0;
+    --ink-2: #b9bec5;
+    --ink-3: #9aa0a8;
+    --rule: #3b4047;
+    --rule-strong: #eceef0;
+    --negative: #ff8f84;
+    --envelope: #4a3c1c;
+    --envelope-2: #5a4a24;
+    --envelope-ink: #f6e6b8;
+    --ballpoint: #a9c0ff;
+    --line-aguinaldo: #a9c0ff;
+    --line-on: #10182f;
+  }
+}
+
+:root[data-direction='sobre'] .hero h1 {
+  letter-spacing: -0.01em;
+}
+:root[data-direction='sobre'] .station-icon {
+  display: none;
+}
+
+/* Fill-in-the-blank fields */
+:root[data-direction='sobre'] .input {
+  border-width: 0 0 2px;
+  border-radius: 0;
+  background: transparent;
+  padding-inline: 0;
+  font-family: var(--font-num);
+}
+:root[data-direction='sobre'] .input-affix__prefix {
+  left: 0;
+}
+:root[data-direction='sobre'] .input-affix__prefix + .input {
+  padding-left: 1.25rem;
+}
+:root[data-direction='sobre'] .input-affix__suffix {
+  right: 0;
+}
+:root[data-direction='sobre'] .segmented__track {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  gap: var(--space-2);
+}
+:root[data-direction='sobre'] .segmented__option span {
+  border: 1.5px solid var(--ink-3);
+  border-radius: 2px;
+}
+:root[data-direction='sobre'] .segmented__option input:checked + span {
+  background: var(--ballpoint);
+  border-color: var(--ballpoint);
+  color: #fff;
+}
+
+/* The envelope */
+:root[data-direction='sobre'] .calc__result {
+  position: relative;
+  background: var(--envelope);
+  color: var(--envelope-ink);
+  border: 0;
+  border-radius: 3px;
+  padding-top: calc(var(--space-7) + var(--space-3));
+  box-shadow:
+    0 1px 0 rgb(0 0 0 / 0.12),
+    0 14px 30px -18px rgb(0 0 0 / 0.45);
+}
+:root[data-direction='sobre'] .calc__result::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: var(--space-7);
+  background: var(--envelope-2);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  border-radius: 3px 3px 0 0;
+}
+:root[data-direction='sobre'] .result-head__label,
+:root[data-direction='sobre'] .result-head__note,
+:root[data-direction='sobre'] .breakdown__caption,
+:root[data-direction='sobre'] .breakdown__detail,
+:root[data-direction='sobre'] .breakdown__refs,
+:root[data-direction='sobre'] .calc__fine {
+  color: color-mix(in srgb, var(--envelope-ink) 78%, transparent);
+}
+:root[data-direction='sobre'] .result-head__amount {
+  font-family: var(--font-num);
+  font-weight: 400;
+  color: var(--ballpoint);
+  letter-spacing: -0.03em;
+}
+:root[data-direction='sobre'] .breakdown__concept {
+  padding-left: 0;
+}
+:root[data-direction='sobre'] .breakdown__concept::before,
+:root[data-direction='sobre'] .breakdown__concept::after {
+  display: none;
+}
+:root[data-direction='sobre'] .breakdown__row > * {
+  border-bottom: 1px dashed color-mix(in srgb, var(--envelope-ink) 35%, transparent);
+}
+:root[data-direction='sobre'] .breakdown__amount {
+  font-family: var(--font-num);
+  font-weight: 400;
+  color: var(--ballpoint);
+}
+:root[data-direction='sobre'] .breakdown__row--deduction .breakdown__amount {
+  color: var(--negative);
+}
+:root[data-direction='sobre'] .breakdown__row--total > * {
+  border-top: 2px solid var(--envelope-ink);
+  border-bottom: 0;
+}
+:root[data-direction='sobre'] .btn--quiet {
+  border-color: var(--envelope-ink);
+  color: var(--envelope-ink);
+  border-radius: 2px;
+}
+:root[data-direction='sobre'] .btn--quiet:hover {
+  background: var(--envelope-2);
+}
+
+/* Rubber stamp */
+:root[data-direction='sobre'] .badge--pending {
+  background: transparent;
+  color: var(--negative);
+  border: 2px solid var(--negative);
+  outline: 1px solid var(--negative);
+  outline-offset: 2px;
+  border-radius: 2px;
+  transform: rotate(-3deg);
+  font-family: var(--font-num);
+  font-weight: 400;
+}
+:root[data-direction='sobre'] .badge--pending::before {
+  display: none;
+}
+:root[data-direction='sobre'] .result-bar {
+  background: var(--envelope);
+  color: var(--envelope-ink);
+  border-top: 0;
+}
+:root[data-direction='sobre'] .result-bar__amount {
+  font-family: var(--font-num);
+  font-weight: 400;
+  color: var(--ballpoint);
+}
+:root[data-direction='sobre'] .formula,
+:root[data-direction='sobre'] .example {
+  border-color: var(--ballpoint);
+}

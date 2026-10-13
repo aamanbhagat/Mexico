@@ -1,0 +1,17 @@
+{
+  "id": "mx.lft.prima-antiguedad-tope-base",
+  "name": "Base del tope de la prima de antigüedad (art. 486 LFT)",
+  "unit": "salario_minimo | uma",
+  "description": "Qué unidad se duplica para topar el salario de la prima de antigüedad: el salario mínimo del área geográfica (texto literal del art. 486) o la UMA (criterio minoritario tras la desindexación de 2016).",
+  "versions": [
+    {
+      "value": "salario_minimo",
+      "effective_from": "1970-05-01",
+      "source_url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf",
+      "source_title": "LFT art. 486 y tesis aislada registro digital 2016514 (Semanario Judicial de la Federación, 23/03/2018)",
+      "retrieved_on": "2026-10-13",
+      "verified": false,
+      "notes": "PENDIENTE DE REVISIÓN LEGAL. El art. 486 dice 'doble del salario mínimo del área geográfica'. La tesis 2016514 (Tribunales Colegiados, Décima Época) sostiene que se usa el salario mínimo y no la UMA; otras calculadoras usan 2 UMA y dan montos mucho menores. No se pudo abrir sjf2.scjn.gob.mx para leer la tesis completa. No confundir con la exención de ISR (art. 93 fr. XIII LISR), que sí usa UMA. La calculadora ofrece ver el resultado con UMA como comparación."
+    }
+  ]
+}

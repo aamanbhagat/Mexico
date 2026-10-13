@@ -1,0 +1,27 @@
+---
+import type { LocaleCode } from '../../i18n/locales';
+import { pathFor } from '../../i18n/routes';
+import { SITE } from '../../config/site';
+import ThemeToggle from './ThemeToggle.astro';
+
+interface Props {
+  locale: LocaleCode;
+}
+const { locale } = Astro.props;
+const home = pathFor('home', locale);
+---
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="brand" href={home} aria-label={`${SITE.name}, inicio`}>
+      <span class="brand__mark" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span>{SITE.name}</span>
+    </a>
+    <div class="header-actions">
+      <nav class="header-nav" aria-label="Principal">
+        <a href={home}>Calculadoras</a>
+      </nav>
+      <ThemeToggle />
+    </div>
+  </div>
+</header>

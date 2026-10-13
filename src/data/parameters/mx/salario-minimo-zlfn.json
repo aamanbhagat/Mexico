@@ -1,0 +1,28 @@
+{
+  "id": "mx.salario-minimo.zlfn",
+  "name": "Salario mínimo de la Zona Libre de la Frontera Norte (ZLFN)",
+  "unit": "MXN/día",
+  "description": "Salario mínimo diario en los municipios de la Zona Libre de la Frontera Norte. Rige del 1 de enero al 31 de diciembre.",
+  "versions": [
+    {
+      "value": 419.88,
+      "effective_from": "2025-01-01",
+      "effective_to": "2025-12-31",
+      "source_url": "https://dof.gob.mx/nota_detalle.php?codigo=5745678&fecha=19/12/2024",
+      "source_title": "DOF 19/12/2024 — Resolución del H. Consejo de Representantes de la CONASAMI (salarios mínimos 2025)",
+      "retrieved_on": "2026-10-13",
+      "verified": false,
+      "notes": "Corroborado con gob.mx/conasami vía búsqueda restringida al dominio oficial: de 374.89 a 419.88 (MIR 19.36 + 6.5 %). Documento primario no abierto desde el entorno de build."
+    },
+    {
+      "value": 440.87,
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "source_url": "https://dof.gob.mx/nota_detalle.php?codigo=5775534&fecha=09/12/2025",
+      "source_title": "DOF 09/12/2025 — Resolución del H. Consejo de Representantes de la CONASAMI (salarios mínimos 2026)",
+      "retrieved_on": "2026-10-13",
+      "verified": false,
+      "notes": "Corroborado con gob.mx/conasami vía búsqueda restringida a dominios oficiales: de 419.88 a 440.87 (+5 %, sin MIR). Documento primario no abierto desde el entorno de build."
+    }
+  ]
+}

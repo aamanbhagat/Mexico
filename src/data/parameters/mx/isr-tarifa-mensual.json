@@ -1,0 +1,51 @@
+{
+  "id": "mx.isr.tarifa-mensual",
+  "name": "Tarifa mensual del ISR (artículo 96 LISR)",
+  "unit": "MXN/mes",
+  "description": "Tarifa para retenciones mensuales de ISR por salarios. Cada renglón: límite inferior, límite superior (null = en adelante), cuota fija y porcentaje sobre el excedente del límite inferior.",
+  "versions": [
+    {
+      "value": [
+        { "lower": 0.01, "upper": 746.04, "fixed": 0, "rate_pct": 1.92 },
+        { "lower": 746.05, "upper": 6332.05, "fixed": 14.32, "rate_pct": 6.4 },
+        { "lower": 6332.06, "upper": 11128.01, "fixed": 371.83, "rate_pct": 10.88 },
+        { "lower": 11128.02, "upper": 12935.82, "fixed": 893.63, "rate_pct": 16.0 },
+        { "lower": 12935.83, "upper": 15487.71, "fixed": 1182.88, "rate_pct": 17.92 },
+        { "lower": 15487.72, "upper": 31236.49, "fixed": 1640.18, "rate_pct": 21.36 },
+        { "lower": 31236.5, "upper": 49233.0, "fixed": 5004.12, "rate_pct": 23.52 },
+        { "lower": 49233.01, "upper": 93993.9, "fixed": 9236.89, "rate_pct": 30.0 },
+        { "lower": 93993.91, "upper": 125325.2, "fixed": 22665.17, "rate_pct": 32.0 },
+        { "lower": 125325.21, "upper": 375975.61, "fixed": 32691.18, "rate_pct": 34.0 },
+        { "lower": 375975.62, "upper": null, "fixed": 117912.32, "rate_pct": 35.0 }
+      ],
+      "effective_from": "2023-01-01",
+      "effective_to": "2025-12-31",
+      "source_url": "https://www.sat.gob.mx/minisitio/NormatividadRMFyRGCE/documentos/rmf/anexos/Anexo_8-RMF_2023-27122022.pdf",
+      "source_title": "Anexo 8 de la Resolución Miscelánea Fiscal para 2023 (DOF 27/12/2022), tarifa mensual art. 96 LISR",
+      "retrieved_on": "2026-10-13",
+      "verified": false,
+      "notes": "Tarifa vigente 2023–2025 (los Anexos 8 de 2024 y 2025 la reprodujeron sin cambios: https://www.sat.gob.mx/minisitio/NormatividadRMFyRGCE/documentos2025/rmf/anexos/Anexo8_RMF2025-30122024.pdf). La búsqueda en sat.gob.mx confirmó los dos primeros renglones (0.01–746.04 al 1.92 %; 746.05–6,332.05 con cuota 14.32 al 6.40 %). El resto se transcribió de la tarifa publicada y no se cotejó renglón por renglón contra el PDF (sat.gob.mx bloqueado por la política de red del entorno)."
+    },
+    {
+      "value": [
+        { "lower": 0.01, "upper": 844.59, "fixed": 0, "rate_pct": 1.92 },
+        { "lower": 844.6, "upper": 7168.51, "fixed": 16.22, "rate_pct": 6.4 },
+        { "lower": 7168.52, "upper": 12598.02, "fixed": 420.95, "rate_pct": 10.88 },
+        { "lower": 12598.03, "upper": 14644.64, "fixed": 1011.68, "rate_pct": 16.0 },
+        { "lower": 14644.65, "upper": 17533.64, "fixed": 1339.14, "rate_pct": 17.92 },
+        { "lower": 17533.65, "upper": 35362.83, "fixed": 1856.84, "rate_pct": 21.36 },
+        { "lower": 35362.84, "upper": 55736.68, "fixed": 5665.16, "rate_pct": 23.52 },
+        { "lower": 55736.69, "upper": 106410.5, "fixed": 10457.09, "rate_pct": 30.0 },
+        { "lower": 106410.51, "upper": 141880.66, "fixed": 25659.23, "rate_pct": 32.0 },
+        { "lower": 141880.67, "upper": 425641.99, "fixed": 37009.69, "rate_pct": 34.0 },
+        { "lower": 425642.0, "upper": null, "fixed": 133488.54, "rate_pct": 35.0 }
+      ],
+      "effective_from": "2026-01-01",
+      "source_url": "https://www.sat.gob.mx/minisitio/NormatividadRMFyRGCE/documentos2026/rmf/anexos/Anexo-8-RMF-2026_DOF-28122025.pdf",
+      "source_title": "Anexo 8 de la Resolución Miscelánea Fiscal para 2026 (DOF 28/12/2025), tarifa mensual art. 96 LISR",
+      "retrieved_on": "2026-10-13",
+      "verified": false,
+      "notes": "Actualizada con factor 1.1321 (INPC nov-2025 / INPC nov-2022) conforme al art. 152 LISR. DOF: https://www.dof.gob.mx/nota_detalle.php?codigo=5777219&fecha=28/12/2025. Renglones corroborados con al menos tres fuentes secundarias coincidentes (elcontribuyente.mx, calculandolo.com, calcu.mx, academiadeamparo.com) y comprobación aritmética de límites (límite inferior 2023 × 1.1321). El PDF del SAT no se pudo abrir desde el entorno de build (política de red): cotejar renglón por renglón antes de marcar verified=true."
+    }
+  ]
+}

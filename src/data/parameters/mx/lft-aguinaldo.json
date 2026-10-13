@@ -1,0 +1,17 @@
+{
+  "id": "mx.lft.aguinaldo",
+  "name": "Aguinaldo mínimo (artículo 87 LFT)",
+  "unit": "días de salario",
+  "description": "Aguinaldo anual mínimo de 15 días de salario, pagadero antes del 20 de diciembre; proporcional para quien no cumplió el año. El año se cuenta en 365 días para el proporcional.",
+  "versions": [
+    {
+      "value": { "min_days": 15, "deadline_month": 12, "deadline_day": 20, "days_in_year": 365 },
+      "effective_from": "1970-05-01",
+      "source_url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf",
+      "source_title": "Ley Federal del Trabajo, artículo 87 (Cámara de Diputados, texto vigente)",
+      "retrieved_on": "2026-10-13",
+      "verified": false,
+      "notes": "Texto del art. 87 conocido y citado por PROFEDET (gob.mx). La búsqueda no encontró reforma aprobada que eleve el mínimo a 30 días (iniciativas en discusión). El divisor de 365 días es la práctica de PROFEDET/INADEM, no está en la ley. Documento primario no abierto desde el entorno de build."
+    }
+  ]
+}

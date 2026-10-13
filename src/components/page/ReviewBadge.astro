@@ -1,0 +1,21 @@
+---
+import type { PageKey } from '../../i18n/routes';
+import { reviewFor } from '../../lib/reviews';
+import { formatDateLong } from '../../lib/ui/format';
+
+interface Props {
+  pageKey: PageKey;
+}
+const review = reviewFor(Astro.props.pageKey);
+---
+
+{
+  review.status === 'reviewed' ? (
+    <span class="badge badge--reviewed">
+      Revisado por {review.reviewer}
+      {review.credentials ? `, ${review.credentials}` : ''} el {formatDateLong(review.reviewed_on as string)}
+    </span>
+  ) : (
+    <span class="badge badge--pending">Revisión legal: pendiente</span>
+  )
+}

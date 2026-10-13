@@ -1,0 +1,146 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import ExampleCard from '../../../components/page/ExampleCard.astro';
+import AguinaldoCalculator, { aguinaldoSearch } from '../../../components/calc/AguinaldoCalculator';
+import { AGUINALDO_EXAMPLES } from '../../../content/es-mx/examples';
+import { calculateAguinaldo } from '../../../lib/engine/mx/lft';
+import { mxValue } from '../../../lib/params/mx';
+import { formatDays, formatMoney } from '../../../lib/ui/format';
+import { BUILD_DAY, UPDATED } from '../../../content/es-mx/meta';
+import type { FaqItem } from '../../../lib/seo/jsonld';
+
+interface Props {
+  direction?: string | undefined;
+  pathOverride?: string | undefined;
+}
+const { direction, pathOverride } = Astro.props;
+
+const PAY_DATE = '2026-12-20';
+const uma = mxValue('mx.uma', PAY_DATE);
+const umaPrev = mxValue('mx.uma', '2025-12-20');
+const exempt = formatMoney(30 * uma.daily);
+const smGeneral = mxValue('mx.salario-minimo.general', PAY_DATE);
+const minAguinaldo = formatMoney(smGeneral * 15);
+
+const examples = AGUINALDO_EXAMPLES.map((ex) => {
+  const r = calculateAguinaldo(ex.input);
+  if (!r.ok) throw new Error(`Example ${ex.id} failed: ${r.error.code}`);
+  const v = r.value;
+  return {
+    ex,
+    rows: [
+      { label: 'Días trabajados', value: `${v.daysWorked} de 365` },
+      { label: 'Días de aguinaldo', value: formatDays(v.proportionalDays) },
+      { label: 'Aguinaldo bruto', value: formatMoney(v.gross) },
+      { label: 'Exento de ISR', value: formatMoney(v.exempt) },
+      { label: `ISR (${ex.input.withholding === 'art174' ? 'art. 174 RLISR' : 'art. 96 LISR'})`, value: `−${formatMoney(v.isr)}` },
+      { label: 'Recibes', value: formatMoney(v.net) },
+    ],
+    href: `${pathOverride ?? '/es-mx/calculadora-aguinaldo/'}${aguinaldoSearch(ex.input, BUILD_DAY)}`,
+  };
+});
+
+const faq: FaqItem[] = [
+  {
+    q: '¿Cuántos días de aguinaldo me tocan por ley?',
+    a: `Al menos 15 días de salario por año trabajado (artículo 87 de la Ley Federal del Trabajo). Es un mínimo: tu contrato o el contrato colectivo pueden darte más, y muchas empresas pagan 20 o 30 días. Con el salario mínimo general de 2026 (${formatMoney(smGeneral)} diarios), el aguinaldo mínimo es de ${minAguinaldo}.`,
+  },
+  {
+    q: '¿Cómo se calcula el aguinaldo proporcional?',
+    a: 'Multiplica los días de aguinaldo por los días que trabajaste en el año y divide entre 365. El resultado son los días que te tocan; multiplícalos por tu salario diario. Por ejemplo, si entraste el 1 de junio trabajaste 214 días: 15 × 214 ÷ 365 = 8.79 días de salario.\n\nTe toca la parte proporcional aunque ya no trabajes ahí cuando se paga el aguinaldo.',
+  },
+  {
+    q: '¿Cuándo se paga el aguinaldo 2026?',
+    a: 'La ley dice que debe pagarse antes del 20 de diciembre. En 2026 el 20 cae en domingo, así que lo normal es recibirlo a más tardar el viernes 18 o el sábado 19 de diciembre. Si te vas de la empresa antes, la parte proporcional se incluye en tu finiquito.',
+  },
+  {
+    q: '¿Cuánto del aguinaldo está exento de ISR en 2026?',
+    a: `Hasta 30 veces la UMA diaria: 30 × ${formatMoney(uma.daily)} = ${exempt} (artículo 93, fracción XIV, de la Ley del ISR). La UMA de 2026 rige desde el 1 de febrero; algunas calculadoras todavía usan la de 2025 (${formatMoney(30 * umaPrev.daily)}), que ya no aplica a un aguinaldo pagado en diciembre de 2026. Lo que pase de ese monto paga ISR.`,
+  },
+  {
+    q: '¿Cuánto ISR me van a retener del aguinaldo?',
+    a: 'Depende de tu sueldo. La parte gravada se suma a tu sueldo del mes y se calcula el impuesto con la tarifa del artículo 96 de la Ley del ISR; la diferencia es lo que te retienen. Tu empresa también puede usar el procedimiento del artículo 174 del Reglamento, que reparte el aguinaldo en el año y casi siempre retiene menos. La calculadora te muestra los dos.\n\nLa retención es un pago a cuenta: si te retuvieron de más, se ajusta en la declaración anual.',
+  },
+  {
+    q: '¿El aguinaldo se calcula con el salario base o con el integrado?',
+    a: 'Con el salario base (la cuota diaria que ganas por día trabajado), sin sumar otras prestaciones. Si tu salario es variable, PROFEDET recomienda usar el promedio diario de los últimos 30 días efectivamente trabajados.',
+  },
+  {
+    q: '¿Me toca aguinaldo si renuncié o me despidieron?',
+    a: 'Sí. Tienes derecho a la parte proporcional por el tiempo que trabajaste en el año, sin importar la causa de la separación. Se paga en el finiquito. Puedes calcularlo junto con tus vacaciones y prima vacacional en la calculadora de finiquito.',
+  },
+  {
+    q: '¿Qué hago si no me pagan el aguinaldo?',
+    a: 'Pide el pago por escrito y guarda tus recibos de nómina. Si no te pagan, acude a la PROFEDET, que asesora y representa gratis, o al Centro de Conciliación Laboral de tu estado. Tienes un año para reclamarlo (artículo 516 de la Ley Federal del Trabajo).',
+  },
+];
+---
+
+<CalculatorLayout
+  pageKey="mx.aguinaldo"
+  locale="es-mx"
+  tool="aguinaldo"
+  title="Calculadora de aguinaldo 2026: proporcional, exento y neto"
+  description={`Calcula tu aguinaldo 2026 en segundos: días proporcionales, parte exenta de ISR con la UMA 2026 (${exempt}) y lo que recibes. Basada en el art. 87 de la LFT.`}
+  h1="Calculadora de aguinaldo 2026"
+  lede={`La ley te da al menos 15 días de salario antes del 20 de diciembre, o la parte proporcional si no trabajaste todo el año. En 2026 los primeros ${exempt} no pagan ISR. Escribe tu salario y ve cuánto recibes.`}
+  updated={UPDATED}
+  appName="Calculadora de aguinaldo México 2026"
+  faq={faq}
+  sourceParams={[
+    'mx.lft.aguinaldo',
+    'mx.uma',
+    'mx.lisr.exenciones',
+    'mx.isr.tarifa-mensual',
+    'mx.rlisr.art174',
+    'mx.salario-minimo.general',
+  ]}
+  extraSources={[
+    {
+      title: 'PROFEDET — Preguntas frecuentes sobre aguinaldo',
+      url: 'https://www.gob.mx/profedet/articulos/preguntas-frecuentes-sobre-aguinaldo',
+    },
+    { title: 'Ley del Impuesto sobre la Renta, artículos 93 y 96', url: 'https://www.diputados.gob.mx/LeyesBiblio/pdf/LISR.pdf' },
+  ]}
+  asOf={PAY_DATE}
+  direction={direction}
+  noindex={Boolean(direction)}
+  pathOverride={pathOverride}
+>
+  <AguinaldoCalculator client:load buildDay={BUILD_DAY} />
+
+  <Fragment slot="how">
+    <p>El aguinaldo se calcula con tu salario diario y los días que trabajaste en el año. Estos son los pasos que hace la calculadora:</p>
+    <ol>
+      <li>
+        <strong>Salario diario.</strong> Si te pagan por mes, divide tu sueldo entre 30; por quincena, entre 15; por semana, entre 7 (artículo
+        89 LFT).
+      </li>
+      <li>
+        <strong>Días de aguinaldo.</strong> Si trabajaste todo el año son los días de tu contrato (mínimo 15). Si no, son proporcionales: días
+        de aguinaldo × días trabajados ÷ 365.
+      </li>
+      <li><strong>Aguinaldo bruto.</strong> Salario diario × días de aguinaldo.</li>
+      <li>
+        <strong>Parte exenta.</strong> Hasta 30 UMA ({exempt} en 2026) no pagan ISR. El resto es la parte gravada.
+      </li>
+      <li>
+        <strong>ISR.</strong> La parte gravada se suma a tu sueldo mensual y se aplica la tarifa del artículo 96 de la Ley del ISR (o el procedimiento
+        del artículo 174 del Reglamento). Lo que recibes es el bruto menos ese ISR.
+      </li>
+    </ol>
+    <p class="formula">
+      <b>Aguinaldo</b> = salario diario × días de aguinaldo × (días trabajados ÷ 365)<br />
+      <b>Exento</b> = el menor entre el aguinaldo y 30 × UMA ({formatMoney(uma.daily)})<br />
+      <b>Neto</b> = aguinaldo − ISR sobre (aguinaldo − exento)
+    </p>
+    <p>
+      No restamos el subsidio para el empleo: es una cantidad fija al mes que normalmente no cambia por el aguinaldo. Si ganas cerca del
+      límite del subsidio, tu retención real puede ser un poco distinta.
+    </p>
+  </Fragment>
+
+  <div class="examples" slot="examples">
+    {examples.map(({ ex, rows, href }) => <ExampleCard title={ex.title} story={ex.story} rows={rows} source={ex.source} href={href} />)}
+  </div>
+</CalculatorLayout>

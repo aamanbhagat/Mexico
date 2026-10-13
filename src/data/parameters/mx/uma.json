@@ -1,0 +1,38 @@
+{
+  "id": "mx.uma",
+  "name": "Unidad de Medida y Actualización (UMA)",
+  "unit": "MXN",
+  "description": "Valor diario, mensual (diario × 30.4) y anual (mensual × 12). Base de las exenciones de ISR del artículo 93 LISR. Rige del 1 de febrero al 31 de enero del año siguiente.",
+  "versions": [
+    {
+      "value": { "daily": 108.57, "monthly": 3300.53, "annual": 39606.36 },
+      "effective_from": "2024-02-01",
+      "effective_to": "2025-01-31",
+      "source_url": "https://www.dof.gob.mx/nota_detalle.php?codigo=5714085&fecha=10/01/2024",
+      "source_title": "DOF 10/01/2024 — Unidad de Medida y Actualización (INEGI)",
+      "retrieved_on": "2026-10-13",
+      "verified": false,
+      "notes": "Corroborado con búsqueda restringida a dof.gob.mx e inegi.org.mx (DOF código 5714085). El documento primario no se pudo abrir desde el entorno de build (política de red). Aritmética comprobada: 108.57 × 30.4 = 3,300.53; × 12 = 39,606.36. Se necesita para fechas de enero de 2025."
+    },
+    {
+      "value": { "daily": 113.14, "monthly": 3439.46, "annual": 41273.52 },
+      "effective_from": "2025-02-01",
+      "effective_to": "2026-01-31",
+      "source_url": "https://dof.gob.mx/nota_detalle.php?codigo=5746930&fecha=10/01/2025",
+      "source_title": "DOF 10/01/2025 — Unidad de Medida y Actualización (INEGI)",
+      "retrieved_on": "2026-10-13",
+      "verified": false,
+      "notes": "Corroborado con el comunicado INEGI 1/25 (https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2025/uma/uma2025.pdf) vía búsqueda restringida al dominio oficial; variación 4.21 %. Documento primario no abierto desde el entorno de build. Aritmética comprobada: 113.14 × 30.4 = 3,439.46; × 12 = 41,273.52."
+    },
+    {
+      "value": { "daily": 117.31, "monthly": 3566.22, "annual": 42794.64 },
+      "effective_from": "2026-02-01",
+      "effective_to": "2027-01-31",
+      "source_url": "https://dof.gob.mx/nota_detalle.php?codigo=5778072&fecha=09/01/2026",
+      "source_title": "DOF 09/01/2026 — Unidad de Medida y Actualización (INEGI)",
+      "retrieved_on": "2026-10-13",
+      "verified": false,
+      "notes": "Corroborado con el comunicado INEGI 1/26 (https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/uma/uma2026.pdf) vía búsqueda restringida a inegi.org.mx/dof.gob.mx; variación 3.69 %. Algunos competidores aún usan 113.14 (valor 2025). Documento primario no abierto desde el entorno de build. Aritmética comprobada: 117.31 × 30.4 = 3,566.22; × 12 = 42,794.64."
+    }
+  ]
+}

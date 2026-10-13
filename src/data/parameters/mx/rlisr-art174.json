@@ -1,0 +1,20 @@
+{
+  "id": "mx.rlisr.art174",
+  "name": "Procedimiento opcional de retención para aguinaldo y prima vacacional (artículo 174 RLISR)",
+  "unit": "días",
+  "description": "La remuneración gravada se divide entre 365 y se multiplica por 30.4 para obtener su equivalente mensual; con él se calcula una tasa que se aplica a la remuneración gravada.",
+  "versions": [
+    {
+      "value": {
+        "days_in_year": 365,
+        "days_in_month": 30.4
+      },
+      "effective_from": "2015-10-09",
+      "source_url": "https://www.diputados.gob.mx/LeyesBiblio/regla.htm",
+      "source_title": "Reglamento de la Ley del Impuesto sobre la Renta, artículo 174 (índice de reglamentos de la Cámara de Diputados)",
+      "retrieved_on": "2026-10-13",
+      "verified": false,
+      "notes": "Reglamento publicado en el DOF el 08/10/2015 y en vigor al día siguiente según su primer transitorio (por confirmar). El enlace apunta al índice de reglamentos de la Cámara de Diputados: falta la URL directa del PDF. Documento primario no abierto desde el entorno de build."
+    }
+  ]
+}

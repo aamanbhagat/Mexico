@@ -1,0 +1,28 @@
+{
+  "id": "mx.subsidio-empleo",
+  "name": "Subsidio para el empleo",
+  "unit": "MXN/mes",
+  "description": "Subsidio mensual para personas trabajadoras con ingresos por salarios hasta el límite indicado. Se expresa como porcentaje de la UMA mensual. Solo informativo: las calculadoras no lo restan porque no cambia el ISR atribuible a un pago extraordinario salvo cuando el pago hace cruzar el límite de ingresos.",
+  "versions": [
+    {
+      "value": { "uma_monthly_pct": 15.59, "uma_reference": "2025", "monthly_amount": 536.21, "income_limit_monthly": 11492.66 },
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-01-31",
+      "source_url": "https://www.dof.gob.mx/index.php?year=2025&month=12&day=31",
+      "source_title": "DOF 31/12/2025 — Decreto por el que se modifica el diverso que otorga el subsidio para el empleo",
+      "retrieved_on": "2026-10-13",
+      "verified": false,
+      "notes": "Enero de 2026: 15.59 % de la UMA mensual 2025 (3,439.46) = 536.21. Corroborado solo con fuentes secundarias (idconline.mx, elcontribuyente.mx, contadormx.com, BHR). No se localizó la URL exacta de la nota del DOF: el enlace apunta al índice de esa edición. Verificar el texto del decreto."
+    },
+    {
+      "value": { "uma_monthly_pct": 15.02, "uma_reference": "2026", "monthly_amount": 535.65, "income_limit_monthly": 11492.66 },
+      "effective_from": "2026-02-01",
+      "effective_to": "2026-12-31",
+      "source_url": "https://www.dof.gob.mx/index.php?year=2025&month=12&day=31",
+      "source_title": "DOF 31/12/2025 — Decreto por el que se modifica el diverso que otorga el subsidio para el empleo",
+      "retrieved_on": "2026-10-13",
+      "verified": false,
+      "notes": "Febrero–diciembre de 2026: 15.02 % de la UMA mensual 2026 (3,566.22) = 535.65. Una fuente (merca20) publica 536.22: discrepancia sin resolver. Corroborado solo con fuentes secundarias; verificar contra el DOF."
+    }
+  ]
+}

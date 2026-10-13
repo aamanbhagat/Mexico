@@ -1,0 +1,106 @@
+---
+import { Font } from 'astro:assets';
+import '../styles/global.css';
+import { SITE, absoluteUrl } from '../config/site';
+import { getLocale, type LocaleCode } from '../i18n/locales';
+import { alternatesFor, type PageKey } from '../i18n/routes';
+import { ldJson } from '../lib/seo/jsonld';
+import SiteHeader from '../components/site/SiteHeader.astro';
+import SiteFooter from '../components/site/SiteFooter.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  locale: LocaleCode;
+  /** Route key for canonical + hreflang. Omit for non-indexable pages. */
+  pageKey?: PageKey | undefined;
+  /** Path of this page (canonical). */
+  path: string;
+  /** Slug used for the generated OG image (/og/<ogSlug>.png). */
+  ogSlug?: string | undefined;
+  jsonLd?: unknown[] | undefined;
+  noindex?: boolean | undefined;
+  /** Calculator line color hook (data-tool). */
+  tool?: string | undefined;
+  /** Lab only: render with an alternative visual direction. */
+  direction?: string | undefined;
+}
+
+const { title, description, locale, pageKey, path, ogSlug = 'default', jsonLd = [], noindex = false, tool, direction } = Astro.props;
+const loc = getLocale(locale);
+const canonical = absoluteUrl(path);
+const alternates = pageKey && !noindex ? alternatesFor(pageKey) : [];
+const ogImage = absoluteUrl(`/og/${ogSlug}.png`);
+const fullTitle = title.includes(SITE.name) ? title : `${title} | ${SITE.name}`;
+const ogLocale = loc.hreflang.replace('-', '_');
+---
+
+<!doctype html>
+<html lang={loc.htmlLang} data-direction={direction}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#151517" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script is:inline>
+      (function () {
+        try {
+          const t = localStorage.getItem('theme');
+          if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+        } catch {
+          /* storage blocked: follow the OS theme */
+        }
+      })();
+    </script>
+
+    {
+      direction === 'sobre' ? (
+        <>
+          <Font cssVariable="--font-bitter" preload />
+          <Font cssVariable="--font-courier" preload />
+        </>
+      ) : direction === 'sumadora' ? (
+        <>
+          <Font cssVariable="--font-instrument" preload />
+          <Font cssVariable="--font-martian" preload />
+        </>
+      ) : (
+        <Font cssVariable="--font-archivo" preload />
+      )
+    }
+
+    {jsonLd.map((d) => <script type="application/ld+json" set:html={ldJson(d)} />)}
+    <slot name="head" />
+  </head>
+  <body data-tool={tool}>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <SiteHeader locale={locale} />
+    <main id="contenido" tabindex="-1">
+      <slot />
+    </main>
+    <SiteFooter locale={locale} />
+  </body>
+</html>

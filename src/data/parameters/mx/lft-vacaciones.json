@@ -1,0 +1,27 @@
+{
+  "id": "mx.lft.vacaciones",
+  "name": "Días de vacaciones por antigüedad (artículo 76 LFT)",
+  "unit": "días laborables",
+  "description": "Regla del art. 76: días del primer año, aumento anual hasta el año indicado y, después, aumento cada bloque de años. Días para el año de servicios n: si n ≤ ramp_years, first_year + step × (n − 1); si no, días del último año de rampa + band_step × ⌈(n − ramp_years) / band_years⌉.",
+  "versions": [
+    {
+      "value": { "first_year": 6, "step": 2, "ramp_years": 4, "band_years": 5, "band_step": 2 },
+      "effective_from": "1970-05-01",
+      "effective_to": "2022-12-31",
+      "source_url": "https://www.diputados.gob.mx/LeyesBiblio/ref/lft/LFT_ref41_27dic22.pdf",
+      "source_title": "LFT, art. 76 antes de la reforma publicada en el DOF el 27/12/2022",
+      "retrieved_on": "2026-10-13",
+      "verified": false,
+      "notes": "Tabla anterior: 6, 8, 10, 12 días y +2 cada 5 años. Se conserva para fechas anteriores a 2023. Documento primario no abierto desde el entorno de build."
+    },
+    {
+      "value": { "first_year": 12, "step": 2, "ramp_years": 5, "band_years": 5, "band_step": 2 },
+      "effective_from": "2023-01-01",
+      "source_url": "https://dof.gob.mx/nota_detalle.php?codigo=5675889&fecha=27/12/2022",
+      "source_title": "DOF 27/12/2022 — Decreto que reforma los artículos 76 y 78 de la LFT (vacaciones dignas)",
+      "retrieved_on": "2026-10-13",
+      "verified": false,
+      "notes": "Resultado: 12, 14, 16, 18, 20 días; 22 (años 6–10), 24 (11–15), 26 (16–20), 28 (21–25), 30 (26–30)… Coincide con la tabla de PROFEDET (gob.mx) y CCL Sinaloa. En vigor el 1/1/2023. Documento primario no abierto desde el entorno de build."
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "id": "mx.lft.separacion",
+  "name": "Indemnizaciones y prima de antigüedad (arts. 48, 50, 89, 162, 485 y 486 LFT)",
+  "unit": "días de salario",
+  "description": "Constantes para finiquito y liquidación: indemnización constitucional (3 meses = 90 días), 20 días por año (art. 50 fr. II), prima de antigüedad de 12 días por año (art. 162) con piso de un salario mínimo (art. 485) y tope del doble del salario mínimo del área geográfica (art. 486); 15 años mínimos para cobrarla al renunciar (art. 162 fr. III); divisores del art. 89 para obtener el salario diario.",
+  "versions": [
+    {
+      "value": {
+        "constitutional_days": 90,
+        "days_per_year_art50": 20,
+        "seniority_days_per_year": 12,
+        "seniority_min_years_voluntary": 15,
+        "seniority_cap_multiple": 2,
+        "daily_divisor_monthly": 30,
+        "daily_divisor_biweekly": 15,
+        "daily_divisor_weekly": 7
+      },
+      "effective_from": "1970-05-01",
+      "source_url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf",
+      "source_title": "Ley Federal del Trabajo, artículos 48, 50, 89, 162, 485 y 486 (Cámara de Diputados, texto vigente)",
+      "retrieved_on": "2026-10-13",
+      "verified": false,
+      "notes": "Ejemplo de CCL Sinaloa (SDI 349.31, 5 años: 90 días = 31,437.90; 20 días/año = 34,931.00; prima = 20,958.60) reproducido en las pruebas. El divisor quincenal (15) no está en el art. 89 (que solo menciona semana ÷ 7 y mes ÷ 30); se usa por coherencia con mes ÷ 30. Los 20 días por año solo proceden en los supuestos de los arts. 49–52: requiere revisión legal."
+    }
+  ]
+}

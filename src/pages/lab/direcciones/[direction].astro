@@ -1,0 +1,19 @@
+---
+/**
+ * Design lab: the real aguinaldo page rendered in each candidate visual direction.
+ * Only built with LAB=1 (npm run build:lab); never part of the production site.
+ * Screenshots live in docs/screenshots/directions/ and the decision in docs/design/DIRECTIONS.md.
+ */
+import '../../../styles/directions/sobre.css';
+import '../../../styles/directions/sumadora.css';
+import AguinaldoPage from '../../es-mx/calculadora-aguinaldo/index.astro';
+
+export function getStaticPaths() {
+  if (process.env['LAB'] !== '1') return [];
+  return [{ params: { direction: 'linea' } }, { params: { direction: 'sobre' } }, { params: { direction: 'sumadora' } }];
+}
+
+const { direction } = Astro.params;
+---
+
+<AguinaldoPage direction={direction} pathOverride={`/lab/direcciones/${direction}/`} />

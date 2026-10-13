@@ -1,0 +1,28 @@
+{
+  "id": "mx.salario-minimo.general",
+  "name": "Salario mínimo general (resto del país)",
+  "unit": "MXN/día",
+  "description": "Salario mínimo general diario fuera de la Zona Libre de la Frontera Norte. Rige del 1 de enero al 31 de diciembre.",
+  "versions": [
+    {
+      "value": 278.8,
+      "effective_from": "2025-01-01",
+      "effective_to": "2025-12-31",
+      "source_url": "https://dof.gob.mx/nota_detalle.php?codigo=5745678&fecha=19/12/2024",
+      "source_title": "DOF 19/12/2024 — Resolución del H. Consejo de Representantes de la CONASAMI (salarios mínimos 2025)",
+      "retrieved_on": "2026-10-13",
+      "verified": false,
+      "notes": "Corroborado con gob.mx/conasami vía búsqueda restringida al dominio oficial: de 248.93 a 278.80 (MIR 12.85 + 6.5 %). Documento primario no abierto desde el entorno de build."
+    },
+    {
+      "value": 315.04,
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "source_url": "https://dof.gob.mx/nota_detalle.php?codigo=5775534&fecha=09/12/2025",
+      "source_title": "DOF 09/12/2025 — Resolución del H. Consejo de Representantes de la CONASAMI (salarios mínimos 2026)",
+      "retrieved_on": "2026-10-13",
+      "verified": false,
+      "notes": "Corroborado con gob.mx/conasami y el comunicado de la STPS vía búsqueda restringida a dominios oficiales: de 278.80 a 315.04 (+13 %; MIR 17.01 + 6.5 %). Documento primario no abierto desde el entorno de build. Los valores de 2027 se publican en diciembre de 2026: actualizar este archivo ese día."
+    }
+  ]
+}

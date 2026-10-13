@@ -1,0 +1,59 @@
+---
+/** Pictogram per calculator, in the spirit of transit wayfinding: one simple shape per tool. */
+interface Props {
+  tool: 'aguinaldo' | 'finiquito' | 'liquidacion' | 'prima-vacacional' | 'vacaciones' | 'uma';
+}
+const { tool } = Astro.props;
+---
+
+<span class="station-icon" aria-hidden="true">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    {
+      tool === 'aguinaldo' && (
+        <>
+          <rect x="4" y="9" width="16" height="11" rx="1" />
+          <path d="M3 9h18M12 9v11M12 9c-1.5-3-5-4-5-1.5S12 9 12 9Zm0 0c1.5-3 5-4 5-1.5S12 9 12 9Z" />
+        </>
+      )
+    }
+    {
+      tool === 'finiquito' && (
+        <>
+          <path d="M6 3h9l4 4v14H6z" />
+          <path d="M14 3v5h5M9 13l2 2 4-4" />
+        </>
+      )
+    }
+    {
+      tool === 'liquidacion' && (
+        <>
+          <path d="M4 7h16v12H4z" />
+          <path d="M9 7V5h6v2M4 12h16" />
+        </>
+      )
+    }
+    {
+      tool === 'prima-vacacional' && (
+        <>
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4" />
+        </>
+      )
+    }
+    {
+      tool === 'vacaciones' && (
+        <>
+          <rect x="4" y="5" width="16" height="15" rx="1" />
+          <path d="M4 10h16M9 3v4M15 3v4M9 14h2v2H9z" />
+        </>
+      )
+    }
+    {
+      tool === 'uma' && (
+        <>
+          <path d="M4 20V10M10 20V4M16 20v-7M22 20H2" />
+        </>
+      )
+    }
+  </svg>
+</span>

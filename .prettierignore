@@ -1,0 +1,12 @@
+dist
+node_modules
+.astro
+docs/research
+docs/screenshots
+playwright-report
+test-results
+.lighthouseci
+package-lock.json
+tests/golden/golden.py
+.claude
+*.md

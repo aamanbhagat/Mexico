@@ -1,0 +1,203 @@
+/*
+ * Design tokens — the single source of truth for color, type, spacing, radius, shadow and motion
+ * (CLAUDE.md "Design system"). Components only read these custom properties.
+ *
+ * Direction: "Línea" (see docs/design/DIRECTIONS.md). Light and dark are both first-class:
+ * dark follows the OS unless the visitor picks a theme (html[data-theme]).
+ */
+
+:root {
+  /* ---- Type --------------------------------------------------------------------------- */
+  --font-sans: var(--font-archivo), 'Archivo', Arial, sans-serif;
+  --font-display: var(--font-archivo), 'Archivo', Arial, sans-serif;
+  --font-num: var(--font-archivo), 'Archivo', Arial, sans-serif;
+  /* Width axis of Archivo: display headings are set expanded, like station signage. */
+  --display-stretch: 118%;
+  --display-weight: 800;
+  --body-weight: 400;
+  --strong-weight: 650;
+
+  /* Classic typographic scale (Bringhurst): 14 · 16 · 18 · 21 · 24 · 36 · 48 · 60 */
+  --text-xs: 0.8125rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-md: 1.125rem;
+  --text-lg: 1.3125rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2.25rem;
+  --text-3xl: 3rem;
+  --text-4xl: 3.75rem;
+  --leading-tight: 1.08;
+  --leading-snug: 1.25;
+  --leading-body: 1.55;
+  --measure: 68ch;
+
+  /* ---- Space (4 px grid) -------------------------------------------------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --gutter: 1rem;
+  --page-max: 75rem;
+
+  /* ---- Radius -------------------------------------------------------------------------- */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-pill: 999px;
+
+  /* ---- Motion (150–250 ms, ease-out or spring; CLAUDE.md) ------------------------------ */
+  --dur-1: 150ms;
+  --dur-2: 200ms;
+  --dur-3: 250ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: linear(
+    0,
+    0.013 0.6%,
+    0.05 1.2%,
+    0.2 2.5%,
+    0.73 6.7%,
+    0.91 8.9%,
+    1.03 11.6%,
+    1.07 14%,
+    1.06 16.1%,
+    1.01 21.9%,
+    0.995 26.3%,
+    1
+  );
+
+  /* ---- Line colors (one per calculator; every pair passes WCAG AA) ---------------------- */
+  --line-aguinaldo: #b0005e;
+  --line-finiquito: #00529b;
+  --line-liquidacion: #b33a00;
+  --line-prima-vacacional: #007a44;
+  --line-vacaciones: #8a6400;
+  --line-uma: #6b4423;
+  --line-on: #ffffff;
+
+  /* ---- Color: light ------------------------------------------------------------------- */
+  color-scheme: light;
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f3f3f1;
+  --surface-3: #e8e8e4;
+  --ink: #000000;
+  --ink-2: #4d4d4a;
+  --ink-3: #6b6b67;
+  --rule: #d4d4cf;
+  --rule-strong: #000000;
+  --accent: var(--tool, #000000);
+  --accent-on: #ffffff;
+  --focus: #1a5fd0;
+  --negative: #b3261e;
+  --positive: #0a6b3a;
+  --warning-bg: #fff4d1;
+  --warning-ink: #5c4300;
+  --info-bg: #eef3fb;
+  --info-ink: #1c3a66;
+  --shadow-1: 0 1px 0 rgb(0 0 0 / 0.06);
+  --shadow-2: 0 8px 24px -12px rgb(0 0 0 / 0.25);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --bg: #151517;
+    --surface: #1c1c1f;
+    --surface-2: #242428;
+    --surface-3: #2e2e33;
+    --ink: #f4f4f2;
+    --ink-2: #c2c2bd;
+    --ink-3: #9d9d98;
+    --rule: #3a3a3f;
+    --rule-strong: #f4f4f2;
+    --accent-on: #ffffff;
+    --focus: #8ab4ff;
+    --negative: #ff8a80;
+    --positive: #6fd39b;
+    --warning-bg: #3a2f0c;
+    --warning-ink: #ffe08a;
+    --info-bg: #1a2638;
+    --info-ink: #cfe0ff;
+    --line-aguinaldo: #ff5cab;
+    --line-finiquito: #5aa7ff;
+    --line-liquidacion: #ff8a4c;
+    --line-prima-vacacional: #43c987;
+    --line-vacaciones: #e5b53a;
+    --line-uma: #d5a37a;
+    --line-on: #151517;
+    --shadow-1: 0 1px 0 rgb(0 0 0 / 0.4);
+    --shadow-2: 0 8px 24px -12px rgb(0 0 0 / 0.7);
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #151517;
+  --surface: #1c1c1f;
+  --surface-2: #242428;
+  --surface-3: #2e2e33;
+  --ink: #f4f4f2;
+  --ink-2: #c2c2bd;
+  --ink-3: #9d9d98;
+  --rule: #3a3a3f;
+  --rule-strong: #f4f4f2;
+  --accent-on: #ffffff;
+  --focus: #8ab4ff;
+  --negative: #ff8a80;
+  --positive: #6fd39b;
+  --warning-bg: #3a2f0c;
+  --warning-ink: #ffe08a;
+  --info-bg: #1a2638;
+  --info-ink: #cfe0ff;
+  --line-aguinaldo: #ff5cab;
+  --line-finiquito: #5aa7ff;
+  --line-liquidacion: #ff8a4c;
+  --line-prima-vacacional: #43c987;
+  --line-vacaciones: #e5b53a;
+  --line-uma: #d5a37a;
+  --line-on: #151517;
+  --shadow-1: 0 1px 0 rgb(0 0 0 / 0.4);
+  --shadow-2: 0 8px 24px -12px rgb(0 0 0 / 0.7);
+}
+
+/* Each page sets data-tool; the tool's line color becomes the accent. */
+[data-tool='aguinaldo'] {
+  --tool: var(--line-aguinaldo);
+}
+[data-tool='finiquito'] {
+  --tool: var(--line-finiquito);
+}
+[data-tool='liquidacion'] {
+  --tool: var(--line-liquidacion);
+}
+[data-tool='prima-vacacional'] {
+  --tool: var(--line-prima-vacacional);
+}
+[data-tool='vacaciones'] {
+  --tool: var(--line-vacaciones);
+}
+[data-tool='uma'] {
+  --tool: var(--line-uma);
+}
+[data-tool] {
+  --accent: var(--tool);
+  --accent-on: var(--line-on);
+}
+
+@media (min-width: 40rem) {
+  :root {
+    --gutter: 1.5rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --gutter: 2rem;
+  }
+}
