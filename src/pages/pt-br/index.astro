@@ -5,7 +5,7 @@ import { pathFor } from '../../i18n/routes';
 import { toolsFor, haOf, m2Of } from '../../i18n/tools';
 import { absoluteUrl, SITE } from '../../config/site';
 import { BR_LAND } from '../../lib/params/br';
-import { formatDateLongIn } from '../../lib/ui/format';
+import { formatDateLong } from '../../lib/ui/format';
 import { UPDATED } from '../../content/pt-br/meta';
 import { KIND_LABEL } from '../../content/pt-br/land-text';
 
@@ -48,7 +48,7 @@ const jsonLd = [
         Alqueire, tarefa, litro de terra e quadra em hectare e metro quadrado. O alqueire muda de estado para estado: aqui você escolhe o
         seu, vê o valor usado e a fonte de cada número, e é avisado quando as fontes não concordam.
       </p>
-      <p class="hero__meta"><span>Atualizado em <time datetime={UPDATED}>{formatDateLongIn(UPDATED, 'pt-BR')}</time></span></p>
+      <p class="hero__meta"><span>Atualizado em <time datetime={UPDATED}>{formatDateLong(UPDATED, 'pt-BR')}</time></span></p>
     </header>
 
     <nav aria-labelledby="ferramentas">

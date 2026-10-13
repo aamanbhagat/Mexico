@@ -1,10 +1,11 @@
-import { PAGE_TEXT, ROUTES, expect, test } from './fixtures';
+import { ROUTES, WORDS, expect, test } from './fixtures';
 
 test.describe('SEO contract (CLAUDE.md §6)', () => {
   test.skip(({ isMobile }) => isMobile, 'markup is identical on mobile');
 
   for (const route of ROUTES) {
     test(`${route.path} has unique metadata, canonical, hreflang and JSON-LD`, async ({ page }) => {
+      const words = WORDS[route.locale];
       const res = await page.goto(route.path);
       expect(res?.status()).toBe(200);
       await expect(page.locator('html')).toHaveAttribute('lang', route.lang);
@@ -25,23 +26,22 @@ test.describe('SEO contract (CLAUDE.md §6)', () => {
         .evaluateAll((els) => els.map((e) => e.getAttribute('hreflang')));
       expect(hreflangs).toEqual(route.hreflang);
 
-      await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /\/og\/[a-z-]+\.png$/);
+      await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /\/og\/(id\/)?[a-z0-9-]+\.png$/);
       await expect(page.locator('h1')).toHaveCount(1);
       await expect(page.locator('h1')).toContainText(route.h1);
 
       const types = await page
         .locator('script[type="application/ld+json"]')
         .evaluateAll((els) => els.map((e) => (JSON.parse(e.textContent ?? '{}') as { '@type': string })['@type']));
-      if (route.kind === 'calculator') expect(types).toEqual(['WebApplication', 'FAQPage', 'BreadcrumbList']);
+      if (route.kind === 'calculator' || route.kind === 'calendar') expect(types).toEqual(['WebApplication', 'FAQPage', 'BreadcrumbList']);
       if (route.kind === 'reference') expect(types).toEqual(['Dataset', 'FAQPage', 'BreadcrumbList']);
 
       if (route.kind !== 'home') {
-        const text = PAGE_TEXT[route.lang];
-        await expect(page.getByText(text.updated, { exact: false }).first()).toBeVisible();
-        await expect(page.getByText(text.review).first()).toBeVisible();
-        await expect(page.getByRole('heading', { name: text.sources, exact: true })).toBeVisible();
+        await expect(page.getByText(words.updated, { exact: false }).first()).toBeVisible();
+        await expect(page.getByText(words.review).first()).toBeVisible();
+        await expect(page.getByRole('heading', { name: words.sources, exact: true })).toBeVisible();
         expect(await page.locator('.sources a[href^="https://"]').count()).toBeGreaterThanOrEqual(3);
-        await expect(page.getByRole('heading', { name: text.faq })).toBeVisible();
+        await expect(page.getByRole('heading', { name: words.faq })).toBeVisible();
         expect(await page.locator('.faq details').count()).toBeGreaterThanOrEqual(5);
       }
     });
@@ -52,7 +52,7 @@ test.describe('SEO contract (CLAUDE.md §6)', () => {
     for (const route of ROUTES) {
       await page.goto(route.path);
       const key = `${await page.title()}|${await page.locator('meta[name="description"]').getAttribute('content')}`;
-      expect(seen.has(key)).toBe(false);
+      expect(seen.has(key), route.path).toBe(false);
       seen.add(key);
     }
   });
@@ -62,6 +62,17 @@ test.describe('SEO contract (CLAUDE.md §6)', () => {
     const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1] ?? '').pathname).sort();
     expect(locs).toEqual(ROUTES.map((r) => r.path).sort());
     expect(xml.match(/hreflang="x-default"/g)?.length).toBe(ROUTES.length);
+    // A locale's tag appears on its own pages and on every locale's home (the homes are alternates of each other).
+    const homes = ROUTES.filter((r) => r.kind === 'home').length;
+    for (const [locale, tag] of [
+      ['es-mx', 'es-MX'],
+      ['pt-br', 'pt-BR'],
+      ['id', 'id-ID'],
+    ] as const) {
+      expect(xml.match(new RegExp(`hreflang="${tag}"`, 'g'))?.length, tag).toBe(
+        ROUTES.filter((r) => r.locale === locale).length + homes - 1,
+      );
+    }
   });
 
   test('robots.txt points to the sitemap', async ({ request }) => {
@@ -70,20 +81,36 @@ test.describe('SEO contract (CLAUDE.md §6)', () => {
   });
 
   test('unpublished locales are not built', async ({ request }) => {
-    for (const code of ['id', 'ja', 'pl', 'de', 'es-es', 'en', 'tr']) {
+    for (const code of ['ja', 'pl', 'de', 'es-es', 'en', 'tr']) {
       expect((await request.get(`/${code}/`)).status()).toBe(404);
     }
   });
 
-  test('OG images are real 1200×630 PNGs', async ({ request }) => {
-    for (const slug of ['aguinaldo', 'alqueire-hectare', 'alqueire-baiano']) {
-      const res = await request.get(`/og/${slug}.png`);
-      expect(res.headers()['content-type']).toContain('image/png');
+  test('OG images are real 1200×630 PNGs, including one per weton and calendar', async ({ request }) => {
+    for (const path of [
+      '/og/aguinaldo.png',
+      '/og/alqueire-hectare.png',
+      '/og/alqueire-baiano.png',
+      '/og/id/selasa-pon.png',
+      '/og/id/kalender-2027.png',
+      '/og/id/kalender-2027-desember.png',
+    ]) {
+      const res = await request.get(path);
+      expect(res.headers()['content-type'], path).toContain('image/png');
       const body = await res.body();
       expect(body.subarray(1, 4).toString()).toBe('PNG');
       expect(body.readUInt32BE(16)).toBe(1200);
       expect(body.readUInt32BE(20)).toBe(630);
     }
+  });
+
+  test('every page links to an OG image that exists', async ({ page, request }) => {
+    const images = new Set<string>();
+    for (const route of ROUTES) {
+      await page.goto(route.path);
+      images.add(new URL((await page.locator('meta[property="og:image"]').getAttribute('content')) ?? '').pathname);
+    }
+    for (const path of images) expect((await request.get(path)).status(), path).toBe(200);
   });
 
   test('each BR page points to its own OG image', async ({ page }) => {
@@ -95,9 +122,12 @@ test.describe('SEO contract (CLAUDE.md §6)', () => {
   test('cross-locale links appear only where hreflang applies', async ({ page }) => {
     await page.goto('/pt-br/');
     await expect(page.locator('.site-footer a[hreflang="es-MX"]')).toHaveAttribute('href', /\/es-mx\/$/);
+    await expect(page.locator('.site-footer a[hreflang="id-ID"]')).toHaveAttribute('href', /\/id\/$/);
     await page.goto('/pt-br/conversor-alqueire-hectare/');
     await expect(page.locator('.site-footer a[hreflang]')).toHaveCount(0);
     await page.goto('/es-mx/calculadora-aguinaldo/');
+    await expect(page.locator('.site-footer a[hreflang]')).toHaveCount(0);
+    await page.goto('/id/weton/');
     await expect(page.locator('.site-footer a[hreflang]')).toHaveCount(0);
   });
 });

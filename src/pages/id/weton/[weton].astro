@@ -1,0 +1,329 @@
+---
+/**
+ * One page per weton (35). Everything on it is computed for that weton: neptu and the weton that
+ * share it, every date in 2026–2027 with its Javanese date and wuku, the six wuku it falls in, the
+ * jodoh result with each of the 35 weton, and only the traditions we could source.
+ */
+import type { GetStaticPaths } from 'astro';
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import SelapanGrid from '../../../components/weton/SelapanGrid';
+import Keblat from '../../../components/weton/Keblat';
+import InlineList from '../../../components/page/InlineList.astro';
+import { BULAN_SLUGS, KALENDER_YEARS, UPDATED } from '../../../content/id/meta';
+import { ID_DISCLAIMER, ID_RELATED, ID_SOURCES } from '../../../content/id/shared';
+import { WETON_NOTES } from '../../../content/id/weton-notes';
+import { allWeton, wetonDatesBetween, wetonSlug, wukuOfWeton, type Weton } from '../../../lib/calendar/javanese';
+import { jodohWith, keblatOf, neptuOfWeton, pangarasanOf, wetonDay } from '../../../lib/weton';
+import { defaultJodohMethod, defaultNeptuTable, idReference } from '../../../lib/params/id';
+import { hijriShort, jawaShort, tanggal, tanggalHari } from '../../../components/weton/copy';
+import type { FaqItem } from '../../../lib/seo/jsonld';
+import type { WetonSlug } from '../../../i18n/routes';
+
+export const getStaticPaths = (() =>
+  allWeton().map((w) => ({ params: { weton: wetonSlug(w.dina, w.pasaran) }, props: { w } }))) satisfies GetStaticPaths;
+
+interface Props {
+  w: Weton;
+}
+const { w } = Astro.props;
+const slug = wetonSlug(w.dina, w.pasaran) as WetonSlug;
+const name = `${w.dina} ${w.pasaran}`;
+const neptu = neptuOfWeton(w);
+const table = defaultNeptuTable();
+const keblat = keblatOf(w.pasaran);
+const pangarasan = pangarasanOf(neptu.total);
+const siblings = allWeton().filter((o) => neptuOfWeton(o).total === neptu.total && !(o.dina === w.dina && o.pasaran === w.pasaran));
+
+const first = KALENDER_YEARS[0];
+const last = KALENDER_YEARS[KALENDER_YEARS.length - 1];
+const dates = wetonDatesBetween(`${first}-01-01`, `${last}-12-31`, w).map((iso) => wetonDay(iso));
+const wuku = wukuOfWeton(w);
+
+const method = defaultJodohMethod();
+const pairs = allWeton().map((o) => ({ o, r: jodohWith(method, w, o) }));
+const groups = method.results
+  .map((res) => ({ res, partners: pairs.filter((p) => p.r.result.label === res.label) }))
+  .filter((g) => g.partners.length > 0);
+const jodohHref = (o: Weton) => `/id/weton/jodoh/?ma=weton&wa=${slug}&mb=weton&wb=${wetonSlug(o.dina, o.pasaran)}`;
+
+const notes = WETON_NOTES[slug] ?? [];
+const pangarasanText = pangarasan.labels.map((l) => (l.meaning ? `${l.label}, ${l.meaning}` : l.label)).join(' atau ');
+const pRefs = pangarasan.labels.flatMap((l) => l.refs.map((k) => idReference('id.weton-methods', k)));
+const label = (x: Weton) => `${x.dina} ${x.pasaran}`;
+const goodLabels = new Set(method.results.filter((r) => r.tone === 'baik').map((r) => r.label));
+const goodPartners = groups.filter((g) => goodLabels.has(g.res.label));
+
+const faq: FaqItem[] = [
+  {
+    q: `${name} neptunya berapa?`,
+    a: `Neptu ${name} adalah ${neptu.total}: ${w.dina} bernilai ${neptu.dina} dan ${w.pasaran} bernilai ${neptu.pasaran}.${
+      siblings.length
+        ? ` Weton lain dengan neptu ${neptu.total}: ${siblings.map(label).join(', ')}.`
+        : ` Tidak ada weton lain dengan neptu ${neptu.total}.`
+    }`,
+  },
+  {
+    q: `Kapan saja ${name} di ${first}–${last}?`,
+    a: `${name} datang setiap 35 hari. Sepanjang ${first}–${last} ada ${dates.length} hari ${name}, mulai ${tanggal(dates[0]!.iso)} sampai ${tanggal(
+      dates[dates.length - 1]!.iso,
+    )}. Daftar lengkapnya, dengan tanggal Jawa dan wuku, ada di halaman ini.`,
+  },
+  {
+    q: `${name} cocok berjodoh dengan weton apa menurut primbon?`,
+    a: `Dengan metode ${method.short} (Pegat sampai Pesthi), pasangan yang hasilnya dianggap baik untuk ${name}: ${goodPartners
+      .map((g) => `${g.res.label} dengan ${g.partners.map((p) => label(p.o)).join(', ')}`)
+      .join('; ')}. Metode lain (sisa 7, 5 dan 4) bisa memberi hasil berbeda; bandingkan di kalkulator weton jodoh.`,
+  },
+  {
+    q: `Apa watak ${name} menurut primbon?`,
+    a: `Primbon membaca watak dari pasaran dan jumlah neptu. Pasaran ${w.pasaran} berada di ${keblat?.arah ?? '-'} dengan warna ${keblat?.warna ?? '-'} dalam keblat papat lima pancer. Untuk neptu ${neptu.total}, istilah pangarasannya ${
+      pangarasan.labels.length ? pangarasan.labels.map((l) => l.label).join(' atau ') : 'belum kami temukan di sumber tertulis'
+    }${pangarasan.labels.length > 1 ? ' (sumber berbeda)' : ''}. Tafsir watak berbeda antarbuku primbon dan bukan kepastian.`,
+  },
+  {
+    q: `${name} jatuh di wuku apa saja?`,
+    a: `Karena pawukon berumur 210 hari (6 × 35), ${name} selalu jatuh di enam wuku yang sama: ${wuku.join(', ')}.`,
+  },
+];
+---
+
+<CalculatorLayout
+  pageKey={`id.weton.${slug}`}
+  locale="id"
+  tool="weton"
+  reviewKey="id.weton"
+  crumb={name}
+  parents={[{ name: 'Weton', path: '/id/weton/' }]}
+  ogSlug={`id/${slug}`}
+  title={`Weton ${name}: Neptu ${neptu.total}, Tanggal ${first}–${last} dan Jodohnya`}
+  description={`${name} punya neptu ${neptu.total} (${w.dina} ${neptu.dina} + ${w.pasaran} ${neptu.pasaran}). Tanggal ${name} ${first}–${last} dengan tanggal Jawa dan wuku, watak menurut primbon, dan jodohnya.`}
+  h1={`Weton ${name}`}
+  lede={`${name} punya neptu ${neptu.total}: ${w.dina} ${neptu.dina} ditambah ${w.pasaran} ${neptu.pasaran}. Weton ini datang setiap 35 hari; di bawah ada semua tanggalnya pada ${first}–${last}, letaknya di tabel neptu, dan kecocokan jodohnya dengan 35 weton.`}
+  updated={UPDATED}
+  appName={`Weton ${name}`}
+  appCategory="UtilitiesApplication"
+  faq={faq}
+  sourceParams={['id.weton-methods', 'id.hijri-kemenag']}
+  extraSources={[
+    ...ID_SOURCES.calendar.slice(0, 2),
+    ...pRefs,
+    ...notes.flatMap((n) => n.sources.map((s) => ({ title: s.label, url: s.url }))),
+  ]}
+  asOf={UPDATED}
+  hasExamples={false}
+  howTitle={`Neptu dan watak ${name} menurut primbon`}
+  related={ID_RELATED}
+>
+  <section class="weton-page-top" aria-label={`${name} di tabel neptu`}>
+    <div class="table-scroll" tabindex="0" role="region" aria-label="Tabel neptu weton">
+      <SelapanGrid
+        table={table}
+        active={w}
+        caption={`${name} di tabel neptu: baris ${w.dina}, kolom ${w.pasaran}`}
+        hrefFor={(o) => `/id/weton/${wetonSlug(o.dina, o.pasaran)}/`}
+      />
+    </div>
+    <dl class="facts weton-page-facts">
+      <div>
+        <dt>Neptu</dt>
+        <dd>{neptu.dina} + {neptu.pasaran} = {neptu.total}</dd>
+      </div>
+      <div>
+        <dt>Pasaran</dt>
+        <dd class="weton-facts__pasaran">
+          <Keblat active={w.pasaran} />
+          <span>
+            {w.pasaran}
+            {
+              keblat && (
+                <span class="facts__note">
+                  arah {keblat.arah}, warna {keblat.warna}
+                </span>
+              )
+            }
+          </span>
+        </dd>
+      </div>
+      <div>
+        <dt>Neptu sama</dt>
+        <dd>
+          {siblings.length === 0 && 'tidak ada'}
+          <InlineList
+            >{
+              siblings.map((x) => (
+                <span>
+                  <a href={`/id/weton/${wetonSlug(x.dina, x.pasaran)}/`}>{label(x)}</a>
+                </span>
+              ))
+            }</InlineList
+          >
+        </dd>
+      </div>
+      <div>
+        <dt>Muncul berikutnya</dt>
+        <dd data-next-weton={slug}>setiap 35 hari</dd>
+      </div>
+    </dl>
+    <p class="calc__fine">
+      Ingin tahu weton tanggal lahir lain? <a href="/id/weton/">Cek weton dari tanggal lahir</a>.
+    </p>
+  </section>
+
+  <Fragment slot="how">
+    <p>
+      Neptu {name} adalah jumlah neptu hari {w.dina} ({neptu.dina}) dan neptu pasaran {w.pasaran} ({neptu.pasaran}): <strong
+        >{neptu.total}</strong
+      >. Semua sumber yang kami periksa memakai nilai ini.
+    </p>
+    <p>
+      Dalam keblat papat lima pancer, pasaran {w.pasaran} berada di {keblat?.arah} dengan warna {keblat?.warna}.
+    </p>
+    {
+      pangarasan.labels.length > 0 ? (
+        <p>
+          Untuk neptu {neptu.total}, istilah watak (pangarasan) yang dipakai sumber kami: {pangarasanText}.
+        </p>
+      ) : (
+        <p>Kami belum menemukan istilah pangarasan untuk neptu {neptu.total} di sumber tertulis.</p>
+      )
+    }
+    {
+      pangarasan.labels.length > 1 && (
+        <p class="conflict">Sumber berbeda tentang istilah untuk neptu {neptu.total}; keduanya kami tampilkan.</p>
+      )
+    }
+    {pangarasan.note && <p class="calc__fine">{pangarasan.note}</p>}
+    {
+      notes.map((n) => (
+        <p>
+          {n.text}{' '}
+          <span class="calc__fine">
+            (
+            <InlineList sep="semicolon">
+              {n.sources.map((x) => (
+                <span>
+                  <a href={x.url} rel="noopener" target="_blank">
+                    {x.label.split(' — ')[0]}
+                  </a>
+                </span>
+              ))}
+            </InlineList>
+            )
+          </span>
+        </p>
+      ))
+    }
+    <p>
+      Bayi yang lahir pada {name} memperingati selapanan 35 hari kemudian, yang juga jatuh pada {name}. Tafsir watak dalam primbon
+      berbeda-beda dan bukan kepastian; anggap sebagai bagian dari tradisi.
+    </p>
+  </Fragment>
+
+  <Fragment slot="extra">
+    <section class="section" aria-labelledby="tanggal">
+      <h2 id="tanggal">Tanggal {name} {first} dan {last}</h2>
+      <div class="table-scroll" tabindex="0" role="region" aria-label={`Daftar tanggal ${name}`}>
+        <table class="data-table weton-dates">
+          <caption>{dates.length} hari {name}, setiap 35 hari</caption>
+          <thead>
+            <tr>
+              <th scope="col">Tanggal</th>
+              <th scope="col">Tanggal Jawa</th>
+              <th scope="col">Wuku</th>
+              <th scope="col">Hijriah</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              dates.map((d) => (
+                <tr data-iso={d.iso}>
+                  <th scope="row">
+                    <a href={`/id/kalender-jawa/${d.iso.slice(0, 4)}/${BULAN_SLUGS[Number(d.iso.slice(5, 7)) - 1]}/`}>
+                      {tanggalHari(d.iso)}
+                    </a>
+                  </th>
+                  <td>{jawaShort(d.javanese)}</td>
+                  <td>{d.wuku.name}</td>
+                  <td>{hijriShort(d.hijri)}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="jodoh">
+      <h2 id="jodoh">Kecocokan jodoh {name} ({method.short})</h2>
+      <div class="prose">
+        <p>
+          Hasil hitungan {method.short} untuk {name} (neptu {neptu.total}) dengan setiap weton. Metode lain bisa memberi hasil berbeda;
+          untuk melihat semuanya, pilih pasangan di bawah untuk membukanya di kalkulator weton jodoh.
+        </p>
+      </div>
+      <div class="jodoh-groups">
+        {
+          groups.map((g) => (
+            <div class="jodoh-group">
+              <h3>
+                {g.res.label} <span class="jodoh-group__rem">sisa {g.res.remainder}</span>
+              </h3>
+              <p class="calc__fine">{g.res.summary}</p>
+              <ul class="pill-list">
+                {g.partners.map((p) => (
+                  <li>
+                    <a href={jodohHref(p.o)}>
+                      {label(p.o)} ({neptuOfWeton(p.o).total})
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="wuku">
+      <h2 id="wuku">Wuku {name}</h2>
+      <div class="prose">
+        <p>
+          Pawukon berumur 210 hari, tepat enam kali selapan (35 hari), sehingga {name} selalu jatuh di enam wuku yang sama dari 30 wuku:
+        </p>
+      </div>
+      <ul class="pill-list">
+        {
+          wuku.map((x) => (
+            <li>
+              <span>{x}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </Fragment>
+
+  <Fragment slot="disclaimer">
+    <p>{ID_DISCLAIMER.weton}</p>
+  </Fragment>
+</CalculatorLayout>
+
+<script>
+  // Mark the next date of this weton (on the visitor's own clock, WIB) so the page never goes stale.
+  const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Jakarta', year: 'numeric', month: '2-digit', day: '2-digit' }).format(
+    new Date(),
+  );
+  const rows = [...document.querySelectorAll<HTMLTableRowElement>('.weton-dates tr[data-iso]')];
+  const next = rows.find((r) => (r.dataset['iso'] ?? '') >= today);
+  if (next) {
+    const isToday = next.dataset['iso'] === today;
+    next.classList.add('highlight-row');
+    const badge = document.createElement('span');
+    badge.className = 'next-badge';
+    badge.textContent = isToday ? 'hari ini' : 'berikutnya';
+    next.querySelector('th')?.append(' ', badge);
+    const out = document.querySelector('[data-next-weton]');
+    const link = next.querySelector('a');
+    if (out && link) out.textContent = `${isToday ? 'Hari ini, ' : ''}${link.textContent ?? ''}`;
+  }
+</script>

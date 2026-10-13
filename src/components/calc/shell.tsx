@@ -73,6 +73,14 @@ interface ShellProps {
   locale?: UiLocale;
   /** Where the sticky bar's "details" link points (default: the breakdown table). */
   detailsHref?: string;
+  /** Replaces the animated figure when the answer is not a number (e.g. a weton name). */
+  display?: ComponentChildren;
+  /** Text announced and shown in the mobile bar instead of format(headline). */
+  headlineText?: string | undefined;
+  /** aria-label of the form when the generic one for the locale is too vague. */
+  formLabel?: string | undefined;
+  /** Text of the sticky bar's link when "see details" is not accurate (e.g. "see all methods"). */
+  detailsLabel?: string | undefined;
 }
 
 export function CalculatorShell({
@@ -87,9 +95,14 @@ export function CalculatorShell({
   round,
   locale = 'es-mx',
   detailsHref,
+  display,
+  headlineText,
+  formLabel,
+  detailsLabel,
 }: ShellProps) {
   const ui = CALC_UI[locale];
-  const announcement = useAnnouncement(headline === null ? '' : `${resultLabel}: ${format(headline)}`);
+  const text = headline === null ? '' : (headlineText ?? format(headline));
+  const announcement = useAnnouncement(headline === null ? '' : `${resultLabel}: ${text}`);
   // One "calculo" event per page view, the first time a result appears (completion-rate KPI).
   const counted = useRef(false);
   useEffect(() => {
@@ -100,7 +113,7 @@ export function CalculatorShell({
   }, [headline, announcement, tool]);
   return (
     <div class="calc" data-tool={tool}>
-      <form class="calc__form" onSubmit={(e) => e.preventDefault()} aria-label={ui.formLabel} noValidate>
+      <form class="calc__form" onSubmit={(e) => e.preventDefault()} aria-label={formLabel ?? ui.formLabel} noValidate>
         {form}
       </form>
       <section class="calc__result" aria-labelledby={`${tool}-result-title`}>
@@ -112,9 +125,7 @@ export function CalculatorShell({
             <p class="result-head__empty">{empty}</p>
           ) : (
             <>
-              <p class="result-head__amount">
-                <AnimatedNumber value={headline} format={format} round={round} />
-              </p>
+              <p class="result-head__amount">{display ?? <AnimatedNumber value={headline} format={format} round={round} />}</p>
               {headlineNote ? <p class="result-head__note">{headlineNote}</p> : null}
             </>
           )}
@@ -126,9 +137,9 @@ export function CalculatorShell({
       </section>
       <div class="result-bar" aria-hidden={headline === null ? 'true' : undefined}>
         <span class="result-bar__label">{resultLabel}</span>
-        <span class="result-bar__amount">{headline === null ? '—' : format(headline)}</span>
+        <span class="result-bar__amount">{headline === null ? '—' : text}</span>
         <a class="result-bar__link" href={detailsHref ?? `#${tool}-desglose`} tabIndex={headline === null ? -1 : undefined}>
-          {ui.seeDetails}
+          {detailsLabel ?? ui.seeDetails}
         </a>
       </div>
     </div>

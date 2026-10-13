@@ -1,6 +1,11 @@
-# Launch checklist — MX-01 (es-MX payroll suite) and BR-01 (pt-BR land units)
+# Launch checklists
 
-Sections 1–6 cover MX-01; section 7 covers BR-01.
+- [MX-01 — es-MX payroll-payout suite](#launch-checklist--mx-01-es-mx-payroll-payout-suite) (sections 1–6)
+- [BR-01 — pt-BR land-unit converter](#7-br-01--pt-br-land-unit-converter-pt-br) (section 7)
+- [ID-01 — weton and kalender Jawa (/id/)](#launch-checklist--id-01-weton-and-kalender-jawa-id) — **deadline: kalender Jawa
+  2027 live and indexable by 15 November 2026**
+
+# Launch checklist — MX-01 (es-MX payroll-payout suite)
 
 Status on 13 Oct 2026: the site builds, `npm run check` passes and every page meets the CLAUDE.md
 budgets, but **it must not go live until the blocking items below are done**. Aguinaldo demand
@@ -112,6 +117,11 @@ versions the day they are published (target SLA: 24–72 h, per docs/research/RE
    the first run. If the visual snapshots differ only because CI's Chromium is newer than the one
    that produced the baselines, run the workflow manually with "update snapshots" and commit the
    artifact (see §6).
+   **🔴 Seen on 13 Oct 2026:** every `npm run check` job on the first three PRs ended in ~3 s with
+   *no runner assigned* (`runner_id: 0`, no steps, no log), so CI has never actually run. That is a
+   GitHub Actions account/repo problem (billing or spending limit, or an Actions policy), not a code
+   failure. Open the run page and read the annotation at the top, fix it, then re-run. Until then
+   the local `npm run check` is the only quality gate.
 5. **Analytics (🟡).** Only cookieless and self-hosted: deploy Umami or Plausible behind the same
    origin (e.g. a Cloudflare route to `/stats/script.js`) and set `PUBLIC_ANALYTICS_SCRIPT_URL`
    (must start with `/`) and `PUBLIC_ANALYTICS_WEBSITE_ID`. Events sent: `calculo`, `copiar`,
@@ -267,3 +277,105 @@ todos"), tarefa rows 66 (AL, SE: hectare column misprinted 0,03) and 67 (CE), qu
 6. Geo-located SERP check on google.com.br for the same five terms (REPORT.md "validate before
    development") and Keyword Planner volume for "preço do alqueire" before building the price page.
 7. Bing Webmaster Tools: re-import from Search Console.
+
+---
+
+# Launch checklist — ID-01 (weton and kalender Jawa, /id/)
+
+Status on 13 Oct 2026: 65 pages build, `npm run check` passes for /id/ and /es-mx/ (see the report in
+the PR/commit), the engine has 38 golden dates with ≥ 2 sources each. Unlike MX-01 these pages give no
+legal or tax figures, so the **only hard blockers are the deploy itself and Search Console**; the
+verification items below can follow launch, but the pages already say "menunggu" (pending) until they
+are done. Demand for *kalender jawa 2027* starts in December: get the pages indexed by mid-November.
+
+## ID-1. Deploy and index (🔴 blocking, by 15 Nov 2026)
+
+1. Deploy the branch to production (same Cloudflare Pages project; `SITE_URL` set — see MX-01 §3).
+2. **Search Console**: add a **URL-prefix property for `https://<domain>/id/`** (the research recommends
+   one property per locale folder; the Domain property from MX-01 also covers it).
+3. Submit `https://<domain>/sitemap.xml` (it now lists the 65 /id/ URLs with hreflang id-ID and their
+   own `lastmod`).
+4. **Request indexing** (URL Inspection → Request indexing), in this order, within the daily quota:
+   1. `/id/kalender-jawa/2027/` (deadline page), then `/id/kalender-jawa/2027/januari/` … `/desember/`
+   2. `/id/weton/`, `/id/weton/hari-ini/`, `/id/weton/jodoh/`, `/id/kalender-jawa/2026/`
+   3. the 35 `/id/weton/{hari}-{pasaran}/` pages (they are linked from every weton page, so crawling
+      also finds them)
+5. Live-test one URL: canonical = production URL; hreflang `id-ID` + `x-default`; rendered HTML shows
+   the weton of *today* in "Weton hari ini" (the page recomputes it on the device).
+6. Enhancements: FAQ and Breadcrumbs should validate on the /id/ pages.
+7. Bing Webmaster Tools: import from Search Console.
+8. Track REPORT.md §E KPIs for the 5 heads: *hitung weton*, *hitung weton jawa*, *hitung weton jodoh*,
+   *weton hari ini*, *kalender jawa 2026* (and *kalender jawa 2027* from December).
+
+## ID-2. Daily rebuild (🟡 at launch)
+
+`Weton hari ini`, the "berikutnya" marks on weton pages and the "today" cell of the calendars are
+recomputed in the visitor's browser, so they are never stale. To also refresh the static HTML that
+crawlers see, create a **Cloudflare Pages deploy hook** and store its URL as the GitHub repository
+secret **`CF_PAGES_DEPLOY_HOOK`**: `.github/workflows/daily-rebuild.yml` calls it at 00:05 WIB.
+
+## ID-3. Cultural review (🟡 before promotion)
+
+Ask a specialist in Javanese calendrics (penanggalan Jawa: e.g. a lecturer in Javanese literature or a
+keraton abdi dalem who keeps the calendar) to review `src/data/parameters/id/weton-methods.json`, the
+engine rules and the copy. Record them in `src/data/reviews.json` under `id.weton`, `id.weton.jodoh`,
+`id.weton.hari-ini` and `id.kalender`; the badge "Tinjauan ahli penanggalan Jawa: menunggu" changes
+by itself. Questions:
+
+1. **Kurup**: Asapon since 1 Suro 1867 (24 Mar 1936), Anenhing from 26 Aug 2052 (we derive the day
+   from the kurup name; sources print 25, 26 or 27 Aug). Confirm, and whether the keraton has
+   announced the 2052 switch.
+2. **Leap years** Ehe, Dal, Jimakir; the shortened Besar at the kurup change. Confirm.
+3. **Windu**: Adi → Kuntara → Sangara → Sancaya, with 1955–1962 J in Sancaya. Confirm, and supply the
+   *lambang* (Langkir/Kulawu) rule if it should be shown (not shown today: no source found).
+4. **Jodoh methods**: sisa 8 as default (most cited); sisa 7 order (Satriya Wirang at 5, Lebu Katiup
+   Angin at 7); sisa 5 (Sri, Dana, Lara, Pati, Lungguh) and its remainder-0 rule; sisa 4 spellings.
+   Can you supply the full **sisa 9 per-person** table from Betaljemur Adammakna? (Not implemented.)
+5. **Pangarasan**: which list is authoritative for neptu 10, 11, 14–17? (See PLAN.md conflicts.)
+6. **Keblat** colours/directions per pasaran; Kliwon "manca warna".
+7. Wording of the disclaimer ("tradisi budaya, bukan ramalan pasti") and of the Pati/Punggel/Pegat
+   descriptions.
+8. Should "lahir setelah magrib" use the next day's weton by default? (Today: we compute the Gregorian
+   date and explain the custom in the FAQ.)
+
+## ID-4. Data still `verified: false` (🟡, values shown with their source and state)
+
+The build environment could not open detik.com, kemenag.go.id, setneg.go.id or the other sources (egress
+policy), so every value was cross-checked through search-result summaries of two or more sources but
+**none was read from the primary document**. Regenerate with `npm run params:report -- --unverified`.
+
+| File (`src/data/parameters/id/`) | What to check | Where |
+|---|---|---|
+| `hijri-kemenag.json` 1447 (Rajab → Zulhijah) | each month start | *Kalender Hijriah Indonesia 2026* (Kemenag Bimas Islam PDF); isbat press releases for Ramadan (19 Feb), Syawal (21 Mar), Zulhijah (18 May) |
+| `hijri-kemenag.json` 1448 | Muharam–Rajab from the 2026 calendar; **Syakban (9 Jan) and Ramadan (8 Feb) 2027 are estimates**; **Zulkaidah 1448 is unknown (we use 8 Apr 2027, hisab urfi)** | *Kalender Hijriah Indonesia 2027* (released, per detik) |
+| `hijri-kemenag.json` 1449 | Muharam (6 Jun), Rabiulawal (4 Aug), Rajab (30 Nov) follow the SKB; **Safar, Rabiulakhir, Jumadilawal, Jumadilakhir and Syakban are estimates** from the global calendar | *Kalender Hijriah Indonesia 2027* |
+| `hari-libur.json` 2026 | 17 libur, 8 cuti | SKB No. 1497/2/5 Tahun 2025 (PDF from Kemenko PMK / Kemnaker) |
+| `hari-libur.json` 2027 | 18 libur, 8 cuti; Iduladha 17 May and Waisak 20 May (two outlets only); Isra Mikraj twice (5 Jan, 26 Dec) | SKB 2027 (signed 15 Sep 2026) |
+| `weton-methods.json` | neptu table, the four jodoh tables, keblat, pangarasan | Kitab Primbon Betaljemur Adammakna (print); see ID-3 |
+
+Where a month start is an estimate, every affected day is printed with "≈" on the pages and the dialog
+says "perkiraan; menunggu ketetapan Kemenag". When you confirm a month, set its `basis` to
+`kalender-kemenag` (or `isbat`) and the "≈" disappears. Run `npm test` after every change: the table
+must stay consecutive with 29/30-day months.
+
+## ID-5. Every year (🔴 calendar duty)
+
+- **September–October 2027: publish `/id/kalender-jawa/2028/`** before the December demand. Steps:
+  1. add `2028` to `KALENDER_YEARS` in `src/content/id/meta.ts` (routes, sitemap, OG, header follow);
+  2. extend `hijri-kemenag.json` to cover 2028 (1449 Ramadan → 1450 Syakban) from *Kalender Hijriah
+     Indonesia 2028*;
+  3. add the SKB 2028 holidays to `hari-libur.json` (usually signed in September);
+  4. add golden dates for 2028 (1 Suro 1962 is computed as Kamis Pon, 25 May 2028 — confirm
+     against Kemenag) and run `npm run check`;
+  5. capture screenshots (`npm run screenshots -- id-01`), request indexing for the new pages.
+- January: confirm the year's Ramadan/Syawal/Zulhijah isbat dates and flip them to `isbat`.
+- Keep 2026 online after it ends (people look up past dates); consider dropping it from the header nav.
+
+## ID-6. Policy and product (🟡)
+
+- **Ads**: the pages are framed as tradition ("tradisi/budaya, bukan kepastian"), with no paid readings.
+  Before enabling ads, check AdSense's policy for astrology/esoteric content and keep ad slots off the
+  jodoh result (REPORT.md validation item).
+- **Privacy notice** in Bahasa Indonesia (UU PDP No. 27/2022): no data is stored server-side; shared
+  links contain the dates typed.
+- **Error reports**: a contact for wrong dates (REPORT.md KPI "error reports per 1,000 uses").

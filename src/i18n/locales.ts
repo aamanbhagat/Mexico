@@ -1,5 +1,5 @@
 /**
- * Locale registry. One folder per locale (`/es-mx/`, `/pt-br/`…).
+ * Locale registry. One folder per locale (`/es-mx/`, `/id/`, `/pt-br/`…).
  * A locale is only built, linked, listed in the sitemap and emitted in hreflang
  * when `published` is true. Everything else is defined so routes, formatting and
  * hreflang codes are ready the day a market launches.
@@ -33,7 +33,7 @@ export const LOCALES = {
     currency: 'IDR',
     country: 'ID',
     name: 'Bahasa Indonesia',
-    published: false,
+    published: true,
   },
   ja: {
     code: 'ja',

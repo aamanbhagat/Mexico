@@ -7,13 +7,20 @@
  */
 import type { LocaleCode } from './locales';
 
-export type UiLocale = Extract<LocaleCode, 'es-mx' | 'pt-br'>;
+export type UiLocale = Extract<LocaleCode, 'es-mx' | 'pt-br' | 'id'>;
+
+/** Which kind of review a page waits for: legal (labour/tax/pension), technical or a domain expert. */
+export type ReviewKind = 'legal' | 'technical' | 'expert';
 
 export interface SiteStrings {
   skipLink: string;
+  /** id of <main>, the skip link's target: a native word, stable per locale (es-MX keeps "contenido"). */
+  mainId: string;
   home: string;
   homeAria: (brand: string) => string;
   nav: string;
+  /** aria-label of the header navigation. */
+  mainNav: string;
   themeToDark: string;
   themeToLight: string;
   themeTitle: string;
@@ -27,7 +34,7 @@ export interface SiteStrings {
   disclaimerTitle: string;
   exampleSource: string;
   openExample: string;
-  reviewPending: { legal: string; technical: string };
+  reviewPending: Record<ReviewKind, string>;
   reviewedBy: (who: string, credentials: string | null, date: string) => string;
   sourceMeta: {
     effectiveFrom: string;
@@ -36,14 +43,18 @@ export interface SiteStrings {
     pending: string;
   };
   otherCountries: string;
+  /** schema.org WebApplication.browserRequirements. */
+  browserRequirements: string;
 }
 
 export const SITE_UI: Record<UiLocale, SiteStrings> = {
   'es-mx': {
     skipLink: 'Saltar al contenido',
+    mainId: 'contenido',
     home: 'Inicio',
     homeAria: (brand) => `${brand}, inicio`,
     nav: 'Calculadoras',
+    mainNav: 'Principal',
     themeToDark: 'Cambiar a tema oscuro',
     themeToLight: 'Cambiar a tema claro',
     themeTitle: 'Cambiar tema',
@@ -57,7 +68,11 @@ export const SITE_UI: Record<UiLocale, SiteStrings> = {
     disclaimerTitle: 'Aviso importante',
     exampleSource: 'Fuente:',
     openExample: 'Abrir en la calculadora',
-    reviewPending: { legal: 'Revisión legal: pendiente', technical: 'Revisión técnica: pendiente' },
+    reviewPending: {
+      legal: 'Revisión legal: pendiente',
+      technical: 'Revisión técnica: pendiente',
+      expert: 'Revisión de especialista: pendiente',
+    },
     reviewedBy: (who, credentials, date) => `Revisado por ${who}${credentials ? `, ${credentials}` : ''} el ${date}`,
     sourceMeta: {
       effectiveFrom: 'vigente desde el',
@@ -66,12 +81,15 @@ export const SITE_UI: Record<UiLocale, SiteStrings> = {
       pending: 'verificación contra el documento oficial pendiente',
     },
     otherCountries: 'Otros países',
+    browserRequirements: 'Requiere JavaScript para recalcular en vivo.',
   },
   'pt-br': {
     skipLink: 'Pular para o conteúdo',
+    mainId: 'conteudo',
     home: 'Início',
     homeAria: (brand) => `${brand}, início`,
     nav: 'Ferramentas',
+    mainNav: 'Principal',
     themeToDark: 'Mudar para o tema escuro',
     themeToLight: 'Mudar para o tema claro',
     themeTitle: 'Mudar tema',
@@ -85,7 +103,11 @@ export const SITE_UI: Record<UiLocale, SiteStrings> = {
     disclaimerTitle: 'Aviso importante',
     exampleSource: 'Fonte:',
     openExample: 'Abrir no conversor',
-    reviewPending: { legal: 'Revisão jurídica: pendente', technical: 'Revisão técnica: pendente' },
+    reviewPending: {
+      legal: 'Revisão jurídica: pendente',
+      technical: 'Revisão técnica: pendente',
+      expert: 'Revisão de especialista: pendente',
+    },
     reviewedBy: (who, credentials, date) => `Revisado por ${who}${credentials ? `, ${credentials}` : ''} em ${date}`,
     sourceMeta: {
       effectiveFrom: 'vigente desde',
@@ -94,6 +116,42 @@ export const SITE_UI: Record<UiLocale, SiteStrings> = {
       pending: 'conferência no documento original pendente',
     },
     otherCountries: 'Outros países',
+    browserRequirements: 'Requer JavaScript para converter em tempo real.',
+  },
+  id: {
+    skipLink: 'Langsung ke isi',
+    mainId: 'isi',
+    home: 'Beranda',
+    homeAria: (brand) => `${brand}, beranda`,
+    nav: 'Alat hitung',
+    mainNav: 'Menu utama',
+    themeToDark: 'Ganti ke tema gelap',
+    themeToLight: 'Ganti ke tema terang',
+    themeTitle: 'Ganti tema',
+    breadcrumbs: 'Navigasi lokasi halaman',
+    updatedOn: 'Diperbarui',
+    howTitle: 'Cara menghitung',
+    examplesTitle: 'Contoh perhitungan',
+    faqTitle: 'Pertanyaan yang sering diajukan',
+    sourcesTitle: 'Sumber dan metode',
+    relatedTitle: 'Alat lainnya',
+    disclaimerTitle: 'Catatan penting',
+    exampleSource: 'Sumber:',
+    openExample: 'Buka di kalkulator',
+    reviewPending: {
+      legal: 'Tinjauan hukum: menunggu',
+      technical: 'Tinjauan teknis: menunggu',
+      expert: 'Tinjauan ahli penanggalan Jawa: menunggu',
+    },
+    reviewedBy: (who, credentials, date) => `Ditinjau oleh ${who}${credentials ? `, ${credentials}` : ''} pada ${date}`,
+    sourceMeta: {
+      effectiveFrom: 'berlaku sejak',
+      retrievedOn: 'diakses',
+      verified: 'sudah dicocokkan dengan sumber asli',
+      pending: 'belum dicocokkan dengan dokumen asli',
+    },
+    otherCountries: 'Negara lain',
+    browserRequirements: 'Perlu JavaScript untuk menghitung langsung di perangkat.',
   },
 };
 
@@ -138,6 +196,22 @@ export const CALC_UI: Record<UiLocale, CalcStrings> = {
       pdf: 'PDF baixado',
       print: 'Abrindo a impressão',
       error: 'Não foi possível concluir. Tente de novo.',
+    },
+  },
+  id: {
+    formLabel: 'Data untuk menghitung',
+    seeDetails: 'Lihat detail',
+    copy: 'Salin',
+    share: 'Bagikan',
+    pdf: 'Unduh PDF',
+    print: 'Cetak',
+    feedback: {
+      copied: 'Ringkasan disalin',
+      shared: 'Siap dibagikan',
+      link: 'Tautan disalin',
+      pdf: 'PDF diunduh',
+      print: 'Membuka jendela cetak',
+      error: 'Gagal. Coba lagi.',
     },
   },
 };

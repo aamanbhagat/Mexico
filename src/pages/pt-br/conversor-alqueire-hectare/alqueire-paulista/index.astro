@@ -79,7 +79,7 @@ const faq: FaqItem[] = [
   faq={faq}
   sourceItems={landSourceItems(['alqueire-paulista', 'alqueire-mineiro', 'litro', 'acre', 'ha'])}
   extraSources={OFFICIAL_DOC_SOURCES}
-  parent={{ name: 'Conversor de alqueire em hectare', path: HUB }}
+  parents={[{ name: 'Conversor de alqueire em hectare', path: HUB }]}
 >
   <LandConverter client:load preset={preset} />
 

@@ -37,10 +37,11 @@ const ogLocale = loc.hreflang.replace('-', '_');
 const ui = siteUi(locale);
 // Analytics only from our own origin (a proxied, self-hosted Umami/Plausible), never a third party.
 const analyticsSrc = SITE.analyticsScriptUrl.startsWith('/') ? SITE.analyticsScriptUrl : '';
+const mainId = ui.mainId;
 ---
 
 <!doctype html>
-<html lang={loc.htmlLang} data-direction={direction}>
+<html lang={loc.htmlLang} data-locale={locale} data-direction={direction}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -91,9 +92,9 @@ const analyticsSrc = SITE.analyticsScriptUrl.startsWith('/') ? SITE.analyticsScr
     <slot name="head" />
   </head>
   <body data-tool={tool}>
-    <a class="skip-link" href="#contenido">{ui.skipLink}</a>
+    <a class="skip-link" href={`#${mainId}`}>{ui.skipLink}</a>
     <SiteHeader locale={locale} />
-    <main id="contenido" tabindex="-1">
+    <main id={mainId} tabindex="-1">
       <slot />
     </main>
     <SiteFooter locale={locale} pageKey={noindex ? undefined : pageKey} />

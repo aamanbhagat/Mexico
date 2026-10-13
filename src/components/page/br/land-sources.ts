@@ -5,7 +5,7 @@
 import type { SourceItem } from '../Sources.astro';
 import { BR_LAND } from '../../../lib/params/br';
 import { KIND_LABEL } from '../../../content/pt-br/land-text';
-import { formatDateLongIn } from '../../../lib/ui/format';
+import { formatDateLong } from '../../../lib/ui/format';
 
 /** Always cited: the primary table, the 1948 publication to check against, the legal units. */
 const ALWAYS = ['inda-1966', 'ibge-1948', 'inmetro-qgum'];
@@ -25,7 +25,7 @@ export function landSourceItems(unitIds: string[]): SourceItem[] {
     return {
       title: s.title,
       url: s.url,
-      meta: `${KIND_LABEL[s.kind]}, consultado em ${formatDateLongIn(s.retrieved_on, 'pt-BR')}, ${read}${s.notes ? `. ${s.notes}` : ''}`,
+      meta: `${KIND_LABEL[s.kind]}, consultado em ${formatDateLong(s.retrieved_on, 'pt-BR')}, ${read}${s.notes ? `. ${s.notes}` : ''}`,
       verified: s.opened,
     };
   });

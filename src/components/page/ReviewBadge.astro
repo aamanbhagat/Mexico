@@ -3,11 +3,12 @@ import type { PageKey } from '../../i18n/routes';
 import type { LocaleCode } from '../../i18n/locales';
 import { siteUi } from '../../i18n/ui';
 import { reviewFor } from '../../lib/reviews';
-import { formatDateLongIn } from '../../lib/ui/format';
+import { formatDateLong } from '../../lib/ui/format';
 import { getLocale } from '../../i18n/locales';
 
 interface Props {
-  pageKey: PageKey;
+  /** Page (or page family, e.g. "id.weton") whose review state is shown. */
+  pageKey: PageKey | string;
   locale?: LocaleCode | undefined;
 }
 const { pageKey, locale = 'es-mx' } = Astro.props;
@@ -18,7 +19,7 @@ const ui = siteUi(locale);
 {
   review.status === 'reviewed' ? (
     <span class="badge badge--reviewed">
-      {ui.reviewedBy(review.reviewer as string, review.credentials, formatDateLongIn(review.reviewed_on as string, getLocale(locale).intl))}
+      {ui.reviewedBy(review.reviewer as string, review.credentials, formatDateLong(review.reviewed_on as string, getLocale(locale).intl))}
     </span>
   ) : (
     <span class="badge badge--pending">{ui.reviewPending[review.kind ?? 'legal']}</span>

@@ -1,0 +1,30 @@
+name: Daily rebuild
+
+# "Weton hari ini" and the "today" marks on the /id/ pages are recomputed in the browser, so they are
+# never stale. This daily rebuild also refreshes the static HTML (what crawlers and no-JS visitors
+# see) just after midnight in Jakarta. It needs a Cloudflare Pages deploy hook URL stored as the
+# repository secret CF_PAGES_DEPLOY_HOOK (see docs/LAUNCH_CHECKLIST.md); without it the job is a no-op.
+
+on:
+  schedule:
+    - cron: '5 17 * * *' # 00:05 WIB (UTC+7)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Trigger the Cloudflare Pages deploy hook
+        env:
+          HOOK: ${{ secrets.CF_PAGES_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "CF_PAGES_DEPLOY_HOOK is not set: skipping (pages still refresh on the client)."
+            exit 0
+          fi
+          curl -fsS -X POST "$HOOK" > /dev/null
+          echo "Deploy triggered."

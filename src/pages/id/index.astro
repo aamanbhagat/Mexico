@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StationIcon from '../../components/page/StationIcon.astro';
+import HariIni from '../../components/weton/HariIni';
+import { absoluteUrl, SITE } from '../../config/site';
+import { BUILD_DAY, UPDATED } from '../../content/id/meta';
+import { formatDateLong } from '../../lib/ui/format';
+import { newYearJdn, isoFromJdn } from '../../lib/calendar/javanese';
+import { tanggal } from '../../components/weton/copy';
+import { toolsFor } from '../../i18n/tools';
+import { pathFor } from '../../i18n/routes';
+
+const suro1960 = isoFromJdn(newYearJdn(1960));
+const suro1961 = isoFromJdn(newYearJdn(1961));
+
+const tools = toolsFor('id').map((t) => ({ href: pathFor(t.key, 'id'), tool: t.tool, icon: t.icon, name: t.name, what: t.what }));
+
+const jsonLd = [
+  { '@context': 'https://schema.org', '@type': 'WebSite', name: SITE.name, url: absoluteUrl('/id/'), inLanguage: 'id-ID' },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: tools.map((t, i) => ({ '@type': 'ListItem', position: i + 1, name: t.name, url: absoluteUrl(t.href) })),
+  },
+];
+---
+
+<BaseLayout
+  title="Weton dan Kalender Jawa 2026–2027: Cek Weton, Jodoh, Hari Ini"
+  description="Cek weton dan neptu dari tanggal lahir, hitung weton jodoh dengan semua metode primbon, lihat weton hari ini, dan kalender Jawa 2026–2027 lengkap dengan pasaran."
+  locale="id"
+  pageKey="home"
+  path="/id/"
+  ogSlug="id/weton"
+  jsonLd={jsonLd}
+  tool="weton"
+>
+  <div class="wrap">
+    <header class="hero home-hero">
+      <h1>Weton dan kalender Jawa, dengan cara hitung yang terbuka</h1>
+      <p class="hero__lede">
+        Hitung weton, neptu dan kecocokan jodoh dari tanggal lahir, atau lihat kalender Jawa lengkap dengan pasaran, tanggal Jawa dan
+        tanggal Hijriah versi Kemenag. Setiap hasil menyebut metode dan sumbernya.
+      </p>
+      <p class="hero__meta"><span>Diperbarui <time datetime={UPDATED}>{formatDateLong(UPDATED, 'id-ID')}</time></span></p>
+    </header>
+
+    <section class="home-today" aria-labelledby="hari-ini">
+      <h2 id="hari-ini" class="home-today__label">Hari ini</h2>
+      <HariIni client:load buildDay={BUILD_DAY} compact />
+    </section>
+
+    <nav aria-labelledby="alat">
+      <h2 id="alat" class="sr-only">Alat dan kalender</h2>
+      <ol class="line-map">
+        {
+          tools.map((t) => (
+            <li data-tool={t.tool}>
+              <a href={t.href}>
+                <StationIcon tool={t.icon} />
+                <span class="line-map__text">
+                  <span class="line-map__name">{t.name}</span>
+                  <span class="line-map__what">{t.what}</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+
+    <section class="section" aria-labelledby="kenapa">
+      <h2 id="kenapa">Kenapa hasil di sini bisa diperiksa</h2>
+      <div class="prose">
+        <p>
+          Situs weton sering memberi hasil berbeda untuk tanggal yang sama, tanpa menjelaskan sebabnya. Kami menulis aturan yang kami pakai
+          dan dari mana asalnya:
+        </p>
+        <ul>
+          <li>
+            <strong>Tanggal Jawa</strong> dihitung dengan aturan kalender Sultan Agung (kurup Asapon), sama seperti kalender Kementerian Agama:
+            1 Suro 1960 jatuh {tanggal(suro1960)}, 1 Suro 1961 jatuh {tanggal(suro1961)}.
+          </li>
+          <li>
+            <strong>Tanggal Hijriah</strong> mengikuti awal bulan dari Kemenag (Kalender Hijriah Indonesia dan sidang isbat); yang belum ditetapkan
+            diberi tanda ≈.
+          </li>
+          <li>
+            <strong>Weton jodoh</strong> menampilkan semua metode yang sumbernya bisa kami tunjukkan, bukan satu metode yang dipilih diam-diam.
+          </li>
+          <li>
+            <strong>Privasi</strong>: tanggal lahir dihitung di perangkatmu dan tidak dikirim ke server. Tanpa daftar, tanpa cookie pelacak.
+          </li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

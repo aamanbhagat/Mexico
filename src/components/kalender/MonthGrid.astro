@@ -1,0 +1,126 @@
+---
+/**
+ * One month of the Javanese calendar as a table (Minggu first, Sundays and holidays in red as on
+ * Indonesian printed calendars). Each day is a button: the calendar script opens a detail dialog.
+ * Screen readers hear the full day ("Selasa 13 Oktober 2026, Pon, 1 Jumadilawal 1960, …").
+ */
+import { DINA } from '../../lib/calendar/javanese';
+import type { MonthModel } from '../../lib/weton/kalender';
+import { jawaMarkerOf } from '../../lib/weton/kalender';
+import { BULAN, BULAN_SLUGS } from '../../content/id/meta';
+
+interface Props {
+  model: MonthModel;
+  /** Heading level of the month name. */
+  level?: 2 | 3;
+  /** Large cells for the month pages. */
+  size?: 'year' | 'month';
+  /** Link the month name to its page. */
+  linkMonth?: boolean;
+}
+const { model, level = 2, size = 'year', linkMonth = true } = Astro.props;
+const slug = BULAN_SLUGS[model.month - 1] as string;
+const name = `${BULAN[model.month - 1]} ${model.year}`;
+const H = level === 2 ? 'h2' : 'h3';
+const headId = `${slug}-${model.year}-judul`;
+const short = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+/** What a screen reader says for a day: one clean sentence instead of the visual fragments. */
+function spoken(d: (typeof model.days)[number]): string {
+  const extra = [...d.holidays.map((h) => h.name), jawaMarkerOf(d)].filter(Boolean);
+  return [
+    `${d.weton.dina} ${Number(d.iso.slice(8))} ${name}, ${d.weton.pasaran}`,
+    `tanggal Jawa ${d.javanese.day} ${d.javanese.monthName} ${d.javanese.year}`,
+    `Hijriah ${d.hijri.approx ? 'kira-kira ' : ''}${d.hijri.day} ${d.hijri.monthName} ${d.hijri.year}`,
+    ...extra,
+  ].join(', ');
+}
+---
+
+<section class={`kal-month kal-month--${size}`} id={slug} aria-labelledby={headId}>
+  <header class="kal-month__head">
+    {/* On a month page the h1 already names the month: keep the heading for screen readers only. */}
+    <H id={headId} class:list={['kal-month__name', { 'sr-only': size === 'month' }]}>
+      {linkMonth ? <a href={`/id/kalender-jawa/${model.year}/${slug}/`}>{name}</a> : name}
+    </H>
+    <p class="kal-month__span">
+      <span>Jawa: {model.javanese.text}</span>
+      <span>Hijriah: {model.hijri.text}</span>
+    </p>
+  </header>
+  <table class="kal-grid">
+    <caption class="sr-only">Kalender Jawa {name}: tanggal, pasaran, tanggal Jawa dan tanggal Hijriah</caption>
+    <thead>
+      <tr>
+        {
+          DINA.map((d, i) => (
+            <th scope="col" abbr={d} class={i === 0 ? 'kal-red' : undefined}>
+              <span aria-hidden="true">{short[i]}</span>
+              <span class="sr-only">{d}</span>
+            </th>
+          ))
+        }
+      </tr>
+    </thead>
+    <tbody>
+      {
+        model.weeks.map((week) => (
+          <tr>
+            {week.map((d) =>
+              d ? (
+                <td
+                  class:list={[
+                    'kal-day',
+                    {
+                      'kal-red': d.red,
+                      'kal-day--libur': d.holidays.length > 0,
+                      'kal-day--jstart': d.javanese.day === 1,
+                      'kal-day--kliwon': d.weton.pasaran === 'Kliwon',
+                    },
+                  ]}
+                  data-iso={d.iso}
+                >
+                  <button type="button" class="kal-day__btn">
+                    <span class="sr-only">{spoken(d)}</span>
+                    <span class="kal-day__n" aria-hidden="true">
+                      {Number(d.iso.slice(8))}
+                    </span>
+                    <span class="kal-day__pasaran" aria-hidden="true">
+                      {d.weton.pasaran}
+                    </span>
+                    <span class="kal-day__jawa" aria-hidden="true">
+                      {d.javanese.day}
+                      {d.javanese.day === 1 && <span class="kal-day__mname"> {d.javanese.monthName}</span>}
+                    </span>
+                    <span class="kal-day__hijri" aria-hidden="true">
+                      {d.hijri.approx ? '≈' : ''}
+                      {d.hijri.day}
+                    </span>
+                  </button>
+                </td>
+              ) : (
+                <td class="kal-day kal-day--empty" />
+              ),
+            )}
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+  {
+    (model.holidays.length > 0 || model.jawaStarts.length > 0) && (
+      <ul class="kal-notes">
+        {model.holidays.map(({ day, holiday }) => (
+          <li class={holiday.kind === 'libur' ? 'kal-notes__libur' : 'kal-notes__cuti'}>
+            <span class="kal-notes__d">{Number(day.iso.slice(8))}</span> {holiday.name}
+          </li>
+        ))}
+        {model.jawaStarts.map((day) => (
+          <li class="kal-notes__jawa">
+            <span class="kal-notes__d">{Number(day.iso.slice(8))}</span> 1 {day.javanese.monthName} {day.javanese.year} ({day.weton.dina}{' '}
+            {day.weton.pasaran})
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</section>

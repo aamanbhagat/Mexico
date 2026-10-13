@@ -9,9 +9,21 @@ import { BR_LAND } from '../lib/params/br';
 import { formatRational } from '../lib/land-units/number';
 import { convertArea } from '../lib/land-units/convert';
 import { rat } from '../lib/land-units/rational';
+import { KALENDER_YEARS } from '../content/id/meta';
 
 /** Line color (data-tool) of a page. */
-export type Tool = 'aguinaldo' | 'finiquito' | 'liquidacion' | 'prima-vacacional' | 'vacaciones' | 'uma' | 'terra';
+export type Tool =
+  | 'aguinaldo'
+  | 'finiquito'
+  | 'liquidacion'
+  | 'prima-vacacional'
+  | 'vacaciones'
+  | 'uma'
+  | 'terra'
+  | 'weton'
+  | 'jodoh'
+  | 'kalender'
+  | 'hari-ini';
 /** Pictogram drawn in the station icon; defaults to the tool. */
 export type Pictogram = Tool | 'alqueire' | 'hectare' | 'tarefa' | 'litro';
 
@@ -164,6 +176,40 @@ export const TOOLS: Record<UiLocale, ToolEntry[]> = {
       label: 'Litro de terra em m²',
       what: `${brM2('litro')} m² por litro, e quantos litros cabem em cada alqueire.`,
     },
+  ],
+  id: [
+    {
+      key: 'id.weton',
+      tool: 'weton',
+      icon: 'weton',
+      name: 'Cek weton',
+      label: 'Cek weton',
+      what: 'Weton, neptu, wuku, tanggal Jawa dan Hijriah dari tanggal lahir.',
+    },
+    {
+      key: 'id.weton.jodoh',
+      tool: 'jodoh',
+      icon: 'jodoh',
+      name: 'Weton jodoh',
+      label: 'Weton jodoh',
+      what: 'Hasil sisa 8, 7, 5 dan 4 sekaligus, dengan sumber setiap metode.',
+    },
+    {
+      key: 'id.weton.hari-ini',
+      tool: 'hari-ini',
+      icon: 'hari-ini',
+      name: 'Weton hari ini',
+      label: 'Weton hari ini',
+      what: 'Pasaran dan tanggal Jawa hari ini, besok dan tujuh hari ke depan.',
+    },
+    ...KALENDER_YEARS.map((y) => ({
+      key: `id.kalender.${y}` as const,
+      tool: 'kalender' as const,
+      icon: 'kalender' as const,
+      name: `Kalender Jawa ${y}`,
+      label: `Kalender Jawa ${y}`,
+      what: `Setiap tanggal ${y} dengan pasaran, tanggal Jawa, Hijriah Kemenag dan hari libur. Bisa dicetak.`,
+    })),
   ],
 };
 

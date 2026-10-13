@@ -5,17 +5,19 @@
  */
 import type { LocaleCode } from '../../i18n/locales';
 import { siteUi } from '../../i18n/ui';
+import InlineList from './InlineList.astro';
 
 interface Props {
   title: string;
   story: string;
   rows: { label: string; value: string }[];
-  source: { label: string; url: string };
-  href?: string;
+  source: { label: string; url: string } | { label: string; url: string }[];
+  href?: string | undefined;
   locale?: LocaleCode | undefined;
 }
 const { title, story, rows, source, href, locale = 'es-mx' } = Astro.props;
 const ui = siteUi(locale);
+const sources = Array.isArray(source) ? source : [source];
 ---
 
 <article class="example">
@@ -32,8 +34,18 @@ const ui = siteUi(locale);
     }
   </dl>
   <p class="example__source">
-    {ui.exampleSource}
-    <a href={source.url} rel="noopener" target="_blank">{source.label}</a>
+    {ui.exampleSource}{' '}
+    <InlineList sep="semicolon"
+      >{
+        sources.map((s) => (
+          <span>
+            <a href={s.url} rel="noopener" target="_blank">
+              {s.label}
+            </a>
+          </span>
+        ))
+      }</InlineList
+    >
     {
       href && (
         <>

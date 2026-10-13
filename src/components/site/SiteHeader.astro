@@ -4,6 +4,7 @@ import { pathFor } from '../../i18n/routes';
 import { SITE } from '../../config/site';
 import ThemeToggle from './ThemeToggle.astro';
 import { siteUi } from '../../i18n/ui';
+import { BUILD_DAY, KALENDER_YEARS } from '../../content/id/meta';
 
 interface Props {
   locale: LocaleCode;
@@ -11,6 +12,16 @@ interface Props {
 const { locale } = Astro.props;
 const home = pathFor('home', locale);
 const ui = siteUi(locale);
+const year = Number(BUILD_DAY.slice(0, 4));
+const kalenderYear = (KALENDER_YEARS as readonly number[]).includes(year) ? year : KALENDER_YEARS[0];
+// `wide` is only shown when there is room (the 390 px header holds brand, two links and the toggle).
+const nav: { href: string; label: string; wide?: string }[] =
+  locale === 'id'
+    ? [
+        { href: pathFor('id.weton', 'id'), label: 'Weton' },
+        { href: pathFor(`id.kalender.${kalenderYear}`, 'id'), label: 'Kalender', wide: ' Jawa' },
+      ]
+    : [{ href: home, label: ui.nav }];
 ---
 
 <header class="site-header">
@@ -20,8 +31,15 @@ const ui = siteUi(locale);
       <span>{SITE.name}</span>
     </a>
     <div class="header-actions">
-      <nav class="header-nav" aria-label="Principal">
-        <a href={home}>{ui.nav}</a>
+      <nav class="header-nav" aria-label={ui.mainNav}>
+        {
+          nav.map((l) => (
+            <a href={l.href}>
+              {l.label}
+              {l.wide && <span class="nav-wide">{l.wide}</span>}
+            </a>
+          ))
+        }
       </nav>
       <ThemeToggle locale={locale} />
     </div>

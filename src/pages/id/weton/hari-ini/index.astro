@@ -1,0 +1,82 @@
+---
+import CalculatorLayout from '../../../../layouts/CalculatorLayout.astro';
+import HariIni from '../../../../components/weton/HariIni';
+import { BUILD_DAY, UPDATED } from '../../../../content/id/meta';
+import { ID_DISCLAIMER, ID_RELATED, ID_SOURCES } from '../../../../content/id/shared';
+import type { FaqItem } from '../../../../lib/seo/jsonld';
+
+const faq: FaqItem[] = [
+  {
+    q: 'Weton hari ini apa?',
+    a: 'Lihat kotak di atas: kami menghitung weton, neptu, tanggal Jawa, tanggal Hijriah dan wuku untuk tanggal hari ini menurut waktu Indonesia bagian barat (WIB), langsung di perangkatmu, jadi selalu sesuai hari ini.',
+  },
+  {
+    q: 'Hari ini pasaran apa?',
+    a: 'Pasaran berputar setiap lima hari: Legi, Pahing, Pon, Wage, Kliwon, lalu kembali ke Legi. Pasaran hari ini tertulis di kotak di atas, lengkap dengan arah dan warnanya menurut keblat papat lima pancer.',
+  },
+  {
+    q: 'Kenapa ada yang bilang malam ini sudah masuk weton besok?',
+    a: 'Dalam kalender Jawa pergantian hari terjadi saat matahari terbenam (magrib), bukan pukul 00.00. Jadi Kamis malam setelah magrib sudah terhitung malam Jumat; malam Jumat Kliwon adalah Kamis malam sebelum Jumat Kliwon.',
+  },
+  {
+    q: 'Kapan Jumat Kliwon dan Selasa Kliwon berikutnya?',
+    a: 'Setiap weton datang lagi 35 hari kemudian. Tanggal Jumat Kliwon dan Selasa Kliwon (Anggara Kasih) berikutnya tertulis di bawah daftar tujuh hari ke depan; daftar lengkapnya ada di kalender Jawa.',
+  },
+  {
+    q: 'Weton hari ini dan besok untuk acara apa?',
+    a: 'Banyak orang memakai weton hari ini untuk memperingati selapanan (setiap 35 hari dari hari lahir), menentukan hari selamatan, atau sekadar mengetahui hari pasaran. Pemilihan hari baik untuk pernikahan atau pindah rumah memakai hitungan primbon tersendiri yang berbeda antardaerah.',
+  },
+  {
+    q: 'Tanggal Hijriah hari ini mengikuti siapa?',
+    a: 'Mengikuti Kementerian Agama RI (Kalender Hijriah Indonesia dan hasil sidang isbat). Tanggal bertanda ≈ masih perkiraan karena Kemenag belum menetapkan awal bulannya.',
+  },
+];
+---
+
+<CalculatorLayout
+  pageKey="id.weton.hari-ini"
+  locale="id"
+  tool="hari-ini"
+  reviewKey="id.weton.hari-ini"
+  crumb="Hari ini"
+  parents={[{ name: 'Weton', path: '/id/weton/' }]}
+  ogSlug="id/hari-ini"
+  title="Weton Hari Ini: Pasaran, Neptu dan Tanggal Jawa Hari Ini"
+  description="Weton dan pasaran hari ini beserta neptu, tanggal Jawa, Hijriah Kemenag dan wuku untuk hari ini (WIB), plus weton besok dan tujuh hari ke depan."
+  h1="Weton hari ini"
+  lede="Weton, pasaran dan tanggal Jawa untuk hari ini menurut waktu Indonesia bagian barat. Angkanya dihitung ulang di perangkatmu setiap kali halaman dibuka, jadi tidak pernah basi."
+  updated={UPDATED}
+  appName="Weton hari ini"
+  appCategory="UtilitiesApplication"
+  faq={faq}
+  sourceParams={['id.weton-methods', 'id.hijri-kemenag']}
+  extraSources={ID_SOURCES.calendar}
+  asOf={UPDATED}
+  hasExamples={false}
+  howTitle="Cara kami menghitung weton hari ini"
+  related={ID_RELATED}
+>
+  <HariIni client:load buildDay={BUILD_DAY} />
+
+  <Fragment slot="how">
+    <p>
+      Kami mengambil tanggal hari ini menurut zona waktu Asia/Jakarta (WIB), lalu menghitung pasarannya dari selisih hari terhadap 17
+      Agustus 1945 (Jumat Legi) dibagi 5, neptunya dari tabel neptu, dan tanggal Jawanya dengan aturan kalender Sultan Agung (kurup Asapon),
+      sama seperti di
+      <a href="/id/weton/">kalkulator weton</a>.
+    </p>
+    <p class="formula">
+      <b>Pasaran</b> = sisa (selisih hari dari 17-08-1945 ÷ 5): 0 Legi, 1 Pahing, 2 Pon, 3 Wage, 4 Kliwon<br />
+      <b>Neptu</b> = neptu hari + neptu pasaran
+    </p>
+    <p>
+      Halaman ini juga dibangun ulang setiap hari, tetapi angka di kotak atas selalu dihitung ulang di browser untuk tanggal hari ini, tanpa
+      mengirim apa pun ke server.
+    </p>
+  </Fragment>
+
+  <Fragment slot="disclaimer">
+    <p>{ID_DISCLAIMER.weton}</p>
+    <p>{ID_DISCLAIMER.hijri}</p>
+  </Fragment>
+</CalculatorLayout>

@@ -94,5 +94,41 @@ const { tool } = Astro.props;
         </>
       )
     }
+    {
+      /* weton: two lines (dina, pasaran) crossing at one station */
+      tool === 'weton' && (
+        <>
+          <path d="M3 12h18M12 3v18" />
+          <circle cx="12" cy="12" r="3.5" fill="currentColor" />
+        </>
+      )
+    }
+    {
+      /* jodoh: two weton side by side */
+      tool === 'jodoh' && (
+        <>
+          <circle cx="9" cy="12" r="5" />
+          <circle cx="15" cy="12" r="5" />
+        </>
+      )
+    }
+    {
+      /* kalender Jawa: a month page with the lunar crescent */
+      tool === 'kalender' && (
+        <>
+          <rect x="4" y="5" width="16" height="15" rx="1" />
+          <path d="M4 10h16M9 3v4M15 3v4" />
+          <path d="M14.5 13.2a3 3 0 1 0 0 4.6 2.4 2.4 0 1 1 0-4.6Z" />
+        </>
+      )
+    }
+    {
+      /* hari ini: the sun on the horizon (the Javanese day turns at sunset) */
+      tool === 'hari-ini' && (
+        <>
+          <path d="M3 17h18M7 17a5 5 0 0 1 10 0M12 6v3M5.6 9.6l1.8 1.8M18.4 9.6l-1.8 1.8" />
+        </>
+      )
+    }
   </svg>
 </span>

@@ -1,0 +1,20 @@
+---
+/** Detail panel for one day of the calendar, filled by src/scripts/kalender.ts. */
+---
+
+<dialog class="kal-dialog" id="kal-dialog" aria-labelledby="kal-dialog-title">
+  <form method="dialog" class="kal-dialog__inner">
+    <h2 class="kal-dialog__title" id="kal-dialog-title" data-k="title"></h2>
+    <p class="kal-dialog__weton" data-k="weton"></p>
+    <dl class="facts kal-dialog__facts" data-k="facts"></dl>
+    <p class="kal-dialog__links">
+      <a data-k="weton-link" href="/id/weton/">Tentang weton ini</a>
+      <a data-k="jodoh-link" href="/id/weton/jodoh/">Hitung jodoh dengan weton ini</a>
+    </p>
+    <button class="btn" value="close">Tutup</button>
+  </form>
+</dialog>
+
+<script>
+  import '../../scripts/kalender';
+</script>

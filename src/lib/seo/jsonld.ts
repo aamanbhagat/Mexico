@@ -42,11 +42,11 @@ export function webAppLd(args: {
   path: string;
   inLanguage: string;
   dateModified: string;
-  country?: string;
+  country?: string | undefined;
   /** schema.org applicationCategory (default FinanceApplication). */
-  category?: string;
-  currency?: string;
-  browserRequirements?: string;
+  category?: string | undefined;
+  currency?: string | undefined;
+  browserRequirements?: string | undefined;
 }) {
   return {
     '@context': 'https://schema.org',

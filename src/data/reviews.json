@@ -1,5 +1,5 @@
 {
-  "$comment": "Review status per page. The badge on each page is rendered from this file and never hard-coded. Set status to \"reviewed\" only with the reviewer's name, credentials and date. kind: \"legal\" (labour, tax, pension — CLAUDE.md §8, the default) or \"technical\" (e.g. land units: a licensed surveyor/agrimensor or agronomist).",
+  "$comment": "Review status per page or page family (id.weton covers the weton pages, id.kalender every calendar page). The badge on each page is rendered from this file and never hard-coded. Set status to \"reviewed\" only with the reviewer's name, credentials and date. kind: \"legal\" (labour, tax, pension — CLAUDE.md §8, the default), \"technical\" (e.g. land units: a licensed surveyor/agrimensor or agronomist) or \"expert\" (domain specialist, e.g. a Javanese-calendar specialist — penanggalan Jawa — for /id/).",
   "mx.aguinaldo": {
     "status": "pending",
     "reviewer": null,
@@ -88,6 +88,34 @@
   "br.hectare-alqueire": {
     "status": "pending",
     "kind": "technical",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
+  "id.weton": {
+    "status": "pending",
+    "kind": "expert",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
+  "id.weton.jodoh": {
+    "status": "pending",
+    "kind": "expert",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
+  "id.weton.hari-ini": {
+    "status": "pending",
+    "kind": "expert",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
+  "id.kalender": {
+    "status": "pending",
+    "kind": "expert",
     "reviewer": null,
     "credentials": null,
     "reviewed_on": null

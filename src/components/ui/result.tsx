@@ -145,13 +145,15 @@ interface ActionsProps {
   /** Opens the browser's print dialog (printable table). Omit to hide the button. */
   onPrint?: (() => void) | undefined;
   shareTitle: string;
+  /** URL to share; defaults to the current address (which carries the inputs). */
+  shareUrl?: (() => string) | undefined;
   disabled?: boolean;
   locale?: UiLocale;
 }
 
 type Feedback = '' | 'copied' | 'shared' | 'link' | 'pdf' | 'print' | 'error';
 
-export function ResultActions({ summary, onPdf, onPrint, shareTitle, disabled, tool = '', locale = 'es-mx' }: ActionsProps) {
+export function ResultActions({ summary, onPdf, onPrint, shareTitle, shareUrl, disabled, tool = '', locale = 'es-mx' }: ActionsProps) {
   const ui = CALC_UI[locale];
   const [feedback, setFeedback] = useState<Feedback>('');
   useEffect(() => {
@@ -170,7 +172,7 @@ export function ResultActions({ summary, onPdf, onPrint, shareTitle, disabled, t
     }
   };
   const share = async () => {
-    const url = window.location.href;
+    const url = shareUrl ? shareUrl() : window.location.href;
     try {
       if (typeof navigator.share === 'function') {
         await navigator.share({ title: shareTitle, url });

@@ -6,12 +6,16 @@ Multi-country, multi-language calculator site. Live locales:
   vacaciones) plus a reference page of official 2026 values.
 - **pt-BR** — BR-01, the land-unit converter: alqueire (paulista, mineiro/goiano, baiano, do Norte,
   alqueirão…), tarefa, litro de terra, quadra and braça² ↔ hectare, m², acre, with the value used
-  in each state and its source. Project rules live in [`CLAUDE.md`](CLAUDE.md); the research behind every
+  in each state and its source.
+- **id** — weton and Javanese calendar (ID-01): cek weton, weton jodoh with every method side by side,
+  weton hari ini, 35 weton pages and printable *kalender Jawa* 2026–2027 (year + month pages).
+
+Project rules live in [`CLAUDE.md`](CLAUDE.md); the research behind every
 page in [`docs/research/`](docs/research/REPORT.md).
 
 ```bash
 npm ci
-npm run dev        # http://localhost:4321/es-mx/  ·  http://localhost:4321/pt-br/
+npm run dev        # http://localhost:4321/es-mx/  ·  /pt-br/  ·  /id/
 npm run build      # static site in dist/
 npm run check      # the full quality gate (see below)
 ```
@@ -35,21 +39,27 @@ Node 22. Set `SITE_URL` to the production origin when building for production.
 ```
 src/
   config/site.ts               brand, origin (SITE_URL), analytics switches
-  i18n/locales.ts, routes.ts   locale registry (es-MX and pt-BR published) + hreflang/sitemap helpers
+  i18n/locales.ts, routes.ts   locale registry (es-MX, pt-BR and id published) + hreflang/sitemap helpers
   i18n/ui.ts, tools.ts         interface strings per locale; tools registry (homes, footer, related)
   data/parameters/mx/*.json    dated, sourced legal values (UMA, salarios mínimos, ISR tariff…)
   data/parameters/br/land-units.json  every regional land unit: m², braças, regions, source, verified
-  data/reviews.json            legal-review state that drives the badge on each page
-  lib/params/                  typed loader: value in force on a date, refuses unknown dates
+  data/parameters/id/*.json    weton methods, Kemenag Hijri month starts, SKB holidays (with sources)
+  data/reviews.json            review state (legal / technical / expert) that drives the badge on each page
+  lib/params/                  typed loader: value in force on a date, refuses unknown dates; registry.ts = all countries
   lib/engine/mx/               LFT + LISR engine (pure functions)
   lib/land-units/              country-agnostic land-unit engine: exact rationals, NBR 5891 rounding,
                                locale number I/O, catalog validation (reused later for ID/JP/ES/PL/TR)
+  lib/calendar/javanese/       Javanese calendar engine: pasaran, neptu, wuku, Sultan Agungan date
+                               (kurup), Hijri (Kemenag table) — shared with the ID-09 date tools
+  lib/weton/                   jodoh methods, calendar page models
   lib/ui/                      formatting, URL state, PDF writer, analytics events
   components/ui/               field, result and action primitives (Preact)
   components/calc/             calculator islands; shell.tsx = the shared calculator shell
-  content/es-mx/, pt-br/       worked examples shared by pages and golden tests; pt-BR wording
+  components/weton/, kalender/ weton islands, crossing neptu grid, month grids (id)
+  content/es-mx/, pt-br/, id/  worked examples shared by pages and golden tests; per-locale wording
   layouts/, pages/             Astro templates and routes; og/, sitemap.xml, robots.txt endpoints
 tests/unit/                    Vitest: registry contract, engine golden tests, utilities
+tests/unit/calendar/           Javanese calendar golden dates (each with ≥ 2 cited sources)
 tests/e2e/                     Playwright: SEO, calculators, axe (light/dark), keyboard, visual
 tests/golden/golden.py         independent Decimal re-derivation of every MX example
 tests/golden/land_units.py     independent Fraction re-derivation of every BR example

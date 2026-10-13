@@ -1,11 +1,15 @@
 ---
 /**
- * Root: sends visitors to the only published locale. Cloudflare Pages also redirects "/" with
- * a 302 (public/_redirects); this page is the fallback for hosts without redirect rules.
+ * Root: Cloudflare Pages redirects "/" to the default locale with a 302 (public/_redirects).
+ * This page is the fallback for hosts without redirect rules: it lists every published locale.
  */
-import { DEFAULT_LOCALE } from '../i18n/locales';
+import { DEFAULT_LOCALE, publishedLocales, type LocaleCode } from '../i18n/locales';
 import { pathFor } from '../i18n/routes';
 const target = pathFor('home', DEFAULT_LOCALE);
+const labels: Partial<Record<LocaleCode, string>> = {
+  'es-mx': 'Calculadoras laborales de México',
+  id: 'Weton dan kalender Jawa (Bahasa Indonesia)',
+};
 ---
 
 <!doctype html>
@@ -19,6 +23,14 @@ const target = pathFor('home', DEFAULT_LOCALE);
     <meta http-equiv="refresh" content={`0; url=${target}`} />
   </head>
   <body>
-    <p><a href={target}>Ir a las calculadoras de México</a></p>
+    <ul>
+      {
+        publishedLocales().map((l) => (
+          <li lang={l.htmlLang}>
+            <a href={pathFor('home', l.code as LocaleCode)}>{labels[l.code as LocaleCode] ?? l.name}</a>
+          </li>
+        ))
+      }
+    </ul>
   </body>
 </html>

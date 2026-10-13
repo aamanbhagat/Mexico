@@ -12,7 +12,7 @@ interface Props {
   pageKey?: PageKey | undefined;
 }
 const { locale, pageKey } = Astro.props;
-const ui = siteUi(locale);
+const { otherCountries } = siteUi(locale);
 
 // Cross-locale links only where hreflang applies: the alternates of this very page.
 const current = LOCALES[locale].hreflang;
@@ -22,24 +22,47 @@ const others = pageKey
       .map((a) => ({ ...a, name: Object.values(LOCALES).find((l) => l.hreflang === a.hreflang)?.name ?? a.hreflang }))
   : [];
 
-const COPY: Record<UiLocale, { about: string; toolsTitle: string; dataTitle: string; data: { href: string; label: string }[] }> = {
+interface Column {
+  title: string;
+  links: { href: string; label: string }[];
+}
+
+/** The tools come from src/i18n/tools.ts; each locale groups them into the columns that suit it. */
+const tools = toolsFor(locale as UiLocale);
+const toLinks = (list: typeof tools) => list.map((t) => ({ href: pathFor(t.key, locale), label: t.name }));
+
+const COPY: Record<UiLocale, { about: string; columns: Column[] }> = {
   'es-mx': {
     about:
       'Calculadoras con la ley y los valores oficiales vigentes, citados en cada página. Tus datos se procesan en tu navegador: no los enviamos a ningún servidor.',
-    toolsTitle: 'Calculadoras laborales',
-    dataTitle: 'Datos oficiales',
-    data: [{ href: pathFor('mx.uma-salario-minimo', 'es-mx'), label: 'UMA y salario mínimo 2026' }],
+    columns: [
+      { title: 'Calculadoras laborales', links: toLinks(tools.filter((t) => t.tool !== 'uma')) },
+      { title: 'Datos oficiales', links: [{ href: pathFor('mx.uma-salario-minimo', 'es-mx'), label: 'UMA y salario mínimo 2026' }] },
+    ],
   },
   'pt-br': {
     about:
       'Conversões com a fonte de cada valor citada na própria página. As contas são feitas no seu navegador: nada do que você digita é enviado para servidor nenhum.',
-    toolsTitle: 'Medidas de terra',
-    dataTitle: 'Para documentos oficiais',
-    data: [{ href: `${pathFor('br.alqueire-hectare', 'pt-br')}#documentos-oficiais`, label: 'CAR, ITR, CCIR e cartório usam hectares' }],
+    columns: [
+      { title: 'Medidas de terra', links: toLinks(tools) },
+      {
+        title: 'Para documentos oficiais',
+        links: [
+          { href: `${pathFor('br.alqueire-hectare', 'pt-br')}#documentos-oficiais`, label: 'CAR, ITR, CCIR e cartório usam hectares' },
+        ],
+      },
+    ],
+  },
+  id: {
+    about:
+      'Alat hitung dan kalender dengan metode dan sumber yang jelas di setiap halaman. Semua perhitungan berjalan di perangkatmu: tanggal lahir yang kamu masukkan tidak kami kirim ke server mana pun.',
+    columns: [
+      { title: 'Weton', links: toLinks(tools.filter((t) => t.tool !== 'kalender')) },
+      { title: 'Kalender Jawa', links: toLinks(tools.filter((t) => t.tool === 'kalender')) },
+    ],
   },
 };
 const copy = COPY[locale as UiLocale];
-const tools = toolsFor(locale as UiLocale).filter((t) => t.tool !== 'uma');
 ---
 
 <footer class="site-footer">
@@ -48,45 +71,33 @@ const tools = toolsFor(locale as UiLocale).filter((t) => t.tool !== 'uma');
       <h2>{SITE.name}</h2>
       <p>{copy.about}</p>
     </div>
-    <div>
-      <h2>{copy.toolsTitle}</h2>
-      <ul>
-        {
-          tools.map((t) => (
-            <li>
-              <a href={pathFor(t.key, locale)}>{t.name}</a>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-    <div>
-      <h2>{copy.dataTitle}</h2>
-      <ul>
-        {
-          copy.data.map((d) => (
-            <li>
-              <a href={d.href}>{d.label}</a>
-            </li>
-          ))
-        }
-      </ul>
-      {
-        others.length > 0 && (
-          <>
-            <h2 class="site-footer__subhead">{ui.otherCountries}</h2>
-            <ul>
-              {others.map((o) => (
-                <li>
-                  <a href={o.href} hreflang={o.hreflang} lang={o.hreflang}>
-                    {o.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </>
-        )
-      }
-    </div>
+    {
+      copy.columns.map((c, i) => (
+        <div>
+          <h2>{c.title}</h2>
+          <ul>
+            {c.links.map((l) => (
+              <li>
+                <a href={l.href}>{l.label}</a>
+              </li>
+            ))}
+          </ul>
+          {i === copy.columns.length - 1 && others.length > 0 && (
+            <>
+              <h2 class="site-footer__subhead">{otherCountries}</h2>
+              <ul>
+                {others.map((o) => (
+                  <li>
+                    <a href={o.href} hreflang={o.hreflang} lang={o.hreflang}>
+                      {o.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+        </div>
+      ))
+    }
   </div>
 </footer>

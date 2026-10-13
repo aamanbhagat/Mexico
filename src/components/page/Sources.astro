@@ -1,6 +1,6 @@
 ---
-import { MX_PARAM_FILES, type MxParamId } from '../../lib/params/mx';
-import { formatDateLongIn } from '../../lib/ui/format';
+import { PARAM_FILES, type ParamId } from '../../lib/params/registry';
+import { formatDateLong } from '../../lib/ui/format';
 import { getLocale, type LocaleCode } from '../../i18n/locales';
 import { siteUi } from '../../i18n/ui';
 
@@ -20,8 +20,8 @@ export interface SourceItem {
 }
 
 interface Props {
-  /** Mexico registry parameters used on this page; the version in force on `asOf` is cited. */
-  params?: MxParamId[] | undefined;
+  /** Registry parameters used on this page (any country); the version in force on `asOf` is cited. */
+  params?: ParamId[] | undefined;
   asOf?: string | undefined;
   /** Sources prepared by the page, listed after the registry parameters. */
   items?: SourceItem[] | undefined;
@@ -33,7 +33,7 @@ const ui = siteUi(locale);
 const intl = getLocale(locale).intl;
 
 const cited = params.map((id) => {
-  const file = MX_PARAM_FILES[id];
+  const file = PARAM_FILES[id];
   const version = [...file.versions].reverse().find((v) => v.effective_from <= asOf) ?? file.versions[file.versions.length - 1];
   return { file, version: version! };
 });
@@ -47,8 +47,8 @@ const cited = params.map((id) => {
           {version.source_title}
         </a>
         <span class="sources__meta">
-          {file.name} · {ui.sourceMeta.effectiveFrom} {formatDateLongIn(version.effective_from, intl)} · {ui.sourceMeta.retrievedOn}{' '}
-          {formatDateLongIn(version.retrieved_on, intl)} ·{' '}
+          {file.name} · {ui.sourceMeta.effectiveFrom} {formatDateLong(version.effective_from, intl)} · {ui.sourceMeta.retrievedOn}{' '}
+          {formatDateLong(version.retrieved_on, intl)} ·{' '}
           {version.verified ? (
             <span class="verify verify--ok">{ui.sourceMeta.verified}</span>
           ) : (

@@ -3,7 +3,9 @@
  * Page template for every calculator: answer-first hero, the island, "how we calculate",
  * worked examples, FAQ, sources, last-updated date, disclaimer and the data-driven review badge.
  * Emits WebApplication + FAQPage + BreadcrumbList JSON-LD (CLAUDE.md §6). Strings come from the
- * locale's dictionary (src/i18n/ui.ts); the related links from the tools registry.
+ * locale's dictionary (src/i18n/ui.ts); the related links from the tools registry (src/i18n/tools.ts)
+ * unless the page passes its own `related`. The Mexico disclaimer is the default; other locales
+ * pass theirs through the `disclaimer` slot.
  */
 import BaseLayout from './BaseLayout.astro';
 import ReviewBadge from '../components/page/ReviewBadge.astro';
@@ -14,9 +16,10 @@ import { pathFor, type PageKey } from '../i18n/routes';
 import { getLocale, type LocaleCode } from '../i18n/locales';
 import { siteUi, type UiLocale } from '../i18n/ui';
 import { toolsFor, type Pictogram, type Tool } from '../i18n/tools';
-import { breadcrumbLd, datasetLd, faqLd, webAppLd, type FaqItem } from '../lib/seo/jsonld';
-import type { MxParamId } from '../lib/params/mx';
-import { formatDateLongIn } from '../lib/ui/format';
+import { breadcrumbLd, datasetLd, faqLd, webAppLd, type Crumb, type FaqItem } from '../lib/seo/jsonld';
+import type { ParamId } from '../lib/params/registry';
+import type { RelatedLink } from '../components/page/types';
+import { formatDateLong } from '../lib/ui/format';
 
 interface Props {
   pageKey: PageKey;
@@ -34,8 +37,8 @@ interface Props {
   updated: string;
   appName: string;
   faq: FaqItem[];
-  /** Mexico registry parameters cited in the sources section. */
-  sourceParams?: MxParamId[] | undefined;
+  /** Registry parameters (any country) cited in the sources section. */
+  sourceParams?: ParamId[] | undefined;
   /** Sources prepared by the page (land-unit catalog entries…). */
   sourceItems?: SourceItem[] | undefined;
   extraSources?: ExtraSource[] | undefined;
@@ -52,8 +55,16 @@ interface Props {
   appCategory?: string | undefined;
   /** Heading of the "how" section. */
   howTitle?: string | undefined;
-  /** Intermediate breadcrumb (hub page) between home and this page. */
-  parent?: { name: string; path: string } | undefined;
+  /** Breadcrumb trail between home and this page. */
+  parents?: Crumb[] | undefined;
+  /** Short name of this page in the breadcrumb (defaults to the H1). */
+  crumb?: string | undefined;
+  /** Related tools; defaults to the locale's tools from src/i18n/tools.ts. */
+  related?: RelatedLink[] | undefined;
+  /** Key in src/data/reviews.json (defaults to pageKey; a family key such as "id.weton"). */
+  reviewKey?: string | undefined;
+  /** Generated OG image slug (default: derived from the locale and tool). */
+  ogSlug?: string | undefined;
 }
 
 const p = Astro.props;
@@ -61,13 +72,9 @@ const ui = siteUi(p.locale);
 const loc = getLocale(p.locale);
 const path = p.pathOverride ?? pathFor(p.pageKey, p.locale);
 const home = pathFor('home', p.locale);
-const crumbs = [{ name: ui.home, path: home }, ...(p.parent ? [p.parent] : []), { name: p.h1, path }];
+const crumbs: Crumb[] = [{ name: ui.home, path: home }, ...(p.parents ?? []), { name: p.crumb ?? p.h1, path }];
 
-const LD_LOCALE: Record<UiLocale, { country: string; requirements: string }> = {
-  'es-mx': { country: 'México', requirements: 'Requiere JavaScript para recalcular en vivo.' },
-  'pt-br': { country: 'Brasil', requirements: 'Requer JavaScript para converter em tempo real.' },
-};
-const ld = LD_LOCALE[p.locale as UiLocale];
+const COUNTRY: Record<UiLocale, string> = { 'es-mx': 'México', 'pt-br': 'Brasil', id: 'Indonesia' };
 const jsonLd = [
   p.schema === 'dataset'
     ? datasetLd({ name: p.appName, description: p.description, path, dateModified: p.updated })
@@ -77,16 +84,21 @@ const jsonLd = [
         path,
         inLanguage: loc.hreflang,
         dateModified: p.updated,
-        country: ld.country,
+        country: COUNTRY[p.locale as UiLocale],
         currency: loc.currency,
-        browserRequirements: ld.requirements,
+        browserRequirements: ui.browserRequirements,
         ...(p.appCategory ? { category: p.appCategory } : {}),
       }),
   faqLd(p.faq),
   breadcrumbLd(crumbs),
 ];
 
-const related = toolsFor(p.locale as UiLocale).filter((r) => r.key !== p.pageKey);
+const related: RelatedLink[] = (
+  p.related ?? toolsFor(p.locale as UiLocale).map((r) => ({ href: pathFor(r.key, p.locale), label: r.label, tool: r.tool }))
+).filter((r) => r.href !== path);
+const reviewKey = p.reviewKey ?? p.pageKey;
+// es-MX pages use the tool as slug, pt-BR the land-unit key, the rest "<locale>/<tool>".
+const ogSlug = p.ogSlug ?? (p.locale === 'es-mx' ? p.tool : p.pageKey.startsWith('br.') ? p.pageKey.slice(3) : `${p.locale}/${p.tool}`);
 const hasDisclaimer = Astro.slots.has('disclaimer');
 ---
 
@@ -96,7 +108,7 @@ const hasDisclaimer = Astro.slots.has('disclaimer');
   locale={p.locale}
   pageKey={p.pageKey}
   path={path}
-  ogSlug={p.pageKey.startsWith('br.') ? p.pageKey.slice(3) : p.tool}
+  ogSlug={ogSlug}
   jsonLd={jsonLd}
   tool={p.tool}
   direction={p.direction}
@@ -113,7 +125,7 @@ const hasDisclaimer = Astro.slots.has('disclaimer');
             </li>
           ))
         }
-        <li aria-current="page">{p.h1}</li>
+        <li aria-current="page">{p.crumb ?? p.h1}</li>
       </ol>
     </nav>
 
@@ -124,8 +136,8 @@ const hasDisclaimer = Astro.slots.has('disclaimer');
       </div>
       <p class="hero__lede">{p.lede}</p>
       <p class="hero__meta">
-        <span>{ui.updatedOn} <time datetime={p.updated}>{formatDateLongIn(p.updated, loc.intl)}</time></span>
-        <ReviewBadge pageKey={p.pageKey} locale={p.locale} />
+        <span>{ui.updatedOn} <time datetime={p.updated}>{formatDateLong(p.updated, loc.intl)}</time></span>
+        <ReviewBadge pageKey={reviewKey} locale={p.locale} />
       </p>
     </header>
 
@@ -156,6 +168,7 @@ const hasDisclaimer = Astro.slots.has('disclaimer');
 
     <section class="section" aria-labelledby="fuentes">
       <h2 id="fuentes">{ui.sourcesTitle}</h2>
+      <slot name="sources-intro" />
       <Sources params={p.sourceParams} asOf={p.asOf} items={p.sourceItems} extra={p.extraSources} locale={p.locale} />
     </section>
 
@@ -182,24 +195,26 @@ const hasDisclaimer = Astro.slots.has('disclaimer');
             </>
           )
         }
-        <p><ReviewBadge pageKey={p.pageKey} locale={p.locale} /></p>
+        <p><ReviewBadge pageKey={reviewKey} locale={p.locale} /></p>
       </div>
     </section>
 
-    <section class="section" aria-labelledby="relacionadas">
-      <h2 id="relacionadas">{ui.relatedTitle}</h2>
-      <ul class="related">
-        {
-          related.map((r) => (
-            <li>
-              <a href={pathFor(r.key, p.locale)} data-tool={r.tool}>
-                <span class="dot" aria-hidden="true" />
-                {r.label}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </section>
+    {
+      related.length > 0 && (
+        <section class="section" aria-labelledby="relacionadas">
+          <h2 id="relacionadas">{ui.relatedTitle}</h2>
+          <ul class="related">
+            {related.map((r) => (
+              <li>
+                <a href={r.href} data-tool={r.tool}>
+                  <span class="dot" aria-hidden="true" />
+                  {r.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
   </div>
 </BaseLayout>
