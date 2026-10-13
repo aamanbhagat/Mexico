@@ -1,0 +1,431 @@
+serp_id,market,query,search_mode,date,candidates,assessment,urls,n_urls,method_note
+S01,BR,gerador CNPJ alfanumérico validador 2026,standard,2026-10-12,BR-04,Dev posts + small tools (standard mode). First alphanumeric CNPJs issued 31/07/2026.,"https://www.tabnews.com.br/jonas556440/gerador-e-validador-de-cpf-e-cnpj-em-lote-com-suporte-ao-novo-cnpj-alfanumerico-2026
+https://valorfinal.com.br/gerador-cpf-cnpj
+https://packagist.org/packages/cnpjcomletras/valida-cnpj-alfanumerico
+https://www.coad.com.br/home/noticias-detalhe/138971/rfb-gerado-o-primeiro-cnpj-em-formato-alfanumerico
+https://toexceed.com.br/blog/2026/09/26/validador-cnpj-alfanumerico-como-validar-o-novo-formato-do-cnpj/",5,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S02,BR,cnpj alfanumérico gerador validador online 4devs,standard,2026-10-12,BR-04,Standard mode: dev posts/libs only.,"https://www.tabnews.com.br/AndreHenrique/fiz-uma-ferramenta-gratuita-para-o-cnpj-alfanumerico-validador-gerador-de-massa-de-teste-codigo-pronto
+https://www.outsystems.com/forge/component-overview/22093/cnpj-alfanumerico-validate-o11
+https://www.npmjs.com/package/4devs",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S03,BR,validador CNPJ alfanumérico online dígito verificador ferramenta,extended,2026-10-12,BR-04,SATURATED: >=9 validators incl. 4devs and an exact-match domain. Organic opportunity LOW.,"https://validadorcnpj.com.br/
+https://www.ferramentasja.com.br/app/validador-de-cnpj
+https://www.cnpgolden.com.br/cnpj-alfanumerico
+https://www.sintegraconsulta.com.br/validador-cnpj
+https://www.cnpjconsultar.com.br/validador-de-cnpj
+https://www.nfsedownloader.com.br/gerador-de-cnpj
+https://cnpj-alpha.com.br/
+https://cnpjcpf.com.br/validador-de-cnpj-alfanumerico/
+https://www.4devs.com.br/validador_cnpj",9,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S04,BR,alqueire para hectare calculadora,standard,2026-10-12,BR-01,Standard mode: agtech tag pages + generic converter; conflicting factors.,"https://aegro.com.br/blog/hectare/
+https://comprerural.com/hectare-ou-alqueire-qual-medida-de-terra-usar/
+https://calculacentro.com/calculadora/conversor-area",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S05,BR,conversor alqueire hectare calculadora alqueire paulista mineiro goiano baiano,extended,2026-10-12,BR-01,">=8 small converters, no brand/official tool. Documented value conflicts (alqueire baiano 9.68 vs 4.84 ha; do Norte 2.72 vs 9.68 ha). MEDIUM.","https://reland.com.br/en/tools/area-converter/alqueire-paulista-to-hectare
+https://calculadorarural.com.br/ferramentas/conversor-medidas
+https://calculadorarural.com.br/blog/tabela-alqueire-hectare-estados
+https://www.vivamei.com.br/agro/calculadoras/alqueire-hectare
+https://calculacentro.com/ferramenta/conversor-area
+https://www.calculeonline.com/calculadora-conversao-alqueires
+https://pt.360calc.com/conversao/area
+https://credited.com.br/ferramentas/conversoes/hectares/
+https://onlinetoolkit.co/pt/conversor-hectares-para-alqueires/",9,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S06,BR,cclasstrib tabela consulta por NCM,standard,2026-10-12,BR-02,Standard mode: blogs; official table in Portal da Conformidade Fácil.,"https://triviumcontabil.com.br/?p=17191
+https://portalspedbrasil.com.br/?p=20675
+https://taxradar.app/blog/ncm/cclasstrib-como-mapear-ncm-regime-ibs-cbs
+https://conteudo.fiscal.io/?p=2940",4,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S07,BR,consulta cClassTrib por NCM ferramenta online CST IBS CBS,extended,2026-10-12,BR-02,Official SEFAZ-RS lookup exists + >=7 tools incl. paid SaaS. HARD-MEDIUM.,"https://github.com/silvioalbqrq/cst-cclasstrib
+https://dfe-portal.svrs.rs.gov.br/CFF/ClassificacaoTributaria
+https://consultareformait.lovable.app/
+https://reforma33.com.br/
+https://www.usetribumap.com.br/
+https://cclasstrib-app-two.vercel.app/
+https://www.contabildescomplica.com.br/consultar-ncm
+https://mvsistema.com/BuscaNCM/
+https://classtrib.com/novo/",9,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S08,BR,código de tributação nacional NFS-e MEI consulta,standard,2026-10-12,BR-03,Standard mode: fintech/ERP articles; contradictory guidance.,"https://meutudo.com.br/blog/codigo-de-tributacao-nacional-para-mei/
+https://nfe.io/blog/?p=14452
+https://blog.tecnospeed.com.br/nfs-e-nacional-como-consultar-o-codigo-de-tributacao/
+https://neon.com.br/aprenda/mei/codigo-de-tributacao-nacional-para-mei/
+https://conteudo.fiscal.io/nfse-como-consultar-o-codigo-de-tributacao-nacional-do-mei",5,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S09,BR,consultar código de tributação nacional NFS-e por CNAE ferramenta busca,extended,2026-10-12,BR-03,Several searchable lookups (338 cTribNac codes; one CNAE->code). No official CNAE->code tool found. MEDIUM.,"https://github.com/transformax2205-droid/codigo-tributacao-nacional-nfse
+https://www.nfsedownloader.com.br/codigo-tributacao-nacional
+https://notafiscalafiliados.com.br/guia/codigo-tributacao-nacional-nfse-lista
+https://maquinadecartaoboa.com/codigo-de-tributacao-nacional/
+https://buscadorncm.com.br/
+https://consultorestributarios.com.br/codigo-de-tributacao-nacional-para-mei/
+https://dicas.autenticacertificado.com.br/codigo-de-tributacao-nacional-para-mei/",7,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S10,BR,calculadora fator r simples nacional online,standard,2026-10-12,BR-05,Every online-accounting brand runs a free calculator. HARD.,"https://www.contabilizei.com.br/calculadora-fator-r/
+https://agilize.com.br/calculadora-do-fator-r
+https://contaazul.com/materiais-gratuitos/calculadora-fator-r/
+https://www.esimplesauditoria.com/calculadora-simples-nacional
+https://www.contaagil.com/?p=9895",5,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S11,BR,número por extenso conversor online,standard,2026-10-12,NUM,Standard mode only.,"https://valorfinal.com.br/calculadora-numero-por-extenso
+https://calculacentro.com/calculadora/numeros-por-extenso
+https://miniwebtool.com/br/conversor-de-número-para-palavra/",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S12,BR,escrever número por extenso online valor em reais conversor,extended,2026-10-12,NUM,"SATURATED (>=8 incl. 4devs). Grammar dispute (""um mil reais"" vs ""mil reais"").","https://valorfinal.com.br/calculadora-numero-por-extenso
+https://ferramentagratis.com.br/conversores/numero-por-extenso/
+https://numerosaletras.org/pt/
+https://www.utilaria.com.br/numero-por-extenso/
+https://calculadora24.com/numero-por-extenso-online/
+https://geraronline.com/valor-por-extenso/
+https://www.4devs.com.br/numero_por_extenso
+https://ferramentas.qmix.com.br/numero-por-extenso",8,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S13,BR,calculadora pensão alimentícia online,standard,2026-10-12,BR-07,Legal SaaS + law firms + small tools; US-model page ranking. MEDIUM.,"https://calculojuridico.com.br/simulador-pensao-alimenticia/
+https://calculacentro.com/ferramenta/pensao-alimenticia
+https://smargiassi.com.br/ferramentas/calculadora-pensao-alimenticia/
+https://sum.money/br/pensao-alimenticia/
+https://www.vlvadvogados.com/pensao-alimenticia-porcentagem/",5,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S14,BR,calculadora IRRF 2026 isenção 5 mil simulador,standard,2026-10-12,BR-08,Many calculators; disagree on desconto simplificado. Lei 15.270/2025. MEDIUM-HARD.,"https://meutudo.com.br/blog/calculadoras/calculo-irrf/
+https://caltrab.com/calculadoras/calculadora-do-imposto-de-renda-2026/
+https://calculadorabrasil.com.br/?p=66
+https://www.marraclt.com.br/salario/calculadora-novo-irrf-2026-quanto-desconta-folha
+https://www.transp.net/calculadora-irrf-2026
+https://numerando.com.br/calculadoras/trabalhista/calculadora-isencao-ir",6,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S15,BR,calculadora taxas shopee 2026 vendedor,standard,2026-10-12,BR-09,Standard mode only.,"https://ecommercenapratica.com/blog/taxa-shopee/
+https://ecomcalctools.com/pt-br/shopee/calculadora-taxas/
+https://gosmarter.com.br/?p=14467
+https://www.actana.com.br/blog/mudancas-na-shopee-em-2026",4,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S16,BR,calculadora shopee 2026 taxas comissão lucro vendedor ferramenta,extended,2026-10-12,BR-09,>=7 tools; fee tables disagree across tools. MEDIUM.,"https://precificacertoecommerce.com.br/
+https://vendedorlucrativo.com.br/blog/comissao-shopee-2026
+https://calculadora.dbcdatastudio.com/shopee
+https://www.deveccom.com/shopee/
+https://www.appmodu.com/blog/calculadora-comissao-shopee-2026.html
+https://calculadoravirtual.com/blog/calculadora-shopee",6,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S17,BR,gerador de referência ABNT online grátis site,standard,2026-10-12,BR-12,Crowded with dedicated generators. HARD-MEDIUM.,"https://doutoranathalia.com.br/blog/gerador-de-referencias-abnt-online-gratis/
+https://www.grafiati.com/pt/blogs/abnt-references-generator/
+https://tesify.pt/melhores-geradores-referencias-abnt-comparativo-2026
+https://canaltech.com.br/internet/como-usar-o-menthor-gerador-de-referencias-abnt/",4,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S18,DE,XRechnung Viewer online kostenlos öffnen,standard,2026-10-12,DE-14,SaaS brands + free local viewers. HARD.,"https://www.b2brouter.net/de/xrechnung-viewer-online-und-gratis
+https://sevdesk.de/e-rechnung-viewer/
+https://norman.finance/de/tools/e-rechnung-viewer
+https://www.clean-invoice.com/tools/e-rechnung-viewer
+https://kostenlose-erechnung.de/auslesen/",5,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S19,DE,Aktivrente Rechner 2026,standard,2026-10-12,DE-15,Authority portal + calculator networks. MEDIUM-HARD.,"https://www.ihre-vorsorge.de/rechner/aktivrente-rechner
+https://www.deutschland-rechner.de/aktivrente-rechner
+https://rechner-hub.de/aktivrente-rechner/
+https://www.lexware.de/support/faq/faq-beitrag/000036541/",4,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S20,DE,IHK Notenschlüssel Punkte Note Rechner,standard,2026-10-12,DE-01,German calculator networks cover it. MEDIUM-HARD.,"https://www.smart-rechner.de/notenschluessel/ratgeber/notenschluessel_ihk.php
+https://www.deutschland-rechner.de/notenschluessel-rechner
+https://rechner-portal.de/schulnoten/umrechnung/punkte-note
+https://www.studysmarter.de/s/eltern/notenschluessel-berechnen/",4,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S21,DE,HOAI Rechner online kostenlos 2021,standard,2026-10-12,DE-02,Old-fashioned calculators + hoai.de authority; no calculator-network dominance. MEDIUM.,"https://www.steuerschroeder.de/Steuerrechner/HOAI-Rechner.html
+https://www.sanier.de/architekt/hoai
+https://greenox-group.de/hoai-rechner/
+https://www.wolterskluwer.com/de-de/solutions/wolters-kluwer-online/hoai2021
+https://www.baunetzwissen.de/drucken/hoai-rechner-8515301",5,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S22,DE,RVG Rechner 2025 Gebühren,standard,2026-10-12,DE-03,Entrenched dedicated site + networks + legal publishers. HARD-MEDIUM.,"https://www.rvg-rechner.de/Downloads/RVG-Tabelle-34GKG-28FamGKG_2025.pdf
+https://www.smart-rechner.de/anwaltskosten/ratgeber/tabelle_anwaltskosten.php
+https://calcforlife.com/de/rvg-rechner/
+https://rechner-portal.de/finanzen/recht-gebuehren/rvg-rechner
+https://www.haufe.de/recht/rvg-anpassung-was-sich-durch-das-kostbraeg2025-aendert_226_649996.html",5,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S23,DE,Pfändungstabelle 2026 Pfändungsrechner,standard,2026-10-12,DE-04,AOK + networks. HARD.,"https://www.aok.de/fk/bremen/tools/pfaendungsrechner/
+https://www.steuerschroeder.de/Steuerrechner/Pfaendungsrechner.html
+https://www.buergergeld.org/pfaendungstabelle/
+https://www.deutschland-rechner.de/pfaendungstabelle-2026
+https://www.smart-rechner.de/pfaendung/ratgeber/pfaendungstabelle_2026_bis_2027_monatlich.php",5,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S24,DE,Festmeter Raummeter Schüttraummeter Rechner Brennholz,standard,2026-10-12,DE-09,Networks present; conversion factors disagree. MEDIUM.,"https://www.sanier.de/holz/masseinheiten-fuer-holz
+https://rechner-portal.de/bau-handwerk/holz-statik/festmeter-rechner
+https://www.chemie.de/lexikon/Raummeter.html
+https://www.haustechnikdialog.de/SHKwissen/1504/Festmeter",4,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S25,DE,Silben trennen online Silbentrennung Wort,standard,2026-10-12,DE-06,Established single-purpose tools (silbentrennung24) referenced. MEDIUM.,"https://www.schieb.de/?p=746736
+https://www.meinunterricht.de/blog/silbentrennung-so-trennt-man-woerter-richtig/
+https://studyflix.de/deutsch/silbentrennung-3310",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S26,DE,Kündigungsfrist Rechner Arbeitnehmer berechnen,standard,2026-10-12,DE-05,Legal portal + HR SaaS + networks. HARD.,"https://arbeitsrechte.de/kuendigungsfristenrechner
+https://www.ordio.com/tools/kuendigungsfrist-rechner
+https://www.deutschland-rechner.de/kuendigungsfrist-rechner
+https://rechner-portal.de/finanzen/gehalt/kuendigungsfristen-rechner
+https://calcforlife.com/de/kuendigungsfrist-rechner/",5,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S27,DE,Sütterlin Übersetzer online,standard,2026-10-12,DE-10,Standard mode only.,"https://www.compgen.de/?p=65845
+https://www.transkribus.org/suetterlin-transcription-software
+https://www.giga.de/downloads/suetterlin/",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S28,DE,Sütterlin Generator Text in Sütterlinschrift umwandeln online Kurrent,extended,2026-10-12,DE-10,Generators (Fraktur-style Unicode) + HTR services. MEDIUM.,"https://www.transkribus.org/suetterlin-transcription-software
+https://omastagebuch.de/
+https://schriftengenerator.org/altdeutsche-schrift-generator/
+https://handwritingtotext.org/sutterlin-to-text
+https://schriftartenn.de/altdeutsche-schrift-generator/
+https://www.fontgenerator.art/de/altdeutsche-schrift/ad-suetterlin/",6,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S29,DE,Verzugszinsen Rechner Basiszinssatz 2026,standard,2026-10-12,DE-07,Networks + invoicing SaaS; one network shows stale Basiszinssatz (1.27% vs 1.52% from 01.07.2026). MEDIUM-HARD.,"https://jurawelt.com/verzugszinsen-berechnen/
+https://www.steuerschroeder.de/Steuerrechner/Basiszins.html
+https://www.selbststaendig.de/verzugszinsen-rechner
+https://kostenlose-erechnung.de/ratgeber/verzugszinsen-b2b-40-euro-pauschale/
+https://www.deutschland-rechner.de/verzugszinsen-rechner
+https://rechner-hub.de/verzugszinsen-rechner/
+https://rechner-portal.de/finanzen/recht-gebuehren/verzugszinsen-berechnen",7,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S30,ES,calculadora actualización alquiler IRAV 2026,standard,2026-10-12,ES-04,Official INE / Ministerio de Vivienda tools referenced. MEDIUM-HARD.,"https://ayuda-social.es/herramienta-calculo-alquiler/
+https://www.raisin.com/es-es/noticias/los-alquileres-que-se-actualicen-con-el-irav-de-agosto-subiran-un-2-47-y-los-del-ipc-un-4-3/
+https://www.ocu.org/fincas-y-casas/gestion/alquiler/analisis/2025/12/subira-la-renta-en-2026
+https://www.vivara.io/blog/innovacion/calculadora-subida-alquiler-2026/",4,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S31,ES,calculadora nota PAU 2026 ponderaciones nota de corte,standard,2026-10-12,ES-01,One strong specialist (yaq.es) fills results; data per community/university. MEDIUM.,"https://yaq.es/selectividad/ponderaciones-asturias
+https://yaq.es/node/19",2,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S32,ES,calculadora letra DNI NIE online,standard,2026-10-12,ES-02,Invoicing SaaS + official algorithm page. MEDIUM.,"https://www.billin.net/calculadoras/calculadora-letra-dni-y-nif/
+https://www.interior.gob.es/opencms/es/servicios-al-ciudadano/tramites-y-gestiones/dni/calculo-del-digito-de-control-del-nif-nie/
+https://loentiendo.com/?p=88600",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S33,ES,calculadora plazos procesales días hábiles LEC,standard,2026-10-12,ES-03,Standard mode missed Spanish tools (see S35).,"https://e-justice.europa.eu/topics/court-procedures/civil-cases/time-limits-procedures/es_es
+https://www.economistjurist.es/?p=39581
+https://www.gerencie.com/calculadora-de-dias-habiles.html",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S34,ES,calculadora CGPJ plazos procesales poder judicial,standard,2026-10-12,ES-03,No CGPJ calculator confirmed.,"https://www.economistjurist.es/noticias-juridicas/truco-para-calcular-plazos-procesales-con-festivos-locales-sin-errores/
+https://web.icam.es/acuerdo-adoptado-por-el-cgpj-sobre-levantamiento-de-la-suspension-de-plazos-procesales-y-administrativos/",2,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S35,ES,poderjudicial.es calculadora de plazos procesales herramienta CGPJ días inhábiles,extended,2026-10-12,ES-03,CORRECTION: >=6 Spanish deadline calculators incl. legal publisher Sepin and an exact-match domain. HARD-MEDIUM.,"https://www.sepin.es/utilidades-herramientas/herramientas/calculador-plazos-procesales.asp
+https://calculadoraplazos.es/
+https://estudiaderecho.es/calculadora-plazos-procesales/
+https://calcularindemnizacion.es/calculadoras/plazos-procesales
+https://adcordis.com/calculadora-plazos/
+https://www.javaloyeslegal.com/blog/calculadora-plazos-procesales
+https://kosmalabs.com/blog/calcular-plazo-procesal-festivos-locales/",7,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S36,ID,hitung weton jodoh online,standard,2026-10-12,ID-01,Standard mode: news/lifestyle articles.,"https://kabar24.bisnis.com/read/20250919/243/1912062/perhitungan-weton-jodoh-dan-tafsir-lengkap-online
+https://www.detik.com/jateng/budaya/d-8165445/cara-cek-kecocokan-jodoh-berdasarkan-weton-dan-primbon-jawa-untuk-pernikahan
+https://www.popbela.com/relationship/married/cek-perhitungan-weton-jodoh-online-00-kc27c-dzr6kb",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S37,ID,hitung weton jodoh kalkulator weton online neptu,extended,2026-10-12,ID-01,>=8 tools; neptu/pasaran tables and division methods inconsistent across sites (trust gap). MEDIUM.,"https://kalenderindo.id/weton-jodoh
+https://hitunganweton.id/
+https://www.suara.com/lifestyle/2026/07/23/131855/kalkulator-weton-online-cek-hari-lahir-menurut-penanggalan-jawa
+https://jalinjanji.com/tools/cek-weton/
+https://hitungweton.com/weton-jodoh-online
+https://javasenseapp.com/id/cek-jodoh-menurut-weton/
+https://www.itungin.com/kalkulator-weton
+https://se-hari.com/tools/kalkulator-weton-jawa
+https://wedding.manggala.cloud/alat/hitung-weton",9,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S38,ID,kalender jawa 2026 lengkap dengan weton pasaran,standard,2026-10-12,ID-01,"Calendar intent served by monthly news articles, not interactive calendars. WEAK-MEDIUM.","https://katadata.co.id/lifestyle/varia/6a39f918dddc9/kalender-jawa-juli-2026-lengkap-dengan-weton-dan-pasarannya
+https://www.metrotvnews.com/read/kewCjRY2-kalender-jawa-januari-2026-lengkap-dengan-weton-pasaran-dan-neptu
+https://www.goodnewsfromindonesia.id/2026/04/24/cek-weton-kalender-jawa-hari-ini-24-april-2026",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S39,ID,translate aksara jawa latin online,standard,2026-10-12,ID-02,Standard mode only.,"https://www.producthunt.com/products/aksara-jawa/makers
+https://www.gramedia.com/literasi/?p=80226",2,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S40,ID,translate aksara jawa ke latin online alat transliterasi aksara sunda bali,extended,2026-10-12,ID-02,>=6 tools incl. photo-scan OCR. MEDIUM-HARD.,"https://goonlinetools.com/id/translate-aksara-bali/
+https://bennylin.github.io/transliterasijawa/
+https://aksarasunda.id/
+https://nulisaksara.id/
+https://tools.teknis.id/p/translate-aksara-jawa.html
+https://aksarajawa.net/",6,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S41,ID,1 mayam berapa gram emas kalkulator harga,standard,2026-10-12,ID-03,Pegadaian + Pluang + news; factoid zero-click risk. MEDIUM-HARD.,"https://pegadaian.co.id/artikel/emas/1-mayam-berapa-gram
+https://www.cermati.com/artikel/mayam
+https://pluang.com/en/tools/kalkulator-emas-mayam
+https://www.liputan6.com/hot/read/6123386/1-mayam-itu-berapa-gram-ini-penjelasan-lengkapnya",4,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S42,ID,1 tumbak berapa meter persegi konversi bata ru,standard,2026-10-12,ID-04,Standard mode only.,"https://akurat.co/pendidikan/800094/ukuran-1-bata-berapa-meter-ini-hitungan-resmi-satuan-tanah-di-pulau-jawa-tahun-2025
+https://miniwebtool.com/id/konverter-satuan-lahan-india/",2,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S43,ID,1 tumbak berapa meter konversi satuan tanah bata ru bau kalkulator,extended,2026-10-12,ID-04,"99.co guides + 2 converters; values conflict (tumbak ~14 m² vs 56 m²; bau 7,000 vs 7,100 m²). MEDIUM.","https://www.99.co/id/panduan/1-tumbak-berapa-meter/
+https://www.99.co/id/panduan/satuan-luas-tanah/
+https://www.sederet.com/calc/luas_tanah.php
+https://teraa.net/satuan-ukuran-tanah/
+https://kalkulator.click/kalkulator-luas-tanah",5,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S44,ID,kalkulator waris islam online faraid,standard,2026-10-12,ID-06,NU Online (app) + Justika; religious-legal YMYL. MEDIUM.,"https://nu.or.id/nasional/kalkulator-waris-nu-online-hitung-hak-ahli-waris-dalam-sekejap-v8EGR
+https://www.hukumonline.com/berita/a/mau-tahu-perhitungan-harta-waris-yuk-intip-kalkulator-waris-islam-lt6078f2b54db33
+https://www.megasyariah.co.id/id/artikel/edukasi-tips/asuransi-syariah/mengenal-kalkulator-waris-islam",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S45,ID,converter excel ke xml coretax bukti potong,standard,2026-10-12,ID-08,Official DJP converters (frequently versioned). HARD-MEDIUM.,"https://news.ddtc.co.id/literasi/tips-trik/1807194/cara-konverter-excel-to-xml-untuk-impor-data-di-aplikasi-coretax
+https://www.pajak.com/pajak/perubahan-impor-data-di-core-tax-unduh-template-xml-di-sini/
+https://ortax.org/ada-update-djp-perbarui-converter-xml-bupot-pph-pasal-21
+https://www.pajak.go.id/en/node/112031",4,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S46,ID,kalkulator jadian hitung hari jadian online,standard,2026-10-12,ID-09,Standard mode only.,"https://www.popbela.com/relationship/dating/kalkulator-hitung-jadian-00-ck827-1wb2hw
+https://miniwebtool.com/id/kalkulator-hari-jadi/
+https://kalenderku.id/kalkulator",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S47,ID,kalkulator jadian online hitung hari jadian pacaran,extended,2026-10-12,ID-09,>=5 tools incl. exact-match domain. MEDIUM-HARD for a commodity tool.,"https://kalkulatorjadian.net/
+https://teknogram.id/tools/kalkulator-jadian/
+https://rabiyuk.com/tools/kalkulator-hari-jadian/
+https://www.ajakteman.com/p/jadian.html
+https://bacartikel.id/kalkulator-tanggal-jadian/
+https://www.idntimes.com/life/relationship/kalkulator-jadian-online-00-dfnzv-cxjxnm",6,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S48,ID,kalkulator umur online hitung umur dari tanggal lahir,standard,2026-10-12,ID-09,Generic translated tools + spam pages ranking. WEAK-MEDIUM.,"https://kalenderku.id/kalkulator-umur
+https://everycalculators.com/kalkulator-umur-online-gratis.html
+https://miniwebtool.com/id/kalkulator-usia/
+https://freetoolonline.com/guides/id/age-calculator-step-by-step.html",4,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S49,ID,terbilang rupiah online konversi angka ke huruf,standard,2026-10-12,NUM,One multi-language network + libs. WEAK-MEDIUM.,"https://everycalculators.com/kalkulator-terbilang-rupiah.html
+https://www.idntimes.com/tech/trend/rumus-terbilang-excel-1-00-2k3g7-431gxm
+https://fanruan.com/id/blog/panduan-lengkap-download-terbilang-excel",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S50,JP,住所 英語 変換 ツール,standard,2026-10-12,JP-01,Standard mode only.,"https://toolsbase.dev/ja/text/address-romanizer
+https://gori.me/it/26088
+https://developers.google.com/maps/documentation/address-validation/convert-addresses-english?hl=ja",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S51,JP,住所 英語表記 変換 サイト 郵便番号 自動,extended,2026-10-12,JP-01,">=9 converters, some already using Japan Post official romaji data and multi-format output. MEDIUM-HARD.","https://judress.tsukuenoue.com/
+https://www.haradaeigo.com/address-english-converter/
+https://jptools.jp/address
+https://address.lomdesign.jp/
+https://www.mulchar.co.jp/blog/japanese-to-english-address-converter
+https://benritools.org/english-address
+https://toolnavi.net/src/tools/utility/address-en/
+https://finance-media.jp/tools/address-converter/",8,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S52,JP_EN,japanese address in english converter,standard,2026-10-12,JP-01,"English SERP: JuDress write-up, Google API docs, forum. WEAK-MEDIUM.","https://gigazine.net/gsc_news/en/20130128-judress
+https://developers.google.com/maps/documentation/address-validation/convert-addresses-english
+https://cotoacademy.com/?p=100516",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S53,JP,全角 半角 変換 ツール オンライン,standard,2026-10-12,JP-TXT,Extension listings + small tools + dev articles. MEDIUM.,"https://www.luft.co.jp/cgi/category-text-editing.php
+https://uravation.com/tools/zenkaku-hankaku/
+https://zenn.dev/kojimaru/articles/785480cf51d8e4
+https://chromeboard.com/extension/全角半角変換ツール-kfmmgidbicnfkokngkelgdkceddbdcoh",4,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S54,JP,機種依存文字 チェッカー オンライン 環境依存文字 チェック,standard,2026-10-12,JP-TXT,"Old checkers (さぶみっと!, 秋田大学) referenced; PDFs. WEAK-MEDIUM.","https://atmarkit.itmedia.co.jp/ait/articles/2112/13/news018.html
+https://allabout.co.jp/gm/gc/23869/2/
+https://www.pref.osaka.lg.jp/documents/101375/kinshimoji.pdf",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S55,JP,育児休業給付金 計算ツール 出生後休業支援給付金,standard,2026-10-12,JP-06,Official MHLW simulator (shussan.ikukyu-simu.mhlw.go.jp) + MoneyForward. HARD-MEDIUM.,"https://roumu.com/archives/130115.html
+https://gyomu-keisan.jp/payroll/ikuji-kyufukin/
+https://hojyokin-portal.jp/columns/ikukyu_teate_tool
+https://biz.moneyforward.com/payroll/basic/?p=76773",4,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S56,JP,退職金 税金 計算 シミュレーション 退職所得控除,standard,2026-10-12,JP-07,MoneyForward dominates; formula simple. MEDIUM-HARD.,"https://biz.moneyforward.com/payroll/basic/discharge-allowance-income-tax/
+https://sum.money/jp/taishokukin-zei/
+https://financial-field.com/oldage/entry-267546
+https://www.invest-concierge.com/posts/about-retirement-income-deduction",4,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S57,JP,原稿用紙 文字数 換算 ツール 枚数,standard,2026-10-12,JP-03,Standard mode only.,"https://community.obsidian.md/plugins/japanese-manuscript-counter
+https://uravation.com/tools/moji-count/
+https://toolsbase.dev/ja/text",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S58,JP,原稿用紙 変換 ツール テキスト 原稿用紙 形式 PDF 禁則処理 オンライン,extended,2026-10-12,JP-03,>=5 manuscript-paper renderers with PDF output. MEDIUM-HARD.,"https://www.benricho.org/Tips/genkoeditor/
+https://tooldock.github.io/genkoyosi/
+https://mojisuu.com/genkoyoshi
+https://hakotools.com/tools/genkou-youshi/
+https://temototool.com/tools/tategaki-maker/",5,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S59,JP,一反 何坪 換算 坪 平米 畳 計算,standard,2026-10-12,JP-05,Standard mode only.,"https://allabout.co.jp/gm/gc/472290
+https://www.livable.co.jp/l-note//question/s11424/
+https://e-estate.jp/media/land-sale/blog/1761/",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S60,JP,坪 平米 換算 ツール 一反 何坪 計算 畝 町歩,extended,2026-10-12,JP-05,>=7 converters + real-estate majors. HARD-MEDIUM.,"https://rakkokeyword.com/techo/tool-tsubo-to-heibei/
+https://testpage.jp/tool/shakkan_menseki.php
+https://f-mikata.jp/japanese-size-unit-conversion-tool/
+https://o-uccino.com/front/tool/area_unit/
+https://tool-calc.com/tsubo/
+https://toolbako.com/tsubo-heibei/
+https://www.siraberu-tool.net/conversion/m2-tubo/",7,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S61,JP,子ども子育て支援金 計算方法 いくら 計算ツール,standard,2026-10-12,JP-13,Standard mode only.,"https://www.kaiketsu-j.com/?p=20025
+https://www.dlri.co.jp:443/files/ld/322043.pdf",2,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S62,JP,子ども・子育て支援金 計算 シミュレーション ツール 月額 標準報酬,extended,2026-10-12,JP-13,Official explanation (rate 0.23%) + a calculator using a wrong 0.18% rate + many articles. MEDIUM.,"https://www.cfa.go.jp/policies/kodomokosodateshienkinseido
+https://hcm-jinjer.com/blog/kintai/childcare-support-benefit/
+https://keisan-tool.com/kosodateshienkin
+https://moneyliteracy.news/child-care-support-levy-2026",4,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S63,JP,傷病手当金 計算ツール 支給額 シミュレーション,standard,2026-10-12,JP-08,Standard mode only.,"https://moneiro.jp/media/article/injury-and-disease-allowance
+https://www.freee.co.jp/kb/kb-payroll/disability-allowance/
+https://hoken.kakaku.com/gma/select/syobyou/",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S64,JP,傷病手当金 計算ツール 自動計算 支給額 いくら,extended,2026-10-12,JP-08,>=5 tools + insurer brand; one ranking quick-reference table contains a calculation error. MEDIUM-HARD.,"https://sharoushi-cloud.com/shoubyouteate-tool/
+https://manekomi.tmn-anshin.co.jp/kenko/17600483
+https://keisan.site/exec/system/1539655799
+https://jimu-dx.com/shoubyou-teatekin-calculator/
+https://calceasy.net/finance/allowance-benefits/sickness-benefit
+https://invitro.co.jp/weblog/taisyoku/situgyouhoken/quick-reference-table-injury-and-sickness-allowance/",6,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S65,JP,ヘボン式 ローマ字 変換 パスポート 名前,standard,2026-10-12,JP-11,Prefecture passport-rule pages. MEDIUM.,"https://www.pref.osaka.lg.jp/o070140/passport/top/romaji.html
+https://www.pref.kanagawa.jp/docs/h6d/passport/hepburn.html
+https://www.pref.saitama.lg.jp/passport/kinyure/romajihyoki.html",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S66,JP,最低賃金 2026 一覧 都道府県別 年収 換算,standard,2026-10-12,JP-04,Job portals + MHLW list. MEDIUM-HARD.,"https://romsearch.officestation.jp/news/58265
+https://job-medley.com/tips/detail/941/
+https://bestcalendar.jp/tools/saitei-chingin",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S67,JP_EN,japan take home pay calculator foreigners,standard,2026-10-12,JP_EN-01,No dominant brand (standard mode). MEDIUM.,"https://www.ejable.com/japan-corner/working-in-japan/japan-net-income-calculator/
+https://relocate.me/net-pay-calculators/japan
+https://jftguru.com/tools/japan-salary-calculator
+https://valem.onrender.com/calculators/japan/net-salary",4,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S68,JP_EN,japan pension lump sum withdrawal calculator,standard,2026-10-12,JP_EN-02,Standard mode only.,"https://lightboat.lightworks.co.jp/article/calculation-of-lump-sum-withdrawal-payment-in-english
+https://mailmate.jp/blog/japan-pension-refund
+https://www.foreign.city.shinjuku.lg.jp/en/kurashi/dattai/",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S69,JP_EN,japan pension lump sum withdrawal calculator employees pension refund estimate tool,extended,2026-10-12,JP_EN-02,">=3 estimators, mostly run by refund agents. MEDIUM.","https://helloworldjapan.com/en/tools/japan-pension-refund-estimator
+https://easynenkin.com/en/calculator
+https://visashogun.com/en/pages/pension-refund-japan
+https://www.pg-taxrefund.co.jp/pensionrefund/english/payment.html
+https://life.m-ri.co.jp/en/pension-guide.html",5,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S70,MX,calculadora finiquito y liquidación 2026 México,standard,2026-10-12,MX-01,Mid-size specialists; UMA/SM values differ between sites. MEDIUM.,"https://elconta.mx/calculadora-gratuita-de-finiquito-y-liquidacion-laboral/
+https://hacecuentas.com/calculadora-finiquito-liquidacion-mexico-2026
+https://cotizadorhipotecario.mx/laboral/calculadora-finiquito
+https://calcuris.com/es/mexico/laboral/calculo-liquidacion/
+https://sdv.com.mx/herramientas/calculadora-liquidacion/",5,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S71,MX,calculadora finiquito liquidación México gratis PROFEDET calculadora oficial,extended,2026-10-12,MX-01,>=9 third-party tools incl. exact-match domains; no official PROFEDET calculator surfaced. MEDIUM.,"https://calculadorade-finiquito.com.mx/
+https://calculolaboral.mx/
+https://www.calculadorasat.org/calculadoras/nomina/calculadora-finiquito-liquidacion
+https://calculadoraliquidacion.com/
+https://www.tucalculadorasat.com/calculadora_finiquito.html
+https://tucalculolaboral.com/finiquito/mexico/
+https://tucalculadora.com/laboral/finiquito-liquidacion/
+https://cifrasnet.com/tools/finiquito-liquidacion/",8,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S72,MX,calculadora aguinaldo 2026 PROFEDET,standard,2026-10-12,MX-01,"Fragmented; ISR exemption computed with different UMA values (3,519.30 vs 3,394.20). MEDIUM.","https://calcforlife.com/?p=2051
+https://cotizadorhipotecario.mx/laboral/calculadora-aguinaldo
+https://calcuris.com/es/mexico/laboral/como-calcular-aguinaldo/
+https://www.excelsior.com.mx/finanzas/cuando-paga-aguinaldo-2026-puedes-calcular-cuanto-toca",4,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S73,MX,calculadora modalidad 40 IMSS ley 73 pensión,standard,2026-10-12,MX-02,Standard mode only; rate discrepancy 12.256% vs 14.438%.,"https://calculoseguro.mx/calculadora-modalidad-40/
+https://www.unotv.com/pensiones/modalidad-40-del-imss-cuanto-cuesta-en-2026-y-quien-puede-acceder/
+https://www.elimparcial.com/mexico/2025/12/19/imss-cambia-la-modalidad-40-en-2026-costara-mas-mejorar-la-pension/",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S74,MX,calculadora modalidad 40 2026 simulador pensión ley 73 gratis,extended,2026-10-12,MX-02,">=10 dedicated calculators, several selling reports. HARD-MEDIUM.","https://aumentatupension.mx/herramientas/calculadora
+https://www.rivenza.com.mx/herramientas/simulador-modalidad-40
+https://www.calculadoramodalidad40.com/
+https://calcu.mx/pensiones
+https://www.m40.mx/
+https://trimsy.mx/modalidad-40
+https://calcusueldomx.com/pension-imss
+https://www.cotiza40.com/
+https://www.mipension-gva.com/",9,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S75,MX,udis a pesos calculadora hoy,standard,2026-10-12,MX-03,Standard mode only.,"https://www.arqfinance.com/es-MX/blog/your-money/que-son-udis
+https://calcforlife.com/es/calculadora-de-udis/
+https://www.tusbuenasnoticias.com/noticias/economia/2026/01/07/55382-calculadora-de-pesos-a-udis-convierte-pesos-y-protege-tu-dinero",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S76,MX,convertir udis a pesos valor udi hoy banxico calculadora,extended,2026-10-12,MX-03,Live-value converters incl. two exact-match domains; values differ by date (stale caching). MEDIUM-HARD.,"https://www.elcontribuyente.mx/indicadores/udi/
+https://www.banxico.org.mx/SieInternet/consultarDirectorioInternetAction.do?sector=8&accion=consultarCuadro&idCuadro=CP150&locale=es
+https://prestamoya.mx/herramientas/calculadora-udi
+https://senhub.mx/herramientas/valor-udi
+https://valorudi.com/
+https://calculadora-udi.com/
+https://calculadora-udi.com/udi/2026",7,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S77,MX,calcular RFC con homoclave gratis SAT,standard,2026-10-12,MX-04,Entrenched e-invoicing vendor; homoclave is assigned by SAT (estimate-only risk). HARD-MEDIUM.,"https://www.edifact.com.mx/masinfo/calcular-rfc-con-homoclave
+https://contadormx.com/calcular-el-rfc-con-homoclave-desde-excel-registro-federal-de-contribuyentes-sat/
+https://www.adn40.mx/mexico/rfc-homoclave-gratis-que-es-y-en-que-consiste",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S78,MX,foto tamaño infantil medidas imprimir online,standard,2026-10-12,MX-05,Well-funded photo SaaS + content farm. HARD-MEDIUM.,"https://passport-photo.online/es-mx/foto-tamano-infantil
+https://tecnobits.com/como-convertir-una-foto-a-tamano-infantil/
+https://www.aztecajalisco.com/local/medidas-exactas-fotografia-tamano-infantil-preinscripciones-sep",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S79,MX,calculadora USICAMM 2026 promoción horizontal puntos,standard,2026-10-12,MX-07,Index gap: no relevant results. UNVERIFIED.,,0,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S80,PL,KSeF podgląd faktury XML wizualizacja online,standard,2026-10-12,PL-01,Standard mode only.,"https://www.fakturowo.pl/pomoc/podglad-faktury-w-ksef.pdf
+https://www.podatki.biz/artykuly/wizualizacje-faktur-w-ksef-2-0_55_59807.htm",2,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S81,PL,wizualizacja faktury KSeF XML do PDF online narzędzie bez logowania,extended,2026-10-12,PL-01,>=6 free in-browser visualisers incl. exact-match domain. MEDIUM-HARD.,"https://wizualizacjaksef.pl/
+https://ksefusz.pl/
+https://ksefeusz.pl/
+https://systemfaktur.pl/
+https://mojksef.online/
+https://weryfikacjafaktur.pl/blog/wizualizacja-faktury-ksef/
+https://ksefimport.pl/blog/podglad-faktury-ksef-bez-logowania",7,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S82,PL,odmiana nazwisk przez przypadki online,standard,2026-10-12,PL-02,Standard mode only.,"https://akademia.tvp.pl/84080880/nazwiska-odmieniac-czy-nie-odmieniac-oto-jest-pytanie
+https://nck.pl/projekty-kulturalne/projekty/ojczysty-dodaj-do-ulubionych/ciekawostki-jezykowe/kiedy-apostrof-w-odmianie-nazwisk-.ajax",2,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S83,PL,odmiana nazwisk online generator odmiana przez przypadki narzędzie,extended,2026-10-12,PL-02,>=6 tools incl. wedding-invitation generators; quality caveats on foreign/unusual surnames. MEDIUM.,"https://meetly.com.pl/narzedzia/odmiana-nazwisk
+https://szukajnazwiska.pl/odmiana-nazwisk
+https://eodmiany.pl/nazwiska/odmiana-przez-przypadki-nazwisk
+https://odmiana.net/odmiana-przez-przypadki-rzeczownika-nazwisko
+https://www.odmiana-nazwisk.waw.pl/
+https://kalmarry.pl/narzedzia/odmiana-nazwisk
+https://portal.janachowska.pl/jak-odmieniac-nazwiska-na-zaproszeniach/",7,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S84,PL,kwota słownie online zamiana liczby na słowa,standard,2026-10-12,NUM,Standard mode only.,"https://rankomat.pl/finanse/?p=7959
+https://fakturownia.pl/firma-w-praktyce/kwota-slownie-jak-prawidlowo-ja-zapisywac",2,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S85,PL,kwota słownie generator online złotych groszy,extended,2026-10-12,NUM,SATURATED (>=9 generators on finance-affiliate sites). HARD-MEDIUM.,"https://www.czerwona-skarbonka.pl/kwota-slownie-generator/
+https://bizneskalkulator.pl/kwota-slownie/
+https://wyliczanie.pl/kwota-slownie
+https://e-kursy-walut.pl/warto-wiedziec/generator-kwoty-slownie/
+https://minikalkulator.pl/kwota-slownie
+https://bankmoney.pl/generator-kwoty-slownie/",6,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S86,PL,kalkulator stażu pracy 2026 umowy zlecenia,standard,2026-10-12,PL-04,2026 rule change (zlecenie/JDG count). MEDIUM.,"https://www.ordio.com/pl/tools/kalkulator-stazu-pracy
+https://calcforlife.com/?p=3724
+https://hrappka.pl/?p=61155
+https://www.podatki.biz/artykuly/staz-pracy-na-nowych-zasadach-pytania-i-odpowiedzi_10_60860.htm",4,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S87,PL,kalkulator stażu pracy online gofin urlop jubileusz,extended,2026-10-12,PL-04,GOFIN (strong publisher) + several tools. MEDIUM-HARD.,"https://kalkulatory.gofin.pl/kalkulatory/kalkulator-stazu-pracy-1
+https://kalkulatory.gofin.pl/kalkulatory/kalkulator-stazu-urlopowego
+https://www.kalkulator-pracy.pl/
+https://pancaro.pl/narzedzia/kalkulator-stazu-pracy/
+https://webp.pl/kalkulator-stazu-pracy
+https://dobrykalkulator.pl/kalkulator-stazu-pracy-ze-szkola-oblicz-urlop/",6,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S88,PL,słowa z liter układanie wyrazów z liter,standard,2026-10-12,PL-05,Programmatic word-finder (poocoo) + noise. MEDIUM (not re-checked in extended mode).,"https://poocoo.pl/scrabble-literaki-slowa-z-liter/szyfruj
+https://geekweek.interia.pl/styl-zycia/news-najlepsze-slowa-w-scrabble-duzo-punktow-i-mistrz-dla-ciebie,nId,6715101",2,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S89,PL,kalkulator punktów rekrutacyjnych liceum 2026,standard,2026-10-12,PL-06,Tabloid/news calculators. MEDIUM (standard only).,"https://www.se.pl/bydgoszcz/kalkulator-punktow-do-liceum-i-technikum-jak-liczyc-punkty-do-szkoly-ponadpodstawowej-2025-2026-aa-NmSj-kYJC-TKXW.html
+https://calcforlife.com/?p=3684
+https://www.eska.pl/news/wyniki-z-testow-to-nie-wszystko-podczas-rekrutacji-samodzielnie-oblicz-punkty-i-zawalcz-o-miejsce-w-liceum-aa-vHjc-ntaN-pUqA.html",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S90,PL,kalkulator drewna m3 tarcica okrągłe,standard,2026-10-12,PL-07,Omni Calculator strong. MEDIUM-HARD.,"https://calcforlife.com/?p=2236
+https://www.omnicalculator.com/pl/budownictwo/kalkulator-tarcicy
+https://cenauslug.pl/kalkulatory/kalkulator-objetosci-drewna",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S91,PL,hektar przeliczeniowy 2026 kalkulator,standard,2026-10-12,PL-08,Standard mode only.,"https://www.infor.pl/wskazniki/podatki/podatek-rolny/50,Podatek-rolny.html
+https://www.podatki.biz/artykuly/przeliczanie-hektarow-dla-potrzeb-podatku-rolnego-interpretacja-ogolna-mf_59_36842.htm",2,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S92,PL,kalkulator hektar przeliczeniowy online podatek rolny klasa gruntu okręg podatkowy,extended,2026-10-12,PL-08,Only one dedicated calculator (agrimetra) + municipal spreadsheet. WEAK-MEDIUM (best organic gap found).,"https://agrimetra.com/pl/poradniki/jak-obliczyc-hektary-przeliczeniowe/
+https://www.bip.krakow.pl/zalacznik.php?zid=66493&wer=0&new=t&mode=shw
+https://arslege.pl/podstawa-opodatkowania-podatkiem-rolnym-okregi-podatkowe-przeliczniki-powierzchni-uzytkow-rolnych/k74/a16834/
+https://blog.ongeo.pl/podatek-rolny
+https://i-rolnik.pl/podatek-rolny-2025-terminy-stawki-zwolnienia/",5,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S93,PL,renta wdowia kalkulator 2027 ile wyniesie,standard,2026-10-12,PL-09,Standard mode only.,"https://forsal.pl/finanse/twoje-pieniadze/artykuly/11283277,renta-wdowia-wzrosnie-od-2027-roku-25-procent-drugiego-swiadczenia.html
+https://www.gazetaprawna.pl/praca/emerytury-i-renty/artykuly/11262251,renta-wdowia-2027-nowy-limit-6142-zl.html",2,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S94,PL,renta wdowia kalkulator online 25 procent wyliczenie,extended,2026-10-12,PL-09,OFFICIAL ZUS and KRUS calculators exist. HARD.,"https://www.zus.pl/en/
+https://www.gov.pl/web/krus/kalkulator-laczenia-swiadczen-z-renta-rodzinna
+https://rentawdowia.pl/
+https://www.pit.pl/aktualnosci/renta-wdowia-jest-nowy-kalkulator-zus",4,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S95,PL,kalkulator odsetek ustawowych za opóźnienie,standard,2026-10-12,PL-11,Strong finance/legal brands. HARD-MEDIUM.,"https://fakturownia.pl/kalkulator-odsetek
+https://www.bankier.pl/narzedzia/kalkulator-odsetkowy
+https://poradnikprzedsiebiorcy.pl/kalkulator-odsetek-ustawowych
+https://www.infor.pl/kalkulatory/odsetki_ustawowe_za_opoznienie.html",4,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S96,TR,100'lük sistem 4'lük sisteme çevirme YÖK tablosu hesaplama,standard,2026-10-12,TR-01,Standard mode only; one ranking glossary publishes wrong values.,"https://www.akademikhukuk.org/hesaplamalar/yatay-gecis-uygunluk-hesaplama
+https://birimler.atauni.edu.tr/ogrenci-isleri-daire-baskanligi/wp-content/uploads/sites/18/2025/10/YOK_Cevirim-Tablosu_4-LUKTEN-100-LUGE.pdf
+https://www.hemenhesap.com/sozluk/diploma-notu",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S97,TR,4'lük not 100'lük sisteme çevirme hesaplama aracı YÖK dönüşüm tablosu online,extended,2026-10-12,TR-01,Turkish hesaplama networks + university PDFs. MEDIUM-HARD. Demand unverified.,"https://hesapo.com/not-donusturme/
+https://bilirhesap.com/egitim/diplomanotcevirici.php
+https://hesapmatik.com/hesapla/yuzluk-dortluk-not-cevirme-hesaplama/
+https://oidb.metu.edu.tr/en/equivalency-table-400-and-100-grading-system
+https://kafkas.edu.tr/dosyalar/smyo/file/SMYO%20Site%20G%C3%BCncelleme/TABLOLAR/Y%C3%96K%20Not%20D%C3%B6n%C3%BC%C5%9F%C3%BCm%20Tablosu.pdf",5,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S98,TR,AGS puan hesaplama 2026 akademi giriş sınavı,standard,2026-10-12,TR-04,Two specialist tools within weeks of a brand-new exam. MEDIUM. Demand unverified.,"https://sinavtime.com/ags-puan-hesapla
+https://rehberpanda.com/puan-hesaplama/ags/
+https://www.evrensel.net/haber/5997876/osymden-kritik-ags-aciklamasi-puanlar-yeniden-hesaplaniyor",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
+S99,TR,kıdem tazminatı hesaplama 2026 tavan,standard,2026-10-12,TR-02,National media + job portals. HARD.,"https://bigpara.hurriyet.com.tr/haberleri/kidem-tazminati-tavani-2026
+https://www.haberturk.com/2026-kidem-tazminati-tavani-ne-kadar-oldu-kac-tl-ye-yukseldi-ne-zamandan-itibaren-gecerli-kimler-yararlanabilir-3851550
+https://www.kariyer.net/ik-blog/kidem-tazminati-tavani-2026-temmuz/",3,"WebSearch tool (US index) with native-language query — proxy, not a geo-located Google SERP"
