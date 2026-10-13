@@ -1756,6 +1756,11 @@
 .weton-page-facts {
   font-size: var(--text-base);
 }
+/* A list made only of links: each one is a 24 px target even when the list wraps (WCAG 2.5.8). */
+.weton-page-facts .inline-list a {
+  display: inline-block;
+  padding-block: var(--space-1);
+}
 .jodoh-groups {
   display: grid;
   gap: var(--space-5);
