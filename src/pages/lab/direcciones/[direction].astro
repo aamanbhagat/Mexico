@@ -6,6 +6,7 @@
  */
 import '../../../styles/directions/sobre.css';
 import '../../../styles/directions/sumadora.css';
+import { Font, type CssVariable } from 'astro:assets';
 import AguinaldoPage from '../../es-mx/calculadora-aguinaldo/index.astro';
 
 export function getStaticPaths() {
@@ -14,6 +15,14 @@ export function getStaticPaths() {
 }
 
 const { direction } = Astro.params;
+// Lab fonts are only registered in LAB builds, so their CSS variables are not in the generated types.
+const labFonts = (direction === 'sobre'
+  ? ['--font-bitter', '--font-courier']
+  : direction === 'sumadora'
+    ? ['--font-instrument', '--font-martian']
+    : []) as unknown as CssVariable[];
 ---
 
-<AguinaldoPage direction={direction} pathOverride={`/lab/direcciones/${direction}/`} />
+<AguinaldoPage direction={direction} pathOverride={`/lab/direcciones/${direction}/`}>
+  {labFonts.map((v) => <Font cssVariable={v} preload slot="head" />)}
+</AguinaldoPage>

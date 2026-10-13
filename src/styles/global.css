@@ -463,6 +463,18 @@
   padding-right: 3.5rem;
 }
 
+/* Two short fields side by side from tablet width up. */
+.field-pair {
+  display: grid;
+  gap: var(--space-5);
+}
+@media (min-width: 30rem) {
+  .field-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+}
+
 /* Segmented control: native radios; selection moves with a short ease-out. */
 .segmented__track {
   display: grid;
@@ -818,6 +830,39 @@
   color: var(--ink-2);
 }
 
+.facts {
+  margin: 0;
+  display: grid;
+  gap: 0;
+  font-size: var(--text-sm);
+  border-top: 1px solid var(--rule);
+}
+.facts > div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-block: var(--space-2);
+  border-bottom: 1px solid var(--rule);
+}
+.facts dt {
+  color: var(--ink-2);
+}
+.facts dd {
+  margin: 0;
+  text-align: right;
+  font-weight: var(--strong-weight);
+  font-variant-numeric: tabular-nums;
+}
+.facts__note {
+  display: block;
+  font-weight: var(--body-weight);
+  color: var(--ink-2);
+  font-size: var(--text-xs);
+}
+.schedule {
+  max-width: 24rem;
+}
+
 .calc__fine {
   font-size: var(--text-sm);
   color: var(--ink-2);
@@ -981,9 +1026,19 @@
 .prose ul,
 .prose ol {
   margin: 0;
-  padding-left: 1.25rem;
+  padding-left: 1.5rem;
   display: grid;
   gap: var(--space-2);
+}
+.prose ol {
+  list-style: decimal;
+}
+.prose ul {
+  list-style: disc;
+}
+.prose li::marker {
+  font-weight: var(--strong-weight);
+  color: var(--ink-2);
 }
 .prose strong {
   font-weight: var(--strong-weight);
@@ -1224,6 +1279,10 @@
 .table-scroll {
   overflow-x: auto;
   max-width: 100%;
+}
+.table-scroll:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
 }
 .highlight-row {
   background: color-mix(in srgb, var(--tool) 12%, transparent);

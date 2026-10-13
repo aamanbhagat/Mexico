@@ -50,6 +50,8 @@ export default tseslint.config(
       'react-hooks/exhaustive-deps': 'warn',
       // Labels wrap their native radio inputs; the rule cannot see through the <span>.
       'jsx-a11y/label-has-associated-control': ['error', { assert: 'either', depth: 3 }],
+      // Horizontally scrolling tables are focusable regions so keyboard users can scroll them.
+      'jsx-a11y/no-noninteractive-tabindex': ['error', { roles: ['tabpanel', 'region'], tags: [] }],
     },
   },
   {

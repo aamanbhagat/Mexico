@@ -3,7 +3,21 @@
  * and radio buttons give keyboard support, autofill and screen-reader semantics for free.
  */
 import type { ComponentChildren } from 'preact';
-import { useEffect, useId, useState } from 'preact/hooks';
+import { useEffect, useId, useRef, useState } from 'preact/hooks';
+
+/**
+ * Islands hydrate a moment after the HTML is visible. On a slow phone someone can type or tap
+ * before that; the browser keeps those edits in the DOM but the component never saw them.
+ * On mount we adopt whatever the DOM holds if it differs from what we rendered.
+ */
+function useAdoptPreHydrationValue(read: () => string | null, rendered: string, adopt: (domValue: string) => void) {
+  useEffect(() => {
+    const dom = read();
+    if (dom !== null && dom !== rendered) adopt(dom);
+    // Mount only: later edits flow through the normal handlers.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+}
 import { formatAmount, parseAmount } from '../../lib/ui/format';
 
 interface FieldShellProps {
@@ -84,6 +98,15 @@ export function MoneyField({
   }, [value, focused]);
 
   const display = focused || value === null ? text : decimals === 0 ? String(value) : formatAmount(value);
+  const inputRef = useRef<HTMLInputElement>(null);
+  useAdoptPreHydrationValue(
+    () => inputRef.current?.value ?? null,
+    display,
+    (dom) => {
+      setText(dom);
+      onChange(parseAmount(dom));
+    },
+  );
 
   return (
     <FieldShell id={id} label={label} hint={hint} error={error}>
@@ -94,6 +117,7 @@ export function MoneyField({
           </span>
         ) : null}
         <input
+          ref={inputRef}
           id={id}
           name={name}
           class="input input--num"
@@ -143,9 +167,16 @@ interface DateFieldProps {
 /** Native date input: localized picker on phones, full keyboard support on desktop, zero JS cost. */
 export function DateField({ label, value, onChange, hint, error, min, max, name }: DateFieldProps) {
   const id = useId();
+  const inputRef = useRef<HTMLInputElement>(null);
+  useAdoptPreHydrationValue(
+    () => inputRef.current?.value || null,
+    value,
+    (dom) => onChange(dom),
+  );
   return (
     <FieldShell id={id} label={label} hint={hint} error={error}>
       <input
+        ref={inputRef}
         id={id}
         name={name}
         class="input input--date"
@@ -185,12 +216,23 @@ interface SegmentedProps<T extends string> {
 }
 
 /** Segmented control built from native radios inside a fieldset (arrow keys move the choice). */
+function useAdoptCheckedRadio<T extends string>(value: T, onChange: (v: T) => void) {
+  const ref = useRef<HTMLDivElement>(null);
+  useAdoptPreHydrationValue(
+    () => ref.current?.querySelector<HTMLInputElement>('input[type=radio]:checked')?.value ?? null,
+    value,
+    (dom) => onChange(dom as T),
+  );
+  return ref;
+}
+
 export function Segmented<T extends string>({ legend, name, value, options, onChange, hint, legendHidden }: SegmentedProps<T>) {
   const id = useId();
+  const trackRef = useAdoptCheckedRadio(value, onChange);
   return (
     <fieldset class="field segmented" aria-describedby={hint ? `${id}-hint` : undefined}>
       <legend class={legendHidden ? 'sr-only' : 'field__label'}>{legend}</legend>
-      <div class="segmented__track">
+      <div class="segmented__track" ref={trackRef}>
         {options.map((o) => (
           <label class="segmented__option" key={o.value}>
             <input type="radio" name={name} value={o.value} checked={value === o.value} onChange={() => onChange(o.value)} />
@@ -209,10 +251,11 @@ export function Segmented<T extends string>({ legend, name, value, options, onCh
 
 /** Larger radio choices with a description line (separation cause). */
 export function RadioCards<T extends string>({ legend, name, value, options, onChange }: SegmentedProps<T>) {
+  const listRef = useAdoptCheckedRadio(value, onChange);
   return (
     <fieldset class="field radio-cards">
       <legend class="field__label">{legend}</legend>
-      <div class="radio-cards__list">
+      <div class="radio-cards__list" ref={listRef}>
         {options.map((o) => (
           <label class="radio-card" key={o.value}>
             <input type="radio" name={name} value={o.value} checked={value === o.value} onChange={() => onChange(o.value)} />
@@ -241,9 +284,16 @@ interface SwitchProps {
 /** A checkbox with switch styling (role="switch" so it announces on/off). */
 export function Switch({ label, checked, onChange, hint, name, disabled }: SwitchProps) {
   const id = useId();
+  const inputRef = useRef<HTMLInputElement>(null);
+  useAdoptPreHydrationValue(
+    () => (inputRef.current ? String(inputRef.current.checked) : null),
+    String(checked),
+    (dom) => onChange(dom === 'true'),
+  );
   return (
     <div class="field switch">
       <input
+        ref={inputRef}
         id={id}
         name={name}
         type="checkbox"

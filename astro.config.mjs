@@ -36,6 +36,70 @@ function stripParamNotesForClient() {
   };
 }
 
+/** @type {any[]} Lab-only font families (typed loosely: the shape matches `fonts` entries). */
+const LAB_FONTS = [
+  {
+    provider: local,
+    name: 'Martian Mono',
+    cssVariable: '--font-martian',
+    fallbacks: ['Courier New', 'monospace'],
+    options: {
+      variants: [
+        {
+          src: [fs('@fontsource-variable/martian-mono', 'martian-mono-latin-wght-normal.woff2')],
+          weight: '100 800',
+          style: 'normal',
+        },
+      ],
+    },
+  },
+  {
+    provider: local,
+    name: 'Instrument Sans',
+    cssVariable: '--font-instrument',
+    fallbacks: ['Arial', 'sans-serif'],
+    options: {
+      variants: [
+        {
+          src: [fs('@fontsource-variable/instrument-sans', 'instrument-sans-latin-wght-normal.woff2')],
+          weight: '400 700',
+          style: 'normal',
+        },
+      ],
+    },
+  },
+  {
+    provider: local,
+    name: 'Bitter',
+    cssVariable: '--font-bitter',
+    fallbacks: ['Georgia', 'serif'],
+    options: {
+      variants: [
+        {
+          src: [fs('@fontsource-variable/bitter', 'bitter-latin-wght-normal.woff2')],
+          weight: '100 900',
+          style: 'normal',
+        },
+      ],
+    },
+  },
+  {
+    provider: local,
+    name: 'Courier Prime',
+    cssVariable: '--font-courier',
+    fallbacks: ['Courier New', 'monospace'],
+    options: {
+      variants: [
+        {
+          src: [fs('@fontsource/courier-prime', 'courier-prime-latin-400-normal.woff2')],
+          weight: 400,
+          style: 'normal',
+        },
+      ],
+    },
+  },
+];
+
 export default defineConfig({
   site: SITE_URL,
   output: 'static',
@@ -76,73 +140,16 @@ export default defineConfig({
       options: {
         variants: [
           {
-            src: [fs('@fontsource-variable/archivo', 'archivo-latin-wdth-normal.woff2')],
-            weight: '100 900',
+            // Spanish subset with axes limited to the ranges in use (scripts/subset-fonts.py).
+            src: ['./src/assets/fonts/archivo-es.woff2'],
+            weight: '400 800',
             style: 'normal',
-            stretch: '62% 125%',
+            stretch: '100% 125%',
           },
         ],
       },
     },
-    {
-      provider: local,
-      name: 'Martian Mono',
-      cssVariable: '--font-martian',
-      fallbacks: ['Courier New', 'monospace'],
-      options: {
-        variants: [
-          {
-            src: [fs('@fontsource-variable/martian-mono', 'martian-mono-latin-wght-normal.woff2')],
-            weight: '100 800',
-            style: 'normal',
-          },
-        ],
-      },
-    },
-    {
-      provider: local,
-      name: 'Instrument Sans',
-      cssVariable: '--font-instrument',
-      fallbacks: ['Arial', 'sans-serif'],
-      options: {
-        variants: [
-          {
-            src: [fs('@fontsource-variable/instrument-sans', 'instrument-sans-latin-wght-normal.woff2')],
-            weight: '400 700',
-            style: 'normal',
-          },
-        ],
-      },
-    },
-    {
-      provider: local,
-      name: 'Bitter',
-      cssVariable: '--font-bitter',
-      fallbacks: ['Georgia', 'serif'],
-      options: {
-        variants: [
-          {
-            src: [fs('@fontsource-variable/bitter', 'bitter-latin-wght-normal.woff2')],
-            weight: '100 900',
-            style: 'normal',
-          },
-        ],
-      },
-    },
-    {
-      provider: local,
-      name: 'Courier Prime',
-      cssVariable: '--font-courier',
-      fallbacks: ['Courier New', 'monospace'],
-      options: {
-        variants: [
-          {
-            src: [fs('@fontsource/courier-prime', 'courier-prime-latin-400-normal.woff2')],
-            weight: 400,
-            style: 'normal',
-          },
-        ],
-      },
-    },
+    // Fonts of the rejected design directions, only for the lab build (npm run build:lab).
+    ...(process.env.LAB === '1' ? LAB_FONTS : []),
   ],
 });

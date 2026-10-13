@@ -11,7 +11,7 @@ import Faq from '../components/page/Faq.astro';
 import Sources, { type ExtraSource } from '../components/page/Sources.astro';
 import { pathFor, type PageKey } from '../i18n/routes';
 import type { LocaleCode } from '../i18n/locales';
-import { breadcrumbLd, faqLd, webAppLd, type FaqItem } from '../lib/seo/jsonld';
+import { breadcrumbLd, datasetLd, faqLd, webAppLd, type FaqItem } from '../lib/seo/jsonld';
 import type { MxParamId } from '../lib/params/mx';
 import { formatDateLong } from '../lib/ui/format';
 
@@ -40,6 +40,10 @@ interface Props {
   pathOverride?: string | undefined;
   /** Hide the "Ejemplos" heading block when the page has none. */
   hasExamples?: boolean | undefined;
+  /** "dataset" for reference pages (no calculator). */
+  schema?: 'app' | 'dataset' | undefined;
+  /** Heading of the "how" section. */
+  howTitle?: string | undefined;
 }
 
 const p = Astro.props;
@@ -50,7 +54,9 @@ const crumbs = [
   { name: p.h1, path },
 ];
 const jsonLd = [
-  webAppLd({ name: p.appName, description: p.description, path, inLanguage: 'es-MX', dateModified: p.updated, country: 'México' }),
+  p.schema === 'dataset'
+    ? datasetLd({ name: p.appName, description: p.description, path, dateModified: p.updated })
+    : webAppLd({ name: p.appName, description: p.description, path, inLanguage: 'es-MX', dateModified: p.updated, country: 'México' }),
   faqLd(p.faq),
   breadcrumbLd(crumbs),
 ];
@@ -79,6 +85,7 @@ const related: { key: PageKey; label: string; tool: Tool }[] = (
   direction={p.direction}
   noindex={p.noindex}
 >
+  <slot name="head" slot="head" />
   <div class="wrap">
     <nav class="breadcrumbs" aria-label="Ruta de navegación">
       <ol>
@@ -102,7 +109,7 @@ const related: { key: PageKey; label: string; tool: Tool }[] = (
     <slot />
 
     <section class="section" aria-labelledby="como-se-calcula">
-      <h2 id="como-se-calcula">Cómo se calcula</h2>
+      <h2 id="como-se-calcula">{p.howTitle ?? 'Cómo se calcula'}</h2>
       <div class="prose">
         <slot name="how" />
       </div>

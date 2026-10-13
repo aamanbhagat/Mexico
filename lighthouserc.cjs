@@ -1,0 +1,43 @@
+/**
+ * Lighthouse CI: mobile emulation (Lighthouse default: Moto G Power, slow 4G, 4× CPU) on every
+ * live page. Budgets from CLAUDE.md §3. INP cannot be measured in a lab run; Total Blocking Time
+ * is Lighthouse's lab proxy for responsiveness and is held to the same 200 ms.
+ */
+const pages = [
+  '/es-mx/',
+  '/es-mx/calculadora-aguinaldo/',
+  '/es-mx/calculadora-finiquito/',
+  '/es-mx/calculadora-liquidacion/',
+  '/es-mx/calculadora-prima-vacacional/',
+  '/es-mx/calculadora-vacaciones/',
+  '/es-mx/uma-salario-minimo-2026/',
+];
+
+module.exports = {
+  ci: {
+    collect: {
+      staticDistDir: './dist',
+      url: pages.map((p) => `http://localhost${p}`),
+      numberOfRuns: 3,
+      settings: {
+        chromeFlags: '--no-sandbox --headless=new',
+      },
+    },
+    assert: {
+      assertions: {
+        'categories:performance': ['error', { minScore: 0.95, aggregationMethod: 'median-run' }],
+        'categories:accessibility': ['error', { minScore: 0.95, aggregationMethod: 'median-run' }],
+        'categories:best-practices': ['error', { minScore: 0.95, aggregationMethod: 'median-run' }],
+        'categories:seo': ['error', { minScore: 0.95, aggregationMethod: 'median-run' }],
+        'largest-contentful-paint': ['error', { maxNumericValue: 1800, aggregationMethod: 'median-run' }],
+        'cumulative-layout-shift': ['error', { maxNumericValue: 0.05, aggregationMethod: 'median-run' }],
+        'total-blocking-time': ['error', { maxNumericValue: 200, aggregationMethod: 'median-run' }],
+        'resource-summary:script:size': ['error', { maxNumericValue: 71680, aggregationMethod: 'median-run' }],
+      },
+    },
+    upload: {
+      target: 'filesystem',
+      outputDir: '.lighthouseci',
+    },
+  },
+};

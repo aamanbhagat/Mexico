@@ -1,0 +1,27 @@
+// Lists every parameter version with its verification state (feeds docs/LAUNCH_CHECKLIST.md).
+//   npm run params:report            → Markdown table of all versions
+//   npm run params:report -- --unverified   → only verified=false
+import { readdirSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+const onlyUnverified = process.argv.includes('--unverified');
+const DIR = 'src/data/parameters';
+console.log('| Parameter | Effective | Value | Verified | Source |');
+console.log('|---|---|---|---|---|');
+for (const country of readdirSync(DIR)) {
+  for (const file of readdirSync(join(DIR, country)).sort()) {
+    const p = JSON.parse(readFileSync(join(DIR, country, file), 'utf8'));
+    for (const v of p.versions) {
+      if (onlyUnverified && v.verified) continue;
+      const value = Array.isArray(v.value)
+        ? `${v.value.length} rows`
+        : typeof v.value === 'object'
+          ? JSON.stringify(v.value)
+          : String(v.value);
+      const range = `${v.effective_from} → ${v.effective_to ?? 'open'}`;
+      console.log(
+        `| \`${p.id}\` | ${range} | ${value.replace(/\|/g, '\\|')} | ${v.verified ? 'yes' : '**no**'} | [${v.source_title}](${v.source_url}) |`,
+      );
+    }
+  }
+}

@@ -1,0 +1,24 @@
+---
+/**
+ * Root: sends visitors to the only published locale. Cloudflare Pages also redirects "/" with
+ * a 302 (public/_redirects); this page is the fallback for hosts without redirect rules.
+ */
+import { DEFAULT_LOCALE } from '../i18n/locales';
+import { pathFor } from '../i18n/routes';
+const target = pathFor('home', DEFAULT_LOCALE);
+---
+
+<!doctype html>
+<html lang="es-MX">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tabula</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={target} />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+  </head>
+  <body>
+    <p><a href={target}>Ir a las calculadoras de México</a></p>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { pathFor } from '../i18n/routes';
+---
+
+<BaseLayout title="Página no encontrada" description="Esta página no existe." locale="es-mx" path="/404/" noindex>
+  <div class="wrap hero">
+    <h1>No encontramos esta página</h1>
+    <p class="hero__lede">Puede que la dirección tenga un error o que la página haya cambiado de lugar.</p>
+    <p><a href={pathFor('home', 'es-mx')}>Ver todas las calculadoras</a></p>
+  </div>
+</BaseLayout>

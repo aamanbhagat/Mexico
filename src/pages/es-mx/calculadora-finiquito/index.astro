@@ -1,0 +1,118 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import ExampleCard from '../../../components/page/ExampleCard.astro';
+import SeparationCalculator, { separationSearch } from '../../../components/calc/SeparationCalculator';
+import { FINIQUITO_EXAMPLES } from '../../../content/es-mx/examples';
+import { separationExampleRows } from '../../../content/es-mx/example-rows';
+import { mxValue } from '../../../lib/params/mx';
+import { formatMoney } from '../../../lib/ui/format';
+import { BUILD_DAY, UPDATED } from '../../../content/es-mx/meta';
+import type { FaqItem } from '../../../lib/seo/jsonld';
+
+const AS_OF = '2026-10-13';
+const uma = mxValue('mx.uma', AS_OF);
+const sm = mxValue('mx.salario-minimo.general', AS_OF);
+const smZ = mxValue('mx.salario-minimo.zlfn', AS_OF);
+const sep = mxValue('mx.lft.separacion', AS_OF);
+const cap = formatMoney(sm * sep.seniority_cap_multiple);
+
+const examples = FINIQUITO_EXAMPLES.map((ex) => ({
+  ex,
+  rows: separationExampleRows(ex.input),
+  href: `/es-mx/calculadora-finiquito/${separationSearch('finiquito', ex.input, BUILD_DAY)}`,
+}));
+
+const faq: FaqItem[] = [
+  {
+    q: '¿Qué incluye el finiquito?',
+    a: 'Todo lo que ya ganaste y no te han pagado: los días trabajados pendientes, el aguinaldo proporcional del año, las vacaciones que no tomaste (las del año en curso en proporción y las de años anteriores que tengas pendientes) y su prima vacacional. Si tienes 15 años o más, también la prima de antigüedad.\n\nEl finiquito se paga sin importar por qué terminó tu trabajo. Si te despidieron sin causa, además te corresponde una liquidación.',
+  },
+  {
+    q: '¿Cuál es la diferencia entre finiquito y liquidación?',
+    a: 'El finiquito son las prestaciones que ya generaste. La liquidación es una indemnización adicional que se paga cuando te despiden sin causa justificada o cuando dejas el trabajo por culpa del patrón: tres meses de salario, en su caso 20 días por año y la prima de antigüedad. Usa la calculadora de liquidación si es tu caso.',
+  },
+  {
+    q: '¿Me toca prima de antigüedad si renuncio?',
+    a: `Solo si tienes 15 años de servicio o más (artículo 162 de la LFT). Son 12 días de salario por año trabajado, pero el salario se topa en el doble del salario mínimo de tu zona: ${cap} diarios en 2026 (${formatMoney(smZ * sep.seniority_cap_multiple)} en la frontera norte).`,
+  },
+  {
+    q: '¿Cómo se calculan las vacaciones en el finiquito?',
+    a: 'Se pagan los días que te tocarían en el año de servicio en curso, en proporción a lo que llevas trabajado desde tu último aniversario (artículo 79), más las vacaciones de años anteriores que no hayas tomado. A esos días se les suma la prima vacacional, mínimo del 25 %.',
+  },
+  {
+    q: '¿El finiquito paga impuestos?',
+    a: `Sí, en parte. El aguinaldo está exento hasta 30 UMA (${formatMoney(30 * uma.daily)} en 2026) y la prima vacacional hasta 15 UMA (${formatMoney(15 * uma.daily)}). Las vacaciones y los salarios pendientes pagan ISR completo. La calculadora estima la retención con la tarifa del artículo 96 de la Ley del ISR para 2026.`,
+  },
+  {
+    q: '¿En cuánto tiempo me deben pagar el finiquito?',
+    a: 'Lo normal es recibirlo el último día de trabajo o en los días siguientes. Revisa el cálculo antes de firmar y pide una copia del recibo. Si no te pagan o no estás de acuerdo, la PROFEDET te asesora gratis; tienes un año para reclamar las prestaciones (artículo 516 de la LFT).',
+  },
+  {
+    q: '¿Debo firmar la renuncia y el finiquito al mismo tiempo?',
+    a: 'Firma solo cuando hayas revisado las cantidades y las recibas. Si el patrón te pide firmar una renuncia que no quieres presentar, no la firmes: ese caso puede ser un despido injustificado y te corresponde una liquidación.',
+  },
+];
+---
+
+<CalculatorLayout
+  pageKey="mx.finiquito"
+  locale="es-mx"
+  tool="finiquito"
+  title="Calculadora de finiquito 2026: cuánto te toca al renunciar"
+  description="Calcula tu finiquito 2026: aguinaldo, vacaciones y prima vacacional proporcionales, prima de antigüedad si aplica e ISR estimado. Con la Ley Federal del Trabajo."
+  h1="Calculadora de finiquito 2026"
+  lede="Si renuncias o termina tu contrato, te deben pagar lo que ya ganaste: días pendientes, aguinaldo proporcional, vacaciones no tomadas con su prima y, con 15 años o más, la prima de antigüedad. Escribe tu salario y tus fechas."
+  updated={UPDATED}
+  appName="Calculadora de finiquito México 2026"
+  faq={faq}
+  sourceParams={[
+    'mx.lft.aguinaldo',
+    'mx.lft.vacaciones',
+    'mx.lft.prima-vacacional',
+    'mx.lft.separacion',
+    'mx.salario-minimo.general',
+    'mx.salario-minimo.zlfn',
+    'mx.uma',
+    'mx.lisr.exenciones',
+    'mx.isr.tarifa-mensual',
+  ]}
+  extraSources={[
+    { title: 'Ley del Impuesto sobre la Renta, artículos 93, 95 y 96', url: 'https://www.diputados.gob.mx/LeyesBiblio/pdf/LISR.pdf' },
+  ]}
+  asOf={AS_OF}
+>
+  <SeparationCalculator client:load buildDay={BUILD_DAY} mode="finiquito" />
+
+  <Fragment slot="how">
+    <p>El finiquito suma las prestaciones que generaste hasta tu último día. La calculadora hace esto:</p>
+    <ol>
+      <li><strong>Salario diario:</strong> sueldo mensual ÷ 30, quincenal ÷ 15 o semanal ÷ 7 (artículo 89).</li>
+      <li><strong>Aguinaldo proporcional:</strong> días de aguinaldo × días trabajados en el año ÷ 365 × salario diario (artículo 87).</li>
+      <li>
+        <strong>Vacaciones:</strong> los días de tu año de servicio en curso × (días desde tu último aniversario ÷ 365), más los días pendientes
+        de años anteriores (artículos 76 y 79).
+      </li>
+      <li>
+        <strong>Prima vacacional:</strong> el porcentaje de tu contrato (mínimo 25 %) sobre el salario de esas vacaciones (artículo 80).
+      </li>
+      <li>
+        <strong>Prima de antigüedad:</strong> solo si renuncias con 15 años o más: 12 días por año con el salario topado a dos salarios mínimos
+        ({cap}
+        en 2026; artículos 162 y 486).
+      </li>
+      <li>
+        <strong>ISR:</strong> exentos el aguinaldo hasta 30 UMA y la prima vacacional hasta 15 UMA; el resto se suma a tu sueldo del mes con la
+        tarifa 2026 del artículo 96. La prima de antigüedad está exenta hasta 90 UMA por año de servicio.
+      </li>
+    </ol>
+    <p class="formula">
+      <b>Finiquito</b> = salario pendiente + aguinaldo proporcional + vacaciones + prima vacacional (+ prima de antigüedad con 15 años o más)<br
+      />
+      <b>Neto</b> = finiquito − ISR estimado
+    </p>
+  </Fragment>
+
+  <div class="examples" slot="examples">
+    {examples.map(({ ex, rows, href }) => <ExampleCard title={ex.title} story={ex.story} rows={rows} source={ex.source} href={href} />)}
+  </div>
+</CalculatorLayout>

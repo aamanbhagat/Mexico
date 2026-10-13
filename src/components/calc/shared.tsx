@@ -8,7 +8,7 @@ import type { EngineError, Citation, WarningCode } from '../../lib/engine/mx/lft
 import { formatDateLong, formatMoney, todayInMexico } from '../../lib/ui/format';
 import { buildSearch, readState, writeState, type Codec } from '../../lib/ui/url-state';
 import type { Report, ReportRow, ReportSection } from '../../lib/ui/pdf';
-import { AnimatedMoney, Icon, useAnnouncement } from '../ui/result';
+import { AnimatedNumber, Icon, useAnnouncement } from '../ui/result';
 
 /** Range of dates for which every Mexico parameter has an official value. */
 export const SUPPORTED = { from: '2025-01-01', to: '2026-12-31' } as const;
@@ -34,7 +34,15 @@ export function useUrlState<T extends object>(
     const now = todayInMexico();
     defaults.current = makeDefaults(now);
     setToday(now);
-    setState(readState(codec, defaults.current, window.location.search));
+    const initial = makeDefaults(buildDay);
+    setState((prev) => {
+      const next = readState(codec, defaults.current, window.location.search);
+      // Keep anything the person changed before hydration (fields report it on mount).
+      for (const key of Object.keys(prev) as (keyof T)[]) {
+        if (!Object.is(prev[key], initial[key])) next[key] = prev[key];
+      }
+      return next;
+    });
     ready.current = true;
     // Runs once on mount by design.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -90,10 +98,12 @@ interface ShellProps {
   form: ComponentChildren;
   result: ComponentChildren;
   tool: string;
+  /** How the headline figure is written (money by default). */
+  format?: (n: number) => string;
 }
 
-export function CalculatorShell({ resultLabel, headline, headlineNote, empty, form, result, tool }: ShellProps) {
-  const announcement = useAnnouncement(headline === null ? '' : `${resultLabel}: ${formatMoney(headline)}`);
+export function CalculatorShell({ resultLabel, headline, headlineNote, empty, form, result, tool, format = formatMoney }: ShellProps) {
+  const announcement = useAnnouncement(headline === null ? '' : `${resultLabel}: ${format(headline)}`);
   return (
     <div class="calc" data-tool={tool}>
       <form class="calc__form" onSubmit={(e) => e.preventDefault()} aria-label="Datos para el cálculo" noValidate>
@@ -109,7 +119,7 @@ export function CalculatorShell({ resultLabel, headline, headlineNote, empty, fo
           ) : (
             <>
               <p class="result-head__amount">
-                <AnimatedMoney value={headline} />
+                <AnimatedNumber value={headline} format={format} />
               </p>
               {headlineNote ? <p class="result-head__note">{headlineNote}</p> : null}
             </>
@@ -122,7 +132,7 @@ export function CalculatorShell({ resultLabel, headline, headlineNote, empty, fo
       </section>
       <div class="result-bar" aria-hidden={headline === null ? 'true' : undefined}>
         <span class="result-bar__label">{resultLabel}</span>
-        <span class="result-bar__amount">{headline === null ? '—' : formatMoney(headline)}</span>
+        <span class="result-bar__amount">{headline === null ? '—' : format(headline)}</span>
         <a class="result-bar__link" href={`#${tool}-desglose`} tabIndex={headline === null ? -1 : undefined}>
           Ver desglose
         </a>

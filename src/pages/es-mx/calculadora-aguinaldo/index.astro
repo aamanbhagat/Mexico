@@ -107,6 +107,7 @@ const faq: FaqItem[] = [
   noindex={Boolean(direction)}
   pathOverride={pathOverride}
 >
+  <slot name="head" slot="head" />
   <AguinaldoCalculator client:load buildDay={BUILD_DAY} />
 
   <Fragment slot="how">

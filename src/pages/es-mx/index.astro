@@ -1,13 +1,200 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import StationIcon from '../../components/page/StationIcon.astro';
+import { pathFor, type PageKey } from '../../i18n/routes';
+import { absoluteUrl, SITE } from '../../config/site';
+import { mxParam } from '../../lib/params/mx';
+import { formatDateLong, formatMoney } from '../../lib/ui/format';
+import { UPDATED } from '../../content/es-mx/meta';
+
+const AS_OF = '2026-12-20';
+const uma = mxParam('mx.uma', AS_OF);
+const smG = mxParam('mx.salario-minimo.general', AS_OF);
+const smZ = mxParam('mx.salario-minimo.zlfn', AS_OF);
+
+type Tool = 'aguinaldo' | 'finiquito' | 'liquidacion' | 'prima-vacacional' | 'vacaciones' | 'uma';
+const tools: { key: PageKey; tool: Tool; name: string; what: string }[] = [
+  {
+    key: 'mx.aguinaldo',
+    tool: 'aguinaldo',
+    name: 'Aguinaldo',
+    what: 'Cuánto te toca antes del 20 de diciembre, proporcional y neto de ISR.',
+  },
+  {
+    key: 'mx.finiquito',
+    tool: 'finiquito',
+    name: 'Finiquito',
+    what: 'Lo que te deben al renunciar: aguinaldo, vacaciones y prima vacacional.',
+  },
+  {
+    key: 'mx.liquidacion',
+    tool: 'liquidacion',
+    name: 'Liquidación',
+    what: 'Despido injustificado: 3 meses, 20 días por año y prima de antigüedad.',
+  },
+  {
+    key: 'mx.prima-vacacional',
+    tool: 'prima-vacacional',
+    name: 'Prima vacacional',
+    what: 'El 25 % extra sobre tus días de vacaciones y su parte exenta.',
+  },
+  { key: 'mx.vacaciones', tool: 'vacaciones', name: 'Vacaciones', what: 'Días que te tocan por antigüedad con la reforma de 2023.' },
+  {
+    key: 'mx.uma-salario-minimo',
+    tool: 'uma',
+    name: 'UMA y salario mínimo 2026',
+    what: 'Valores oficiales vigentes, tabla de ISR y montos exentos.',
+  },
+];
+
+const jsonLd = [
+  { '@context': 'https://schema.org', '@type': 'WebSite', name: SITE.name, url: absoluteUrl('/es-mx/'), inLanguage: 'es-MX' },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: tools.map((t, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: t.name,
+      url: absoluteUrl(pathFor(t.key, 'es-mx')),
+    })),
+  },
+];
 ---
 
 <BaseLayout
-  title="Calculadoras laborales México 2026"
-  description="Calculadoras de aguinaldo, finiquito, liquidación, prima vacacional y vacaciones."
+  title="Calculadora de aguinaldo, finiquito y liquidación 2026"
+  description={`Calcula aguinaldo, finiquito, liquidación, prima vacacional y vacaciones con la LFT y los valores oficiales 2026: UMA ${formatMoney(uma.value.daily)} y salario mínimo ${formatMoney(smG.value)}.`}
   locale="es-mx"
   pageKey="home"
   path="/es-mx/"
+  jsonLd={jsonLd}
 >
-  <div class="wrap"><h1>Calculadoras</h1></div>
+  <div class="wrap">
+    <header class="hero home-hero">
+      <h1>Tus pagos laborales, calculados con la ley vigente</h1>
+      <p class="hero__lede">
+        Aguinaldo, finiquito, liquidación, prima vacacional y vacaciones con la Ley Federal del Trabajo, la Ley del ISR y los valores
+        oficiales de 2026. Cada resultado cita el artículo y la fuente.
+      </p>
+      <p class="hero__meta"><span>Actualizado el <time datetime={UPDATED}>{formatDateLong(UPDATED)}</time></span></p>
+    </header>
+
+    <nav aria-labelledby="lineas">
+      <h2 id="lineas" class="sr-only">Calculadoras</h2>
+      <ol class="line-map">
+        {
+          tools.map((t) => (
+            <li data-tool={t.tool}>
+              <a href={pathFor(t.key, 'es-mx')}>
+                <StationIcon tool={t.tool} />
+                <span class="line-map__text">
+                  <span class="line-map__name">{t.name}</span>
+                  <span class="line-map__what">{t.what}</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+
+    <section class="section" aria-labelledby="valores">
+      <h2 id="valores">Valores oficiales que usamos</h2>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Tabla de valores oficiales">
+        <table class="data-table">
+          <caption class="sr-only">Valores vigentes al {formatDateLong(AS_OF)}</caption>
+          <thead>
+            <tr>
+              <th scope="col">Valor</th>
+              <th scope="col" class="num">Monto</th>
+              <th scope="col">Vigencia</th>
+              <th scope="col">Fuente</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">UMA diaria</th>
+              <td class="num">{formatMoney(uma.value.daily)}</td>
+              <td>Desde el {formatDateLong(uma.effective_from)}</td>
+              <td><a href={uma.source_url} rel="noopener" target="_blank">DOF</a></td>
+            </tr>
+            <tr>
+              <th scope="row">Salario mínimo general</th>
+              <td class="num">{formatMoney(smG.value)}</td>
+              <td>Desde el {formatDateLong(smG.effective_from)}</td>
+              <td><a href={smG.source_url} rel="noopener" target="_blank">DOF</a></td>
+            </tr>
+            <tr>
+              <th scope="row">Salario mínimo frontera norte</th>
+              <td class="num">{formatMoney(smZ.value)}</td>
+              <td>Desde el {formatDateLong(smZ.effective_from)}</td>
+              <td><a href={smZ.source_url} rel="noopener" target="_blank">DOF</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p><a href={pathFor('mx.uma-salario-minimo', 'es-mx')}>Ver todos los valores, la tabla de ISR 2026 y su estado de verificación</a></p>
+    </section>
+
+    <section class="section" aria-labelledby="privacidad">
+      <h2 id="privacidad">Tus datos no salen de tu teléfono</h2>
+      <div class="prose">
+        <p>
+          Los cálculos se hacen en tu navegador. No pedimos registro, no guardamos tu salario y no usamos cookies de rastreo. Si compartes
+          un resultado, el enlace lleva los datos que tú escribiste: compártelo solo con quien quieras.
+        </p>
+      </div>
+    </section>
+  </div>
 </BaseLayout>
+
+<style>
+  .home-hero h1 {
+    max-width: 18ch;
+  }
+  .line-map {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-4) 0 0;
+    display: grid;
+    border-top: 2px solid var(--rule-strong);
+  }
+  .line-map li {
+    border-bottom: 1px solid var(--rule);
+  }
+  .line-map a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding-block: var(--space-4);
+    text-decoration: none;
+  }
+  .line-map a:hover .line-map__name {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
+  .line-map :global(.station-icon) {
+    margin: 0;
+  }
+  .line-map__text {
+    display: grid;
+    gap: 2px;
+  }
+  .line-map__name {
+    font-size: var(--text-lg);
+    font-weight: var(--display-weight);
+    font-stretch: var(--display-stretch);
+    line-height: 1.2;
+  }
+  .line-map__what {
+    color: var(--ink-2);
+    font-size: var(--text-sm);
+  }
+  @media (min-width: 60rem) {
+    .line-map {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--space-7);
+    }
+  }
+</style>

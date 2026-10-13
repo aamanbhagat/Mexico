@@ -403,6 +403,9 @@ export interface VacacionesResult {
   primaVacacional: number;
   accruedPay: number;
   accruedPrima: number;
+  /** Pay for the days the next anniversary grants (useful before the first anniversary). */
+  upcomingPay: number;
+  upcomingPrima: number;
   schedule: { from: number; to: number; days: number }[];
   ruleEffectiveFrom: string;
   citations: Citation[];
@@ -440,6 +443,8 @@ export function calculateVacaciones(input: VacacionesInput): Outcome<VacacionesR
         primaVacacional: round2(daily * daysEarned * pct),
         accruedPay,
         accruedPrima: round2(daily * daysAccrued * pct),
+        upcomingPay: round2(daily * daysNextYear),
+        upcomingPrima: round2(daily * daysNextYear * pct),
         schedule: vacationSchedule(rule),
         ruleEffectiveFrom: ruleVersion.effective_from,
         citations: scope.citations(),

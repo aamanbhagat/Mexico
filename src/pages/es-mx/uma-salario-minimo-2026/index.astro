@@ -1,0 +1,301 @@
+---
+/**
+ * Reference page: every official value the calculators use, read from the parameter registry,
+ * with its effective date, source and verification state. Nothing on this page is typed by hand.
+ */
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import { MX_PARAM_FILES, mxParam } from '../../../lib/params/mx';
+import { formatDateLong, formatMoney, formatPct } from '../../../lib/ui/format';
+import { UPDATED } from '../../../content/es-mx/meta';
+import type { FaqItem } from '../../../lib/seo/jsonld';
+
+const AS_OF = '2026-10-13';
+const uma = mxParam('mx.uma', AS_OF);
+const umaPrev = mxParam('mx.uma', '2026-01-15');
+const smG = mxParam('mx.salario-minimo.general', AS_OF);
+const smZ = mxParam('mx.salario-minimo.zlfn', AS_OF);
+const tariff = mxParam('mx.isr.tarifa-mensual', AS_OF);
+const ex = mxParam('mx.lisr.exenciones', AS_OF).value;
+const sep = mxParam('mx.lft.separacion', AS_OF).value;
+const subsidio = mxParam('mx.subsidio-empleo', AS_OF);
+
+// Calendar conversions of the daily minimum wage (arithmetic, not legal values).
+const MONTH_DAYS = 365 / 12;
+const perHour = (d: number) => d / 8;
+
+const umaVersions = MX_PARAM_FILES['mx.uma'].versions;
+const smGVersions = MX_PARAM_FILES['mx.salario-minimo.general'].versions;
+const smZVersions = MX_PARAM_FILES['mx.salario-minimo.zlfn'].versions;
+
+const verified = (v: { verified: boolean }) => (v.verified ? 'Verificado' : 'Pendiente');
+
+const derived = [
+  {
+    label: 'Aguinaldo exento de ISR',
+    formula: `${ex.aguinaldo_uma} × UMA diaria`,
+    value: ex.aguinaldo_uma * uma.value.daily,
+    ref: 'LISR art. 93 fr. XIV',
+  },
+  {
+    label: 'Prima vacacional exenta',
+    formula: `${ex.prima_vacacional_uma} × UMA diaria`,
+    value: ex.prima_vacacional_uma * uma.value.daily,
+    ref: 'LISR art. 93 fr. XIV',
+  },
+  { label: 'PTU exenta', formula: `${ex.ptu_uma} × UMA diaria`, value: ex.ptu_uma * uma.value.daily, ref: 'LISR art. 93 fr. XIV' },
+  {
+    label: 'Indemnización exenta por año de servicio',
+    formula: `${ex.separation_uma_per_year} × UMA diaria`,
+    value: ex.separation_uma_per_year * uma.value.daily,
+    ref: 'LISR art. 93 fr. XIII',
+  },
+  {
+    label: 'Tope diario de la prima de antigüedad (resto del país)',
+    formula: `${sep.seniority_cap_multiple} × salario mínimo general`,
+    value: sep.seniority_cap_multiple * smG.value,
+    ref: 'LFT arts. 162 y 486',
+  },
+  {
+    label: 'Tope diario de la prima de antigüedad (frontera norte)',
+    formula: `${sep.seniority_cap_multiple} × salario mínimo ZLFN`,
+    value: sep.seniority_cap_multiple * smZ.value,
+    ref: 'LFT arts. 162 y 486',
+  },
+];
+
+const faq: FaqItem[] = [
+  {
+    q: '¿Cuánto vale la UMA en 2026?',
+    a: `${formatMoney(uma.value.daily)} diarios, ${formatMoney(uma.value.monthly)} mensuales y ${formatMoney(uma.value.annual)} anuales. El INEGI la publicó en el Diario Oficial de la Federación el 9 de enero de 2026 y rige del 1 de febrero de 2026 al 31 de enero de 2027. En enero de 2026 seguía vigente la UMA de 2025 (${formatMoney(umaPrev.value.daily)}).`,
+  },
+  {
+    q: '¿Cuál es el salario mínimo 2026 en México?',
+    a: `${formatMoney(smG.value)} diarios en la mayor parte del país y ${formatMoney(smZ.value)} en la Zona Libre de la Frontera Norte, vigentes desde el 1 de enero de 2026. Al mes equivalen a unos ${formatMoney(smG.value * MONTH_DAYS)} y ${formatMoney(smZ.value * MONTH_DAYS)}.`,
+  },
+  {
+    q: '¿Cuál es la diferencia entre la UMA y el salario mínimo?',
+    a: 'El salario mínimo es lo menos que se puede pagar por una jornada de trabajo. La UMA es una unidad de referencia para multas, créditos y límites fiscales: desde 2016 sustituye al salario mínimo en las leyes que lo usaban como medida, por ejemplo las exenciones de ISR del aguinaldo o de la prima vacacional.',
+  },
+  {
+    q: `¿Por qué otras calculadoras usan una UMA de ${formatMoney(umaPrev.value.daily)}?`,
+    a: `Porque es el valor de 2025. Para pagos hechos desde el 1 de febrero de 2026 —como el aguinaldo de diciembre— corresponde ${formatMoney(uma.value.daily)}. Con la UMA vieja, el aguinaldo exento queda en ${formatMoney(30 * umaPrev.value.daily)} en lugar de ${formatMoney(30 * uma.value.daily)}.`,
+  },
+  {
+    q: '¿Cómo se usa la tabla de ISR 2026?',
+    a: 'Busca el renglón donde cae tu ingreso mensual gravado. Réstale el límite inferior, multiplica el resultado por el porcentaje del renglón y súmale la cuota fija. Al impuesto que obtengas se le resta, en su caso, el subsidio para el empleo. La tabla mensual vigente desde el 1 de enero de 2026 viene en el Anexo 8 de la Resolución Miscelánea Fiscal (DOF del 28 de diciembre de 2025).',
+  },
+  {
+    q: '¿Qué zona del salario mínimo me corresponde?',
+    a: 'Depende del municipio donde trabajas, no de donde vives. La Zona Libre de la Frontera Norte incluye los municipios fronterizos del norte que define la resolución de la CONASAMI; en el resto del país aplica el salario mínimo general.',
+  },
+];
+---
+
+<CalculatorLayout
+  pageKey="mx.uma-salario-minimo"
+  locale="es-mx"
+  tool="uma"
+  title="UMA 2026 y salario mínimo 2026: valores oficiales y tabla ISR"
+  description={`UMA 2026: ${formatMoney(uma.value.daily)} diaria, ${formatMoney(uma.value.monthly)} mensual. Salario mínimo 2026: ${formatMoney(smG.value)} y ${formatMoney(smZ.value)} en la frontera norte. Tabla ISR mensual 2026 y montos exentos.`}
+  h1="UMA y salario mínimo 2026"
+  lede={`La UMA 2026 es de ${formatMoney(uma.value.daily)} diarios (desde el 1 de febrero) y el salario mínimo de ${formatMoney(smG.value)} diarios, o ${formatMoney(smZ.value)} en la frontera norte (desde el 1 de enero). Aquí están todos los valores que usan nuestras calculadoras, con su fuente oficial.`}
+  updated={UPDATED}
+  appName="Valores oficiales México 2026: UMA, salarios mínimos y tarifa de ISR"
+  faq={faq}
+  sourceParams={[
+    'mx.uma',
+    'mx.salario-minimo.general',
+    'mx.salario-minimo.zlfn',
+    'mx.isr.tarifa-mensual',
+    'mx.subsidio-empleo',
+    'mx.lisr.exenciones',
+    'mx.lft.separacion',
+  ]}
+  asOf={AS_OF}
+  hasExamples={false}
+  schema="dataset"
+  howTitle="Cómo se actualizan estos valores"
+>
+  <section class="section" aria-labelledby="uma">
+    <h2 id="uma">UMA 2026</h2>
+    <div class="table-scroll" tabindex="0" role="region" aria-label="Tabla de la UMA por año">
+      <table class="data-table">
+        <caption class="sr-only">Unidad de Medida y Actualización por periodo de vigencia</caption>
+        <thead>
+          <tr>
+            <th scope="col">Vigencia</th>
+            <th scope="col" class="num">Diaria</th>
+            <th scope="col" class="num">Mensual</th>
+            <th scope="col" class="num">Anual</th>
+            <th scope="col">Fuente</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            [...umaVersions].reverse().map((v) => (
+              <tr class={v === uma ? 'highlight-row' : undefined}>
+                <th scope="row">
+                  {formatDateLong(v.effective_from)} – {v.effective_to ? formatDateLong(v.effective_to) : 'vigente'}
+                </th>
+                <td class="num">{formatMoney(v.value.daily)}</td>
+                <td class="num">{formatMoney(v.value.monthly)}</td>
+                <td class="num">{formatMoney(v.value.annual)}</td>
+                <td>
+                  <a href={v.source_url} rel="noopener" target="_blank">
+                    DOF
+                  </a>{' '}
+                  · <span class:list={['verify', v.verified ? 'verify--ok' : 'verify--pending']}>{verified(v)}</span>
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="salario-minimo">
+    <h2 id="salario-minimo">Salario mínimo 2026</h2>
+    <div class="table-scroll" tabindex="0" role="region" aria-label="Tabla de salarios mínimos por zona">
+      <table class="data-table">
+        <caption class="sr-only">Salarios mínimos generales por zona</caption>
+        <thead>
+          <tr>
+            <th scope="col">Zona y año</th>
+            <th scope="col" class="num">Diario</th>
+            <th scope="col" class="num">Semanal</th>
+            <th scope="col" class="num">Mensual</th>
+            <th scope="col" class="num">Por hora*</th>
+            <th scope="col">Fuente</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            [
+              ...[...smGVersions].reverse().map((v) => ({ zone: 'Resto del país', v })),
+              ...[...smZVersions].reverse().map((v) => ({ zone: 'Frontera norte', v })),
+            ].map(({ zone, v }) => (
+              <tr class={v === smG || v === smZ ? 'highlight-row' : undefined}>
+                <th scope="row">
+                  {zone} {v.effective_from.slice(0, 4)}
+                </th>
+                <td class="num">{formatMoney(v.value)}</td>
+                <td class="num">{formatMoney(v.value * 7)}</td>
+                <td class="num">{formatMoney(v.value * MONTH_DAYS)}</td>
+                <td class="num">{formatMoney(perHour(v.value))}</td>
+                <td>
+                  <a href={v.source_url} rel="noopener" target="_blank">
+                    DOF
+                  </a>{' '}
+                  · <span class:list={['verify', v.verified ? 'verify--ok' : 'verify--pending']}>{verified(v)}</span>
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <p class="calc__fine">
+      Mensual = diario × 365 ÷ 12, como lo publica la STPS. *Por hora: referencia para una jornada diurna de 8 horas; la ley fija el salario
+      mínimo por día.
+    </p>
+  </section>
+
+  <section class="section" aria-labelledby="montos">
+    <h2 id="montos">Montos que dependen de estos valores en 2026</h2>
+    <div class="table-scroll" tabindex="0" role="region" aria-label="Tabla de montos derivados 2026">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th scope="col">Concepto</th>
+            <th scope="col">Cálculo</th>
+            <th scope="col" class="num">Monto</th>
+            <th scope="col">Fundamento</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            derived.map((d) => (
+              <tr>
+                <th scope="row">{d.label}</th>
+                <td>{d.formula}</td>
+                <td class="num">{formatMoney(d.value)}</td>
+                <td>{d.ref}</td>
+              </tr>
+            ))
+          }
+          <tr>
+            <th scope="row">Subsidio para el empleo (mensual)</th>
+            <td
+              >{formatPct(subsidio.value.uma_monthly_pct)} de la UMA mensual; ingresos hasta {
+                formatMoney(subsidio.value.income_limit_monthly)
+              }</td
+            >
+            <td class="num">{formatMoney(subsidio.value.monthly_amount)}</td>
+            <td>Decreto DOF 31/12/2025 · <span class="verify verify--pending">{verified(subsidio)}</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="tabla-isr">
+    <h2 id="tabla-isr">Tabla ISR mensual 2026</h2>
+    <p class="prose">
+      Tarifa del artículo 96 de la Ley del ISR para retenciones mensuales, vigente desde el {formatDateLong(tariff.effective_from)}. Se
+      actualizó con un factor de 1.1321 porque la inflación acumulada desde noviembre de 2022 superó el 10 % (artículo 152).
+    </p>
+    <div class="table-scroll" tabindex="0" role="region" aria-label="Tabla ISR mensual 2026">
+      <table class="data-table">
+        <caption class="sr-only">Tarifa mensual del ISR 2026</caption>
+        <thead>
+          <tr>
+            <th scope="col" class="num">Límite inferior</th>
+            <th scope="col" class="num">Límite superior</th>
+            <th scope="col" class="num">Cuota fija</th>
+            <th scope="col" class="num">% sobre excedente</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            tariff.value.map((row) => (
+              <tr>
+                <td class="num">{formatMoney(row.lower)}</td>
+                <td class="num">{row.upper === null ? 'En adelante' : formatMoney(row.upper)}</td>
+                <td class="num">{formatMoney(row.fixed)}</td>
+                <td class="num">{formatPct(row.rate_pct)}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <p class="calc__fine">
+      Fuente: <a href={tariff.source_url} rel="noopener" target="_blank">{tariff.source_title}</a> ·{' '}
+      <span class:list={['verify', tariff.verified ? 'verify--ok' : 'verify--pending']}>
+        {tariff.verified ? 'Verificado contra el DOF' : 'Cotejo renglón por renglón contra el DOF pendiente'}
+      </span>
+    </p>
+  </section>
+
+  <Fragment slot="how">
+    <ul>
+      <li>
+        <strong>UMA:</strong> el INEGI la actualiza cada año con la inflación de diciembre (INPC) y la publica en el DOF en los primeros diez
+        días de enero. Rige del 1 de febrero al 31 de enero siguiente.
+      </li>
+      <li>
+        <strong>Salario mínimo:</strong> lo fija el Consejo de Representantes de la CONASAMI en diciembre; rige del 1 de enero al 31 de diciembre.
+        Los valores de 2027 se publicarán en diciembre de 2026.
+      </li>
+      <li>
+        <strong>Tarifa de ISR:</strong> se actualiza cuando la inflación acumulada pasa del 10 % y se publica en el Anexo 8 de la Resolución Miscelánea
+        Fiscal.
+      </li>
+      <li>
+        <strong>Cómo los usamos:</strong> cada calculadora toma el valor vigente en la fecha de pago o de separación. Si eliges una fecha para
+        la que aún no hay valor oficial, la calculadora te lo dice en lugar de usar uno viejo.
+      </li>
+    </ul>
+  </Fragment>
+</CalculatorLayout>

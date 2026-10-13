@@ -76,21 +76,7 @@ const ogLocale = loc.hreflang.replace('-', '_');
       })();
     </script>
 
-    {
-      direction === 'sobre' ? (
-        <>
-          <Font cssVariable="--font-bitter" preload />
-          <Font cssVariable="--font-courier" preload />
-        </>
-      ) : direction === 'sumadora' ? (
-        <>
-          <Font cssVariable="--font-instrument" preload />
-          <Font cssVariable="--font-martian" preload />
-        </>
-      ) : (
-        <Font cssVariable="--font-archivo" preload />
-      )
-    }
+    <Font cssVariable="--font-archivo" preload />
 
     {jsonLd.map((d) => <script type="application/ld+json" set:html={ldJson(d)} />)}
     <slot name="head" />

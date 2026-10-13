@@ -1,0 +1,130 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import ExampleCard from '../../../components/page/ExampleCard.astro';
+import SeparationCalculator, { separationSearch } from '../../../components/calc/SeparationCalculator';
+import { LIQUIDACION_EXAMPLES } from '../../../content/es-mx/examples';
+import { separationExampleRows } from '../../../content/es-mx/example-rows';
+import { mxValue } from '../../../lib/params/mx';
+import { formatMoney } from '../../../lib/ui/format';
+import { BUILD_DAY, UPDATED } from '../../../content/es-mx/meta';
+import type { FaqItem } from '../../../lib/seo/jsonld';
+
+const AS_OF = '2026-10-13';
+const uma = mxValue('mx.uma', AS_OF);
+const sm = mxValue('mx.salario-minimo.general', AS_OF);
+const smZ = mxValue('mx.salario-minimo.zlfn', AS_OF);
+const sep = mxValue('mx.lft.separacion', AS_OF);
+const ex = mxValue('mx.lisr.exenciones', AS_OF);
+const cap = formatMoney(sm * sep.seniority_cap_multiple);
+const capZ = formatMoney(smZ * sep.seniority_cap_multiple);
+const exemptPerYear = formatMoney(ex.separation_uma_per_year * uma.daily);
+
+const examples = LIQUIDACION_EXAMPLES.map((e) => ({
+  ex: e,
+  rows: separationExampleRows(e.input),
+  href: `/es-mx/calculadora-liquidacion/${separationSearch('liquidacion', e.input, BUILD_DAY)}`,
+}));
+
+const faq: FaqItem[] = [
+  {
+    q: '¿Cuánto me toca de liquidación por despido injustificado?',
+    a: 'Tres meses de salario integrado (90 días, artículo 48 de la LFT), la prima de antigüedad (12 días por año, con tope) y tu finiquito: aguinaldo, vacaciones y prima vacacional proporcionales. Si el patrón se niega a reinstalarte, o dejas el trabajo por su culpa, se agregan 20 días de salario por cada año de servicio (artículo 50).',
+  },
+  {
+    q: '¿Cuándo se pagan los 20 días por año?',
+    a: 'La ley los da cuando el patrón se niega a reinstalarte (artículos 49 y 50) o cuando tú rescindes la relación por una falta del patrón, como no pagarte o reducirte el salario (artículos 51 y 52). Si solo reclamas la indemnización por despido, la ley marca los tres meses. En la práctica muchos convenios los incluyen: por eso la calculadora te deja activarlos.',
+  },
+  {
+    q: '¿Con qué salario se calcula la liquidación?',
+    a: 'Con el salario diario integrado: tu cuota diaria más la parte proporcional de las prestaciones que recibes, como aguinaldo y prima vacacional (artículos 84 y 89). Si no lo conoces, la calculadora lo estima con las prestaciones de ley; si tienes más prestaciones, escríbelo en "Más opciones".',
+  },
+  {
+    q: '¿La prima de antigüedad tiene tope?',
+    a: `Sí. Se calcula con tu salario, pero si pasa del doble del salario mínimo de tu zona se usa ese doble: ${cap} diarios en 2026, o ${capZ} en la Zona Libre de la Frontera Norte (artículos 162, 485 y 486). Algunos sitios usan dos UMA, que da mucho menos; la ley habla de salario mínimo y así lo sostiene la tesis aislada con registro 2016514. Este punto está en revisión legal.`,
+  },
+  {
+    q: '¿Cuánto ISR se paga por la liquidación?',
+    a: `Las indemnizaciones y la prima de antigüedad están exentas hasta 90 UMA por cada año de servicio (${exemptPerYear} por año en 2026); una fracción de más de seis meses cuenta como año completo (artículo 93, fracción XIII, de la Ley del ISR). El excedente paga ISR con la tasa efectiva de tu último sueldo mensual (artículo 96).`,
+  },
+  {
+    q: '¿Qué son los salarios caídos y por qué no aparecen?',
+    a: 'Son los salarios que dejas de recibir mientras dura un juicio por despido, hasta por 12 meses (artículo 48). Dependen de cuánto tarde el juicio y de cómo se resuelva, así que no se pueden calcular de antemano. Esta calculadora muestra lo que corresponde sin juicio.',
+  },
+  {
+    q: '¿Qué hago si me despidieron sin causa?',
+    a: 'No firmes una renuncia. Tienes dos meses para presentar tu solicitud de conciliación ante el Centro de Conciliación Laboral (artículo 518 de la LFT). La PROFEDET te asesora y representa gratis. Lleva tus recibos de nómina, tu alta del IMSS y cualquier prueba de tu relación de trabajo.',
+  },
+];
+---
+
+<CalculatorLayout
+  pageKey="mx.liquidacion"
+  locale="es-mx"
+  tool="liquidacion"
+  title="Calculadora de liquidación 2026 por despido injustificado"
+  description={`Calcula tu liquidación 2026 en México: 3 meses de salario integrado, 20 días por año, prima de antigüedad con tope de ${cap} diarios, finiquito e ISR estimado.`}
+  h1="Calculadora de liquidación 2026"
+  lede="Si te despiden sin causa justificada te corresponden tres meses de salario integrado, la prima de antigüedad y tu finiquito; si el patrón se niega a reinstalarte, también 20 días por año. Escribe tu salario y tus fechas para ver la cifra."
+  updated={UPDATED}
+  appName="Calculadora de liquidación México 2026"
+  faq={faq}
+  sourceParams={[
+    'mx.lft.separacion',
+    'mx.lft.prima-antiguedad-tope-base',
+    'mx.salario-minimo.general',
+    'mx.salario-minimo.zlfn',
+    'mx.uma',
+    'mx.lisr.exenciones',
+    'mx.isr.tarifa-mensual',
+    'mx.lft.aguinaldo',
+    'mx.lft.vacaciones',
+    'mx.lft.prima-vacacional',
+  ]}
+  extraSources={[
+    {
+      title: 'Ley Federal del Trabajo, artículos 47 a 52 (despido y rescisión)',
+      url: 'https://www.diputados.gob.mx/LeyesBiblio/pdf/LFT.pdf',
+    },
+    {
+      title: 'Centro de Conciliación Laboral de Sinaloa — Indemnización por despido injustificado',
+      url: 'https://cclsinaloa.gob.mx/indemnizacion-por-despido-injustificado-como-se-calcula/',
+      note: 'Ejemplo con salario integrado de $349.31 reproducido en las pruebas.',
+    },
+  ]}
+  asOf={AS_OF}
+>
+  <SeparationCalculator client:load buildDay={BUILD_DAY} mode="liquidacion" />
+
+  <Fragment slot="how">
+    <p>La liquidación se suma a tu finiquito. Cada concepto usa un salario distinto y tiene su propio artículo:</p>
+    <ol>
+      <li>
+        <strong>Salario diario integrado (SDI):</strong> cuota diaria × factor de integración. Con prestaciones de ley el factor es 1 + (días
+        de aguinaldo + días de vacaciones × prima) ÷ 365 (artículos 84 y 89).
+      </li>
+      <li><strong>Indemnización constitucional:</strong> 90 días × SDI (artículo 48).</li>
+      <li>
+        <strong>20 días por año:</strong> 20 × años de servicio (con fracción) × SDI, cuando el patrón se niega a reinstalarte o rescindes por
+        su culpa (artículos 49 a 52).
+      </li>
+      <li>
+        <strong>Prima de antigüedad:</strong> 12 × años de servicio × salario topado entre uno y dos salarios mínimos de tu zona ({cap} en 2026;
+        artículos 162, 485 y 486). Se paga en cualquier despido.
+      </li>
+      <li><strong>Finiquito:</strong> aguinaldo, vacaciones y prima vacacional proporcionales y salario pendiente.</li>
+      <li>
+        <strong>ISR:</strong> exentos hasta 90 UMA por año de servicio ({exemptPerYear} por año); el excedente paga con la tasa efectiva de tu
+        último sueldo mensual (artículos 93 y 96 de la Ley del ISR).
+      </li>
+    </ol>
+    <p class="formula">
+      <b>Liquidación</b> = 90 × SDI + 20 × años × SDI (si procede) + 12 × años × salario topado + finiquito<br />
+      <b>ISR de la indemnización</b> = (indemnización − 90 UMA × años) × tasa efectiva del último sueldo
+    </p>
+    <p>No incluye salarios caídos ni intereses de un juicio, ni prestaciones de tu contrato colectivo distintas a las de ley.</p>
+  </Fragment>
+
+  <div class="examples" slot="examples">
+    {examples.map(({ ex, rows, href }) => <ExampleCard title={ex.title} story={ex.story} rows={rows} source={ex.source} href={href} />)}
+  </div>
+</CalculatorLayout>

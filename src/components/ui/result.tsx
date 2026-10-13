@@ -18,7 +18,15 @@ function prefersReducedMotion(): boolean {
  * will not end at. Instant when the person asked for reduced motion. Assistive tech always
  * gets the exact final value.
  */
-export function AnimatedMoney({ value, class: cls }: { value: number; class?: string }) {
+export function AnimatedNumber({
+  value,
+  format = formatMoney,
+  class: cls,
+}: {
+  value: number;
+  format?: (n: number) => string;
+  class?: string;
+}) {
   const [shown, setShown] = useState(value);
   const current = useRef(value);
   const mounted = useRef(false);
@@ -53,8 +61,8 @@ export function AnimatedMoney({ value, class: cls }: { value: number; class?: st
 
   return (
     <span class={`money ${cls ?? ''}`}>
-      <span aria-hidden="true">{formatMoney(Math.round(shown * 100) / 100)}</span>
-      <span class="sr-only">{formatMoney(value)}</span>
+      <span aria-hidden="true">{format(Math.round(shown * 100) / 100)}</span>
+      <span class="sr-only">{format(value)}</span>
     </span>
   );
 }

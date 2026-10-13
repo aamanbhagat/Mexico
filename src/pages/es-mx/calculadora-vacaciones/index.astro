@@ -1,0 +1,125 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import ExampleCard from '../../../components/page/ExampleCard.astro';
+import VacacionesCalculator, { vacacionesSearch } from '../../../components/calc/VacacionesCalculator';
+import { VACACIONES_EXAMPLES } from '../../../content/es-mx/examples';
+import { calculateVacaciones, vacationSchedule } from '../../../lib/engine/mx/lft';
+import { mxValue } from '../../../lib/params/mx';
+import { formatDateLong, formatMoney } from '../../../lib/ui/format';
+import { BUILD_DAY, UPDATED } from '../../../content/es-mx/meta';
+import type { FaqItem } from '../../../lib/seo/jsonld';
+
+const AS_OF = '2026-10-13';
+const rule = mxValue('mx.lft.vacaciones', AS_OF);
+const schedule = vacationSchedule(rule, 35);
+const oldRule = mxValue('mx.lft.vacaciones', '2022-12-31');
+const oldSchedule = vacationSchedule(oldRule, 35);
+const scheduleRows = schedule.slice(0, 11).map((row) => ({
+  ...row,
+  label: row.from === row.to ? String(row.from) : `${row.from} a ${row.to}`,
+  oldDays: oldSchedule.find((o) => o.from <= row.from && row.from <= o.to)?.days,
+}));
+
+const examples = VACACIONES_EXAMPLES.map((ex) => {
+  const r = calculateVacaciones(ex.input);
+  if (!r.ok) throw new Error(`Example ${ex.id} failed: ${r.error.code}`);
+  const v = r.value;
+  return {
+    ex,
+    rows: [
+      { label: 'Ingreso', value: formatDateLong(ex.input.startDate) },
+      { label: 'Años cumplidos', value: String(v.seniority.completedYears) },
+      { label: 'Días de vacaciones', value: String(v.daysEarned) },
+      { label: 'Pago de vacaciones', value: formatMoney(v.vacationPay) },
+      { label: 'Prima vacacional (25 %)', value: formatMoney(v.primaVacacional) },
+    ],
+    href: `/es-mx/calculadora-vacaciones/${vacacionesSearch(ex.input, BUILD_DAY)}`,
+  };
+});
+
+const faq: FaqItem[] = [
+  {
+    q: '¿Cuántos días de vacaciones me tocan por ley en 2026?',
+    a: 'Con la reforma de "vacaciones dignas", vigente desde el 1 de enero de 2023: 12 días al cumplir tu primer año, 14 el segundo, 16 el tercero, 18 el cuarto y 20 el quinto. A partir del sexto año suben 2 días por cada 5 años de servicio: 22 días de 6 a 10 años, 24 de 11 a 15, 26 de 16 a 20, 28 de 21 a 25 y 30 de 26 a 30.',
+  },
+  {
+    q: '¿Cuándo empiezo a tener vacaciones?',
+    a: 'Al cumplir un año de trabajo. El patrón debe darte tus días dentro de los seis meses siguientes a cada aniversario (artículo 81). Si te vas antes de cumplir el año, te pagan la parte proporcional en el finiquito.',
+  },
+  {
+    q: '¿Los días de vacaciones son hábiles o naturales?',
+    a: 'Son días laborables: los días que normalmente trabajas. Los descansos semanales y los días festivos que caigan dentro de tus vacaciones no se cuentan.',
+  },
+  {
+    q: '¿Puedo tomar mis vacaciones en partes?',
+    a: 'Sí, pero al menos 12 días deben ser continuos si así lo pides (artículo 78). El resto se distribuye como acuerdes con tu patrón.',
+  },
+  {
+    q: '¿Qué pasa con las vacaciones que no tomé?',
+    a: 'Mientras sigas trabajando no se pueden cambiar por dinero (artículo 79). Si dejas el trabajo, te deben pagar las vacaciones pendientes y las proporcionales del año en curso, con su prima vacacional. Puedes calcularlo en la calculadora de finiquito.',
+  },
+  {
+    q: '¿Cuánto me pagan por mis vacaciones?',
+    a: 'Tu salario normal por cada día de vacaciones, más la prima vacacional: mínimo el 25 % de ese salario (artículo 80). Escribe tu salario en la calculadora para ver el monto.',
+  },
+];
+---
+
+<CalculatorLayout
+  pageKey="mx.vacaciones"
+  locale="es-mx"
+  tool="vacaciones"
+  title="Calculadora de vacaciones 2026: días por antigüedad (LFT)"
+  description="Calcula cuántos días de vacaciones te tocan en 2026 según tu antigüedad con la reforma de vacaciones dignas, cuánto te pagan y tu prima vacacional."
+  h1="Calculadora de vacaciones 2026"
+  lede="Desde 2023 la ley da 12 días al cumplir el primer año y suma 2 por año hasta 20 días en el quinto; después, 2 días más cada 5 años. Escribe tu fecha de ingreso y te decimos cuántos días te tocan y cuánto te pagan."
+  updated={UPDATED}
+  appName="Calculadora de vacaciones México 2026"
+  faq={faq}
+  sourceParams={['mx.lft.vacaciones', 'mx.lft.prima-vacacional', 'mx.lft.separacion']}
+  extraSources={[
+    {
+      title: 'PROFEDET — La Ley Federal del Trabajo es tu aliada en tu derecho a recibir vacaciones',
+      url: 'https://www.gob.mx/profedet/articulos/la-ley-federal-del-trabajo-es-tu-aliada-en-tu-derecho-a-recibir-vacaciones?idiom=es',
+    },
+  ]}
+  asOf={AS_OF}
+>
+  <VacacionesCalculator client:load buildDay={BUILD_DAY} />
+
+  <Fragment slot="how">
+    <p>Los días dependen de los años completos que llevas en la empresa, contados desde tu fecha de ingreso:</p>
+    <div class="table-scroll" tabindex="0" role="region" aria-label="Tabla de días de vacaciones por antigüedad">
+      <table class="data-table schedule">
+        <caption>Días de vacaciones por año de servicio (artículo 76 LFT, vigente desde el 1 de enero de 2023)</caption>
+        <thead>
+          <tr>
+            <th scope="col">Años cumplidos</th>
+            <th scope="col" class="num">Días</th>
+            <th scope="col" class="num">Antes de 2023</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            scheduleRows.map((row) => (
+              <tr>
+                <th scope="row">{row.label}</th>
+                <td class="num">{row.days}</td>
+                <td class="num">{row.oldDays}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <p class="formula">
+      <b>Pago de vacaciones</b> = días × salario diario<br />
+      <b>Prima vacacional</b> = pago de vacaciones × % de prima (mínimo 25 %)<br />
+      <b>Proporcionales</b> (si te vas) = días del año en curso × días desde tu aniversario ÷ 365
+    </p>
+  </Fragment>
+
+  <div class="examples" slot="examples">
+    {examples.map(({ ex, rows, href }) => <ExampleCard title={ex.title} story={ex.story} rows={rows} source={ex.source} href={href} />)}
+  </div>
+</CalculatorLayout>

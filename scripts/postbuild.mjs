@@ -27,3 +27,9 @@ if (problems.length) {
   process.exit(1);
 }
 console.log('postbuild: OK');
+
+if (!process.env.SITE_URL) {
+  console.warn(
+    'postbuild: SITE_URL is not set — canonical, hreflang, sitemap and OG URLs use the placeholder https://calculadoras.example',
+  );
+}

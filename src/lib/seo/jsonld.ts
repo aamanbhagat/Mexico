@@ -62,6 +62,23 @@ export function webAppLd(args: {
   };
 }
 
+export function datasetLd(args: { name: string; description: string; path: string; dateModified: string }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Dataset',
+    name: args.name,
+    description: args.description,
+    url: absoluteUrl(args.path),
+    inLanguage: 'es-MX',
+    dateModified: args.dateModified,
+    isAccessibleForFree: true,
+    spatialCoverage: { '@type': 'Country', name: 'México' },
+    temporalCoverage: '2024-02-01/2026-12-31',
+    creator: { '@type': 'Organization', name: SITE.name, url: absoluteUrl('/') },
+    isBasedOn: ['https://www.dof.gob.mx/', 'https://www.inegi.org.mx/temas/uma/', 'https://www.gob.mx/conasami'],
+  };
+}
+
 /** Serialises JSON-LD safely inside a <script> element. */
 export function ldJson(data: unknown): string {
   return JSON.stringify(data).replace(/</g, '\\u003c');

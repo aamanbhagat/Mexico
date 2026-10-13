@@ -1,0 +1,114 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import ExampleCard from '../../../components/page/ExampleCard.astro';
+import PrimaVacacionalCalculator, { primaSearch } from '../../../components/calc/PrimaVacacionalCalculator';
+import { PRIMA_VACACIONAL_EXAMPLES } from '../../../content/es-mx/examples';
+import { calculatePrimaVacacional } from '../../../lib/engine/mx/lft';
+import { mxValue } from '../../../lib/params/mx';
+import { formatDays, formatMoney } from '../../../lib/ui/format';
+import { BUILD_DAY, UPDATED } from '../../../content/es-mx/meta';
+import type { FaqItem } from '../../../lib/seo/jsonld';
+
+const AS_OF = '2026-10-13';
+const uma = mxValue('mx.uma', AS_OF);
+const minPct = mxValue('mx.lft.prima-vacacional', AS_OF).min_pct;
+const exempt = formatMoney(15 * uma.daily);
+
+const examples = PRIMA_VACACIONAL_EXAMPLES.map((ex) => {
+  const r = calculatePrimaVacacional(ex.input);
+  if (!r.ok) throw new Error(`Example ${ex.id} failed: ${r.error.code}`);
+  const v = r.value;
+  return {
+    ex,
+    rows: [
+      { label: 'Días de vacaciones', value: formatDays(ex.input.vacationDays) },
+      { label: 'Salario de vacaciones', value: formatMoney(v.vacationPay) },
+      { label: `Prima (${ex.input.primaPct} %)`, value: formatMoney(v.gross) },
+      { label: 'Exento de ISR', value: formatMoney(v.exempt) },
+      { label: 'ISR (art. 96 LISR)', value: `−${formatMoney(v.isr)}` },
+      { label: 'Recibes', value: formatMoney(v.net) },
+    ],
+    href: `/es-mx/calculadora-prima-vacacional/${primaSearch(ex.input, BUILD_DAY)}`,
+  };
+});
+
+const faq: FaqItem[] = [
+  {
+    q: '¿Cuánto es la prima vacacional en México?',
+    a: `Al menos el ${minPct} % del salario que te corresponde por tus días de vacaciones (artículo 80 de la Ley Federal del Trabajo). Si tienes 12 días de vacaciones y ganas $500 diarios, tus vacaciones valen $6,000 y la prima mínima es de $1,500. Muchos contratos dan 30 %, 50 % o más.`,
+  },
+  {
+    q: '¿Cuándo se paga la prima vacacional?',
+    a: 'La ley no fija una fecha. Lo común es pagarla cuando sales de vacaciones o en la quincena del aniversario. Si dejas el trabajo, se incluye en tu finiquito junto con las vacaciones no tomadas.',
+  },
+  {
+    q: '¿Cuántos días de vacaciones me tocan en 2026?',
+    a: 'Desde 2023: 12 días al cumplir el primer año, 14 el segundo, 16 el tercero, 18 el cuarto y 20 el quinto. Del sexto año en adelante aumentan 2 días cada 5 años: 22 (6 a 10 años), 24 (11 a 15), 26 (16 a 20) y así sucesivamente. La calculadora los obtiene de tu fecha de ingreso.',
+  },
+  {
+    q: '¿La prima vacacional paga ISR?',
+    a: `Está exenta hasta 15 UMA al año: ${exempt} en 2026 (artículo 93, fracción XIV, de la Ley del ISR). Lo que pase de ese monto se suma a tu sueldo del mes y paga ISR con la tarifa del artículo 96. Tu empresa puede usar el procedimiento del artículo 174 del Reglamento, que suele retener menos.`,
+  },
+  {
+    q: '¿La prima vacacional se calcula con el salario integrado?',
+    a: 'No. Se calcula sobre el salario base de los días de vacaciones. La prima vacacional sí forma parte del salario integrado que se usa para el IMSS y para las indemnizaciones.',
+  },
+  {
+    q: '¿Me pueden pagar la prima y no darme las vacaciones?',
+    a: 'No. Las vacaciones no pueden cambiarse por dinero mientras sigas trabajando (artículo 79); debes disfrutar al menos 12 días continuos al año (artículo 78). Solo se pagan sin disfrutarse cuando termina la relación de trabajo.',
+  },
+];
+---
+
+<CalculatorLayout
+  pageKey="mx.prima-vacacional"
+  locale="es-mx"
+  tool="prima-vacacional"
+  title="Calculadora de prima vacacional 2026: 25 % y parte exenta"
+  description={`Calcula tu prima vacacional 2026: días de vacaciones por antigüedad, prima mínima del 25 %, parte exenta de ISR (${exempt}) y lo que recibes.`}
+  h1="Calculadora de prima vacacional 2026"
+  lede={`La prima vacacional es un pago extra de al menos el ${minPct} % del salario de tus días de vacaciones. En 2026 los primeros ${exempt} no pagan ISR. Escribe tu salario y tu fecha de ingreso y te decimos cuánto recibes.`}
+  updated={UPDATED}
+  appName="Calculadora de prima vacacional México 2026"
+  faq={faq}
+  sourceParams={[
+    'mx.lft.prima-vacacional',
+    'mx.lft.vacaciones',
+    'mx.uma',
+    'mx.lisr.exenciones',
+    'mx.isr.tarifa-mensual',
+    'mx.rlisr.art174',
+  ]}
+  extraSources={[
+    {
+      title: 'Centro de Conciliación Laboral de Sinaloa — Vacaciones y prima vacacional',
+      url: 'https://cclsinaloa.gob.mx/vacaciones-ley-federal-del-trabajo-cuantos-dias-te-tocan-y-calculo-de-prima/',
+      note: 'Ejemplo de $500 diarios y 12 días reproducido en las pruebas.',
+    },
+  ]}
+  asOf={AS_OF}
+>
+  <PrimaVacacionalCalculator client:load buildDay={BUILD_DAY} />
+
+  <Fragment slot="how">
+    <ol>
+      <li>
+        <strong>Días de vacaciones:</strong> según tus años cumplidos (artículo 76, tabla vigente desde 2023) o los que diga tu contrato.
+      </li>
+      <li>
+        <strong>Salario de vacaciones:</strong> salario diario × días de vacaciones. El salario diario es el mensual ÷ 30 (artículo 89).
+      </li>
+      <li><strong>Prima vacacional:</strong> salario de vacaciones × porcentaje de prima (mínimo {minPct} %, artículo 80).</li>
+      <li><strong>Exento:</strong> hasta 15 UMA al año ({exempt} en 2026).</li>
+      <li><strong>ISR:</strong> la parte gravada se suma a tu sueldo del mes y se aplica la tarifa del artículo 96 de la Ley del ISR.</li>
+    </ol>
+    <p class="formula">
+      <b>Prima vacacional</b> = salario diario × días de vacaciones × % de prima<br />
+      <b>Exento</b> = el menor entre la prima y 15 × UMA ({formatMoney(uma.daily)})
+    </p>
+  </Fragment>
+
+  <div class="examples" slot="examples">
+    {examples.map(({ ex, rows, href }) => <ExampleCard title={ex.title} story={ex.story} rows={rows} source={ex.source} href={href} />)}
+  </div>
+</CalculatorLayout>
