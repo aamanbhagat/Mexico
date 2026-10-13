@@ -59,7 +59,11 @@ async function up() {
 
 let server;
 if (!(await up())) {
-  server = spawn('npx', ['astro', 'preview', '--port', '4321'], { stdio: 'ignore' });
+  // Run Astro directly in the foreground (`--ignore-lock`, see playwright.config.ts) so that
+  // server.kill() below really stops it.
+  server = spawn(process.execPath, ['node_modules/astro/bin/astro.mjs', 'preview', '--port', '4321', '--ignore-lock'], {
+    stdio: 'ignore',
+  });
   for (let i = 0; i < 60 && !(await up()); i += 1) await new Promise((r) => setTimeout(r, 500));
 }
 
