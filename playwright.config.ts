@@ -46,7 +46,10 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npx astro preview --port 4321',
+    // `--ignore-lock` keeps the server in the foreground: when Astro detects a coding agent it
+    // otherwise detaches `astro preview` into a background daemon, and Playwright reads the exit of
+    // the launcher as "webServer exited early".
+    command: 'npx astro preview --port 4321 --ignore-lock',
     url: 'http://localhost:4321/es-mx/',
     reuseExistingServer: !process.env['CI'],
     timeout: 60_000,
