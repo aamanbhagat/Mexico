@@ -3,6 +3,11 @@ name: CI
 on:
   pull_request:
   workflow_dispatch:
+    inputs:
+      update_snapshots:
+        description: Regenerate the Playwright visual baselines with CI's Chromium and upload them
+        type: boolean
+        default: false
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -35,7 +40,20 @@ jobs:
       - name: Point Lighthouse at Playwright's Chromium
         run: echo "CHROME_PATH=$(node -e "console.log(require('@playwright/test').chromium.executablePath())")" >> "$GITHUB_ENV"
 
+      - name: Regenerate visual baselines
+        if: ${{ inputs.update_snapshots }}
+        run: |
+          npm run build
+          npx playwright test visual.spec.ts --update-snapshots
+      - name: Upload visual baselines
+        if: ${{ inputs.update_snapshots }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-baselines
+          path: tests/e2e/__screenshots__/
+
       - name: Quality gate
+        if: ${{ !inputs.update_snapshots }}
         run: npm run check
 
       - name: Upload reports

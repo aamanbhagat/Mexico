@@ -33,6 +33,8 @@ const alternates = pageKey && !noindex ? alternatesFor(pageKey) : [];
 const ogImage = absoluteUrl(`/og/${ogSlug}.png`);
 const fullTitle = title.includes(SITE.name) ? title : `${title} | ${SITE.name}`;
 const ogLocale = loc.hreflang.replace('-', '_');
+// Analytics only from our own origin (a proxied, self-hosted Umami/Plausible), never a third party.
+const analyticsSrc = SITE.analyticsScriptUrl.startsWith('/') ? SITE.analyticsScriptUrl : '';
 ---
 
 <!doctype html>
@@ -79,6 +81,11 @@ const ogLocale = loc.hreflang.replace('-', '_');
     <Font cssVariable="--font-archivo" preload />
 
     {jsonLd.map((d) => <script type="application/ld+json" set:html={ldJson(d)} />)}
+    {
+      analyticsSrc && !noindex && (
+        <script is:inline defer src={analyticsSrc} data-website-id={SITE.analyticsWebsiteId} data-do-not-track="true" />
+      )
+    }
     <slot name="head" />
   </head>
   <body data-tool={tool}>

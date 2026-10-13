@@ -263,6 +263,7 @@ export default function PrimaVacacionalCalculator({ buildDay }: { buildDay: stri
       ) : null}
       <Breakdown id="prima-vacacional-desglose" caption="Desglose de tu prima vacacional" lines={lines} />
       <ResultActions
+        tool="prima-vacacional"
         shareTitle="Mi cálculo de prima vacacional"
         summary={() => summaryText('Prima vacacional', reportRows(), window.location.href)}
         onPdf={() =>

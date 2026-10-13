@@ -6,6 +6,7 @@ import type { ComponentChildren } from 'preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { spring } from 'motion';
 import { formatMoney } from '../../lib/ui/format';
+import { track } from '../../lib/ui/analytics';
 
 function prefersReducedMotion(): boolean {
   return typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -129,6 +130,8 @@ export function Breakdown({ id, caption, lines }: BreakdownProps) {
 /* ------------------------------------------------------------------------------------------ */
 
 interface ActionsProps {
+  /** Tool name for analytics events (no input values are ever sent). */
+  tool?: string;
   /** Plain-text summary for the clipboard. */
   summary: () => string;
   /** Builds and downloads the PDF (imported lazily). */
@@ -147,7 +150,7 @@ const FEEDBACK: Record<Exclude<Feedback, ''>, string> = {
   error: 'No se pudo completar. Intenta de nuevo.',
 };
 
-export function ResultActions({ summary, onPdf, shareTitle, disabled }: ActionsProps) {
+export function ResultActions({ summary, onPdf, shareTitle, disabled, tool = '' }: ActionsProps) {
   const [feedback, setFeedback] = useState<Feedback>('');
   useEffect(() => {
     if (!feedback) return;
@@ -159,6 +162,7 @@ export function ResultActions({ summary, onPdf, shareTitle, disabled }: ActionsP
     try {
       await navigator.clipboard.writeText(summary());
       setFeedback('copied');
+      track('copiar', tool);
     } catch {
       setFeedback('error');
     }
@@ -169,9 +173,11 @@ export function ResultActions({ summary, onPdf, shareTitle, disabled }: ActionsP
       if (typeof navigator.share === 'function') {
         await navigator.share({ title: shareTitle, url });
         setFeedback('shared');
+        track('compartir', tool);
       } else {
         await navigator.clipboard.writeText(url);
         setFeedback('link');
+        track('compartir', tool);
       }
     } catch (err) {
       if ((err as DOMException)?.name !== 'AbortError') setFeedback('error');
@@ -181,6 +187,7 @@ export function ResultActions({ summary, onPdf, shareTitle, disabled }: ActionsP
     try {
       await onPdf();
       setFeedback('pdf');
+      track('pdf', tool);
     } catch {
       setFeedback('error');
     }

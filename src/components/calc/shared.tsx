@@ -9,6 +9,7 @@ import { formatDateLong, formatMoney, todayInMexico } from '../../lib/ui/format'
 import { buildSearch, readState, writeState, type Codec } from '../../lib/ui/url-state';
 import type { Report, ReportRow, ReportSection } from '../../lib/ui/pdf';
 import { AnimatedNumber, Icon, useAnnouncement } from '../ui/result';
+import { track } from '../../lib/ui/analytics';
 
 /** Range of dates for which every Mexico parameter has an official value. */
 export const SUPPORTED = { from: '2025-01-01', to: '2026-12-31' } as const;
@@ -104,6 +105,14 @@ interface ShellProps {
 
 export function CalculatorShell({ resultLabel, headline, headlineNote, empty, form, result, tool, format = formatMoney }: ShellProps) {
   const announcement = useAnnouncement(headline === null ? '' : `${resultLabel}: ${format(headline)}`);
+  // One "calculo" event per page view, the first time a result appears (completion-rate KPI).
+  const counted = useRef(false);
+  useEffect(() => {
+    if (headline !== null && !counted.current && announcement) {
+      counted.current = true;
+      track('calculo', tool);
+    }
+  }, [headline, announcement, tool]);
   return (
     <div class="calc" data-tool={tool}>
       <form class="calc__form" onSubmit={(e) => e.preventDefault()} aria-label="Datos para el cálculo" noValidate>

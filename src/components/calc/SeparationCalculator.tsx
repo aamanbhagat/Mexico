@@ -372,6 +372,7 @@ export default function SeparationCalculator({ buildDay, mode }: { buildDay: str
       ) : null}
       <Breakdown id={`${mode}-desglose`} caption={`Desglose de tu ${title.toLowerCase()}`} lines={lines} />
       <ResultActions
+        tool={mode}
         shareTitle={`Mi cálculo de ${title.toLowerCase()}`}
         summary={() => summaryText(`${title} — cálculo estimado`, reportRows(), window.location.href)}
         onPdf={() =>

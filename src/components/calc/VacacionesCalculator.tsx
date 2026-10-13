@@ -216,6 +216,7 @@ export default function VacacionesCalculator({ buildDay }: { buildDay: string })
         </table>
       </div>
       <ResultActions
+        tool="vacaciones"
         shareTitle="Mis días de vacaciones"
         summary={() => summaryText('Vacaciones', reportRows(), window.location.href)}
         onPdf={() =>

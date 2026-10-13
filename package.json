@@ -22,7 +22,10 @@
     "budget": "node scripts/js-budget.mjs",
     "params:report": "node scripts/params-report.mjs",
     "screenshots": "node scripts/screenshots.mjs",
-    "check": "node scripts/check.mjs"
+    "check": "node scripts/check.mjs",
+    "lh:summary": "node scripts/lh-summary.mjs",
+    "fonts:subset": "python3 scripts/subset-fonts.py",
+    "icons": "node scripts/icons.mjs"
   },
   "dependencies": {
     "@astrojs/preact": "6.0.6",

@@ -252,6 +252,7 @@ export default function AguinaldoCalculator({ buildDay }: { buildDay: string }) 
         Se paga a más tardar el 20 de diciembre.
       </p>
       <ResultActions
+        tool="aguinaldo"
         shareTitle="Mi cálculo de aguinaldo"
         summary={() => summaryText(`Aguinaldo ${st.year}`, reportRows(), window.location.href)}
         onPdf={() =>
