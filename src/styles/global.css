@@ -1766,6 +1766,12 @@
 .inline-list li + li::before {
   content: ', ';
 }
+/* WCAG 2.2 target size (2.5.8): adjacent inline links get at least 24 px of height. */
+.inline-list a {
+  display: inline-block;
+  min-height: 1.5rem;
+  line-height: 1.5rem;
+}
 .print-row {
   display: flex;
   flex-wrap: wrap;
