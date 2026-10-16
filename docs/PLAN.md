@@ -18,9 +18,9 @@ mid-November). Rules: `AGENTS.md`.
       verify canonical, hreflang, sitemap and robots use the configured origin.
 - [x] Keep `CLAUDE.md` as a one-line pointer to the tracked `AGENTS.md`; update deployment docs.
 - [x] Run standalone Playwright and the complete `npm run check` on Node 22 (16 Oct 2026:
-      609 passed, 95 skipped; 24/24 Lighthouse routes pass, maximum median LCP 1.65 s).
-- [ ] Commit, push and open a PR into `main` without merging. GitHub Actions jobs currently have
-      no steps (account billing); publishing also requires Git credentials for this workspace.
+      609 passed, 95 skipped; 24/24 Lighthouse routes pass, maximum median LCP 1.55 s).
+- [ ] Push the committed branch and open a PR into `main` without merging. GitHub Actions jobs
+      currently have no steps (account billing); publishing requires Git credentials for this workspace.
 - [x] Leave the production domain and deployment to the owner, deferred as requested.
 - [x] Identify and stop the stale preview on port 4321; use the existing large data disk for
       temporary performance reports instead of filling the system partition.
@@ -32,9 +32,10 @@ mid-November). Rules: `AGENTS.md`.
       mobile/desktop and light/dark output; standalone Playwright: 609 passed, 95 skipped.
 - [x] Improve the measured LCP cause without relaxing any budgets; repeat five-run measurements
       on Norte (median 1364 ms) and each locale's slowest page (all medians below 1650 ms).
-- [ ] Make `npm run check` record its full output and a dated per-step summary with Node version
-      and the tested commit SHA; commit the successful check report.
-- [ ] Run the entire local quality gate, then push `fix/main-baseline` and open an unmerged PR.
+- [x] Make `npm run check` record its full output and a dated per-step summary with Node version
+      and the tested commit SHA; commit `docs/check-reports/fix-main-baseline-4dc4cfe.log`.
+- [x] Run the entire local quality gate on commit `4dc4cfe` (eight steps pass; 24 Lighthouse URLs,
+      three median runs each; every locale's slowest page is below 1650 ms).
 
 ## Phase 1 — Foundation ✅
 
