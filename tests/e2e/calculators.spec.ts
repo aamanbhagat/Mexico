@@ -165,6 +165,6 @@ test.describe('privacy', () => {
     page.on('request', (r) => hosts.add(new URL(r.url()).host));
     await page.goto('/es-mx/calculadora-aguinaldo/?s=15000');
     await page.waitForLoadState('networkidle');
-    expect([...hosts]).toEqual(['localhost:4321']);
+    expect([...hosts]).toEqual([new URL(test.info().project.use.baseURL ?? '').host]);
   });
 });
