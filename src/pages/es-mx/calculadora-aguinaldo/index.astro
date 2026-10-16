@@ -108,7 +108,7 @@ const faq: FaqItem[] = [
   pathOverride={pathOverride}
 >
   <slot name="head" slot="head" />
-  <AguinaldoCalculator client:load buildDay={BUILD_DAY} />
+  <AguinaldoCalculator client:idle buildDay={BUILD_DAY} />
 
   <Fragment slot="how">
     <p>El aguinaldo se calcula con tu salario diario y los días que trabajaste en el año. Estos son los pasos que hace la calculadora:</p>

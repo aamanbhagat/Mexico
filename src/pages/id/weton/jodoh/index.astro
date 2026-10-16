@@ -85,7 +85,7 @@ const faq: FaqItem[] = [
   howTitle="Cara menghitung weton jodoh"
   related={ID_RELATED}
 >
-  <JodohCalculator client:load buildDay={BUILD_DAY} />
+  <JodohCalculator client:idle buildDay={BUILD_DAY} />
 
   <Fragment slot="how">
     <ol>

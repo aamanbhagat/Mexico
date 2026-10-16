@@ -85,7 +85,7 @@ const faq: FaqItem[] = [
   ]}
   asOf={AS_OF}
 >
-  <VacacionesCalculator client:load buildDay={BUILD_DAY} />
+  <VacacionesCalculator client:idle buildDay={BUILD_DAY} />
 
   <Fragment slot="how">
     <p>Los días dependen de los años completos que llevas en la empresa, contados desde tu fecha de ingreso:</p>

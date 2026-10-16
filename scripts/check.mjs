@@ -1,4 +1,4 @@
-// `npm run check`: the quality gate from CLAUDE.md. Runs every step, even after a failure,
+// `npm run check`: the quality gate from AGENTS.md. Runs every step, even after a failure,
 // then prints one summary table and exits non-zero if anything failed.
 //   types → lint + format → unit/golden → build → JS budget → e2e + a11y + visual → Lighthouse
 import { spawnSync } from 'node:child_process';

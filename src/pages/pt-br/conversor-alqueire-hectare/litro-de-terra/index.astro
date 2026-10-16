@@ -81,7 +81,7 @@ const faq: FaqItem[] = [
   extraSources={OFFICIAL_DOC_SOURCES}
   parents={[{ name: 'Conversor de alqueire em hectare', path: HUB }]}
 >
-  <LandConverter client:load preset={preset} />
+  <LandConverter client:idle preset={preset} />
 
   <section class="section" aria-labelledby="litros-no-alqueire">
     <h2 id="litros-no-alqueire">Um alqueire mineiro, {perMineiro} litros</h2>

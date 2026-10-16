@@ -68,7 +68,7 @@ const faq: FaqItem[] = [
   sourceItems={landSourceItems(['ha', 'alqueire-paulista', 'alqueire-mineiro', 'alqueire-baiano', 'alqueire-norte'])}
   extraSources={OFFICIAL_DOC_SOURCES}
 >
-  <LandConverter client:load preset={preset} />
+  <LandConverter client:idle preset={preset} />
   <StateTable />
 
   <HowWeCalculate slot="how" amount="50" from="ha" to="alqueire-paulista" />

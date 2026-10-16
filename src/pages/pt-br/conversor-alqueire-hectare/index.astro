@@ -74,7 +74,7 @@ const faq: FaqItem[] = [
   sourceItems={landSourceItems(BR_LAND.units.map((u) => u.id))}
   extraSources={OFFICIAL_DOC_SOURCES}
 >
-  <LandConverter client:load preset={preset} />
+  <LandConverter client:idle preset={preset} />
   <StateTable />
   <WhyDiverge />
 

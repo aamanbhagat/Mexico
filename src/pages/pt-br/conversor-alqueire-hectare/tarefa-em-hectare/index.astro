@@ -73,7 +73,7 @@ const faq: FaqItem[] = [
   extraSources={OFFICIAL_DOC_SOURCES}
   parents={[{ name: 'Conversor de alqueire em hectare', path: HUB }]}
 >
-  <LandConverter client:load preset={preset} />
+  <LandConverter client:idle preset={preset} />
 
   <section class="section" aria-labelledby="tarefas-em-escala">
     <h2 id="tarefas-em-escala">As tarefas ao lado de um hectare</h2>

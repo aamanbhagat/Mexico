@@ -56,7 +56,7 @@ const faq: FaqItem[] = [
   howTitle="Cara kami menghitung weton hari ini"
   related={ID_RELATED}
 >
-  <HariIni client:load buildDay={BUILD_DAY} />
+  <HariIni client:idle buildDay={BUILD_DAY} />
 
   <Fragment slot="how">
     <p>
