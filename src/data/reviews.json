@@ -1,5 +1,5 @@
 {
-  "$comment": "Review status per page or page family (id.weton covers the weton pages, id.kalender every calendar page). The badge on each page is rendered from this file and never hard-coded. Set status to \"reviewed\" only with the reviewer's name, credentials and date. kind: \"legal\" (labour, tax, pension — CLAUDE.md §8, the default), \"technical\" (e.g. land units: a licensed surveyor/agrimensor or agronomist) or \"expert\" (domain specialist, e.g. a Javanese-calendar specialist — penanggalan Jawa — for /id/).",
+  "$comment": "Review status per page or page family (id.weton covers the weton pages, id.kalender every calendar page). The badge on each page is rendered from this file and never hard-coded. Set status to \"reviewed\" only with the reviewer's name, credentials and date. kind: \"legal\" (labour, tax, pension — AGENTS.md §8, the default), \"technical\" (e.g. land units: a licensed surveyor/agrimensor or agronomist) or \"expert\" (domain specialist, e.g. a Javanese-calendar specialist — penanggalan Jawa — for /id/).",
   "mx.aguinaldo": {
     "status": "pending",
     "reviewer": null,

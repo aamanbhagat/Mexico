@@ -1,6 +1,6 @@
 /*
  * Design tokens — the single source of truth for color, type, spacing, radius, shadow and motion
- * (CLAUDE.md "Design system"). Components only read these custom properties.
+ * (AGENTS.md "Design system"). Components only read these custom properties.
  *
  * Direction: "Línea" (see docs/design/DIRECTIONS.md). Light and dark are both first-class:
  * dark follows the OS unless the visitor picks a theme (html[data-theme]).
@@ -51,7 +51,7 @@
   --radius-lg: 10px;
   --radius-pill: 999px;
 
-  /* ---- Motion (150–250 ms, ease-out or spring; CLAUDE.md) ------------------------------ */
+  /* ---- Motion (150–250 ms, ease-out or spring; AGENTS.md) ------------------------------- */
   --dur-1: 150ms;
   --dur-2: 200ms;
   --dur-3: 250ms;

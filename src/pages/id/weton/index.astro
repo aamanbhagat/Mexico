@@ -86,7 +86,7 @@ const slugs = DINA.flatMap((d) => PASARAN.map((p) => ({ name: `${d} ${p}`, href:
   howTitle="Cara menghitung weton"
   related={ID_RELATED}
 >
-  <WetonCalculator client:load buildDay={BUILD_DAY} />
+  <WetonCalculator client:idle buildDay={BUILD_DAY} />
 
   <Fragment slot="how">
     <p>Ada tiga langkah, dan semuanya bisa dihitung dengan tangan:</p>

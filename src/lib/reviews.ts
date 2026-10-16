@@ -4,7 +4,7 @@ import type { ReviewKind } from '../i18n/ui';
 
 export interface ReviewStatus {
   status: 'pending' | 'reviewed';
-  /** "legal" for labour/tax/pension tools (CLAUDE.md §8), "technical" (e.g. land units) or "expert" (e.g. Javanese calendar). */
+  /** "legal" for labour/tax/pension tools (AGENTS.md §8), "technical" (e.g. land units) or "expert" (e.g. Javanese calendar). */
   kind?: ReviewKind;
   reviewer: string | null;
   credentials: string | null;

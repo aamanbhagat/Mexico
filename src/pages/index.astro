@@ -1,10 +1,11 @@
 ---
 /**
- * Root: Cloudflare Pages redirects "/" to the default locale with a 302 (public/_redirects).
+ * Root: Vercel redirects "/" to the default locale with a 302 (vercel.json).
  * This page is the fallback for hosts without redirect rules: it lists every published locale.
  */
 import { DEFAULT_LOCALE, publishedLocales, type LocaleCode } from '../i18n/locales';
 import { pathFor } from '../i18n/routes';
+import { absoluteUrl } from '../config/site';
 const target = pathFor('home', DEFAULT_LOCALE);
 const labels: Partial<Record<LocaleCode, string>> = {
   'es-mx': 'Calculadoras laborales de México',
@@ -19,7 +20,7 @@ const labels: Partial<Record<LocaleCode, string>> = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Tabula</title>
     <meta name="robots" content="noindex" />
-    <link rel="canonical" href={target} />
+    <link rel="canonical" href={absoluteUrl(target)} />
     <meta http-equiv="refresh" content={`0; url=${target}`} />
   </head>
   <body>

@@ -10,17 +10,25 @@ Multi-country, multi-language calculator site. Live locales:
 - **id** — weton and Javanese calendar (ID-01): cek weton, weton jodoh with every method side by side,
   weton hari ini, 35 weton pages and printable *kalender Jawa* 2026–2027 (year + month pages).
 
-Project rules live in [`CLAUDE.md`](CLAUDE.md); the research behind every
+Project rules live in [`AGENTS.md`](AGENTS.md); the research behind every
 page in [`docs/research/`](docs/research/REPORT.md).
 
 ```bash
 npm ci
 npm run dev        # http://localhost:4321/es-mx/  ·  /pt-br/  ·  /id/
-npm run build      # static site in dist/
-npm run check      # the full quality gate (see below)
+npx playwright install --with-deps chromium  # one-time local setup for browser tests
+SITE_URL=https://ci.tabula.test npm run build  # static site in dist/
+SITE_URL=https://ci.tabula.test npm run check  # full quality gate
 ```
 
-Node 22. Set `SITE_URL` to the production origin when building for production.
+Node 22. A build requires `SITE_URL` to be a valid HTTPS origin; an unset value or the old
+`calculadoras.example` placeholder fails immediately. For local checks, use a reserved `.test`
+origin (`SITE_URL=https://ci.tabula.test npm run check`), or copy `.env.example` to `.env` and set
+its `SITE_URL`. The production domain is not set in this repository. On Vercel, go to
+**Project → Settings → Environment Variables** and set `SITE_URL` to the project's public HTTPS
+address (such as its assigned `*.vercel.app` URL) before building. Update it if the public domain
+changes; canonicals, hreflang, sitemap, robots and OG URLs all derive from this origin.
+The PR workflow sets a reserved `.test` origin for checks; it does not configure deployment.
 
 ## Stack
 
@@ -32,7 +40,7 @@ Node 22. Set `SITE_URL` to the production origin when building for production.
 | Motion (`spring` generator) | Critically damped spring for the number roll (≈2 KB instead of 19 KB for the full `animate`). |
 | Native cross-document View Transitions | Page transitions with zero JavaScript. |
 | Vitest, Playwright + axe-core, Lighthouse CI | Golden tests, e2e/a11y/visual, performance budgets. |
-| Cloudflare Pages | `wrangler.toml`, `public/_headers` (security + caching), `public/_redirects`. |
+| Vercel static deployment | `vercel.json`: directory URLs, 302 root redirect, security headers and asset caching. |
 
 ## Layout
 
@@ -91,6 +99,15 @@ Types (`astro check`) → ESLint → Prettier → Vitest (unit + golden) → bui
 (≤ 70 KB gzip per page) → Playwright (e2e, axe WCAG 2.2 AA in light and dark, keyboard, visual)
 → Lighthouse CI (≥ 95 in every category, LCP < 1.8 s, CLS < 0.05, TBT < 200 ms as the lab proxy
 for INP, JS < 70 KB).
+
+Playwright starts its own preview on port 4329 and refuses to reuse an occupied port. Set
+`PLAYWRIGHT_PORT` to another free port when needed; the development server remains on 4321.
+Lighthouse runs every configured route three times with simulated mobile throttling and evaluates
+the median, without changing any performance budgets. A full `npm run check` records all step
+output and its dated summary (tested commit SHA, Node version, pass/fail per step) in
+`docs/check-reports/<branch-name>-<short-commit-sha>.log` (slashes in branch names become hyphens).
+Commit the code before running the gate, then commit the successful report in a follow-up commit
+so its filename and summary identify the tested code revision.
 
 ## Design
 

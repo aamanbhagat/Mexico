@@ -1,8 +1,9 @@
-// `npm run check`: the quality gate from CLAUDE.md. Runs every step, even after a failure,
+// `npm run check`: the quality gate from AGENTS.md. Runs every step, even after a failure,
 // then prints one summary table and exits non-zero if anything failed.
 //   types → lint + format → unit/golden → build → JS budget → e2e + a11y + visual → Lighthouse
-import { spawnSync } from 'node:child_process';
-import { existsSync } from 'node:fs';
+import { execFileSync, spawn } from 'node:child_process';
+import { closeSync, existsSync, mkdirSync, openSync, writeSync } from 'node:fs';
+import { join } from 'node:path';
 
 const chromium = process.env.CHROME_PATH ?? (existsSync('/opt/pw-browsers/chromium') ? '/opt/pw-browsers/chromium' : undefined);
 const env = { ...process.env, ASTRO_TELEMETRY_DISABLED: '1', ...(chromium ? { CHROME_PATH: chromium } : {}) };
@@ -19,17 +20,47 @@ const steps = [
 ];
 
 const only = process.argv.slice(2);
+const branch = execFileSync('git', ['branch', '--show-current'], { encoding: 'utf8' }).trim() || 'detached';
+const sha = execFileSync('git', ['rev-parse', '--short=7', 'HEAD'], { encoding: 'utf8' }).trim();
+const reportPath = join('docs', 'check-reports', `${branch.replace(/[^A-Za-z0-9._-]/g, '-')}-${sha}.log`);
+let reportFile;
+if (!only.length) {
+  mkdirSync(join('docs', 'check-reports'), { recursive: true });
+  reportFile = openSync(reportPath, 'w');
+}
+
+function output(chunk, error = false) {
+  if (reportFile !== undefined) writeSync(reportFile, chunk);
+  (error ? process.stderr : process.stdout).write(chunk);
+}
+
+function runStep(step) {
+  return new Promise((resolve) => {
+    let launchFailed = false;
+    const child = spawn(step.cmd, step.args, { stdio: ['inherit', 'pipe', 'pipe'], env, shell: process.platform === 'win32' });
+    child.stdout.on('data', (chunk) => output(chunk));
+    child.stderr.on('data', (chunk) => output(chunk, true));
+    child.on('error', (error) => {
+      launchFailed = true;
+      output(`${error.stack ?? error}\n`, true);
+    });
+    child.on('close', (status) => resolve(!launchFailed && status === 0));
+  });
+}
+
 const results = [];
 for (const step of steps) {
   if (only.length && !only.some((o) => step.name.toLowerCase().includes(o.toLowerCase()))) continue;
   const started = Date.now();
-  console.log(`\n▶ ${step.name}`);
-  const r = spawnSync(step.cmd, step.args, { stdio: 'inherit', env, shell: process.platform === 'win32' });
-  results.push({ name: step.name, ok: r.status === 0, seconds: ((Date.now() - started) / 1000).toFixed(1) });
+  output(`\n▶ ${step.name}\n`);
+  const ok = await runStep(step);
+  results.push({ name: step.name, ok, seconds: ((Date.now() - started) / 1000).toFixed(1) });
 }
 
-console.log('\n──────── npm run check ────────');
-for (const r of results) console.log(`${r.ok ? 'PASS' : 'FAIL'}  ${r.name.padEnd(36)} ${r.seconds}s`);
+output(`\n──────── npm run check ────────\nCommit: ${sha}\nDate: ${new Date().toISOString()}\nNode: ${process.version}\n`);
+for (const r of results) output(`${r.ok ? 'PASS' : 'FAIL'}  ${r.name.padEnd(36)} ${r.seconds}s\n`);
 const failed = results.filter((r) => !r.ok);
-console.log(failed.length ? `\n${failed.length} step(s) failed.` : '\nAll checks passed.');
-process.exit(failed.length ? 1 : 0);
+if (reportFile !== undefined) output(`Log: ${reportPath}\n`);
+output(failed.length ? `\n${failed.length} step(s) failed.\n` : '\nAll checks passed.\n');
+if (reportFile !== undefined) closeSync(reportFile);
+process.exitCode = failed.length ? 1 : 0;

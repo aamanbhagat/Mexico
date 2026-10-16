@@ -1,7 +1,16 @@
 import { ROUTES, WORDS, expect, test } from './fixtures';
+import { loadEnv } from 'vite';
+import { requireSiteUrl } from '../../scripts/site-url.mjs';
 
-test.describe('SEO contract (CLAUDE.md §6)', () => {
+const siteUrl = requireSiteUrl(loadEnv('production', process.cwd(), 'SITE_URL').SITE_URL);
+
+test.describe('SEO contract (AGENTS.md §6)', () => {
   test.skip(({ isMobile }) => isMobile, 'markup is identical on mobile');
+
+  test('root fallback canonical uses the configured origin', async ({ request }) => {
+    const html = await (await request.get('/')).text();
+    expect(html).toContain(`<link rel="canonical" href="${siteUrl}/es-mx/">`);
+  });
 
   for (const route of ROUTES) {
     test(`${route.path} has unique metadata, canonical, hreflang and JSON-LD`, async ({ page }) => {
@@ -19,12 +28,13 @@ test.describe('SEO contract (CLAUDE.md §6)', () => {
       expect(description?.length ?? 0).toBeLessThanOrEqual(170);
 
       const canonical = await page.locator('link[rel="canonical"]').getAttribute('href');
-      expect(canonical).toMatch(new RegExp(`^https://[^/]+${route.path.replace(/\//g, '\\/')}$`));
+      expect(canonical).toBe(`${siteUrl}${route.path}`);
 
       const hreflangs = await page
         .locator('link[rel="alternate"][hreflang]')
-        .evaluateAll((els) => els.map((e) => e.getAttribute('hreflang')));
-      expect(hreflangs).toEqual(route.hreflang);
+        .evaluateAll((els) => els.map((e) => ({ lang: e.getAttribute('hreflang'), href: e.getAttribute('href') })));
+      expect(hreflangs.map(({ lang }) => lang)).toEqual(route.hreflang);
+      for (const { href } of hreflangs) expect(new URL(href ?? '').origin).toBe(siteUrl);
 
       await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /\/og\/(id\/)?[a-z0-9-]+\.png$/);
       await expect(page.locator('h1')).toHaveCount(1);
@@ -59,7 +69,10 @@ test.describe('SEO contract (CLAUDE.md §6)', () => {
 
   test('sitemap lists every live page with hreflang alternates, and nothing else', async ({ request }) => {
     const xml = await (await request.get('/sitemap.xml')).text();
-    const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1] ?? '').pathname).sort();
+    const locations = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1] ?? ''));
+    for (const location of locations) expect(location.origin).toBe(siteUrl);
+    for (const [, href] of xml.matchAll(/<xhtml:link\b[^>]*href="([^"]+)"/g)) expect(new URL(href ?? '').origin).toBe(siteUrl);
+    const locs = locations.map((location) => location.pathname).sort();
     expect(locs).toEqual(ROUTES.map((r) => r.path).sort());
     expect(xml.match(/hreflang="x-default"/g)?.length).toBe(ROUTES.length);
     // A locale's tag appears on its own pages and on every locale's home (the homes are alternates of each other).
@@ -77,7 +90,7 @@ test.describe('SEO contract (CLAUDE.md §6)', () => {
 
   test('robots.txt points to the sitemap', async ({ request }) => {
     const txt = await (await request.get('/robots.txt')).text();
-    expect(txt).toMatch(/Sitemap: https:\/\/.+\/sitemap\.xml/);
+    expect(txt).toContain(`Sitemap: ${siteUrl}/sitemap.xml`);
   });
 
   test('unpublished locales are not built', async ({ request }) => {

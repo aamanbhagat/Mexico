@@ -2,7 +2,7 @@ import { ParamNotAvailableError, type ParamFile, type ParamVersion } from './typ
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
-/** Throws if a parameter file breaks the registry contract (see CLAUDE.md). */
+/** Throws if a parameter file breaks the registry contract (see AGENTS.md). */
 export function validateParamFile(file: unknown, label = 'parameter file'): asserts file is ParamFile {
   const fail = (msg: string): never => {
     throw new Error(`${label}: ${msg}`);

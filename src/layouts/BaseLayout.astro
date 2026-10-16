@@ -45,6 +45,7 @@ const mainId = ui.mainId;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <Font cssVariable="--font-archivo" preload />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
@@ -80,8 +81,6 @@ const mainId = ui.mainId;
         }
       })();
     </script>
-
-    <Font cssVariable="--font-archivo" preload />
 
     {jsonLd.map((d) => <script type="application/ld+json" set:html={ldJson(d)} />)}
     {

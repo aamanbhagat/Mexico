@@ -2,7 +2,40 @@
 
 Source of truth for priorities: `docs/research/REPORT.md` (MX-01 is opportunity #2; aguinaldo must
 be live before the November–December peak; ID-01 is #4, kalender Jawa 2027 must be indexable by
-mid-November). Rules: `CLAUDE.md`.
+mid-November). Rules: `AGENTS.md`.
+
+## Project 0 — Green baseline and Vercel deployment
+
+- [x] Sync `main` and confirm es-MX, pt-BR and id home pages and routes exist.
+- [x] Reproduce the full quality gate: Playwright cannot find its browser locally; Lighthouse LCP
+      exceeds 1.8 s on `/id/` and six pt-BR conversion pages. Keep the full output in
+      `/tmp/mexico-main-baseline-initial.log` (local environment only).
+- [x] Install Playwright's pinned browser, align visual snapshots without disabling tests and
+      optimize LCP without changing budgets (standalone Playwright: 609 passed, 95 skipped).
+- [x] Port redirects, security headers and asset caching to `vercel.json`; test the mapping and
+      remove Cloudflare-only configuration.
+- [x] Require a valid `SITE_URL` for builds, reject the old placeholder, document Vercel setup and
+      verify canonical, hreflang, sitemap and robots use the configured origin.
+- [x] Keep `CLAUDE.md` as a one-line pointer to the tracked `AGENTS.md`; update deployment docs.
+- [x] Run standalone Playwright and the complete `npm run check` on Node 22 (16 Oct 2026:
+      609 passed, 95 skipped; 24/24 Lighthouse routes pass, maximum median LCP 1.55 s).
+- [ ] Push the committed branch and open a PR into `main` without merging. GitHub Actions jobs
+      currently have no steps (account billing); publishing requires Git credentials for this workspace.
+- [x] Leave the production domain and deployment to the owner, deferred as requested.
+- [x] Identify and stop the stale preview on port 4321; use the existing large data disk for
+      temporary performance reports instead of filling the system partition.
+- [x] Measure five unmodified Lighthouse runs on the pt-BR Norte page (median 1660 ms, hero lede
+      paragraph) and identify the slowest page in each of the three published locales.
+- [x] Give Playwright a dedicated, configurable preview port (default 4329) that rejects occupied
+      ports instead of reusing a different server.
+- [x] Replace 82 visual baselines captured against the reused stale preview after inspecting
+      mobile/desktop and light/dark output; standalone Playwright: 609 passed, 95 skipped.
+- [x] Improve the measured LCP cause without relaxing any budgets; repeat five-run measurements
+      on Norte (median 1364 ms) and each locale's slowest page (all medians below 1650 ms).
+- [x] Make `npm run check` record its full output and a dated per-step summary with Node version
+      and the tested commit SHA; commit `docs/check-reports/fix-main-baseline-4dc4cfe.log`.
+- [x] Run the entire local quality gate on commit `4dc4cfe` (eight steps pass; 24 Lighthouse URLs,
+      three median runs each; every locale's slowest page is below 1650 ms).
 
 ## Phase 1 — Foundation ✅
 
@@ -11,8 +44,8 @@ mid-November). Rules: `CLAUDE.md`.
       why not Astro 5 / React)
 - [x] Scripts: `dev`, `build`, `check` (+ `test`, `test:e2e`, `lhci`, `budget`, `screenshots`,
       `params:report`)
-- [x] ESLint (TS, Astro, jsx-a11y, hooks) + Prettier; GitHub Actions running `npm run check` on PRs
-- [x] Locale registry: es-MX and id live; pt-BR, ja, pl, de, es-ES, en, tr defined, unpublished,
+- [x] ESLint (TS, Astro, jsx-a11y, hooks) + Prettier; GitHub Actions configured for PRs (no jobs starting)
+- [x] Locale registry: es-MX, pt-BR and id live; ja, pl, de, es-ES, en, tr defined, unpublished,
       guarded by `scripts/postbuild.mjs`
 - [x] hreflang + sitemap helpers (`src/i18n/routes.ts`, `/sitemap.xml`, `/robots.txt`)
 - [x] Parameter registry `src/data/parameters/mx/*.json` + typed loader that picks the version in
@@ -22,7 +55,7 @@ mid-November). Rules: `CLAUDE.md`.
 - [x] Tokens (`src/styles/tokens.css`), light/dark, components: money field, date field,
       segmented control, radio cards, switch, result card with spring number roll, breakdown
       "line", copy/share/PDF, disclaimer, sources, FAQ accordion
-- [x] Cloudflare Pages config (`wrangler.toml`, `public/_headers`, `public/_redirects`), strict CSP
+- [x] Vercel static config (`vercel.json`: redirect, headers, caching), strict CSP
       with build-time hashes, OG images generated at build
 
 ## Phase 2 — MX-01 calculators (es-MX) ✅

@@ -1,6 +1,6 @@
 /**
  * Lighthouse CI: mobile emulation (Lighthouse default: Moto G Power, slow 4G, 4× CPU) on every
- * live page. Budgets from CLAUDE.md §3. INP cannot be measured in a lab run; Total Blocking Time
+ * live page. Budgets from AGENTS.md §3. INP cannot be measured in a lab run; Total Blocking Time
  * is Lighthouse's lab proxy for responsiveness and is held to the same 200 ms.
  */
 const pages = [
