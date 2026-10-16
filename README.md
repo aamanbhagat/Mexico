@@ -102,6 +102,14 @@ for INP, JS < 70 KB).
 
 Playwright starts its own preview on port 4329 and refuses to reuse an occupied port. Set
 `PLAYWRIGHT_PORT` to another free port when needed; the development server remains on 4321.
+`npm run check` runs Playwright through `npm run test:e2e:docker` in the official
+`mcr.microsoft.com/playwright:v1.64.0-noble` image; the exact image version is read from
+`package-lock.json`. Install Docker and run `npm ci` on the host before checking. To regenerate
+all visual baselines in that same browser/font environment, run
+`npm run test:e2e:docker -- visual.spec.ts --update-snapshots` after building. Direct
+`npx playwright test` remains available for local debugging, but do not use it to update
+committed baselines. On hosts where Docker requires passwordless sudo, set
+`PLAYWRIGHT_DOCKER_SUDO=1` for the Docker test step.
 Lighthouse runs every configured route three times with simulated mobile throttling and evaluates
 the median, without changing any performance budgets. A full `npm run check` records all step
 output and its dated summary (tested commit SHA, Node version, pass/fail per step) in
