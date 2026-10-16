@@ -2,10 +2,27 @@
 import { defineConfig, fontProviders } from 'astro/config';
 import preact from '@astrojs/preact';
 import tailwindcss from '@tailwindcss/vite';
+import { loadEnv } from 'vite';
+import { requireSiteUrl } from './scripts/site-url.mjs';
 
-const SITE_URL = process.env.SITE_URL ?? 'https://calculadoras.example';
+const DEV_ORIGIN = 'http://localhost:4321';
 
-/** Local, self-hosted font files (no third-party requests: privacy rule in CLAUDE.md §5). */
+function siteUrlIntegration() {
+  return {
+    name: 'site-url',
+    hooks: {
+      /** @param {import('astro').HookParameters<'astro:config:setup'>} options */
+      'astro:config:setup'({ command, updateConfig }) {
+        const configured = loadEnv(command === 'build' ? 'production' : 'development', process.cwd(), 'SITE_URL').SITE_URL;
+        const siteUrl = command === 'build' ? requireSiteUrl(configured) : configured || DEV_ORIGIN;
+        process.env.SITE_URL = siteUrl;
+        updateConfig({ site: siteUrl });
+      },
+    },
+  };
+}
+
+/** Local, self-hosted font files (no third-party requests: privacy rule in AGENTS.md §5). */
 /** @param {string} pkg @param {string} file */
 const fs = (pkg, file) => `${pkg}/files/${file}`;
 const local = fontProviders.local();
@@ -109,18 +126,18 @@ const LAB_FONTS = [
 ];
 
 export default defineConfig({
-  site: SITE_URL,
+  site: DEV_ORIGIN,
   output: 'static',
   trailingSlash: 'always',
   build: {
     format: 'directory',
-    inlineStylesheets: 'auto',
+    inlineStylesheets: 'always',
   },
   compressHTML: true,
   prefetch: false,
   devToolbar: { enabled: false },
   markdown: { syntaxHighlight: false },
-  integrations: [preact()],
+  integrations: [siteUrlIntegration(), preact()],
   vite: {
     plugins: [tailwindcss(), stripParamNotesForClient()],
   },

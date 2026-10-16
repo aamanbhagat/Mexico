@@ -23,7 +23,7 @@ jobs:
     timeout-minutes: 30
     env:
       ASTRO_TELEMETRY_DISABLED: '1'
-      SITE_URL: ${{ vars.SITE_URL || 'https://calculadoras.example' }}
+      SITE_URL: https://ci.tabula.test
     steps:
       - uses: actions/checkout@v4
 

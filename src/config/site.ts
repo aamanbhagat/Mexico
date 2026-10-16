@@ -1,15 +1,14 @@
 /**
- * Site-wide configuration. The brand name and production origin are placeholders
- * until the owner picks them (see docs/LAUNCH_CHECKLIST.md). Change them here only.
+ * Site-wide configuration. The working brand name can be changed before launch;
+ * the public origin comes from SITE_URL at build time (see docs/LAUNCH_CHECKLIST.md).
  */
 export const SITE = {
   /** Working brand name. Short, neutral across the nine planned languages. */
   name: 'Tabula',
   /**
-   * Production origin. Read from SITE_URL at build time so previews and
-   * production can differ. `.example` is a reserved TLD: it can never go live by accident.
+   * Public origin. Astro validates SITE_URL before a build; localhost is only for development.
    */
-  origin: (process.env['SITE_URL'] ?? 'https://calculadoras.example').replace(/\/$/, ''),
+  origin: (process.env['SITE_URL'] ?? 'http://localhost:4321').replace(/\/$/, ''),
   /** Analytics: cookieless and self-hosted only. Empty = disabled (default). */
   analyticsScriptUrl: process.env['PUBLIC_ANALYTICS_SCRIPT_URL'] ?? '',
   analyticsWebsiteId: process.env['PUBLIC_ANALYTICS_WEBSITE_ID'] ?? '',

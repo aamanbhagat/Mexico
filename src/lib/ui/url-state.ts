@@ -1,7 +1,7 @@
 /**
  * Shareable URL state. Inputs live in the query string (?s=15000&p=m…), so a link
  * reproduces the same calculation. Values are only read and written in the browser:
- * nothing is sent anywhere (CLAUDE.md §5), the URL is just what people choose to share.
+ * nothing is sent anywhere (AGENTS.md §5), the URL is just what people choose to share.
  */
 export type Codec<T> = {
   [K in keyof T]: {

@@ -1,7 +1,7 @@
 /**
  * Cookieless analytics events (Umami or Plausible), only when the owner enables a self-hosted,
  * same-origin script (see BaseLayout and docs/LAUNCH_CHECKLIST.md). Events carry a name and the
- * tool, never anything a person typed: inputs stay on the device (CLAUDE.md §5).
+ * tool, never anything a person typed: inputs stay on the device (AGENTS.md §5).
  */
 type Umami = { track: (name: string, data?: Record<string, string>) => void };
 type Plausible = (name: string, opts?: { props?: Record<string, string> }) => void;

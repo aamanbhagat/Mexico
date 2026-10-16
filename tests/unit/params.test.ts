@@ -20,7 +20,7 @@ function allParamFiles(): { path: string; json: unknown }[] {
   return out;
 }
 
-describe('parameter registry contract (CLAUDE.md §1)', () => {
+describe('parameter registry contract (AGENTS.md §1)', () => {
   const files = allParamFiles();
 
   it('finds parameter files', () => {

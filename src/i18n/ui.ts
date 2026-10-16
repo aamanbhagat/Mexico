@@ -1,5 +1,5 @@
 /**
- * Interface strings per locale. Written natively for each market (CLAUDE.md §7), not translated
+ * Interface strings per locale. Written natively for each market (AGENTS.md §7), not translated
  * word for word. Two dictionaries so islands only ship what they render:
  *  - SITE_UI: static pages (layouts, header, footer, sources, badges) — never sent to the browser;
  *  - CALC_UI: the few strings calculator islands need on the client.

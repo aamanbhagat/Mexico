@@ -10,5 +10,4 @@ coverage/
 .env
 .env.*
 !.env.example
-.wrangler/
 .vercel/

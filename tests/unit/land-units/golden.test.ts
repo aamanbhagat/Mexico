@@ -50,7 +50,7 @@ describe('catalog contract', () => {
   });
 
   it('never marks a value verified while its primary document was not opened', () => {
-    // CLAUDE.md §1: verified=true only after a person checks the primary source.
+    // AGENTS.md §1: verified=true only after a person checks the primary source.
     for (const unit of BR_LAND.units) {
       const primary = BR_LAND.raw.sources[unit.sources[0]!]!;
       if (!primary.opened) expect(unit.verified, unit.id).toBe(false);

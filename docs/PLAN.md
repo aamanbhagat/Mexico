@@ -2,7 +2,26 @@
 
 Source of truth for priorities: `docs/research/REPORT.md` (MX-01 is opportunity #2; aguinaldo must
 be live before the November–December peak; ID-01 is #4, kalender Jawa 2027 must be indexable by
-mid-November). Rules: `CLAUDE.md`.
+mid-November). Rules: `AGENTS.md`.
+
+## Project 0 — Green baseline and Vercel deployment
+
+- [x] Sync `main` and confirm es-MX, pt-BR and id home pages and routes exist.
+- [x] Reproduce the full quality gate: Playwright cannot find its browser locally; Lighthouse LCP
+      exceeds 1.8 s on `/id/` and six pt-BR conversion pages. Keep the full output in
+      `/tmp/mexico-main-baseline-initial.log` (local environment only).
+- [x] Install Playwright's pinned browser, align visual snapshots without disabling tests and
+      optimize LCP without changing budgets (standalone Playwright: 609 passed, 95 skipped).
+- [x] Port redirects, security headers and asset caching to `vercel.json`; test the mapping and
+      remove Cloudflare-only configuration.
+- [x] Require a valid `SITE_URL` for builds, reject the old placeholder, document Vercel setup and
+      verify canonical, hreflang, sitemap and robots use the configured origin.
+- [x] Keep `CLAUDE.md` as a one-line pointer to the tracked `AGENTS.md`; update deployment docs.
+- [x] Run standalone Playwright and the complete `npm run check` on Node 22 (16 Oct 2026:
+      609 passed, 95 skipped; 24/24 Lighthouse routes pass, maximum median LCP 1.65 s).
+- [ ] Commit, push and open a PR into `main` without merging. GitHub Actions jobs currently have
+      no steps (account billing); publishing also requires Git credentials for this workspace.
+- [x] Leave the production domain and deployment to the owner, deferred as requested.
 
 ## Phase 1 — Foundation ✅
 
@@ -11,8 +30,8 @@ mid-November). Rules: `CLAUDE.md`.
       why not Astro 5 / React)
 - [x] Scripts: `dev`, `build`, `check` (+ `test`, `test:e2e`, `lhci`, `budget`, `screenshots`,
       `params:report`)
-- [x] ESLint (TS, Astro, jsx-a11y, hooks) + Prettier; GitHub Actions running `npm run check` on PRs
-- [x] Locale registry: es-MX and id live; pt-BR, ja, pl, de, es-ES, en, tr defined, unpublished,
+- [x] ESLint (TS, Astro, jsx-a11y, hooks) + Prettier; GitHub Actions configured for PRs (no jobs starting)
+- [x] Locale registry: es-MX, pt-BR and id live; ja, pl, de, es-ES, en, tr defined, unpublished,
       guarded by `scripts/postbuild.mjs`
 - [x] hreflang + sitemap helpers (`src/i18n/routes.ts`, `/sitemap.xml`, `/robots.txt`)
 - [x] Parameter registry `src/data/parameters/mx/*.json` + typed loader that picks the version in
@@ -22,7 +41,7 @@ mid-November). Rules: `CLAUDE.md`.
 - [x] Tokens (`src/styles/tokens.css`), light/dark, components: money field, date field,
       segmented control, radio cards, switch, result card with spring number roll, breakdown
       "line", copy/share/PDF, disclaimer, sources, FAQ accordion
-- [x] Cloudflare Pages config (`wrangler.toml`, `public/_headers`, `public/_redirects`), strict CSP
+- [x] Vercel static config (`vercel.json`: redirect, headers, caching), strict CSP
       with build-time hashes, OG images generated at build
 
 ## Phase 2 — MX-01 calculators (es-MX) ✅

@@ -7,8 +7,11 @@
 
 # Launch checklist — MX-01 (es-MX payroll-payout suite)
 
-Status on 13 Oct 2026: the site builds, `npm run check` passes and every page meets the CLAUDE.md
-budgets, but **it must not go live until the blocking items below are done**. Aguinaldo demand
+Status on 16 Oct 2026: the full local quality gate passes on Node 22 (including 609 passing browser
+tests and 24/24 Lighthouse routes); GitHub Actions cannot run while account billing is locked (see
+`docs/PLAN.md`).
+Every page must meet the AGENTS.md budgets, and **it must not go live until the blocking items below
+are done**. Aguinaldo demand
 peaks in November–December, so aim to finish the blocking items by mid-November.
 
 Legend: 🔴 blocking · 🟡 before promotion · ⚪ after launch
@@ -104,26 +107,28 @@ versions the day they are published (target SLA: 24–72 h, per docs/research/RE
 
 ## 3. Things only you can do (🔴 blocking unless noted)
 
-1. **Brand and domain.** "Tabula" is a working name (`src/config/site.ts`). Pick the final name,
-   check trademarks, buy the domain.
-2. **Production origin.** Set `SITE_URL=https://your-domain` in the Cloudflare Pages project
-   (and as a GitHub Actions variable `SITE_URL`). Canonical, hreflang, sitemap, robots and OG URLs
-   all derive from it; the build warns while it is unset.
-3. **Cloudflare Pages.** Create the project from this repo: build command `npm run build`, output
-   `dist`, Node 22. `public/_headers` and `public/_redirects` are picked up automatically. Check
-   that preview deployments (`*.pages.dev`) answer with `X-Robots-Tag: noindex`; if they do not, add a
-   rule so previews are never indexed with production canonicals.
+1. **Brand and domain (deferred).** "Tabula" is a working name (`src/config/site.ts`). Selecting or
+   buying a custom domain is deferred at the owner's request; the Vercel-assigned hostname can be
+   used until then.
+2. **Production origin.** In **Vercel → Project → Settings → Environment Variables**, set `SITE_URL`
+   to the exact public HTTPS origin of the project (the assigned `*.vercel.app` hostname is fine).
+   Set it for each environment being built; a missing value or `calculadoras.example` fails the
+   build. Canonical, hreflang, sitemap, robots and OG URLs all derive from it. `.env.example`
+   documents the variable for local use; CI uses a reserved `.test` origin, never a production URL.
+3. **Vercel.** Import this repository as a static Astro project; Node 22, `npm ci`, build command
+   `npm run build`, output `dist`. `vercel.json` supplies the 302 root redirect, security headers,
+   and immutable/OG caching; HTML uses Vercel's default `public, max-age=0, must-revalidate`.
+   Check that preview deployments are blocked from indexing before sharing their URLs; production
+   canonical URLs must not cause previews to be indexed as duplicates.
 4. **Enable CI.** `.github/workflows/ci.yml` runs `npm run check` on pull requests. Open a PR to see
-   the first run. If the visual snapshots differ only because CI's Chromium is newer than the one
-   that produced the baselines, run the workflow manually with "update snapshots" and commit the
-   artifact (see §6).
-   **🔴 Seen on 13 Oct 2026:** every `npm run check` job on the first three PRs ended in ~3 s with
-   *no runner assigned* (`runner_id: 0`, no steps, no log), so CI has never actually run. That is a
-   GitHub Actions account/repo problem (billing or spending limit, or an Actions policy), not a code
-   failure. Open the run page and read the annotation at the top, fix it, then re-run. Until then
+   the first run. Make visual snapshots with the Playwright Chromium version installed by the
+   workflow (`npx playwright install --with-deps chromium`), not a system browser.
+   **🔴 Confirmed on 15 Oct 2026:** the latest scheduled run on `main` ended in ~4 s with
+   *no runner assigned* (`runner_id: 0`, no steps, no log). GitHub's annotation says the account
+   is locked due to a billing issue. Restore Actions billing, then re-run the PR check. Until then
    the local `npm run check` is the only quality gate.
 5. **Analytics (🟡).** Only cookieless and self-hosted: deploy Umami or Plausible behind the same
-   origin (e.g. a Cloudflare route to `/stats/script.js`) and set `PUBLIC_ANALYTICS_SCRIPT_URL`
+   origin (e.g. a same-origin route to `/stats/script.js`) and set `PUBLIC_ANALYTICS_SCRIPT_URL`
    (must start with `/`) and `PUBLIC_ANALYTICS_WEBSITE_ID`. Events sent: `calculo`, `copiar`,
    `compartir`, `pdf`, each with the tool name only — never inputs. Third-party URLs are ignored.
 6. **Privacy notice (🟡).** Add an "Aviso de privacidad" page (LFPDPPP). The site stores nothing
@@ -158,13 +163,13 @@ versions the day they are published (target SLA: 24–72 h, per docs/research/RE
 
 - `npm run check` = types, lint, format, unit + golden, build, JS budget, Playwright (e2e, axe in
   light/dark, keyboard, visual) and Lighthouse CI. Run it before every merge.
-- Visual baselines were produced with Chromium 141 in the build container; CI installs
-  Playwright's Chromium 156. A 2 % pixel tolerance usually absorbs the difference; if not,
-  refresh the baselines from CI (§3.4) rather than loosening the tolerance.
+- Visual baselines use Playwright 1.64's Chromium 156 headless shell, matching the browser the CI
+  workflow installs. Regenerate intended visual changes locally with `npx playwright test
+  tests/e2e/visual.spec.ts --update-snapshots`, never by increasing the 2 % pixel tolerance.
 - Astro is pinned to 7.3.8 (not 5.x): Astro 5.18.2 has open advisories, including a critical RCE
   in image optimisation, fixed only in ≥ 7.2.8.
-- Fonts: `scripts/subset-fonts.py` regenerates the Spanish Archivo subset; other locales will need
-  their own subset (latin-ext for pl/tr/de; a CJK family for ja).
+- Fonts: `scripts/subset-fonts.py` regenerates the Archivo subset from published locale source;
+  future locales may need extended Latin support (pl/tr/de) or a CJK family (ja).
 
 
 ---
@@ -172,13 +177,13 @@ versions the day they are published (target SLA: 24–72 h, per docs/research/RE
 # 7. BR-01 — pt-BR land-unit converter (`/pt-br/`)
 
 Status on 13 Oct 2026: nine pages build, `npm run check` passes for MX and BR together, every BR
-page meets the CLAUDE.md budgets (29 KB JS gzip). **Do not promote it before 7.1–7.3.** The pages
+page meets the AGENTS.md budgets (29 KB JS gzip). **Do not promote it before 7.1–7.3.** The pages
 already say on screen that each value's check against the original document is pending, so an
 early soft launch is honest; promotion should wait.
 
 ## 7.1 Technical review (🔴 before promotion)
 
-Not a legal tool (CLAUDE.md §8 does not require a lawyer), but people will use these numbers in
+Not a legal tool (AGENTS.md §8 does not require a lawyer), but people will use these numbers in
 land deals. Hire a licensed **agrimensor/topógrafo** (CREA) with rural-registry experience in at
 least two regions (ideally SP/PR and BA or MG). Record the result in `src/data/reviews.json` for
 every `br.*` key (`"kind": "technical"`, `status`, `reviewer`, `credentials`, `reviewed_on`); the
@@ -290,7 +295,7 @@ are done. Demand for *kalender jawa 2027* starts in December: get the pages inde
 
 ## ID-1. Deploy and index (🔴 blocking, by 15 Nov 2026)
 
-1. Deploy the branch to production (same Cloudflare Pages project; `SITE_URL` set — see MX-01 §3).
+1. Deploy the branch to production (same Vercel project; `SITE_URL` set — see MX-01 §3).
 2. **Search Console**: add a **URL-prefix property for `https://<domain>/id/`** (the research recommends
    one property per locale folder; the Domain property from MX-01 also covers it).
 3. Submit `https://<domain>/sitemap.xml` (it now lists the 65 /id/ URLs with hreflang id-ID and their
@@ -311,8 +316,9 @@ are done. Demand for *kalender jawa 2027* starts in December: get the pages inde
 
 `Weton hari ini`, the "berikutnya" marks on weton pages and the "today" cell of the calendars are
 recomputed in the visitor's browser, so they are never stale. To also refresh the static HTML that
-crawlers see, create a **Cloudflare Pages deploy hook** and store its URL as the GitHub repository
-secret **`CF_PAGES_DEPLOY_HOOK`**: `.github/workflows/daily-rebuild.yml` calls it at 00:05 WIB.
+crawlers see, create a **Vercel deploy hook** and store its URL as the GitHub repository
+secret **`VERCEL_DEPLOY_HOOK`**: `.github/workflows/daily-rebuild.yml` calls it at 00:05 WIB.
+This scheduled hook will not run until the repository's GitHub Actions issue is resolved.
 
 ## ID-3. Cultural review (🟡 before promotion)
 

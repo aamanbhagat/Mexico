@@ -1,4 +1,4 @@
-// JS budget (CLAUDE.md §3): gzip size of every script a page loads before interaction —
+// JS budget (AGENTS.md §3): gzip size of every script a page loads before interaction —
 // entry modules, island components/renderers and their static imports. Dynamic import()
 // chunks (e.g. the PDF writer, loaded on click) are reported separately and not counted.
 import { readFileSync, readdirSync, statSync } from 'node:fs';

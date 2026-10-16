@@ -1,5 +1,0 @@
-# Cloudflare Pages project (static). Deploy with: npx wrangler pages deploy dist
-# Set SITE_URL (production origin) in the Pages project's environment variables.
-name = "tabula-calculadoras"
-compatibility_date = "2026-10-01"
-pages_build_output_dir = "dist"
