@@ -1,11 +1,12 @@
 node_modules/
 dist/
 .astro/
-.lighthouseci/
+.lighthouseci
 playwright-report/
 test-results/
 coverage/
 *.log
+!docs/check-reports/*.log
 .DS_Store
 .env
 .env.*

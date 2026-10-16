@@ -100,6 +100,15 @@ Types (`astro check`) → ESLint → Prettier → Vitest (unit + golden) → bui
 → Lighthouse CI (≥ 95 in every category, LCP < 1.8 s, CLS < 0.05, TBT < 200 ms as the lab proxy
 for INP, JS < 70 KB).
 
+Playwright starts its own preview on port 4329 and refuses to reuse an occupied port. Set
+`PLAYWRIGHT_PORT` to another free port when needed; the development server remains on 4321.
+Lighthouse runs every configured route three times with simulated mobile throttling and evaluates
+the median, without changing any performance budgets. A full `npm run check` records all step
+output and its dated summary (tested commit SHA, Node version, pass/fail per step) in
+`docs/check-reports/<branch-name>-<short-commit-sha>.log` (slashes in branch names become hyphens).
+Commit the code before running the gate, then commit the successful report in a follow-up commit
+so its filename and summary identify the tested code revision.
+
 ## Design
 
 Direction **Línea** (transit wayfinding): every calculator is a line with its own color and

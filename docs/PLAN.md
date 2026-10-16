@@ -22,6 +22,19 @@ mid-November). Rules: `AGENTS.md`.
 - [ ] Commit, push and open a PR into `main` without merging. GitHub Actions jobs currently have
       no steps (account billing); publishing also requires Git credentials for this workspace.
 - [x] Leave the production domain and deployment to the owner, deferred as requested.
+- [x] Identify and stop the stale preview on port 4321; use the existing large data disk for
+      temporary performance reports instead of filling the system partition.
+- [x] Measure five unmodified Lighthouse runs on the pt-BR Norte page (median 1660 ms, hero lede
+      paragraph) and identify the slowest page in each of the three published locales.
+- [x] Give Playwright a dedicated, configurable preview port (default 4329) that rejects occupied
+      ports instead of reusing a different server.
+- [x] Replace 82 visual baselines captured against the reused stale preview after inspecting
+      mobile/desktop and light/dark output; standalone Playwright: 609 passed, 95 skipped.
+- [x] Improve the measured LCP cause without relaxing any budgets; repeat five-run measurements
+      on Norte (median 1364 ms) and each locale's slowest page (all medians below 1650 ms).
+- [ ] Make `npm run check` record its full output and a dated per-step summary with Node version
+      and the tested commit SHA; commit the successful check report.
+- [ ] Run the entire local quality gate, then push `fix/main-baseline` and open an unmerged PR.
 
 ## Phase 1 — Foundation ✅
 
