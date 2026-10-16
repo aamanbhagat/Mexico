@@ -12,8 +12,8 @@ mid-November). Rules: `AGENTS.md`.
 - [x] Run visual tests in the official Docker image matching `package-lock.json`; regenerate all
       92 baselines there once, then verify all 92 without relaxing visual thresholds.
 - [x] Preflight the unchanged full browser suite in the image (609 passed, 95 pre-existing skips).
-- [ ] Run the complete check detached to avoid the external command timeout; commit the full report,
-      push the branch, and open an unmerged PR into main.
+- [x] Run the complete check detached past the previous 15-minute interruption: all eight steps
+      passed on `7728a2a`; report: `docs/check-reports/fix-visual-env-7728a2a.log`.
 
 ## Project 0 — Green baseline and Vercel deployment
 
