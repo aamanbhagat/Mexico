@@ -7,13 +7,13 @@
 //   npm run build && npm run screenshots -- all     (every set)
 // Template pages get an above-the-fold PNG and a full-page JPEG per variant; in the id-01 set every
 // other page gets an above-the-fold JPEG per variant (same templates, different data).
-// Starts `astro preview` itself if needed. The sticky mobile bar is hidden in full-page shots,
+// Starts an isolated static preview itself. The sticky mobile bar is hidden in full-page shots,
 // since a fixed element would otherwise be painted mid-page.
 import { spawn } from 'node:child_process';
 import { mkdirSync, readFileSync } from 'node:fs';
 import { chromium } from '@playwright/test';
 
-const BASE = 'http://localhost:4321';
+const BASE = 'http://127.0.0.1:4332';
 const SET = process.argv[2] ?? 'es-mx';
 
 const DINA = ['minggu', 'senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu'];
@@ -113,23 +113,15 @@ const widths = [
   { w: 1440, h: 900 },
 ];
 
-async function up() {
-  try {
-    return (await fetch(`${BASE}/es-mx/`)).ok;
-  } catch {
-    return false;
-  }
-}
-
-let server;
-if (!(await up())) {
-  // Run Astro directly in the foreground (`--ignore-lock`, see playwright.config.ts) so that
-  // server.kill() below really stops it.
-  server = spawn(process.execPath, ['node_modules/astro/bin/astro.mjs', 'preview', '--port', '4321', '--ignore-lock'], {
-    stdio: 'ignore',
+const server = spawn(process.execPath, ['scripts/preview-static.mjs', '--port', '4332'], { stdio: ['ignore', 'pipe', 'pipe'] });
+process.once('exit', () => server.kill());
+await new Promise((resolve, reject) => {
+  server.once('error', reject);
+  server.once('exit', (code) => reject(new Error(`Static preview stopped before screenshots (${code})`)));
+  server.stdout.on('data', (data) => {
+    if (data.toString().includes('Static preview ready')) resolve();
   });
-  for (let i = 0; i < 60 && !(await up()); i += 1) await new Promise((r) => setTimeout(r, 500));
-}
+});
 
 let count = 0;
 for (const name of names) {
@@ -191,5 +183,5 @@ for (const name of names) {
   await browser.close();
 }
 
-server?.kill();
+server.kill();
 console.log(`screenshots: ${count} files (${names.join(', ')})`);

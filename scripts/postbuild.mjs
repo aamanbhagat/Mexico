@@ -1,8 +1,8 @@
-// Post-build guard rails. Fails the build when something that must never ship is in dist/.
+// Post-build guard rails. Inspect the actual public files produced by the Vercel adapter.
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
-const DIST = 'dist';
+const DIST = '.vercel/output/static';
 const problems = [];
 
 // 1. Unpublished locales must not produce pages (their folders are reserved, not live).
@@ -12,11 +12,11 @@ const entries = [...registry.matchAll(/code: '([a-z-]+)',[\s\S]*?published: (tru
 if (entries.length !== (registry.match(/code: '/g) ?? []).length) problems.push('Could not read every locale in src/i18n/locales.ts');
 const unpublished = entries.filter((m) => m[2] === 'false').map((m) => m[1]);
 for (const code of unpublished) {
-  if (existsSync(join(DIST, code))) problems.push(`Unpublished locale folder found in dist/: /${code}/`);
+  if (existsSync(join(DIST, code))) problems.push(`Unpublished locale folder found in public output: /${code}/`);
 }
 
 // 2. The design lab only exists in LAB builds.
-if (process.env.LAB !== '1' && existsSync(join(DIST, 'lab'))) problems.push('Design lab pages found in a production build (dist/lab).');
+if (process.env.LAB !== '1' && existsSync(join(DIST, 'lab'))) problems.push('Design lab pages found in public output.');
 
 // 3. No source maps in production output.
 const walk = (dir) =>

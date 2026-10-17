@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig, fontProviders } from 'astro/config';
 import preact from '@astrojs/preact';
+import vercel from '@astrojs/vercel';
 import tailwindcss from '@tailwindcss/vite';
 import { loadEnv } from 'vite';
 import { requireSiteUrl } from './scripts/site-url.mjs';
@@ -128,6 +129,7 @@ const LAB_FONTS = [
 export default defineConfig({
   site: DEV_ORIGIN,
   output: 'static',
+  adapter: vercel(),
   trailingSlash: 'always',
   build: {
     format: 'directory',

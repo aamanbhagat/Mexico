@@ -10,6 +10,7 @@ export default tseslint.config(
   {
     ignores: [
       'dist/**',
+      '.vercel/**',
       '.astro/**',
       'node_modules/**',
       'docs/**',

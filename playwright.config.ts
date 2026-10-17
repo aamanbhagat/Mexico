@@ -44,10 +44,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    // `--ignore-lock` keeps the server in the foreground: when Astro detects a coding agent it
-    // otherwise detaches `astro preview` into a background daemon, and Playwright reads the exit of
-    // the launcher as "webServer exited early".
-    command: `npx astro preview --port ${previewPort} --ignore-lock`,
+    command: `node scripts/preview-static.mjs --port ${previewPort}`,
     port: previewPort,
     reuseExistingServer: false,
     timeout: 60_000,

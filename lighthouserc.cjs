@@ -38,7 +38,7 @@ const pages = [
 module.exports = {
   ci: {
     collect: {
-      staticDistDir: './dist',
+      staticDistDir: './.vercel/output/static',
       url: pages.map((p) => `http://localhost${p}`),
       numberOfRuns: 3,
       settings: {
