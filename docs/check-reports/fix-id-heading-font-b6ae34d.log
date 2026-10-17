@@ -1,0 +1,1171 @@
+
+▶ Types (astro check)
+00:52:17 [types] Generated 53ms
+00:52:17 [check] Getting diagnostics for Astro files in /mnt/bigdisk/azureuser/Mexico...
+[96meslint.config.js[0m:[93m9[0m:[93m25[0m - [93mwarning[0m[90m ts(6387): [0mThe signature '(...configs: InfiniteDepthConfigWithExtends[]): ConfigArray' of 'tseslint.config' is deprecated.
+
+[7m9[0m export default tseslint.config(
+[7m [0m [93m                        ~~~~~~[0m
+
+Result (150 files): 
+- 0 errors
+- 0 warnings
+- 1 hint
+
+
+▶ Lint (ESLint)
+
+▶ Format (Prettier)
+Checking formatting...
+All matched files use Prettier code style!
+
+▶ Unit + golden (Vitest)
+
+ RUN  v5.0.4 /mnt/bigdisk/azureuser/Mexico
+
+ ✓ tests/unit/land-units/golden.test.ts (44 tests) 16ms
+ ✓ tests/unit/engine/payouts.test.ts (34 tests) 24ms
+ ✓ tests/unit/calendar/javanese.test.ts (70 tests) 30ms
+ ✓ tests/unit/land-units/engine.test.ts (15 tests) 34ms
+ ✓ tests/unit/params.test.ts (32 tests) 22ms
+ ✓ tests/unit/utils.test.ts (16 tests) 16ms
+ ✓ tests/unit/engine/dates-isr.test.ts (11 tests) 7ms
+ ✓ tests/unit/vercel-config.test.ts (3 tests) 5ms
+ ✓ tests/unit/site-url.test.ts (12 tests) 7ms
+
+ Test Files  9 passed (9)
+      Tests  237 passed (237)
+   Start at  00:52:35
+   Duration  898ms (transform 61%, import 22%, tests 12%, worker 5%)
+
+
+▶ Build
+
+> calculadoras@0.1.0 build
+> astro build && node scripts/postbuild.mjs
+
+00:52:37 [types] Generated 41ms
+00:52:37 [build] output: "static"
+00:52:37 [build] mode: "static"
+00:52:37 [build] directory: /mnt/bigdisk/azureuser/Mexico/dist/
+00:52:37 [build] Collecting build info...
+00:52:37 [build] ✓ Completed in 93ms.
+00:52:37 [build] Building static entrypoints...
+00:52:38 [assets] Copying fonts (1 file)...
+00:52:38 [vite] ✓ built in 1.13s
+00:52:38 [vite] ✓ built in 455ms
+00:52:38 [build] Rearranging server assets...
+
+ generating static routes 
+00:52:38   ├─ /404.html (+55ms) 
+00:52:39   ├─ /es-mx/calculadora-aguinaldo/index.html (+16ms) 
+00:52:39   ├─ /es-mx/calculadora-finiquito/index.html (+11ms) 
+00:52:39   ├─ /es-mx/calculadora-liquidacion/index.html (+6ms) 
+00:52:39   ├─ /es-mx/calculadora-prima-vacacional/index.html (+6ms) 
+00:52:39   ├─ /es-mx/calculadora-vacaciones/index.html (+8ms) 
+00:52:39   ├─ /es-mx/uma-salario-minimo-2026/index.html (+4ms) 
+00:52:39   ├─ /es-mx/index.html (+3ms) 
+00:52:39   ├─ /id/kalender-jawa/2026/januari/index.html (+9ms) 
+00:52:39   ├─ /id/kalender-jawa/2026/februari/index.html (+5ms) 
+00:52:39   ├─ /id/kalender-jawa/2026/maret/index.html (+5ms) 
+00:52:39   ├─ /id/kalender-jawa/2026/april/index.html (+5ms) 
+00:52:39   ├─ /id/kalender-jawa/2026/mei/index.html (+4ms) 
+00:52:39   ├─ /id/kalender-jawa/2026/juni/index.html (+4ms) 
+00:52:39   ├─ /id/kalender-jawa/2026/juli/index.html (+4ms) 
+00:52:39   ├─ /id/kalender-jawa/2026/agustus/index.html (+6ms) 
+00:52:39   ├─ /id/kalender-jawa/2026/september/index.html (+6ms) 
+00:52:39   ├─ /id/kalender-jawa/2026/oktober/index.html (+3ms) 
+00:52:39   ├─ /id/kalender-jawa/2026/november/index.html (+2ms) 
+00:52:39   ├─ /id/kalender-jawa/2026/desember/index.html (+3ms) 
+00:52:39   ├─ /id/kalender-jawa/2027/januari/index.html (+6ms) 
+00:52:39   ├─ /id/kalender-jawa/2027/februari/index.html (+2ms) 
+00:52:39   ├─ /id/kalender-jawa/2027/maret/index.html (+2ms) 
+00:52:39   ├─ /id/kalender-jawa/2027/april/index.html (+2ms) 
+00:52:39   ├─ /id/kalender-jawa/2027/mei/index.html (+2ms) 
+00:52:39   ├─ /id/kalender-jawa/2027/juni/index.html (+2ms) 
+00:52:39   ├─ /id/kalender-jawa/2027/juli/index.html (+2ms) 
+00:52:39   ├─ /id/kalender-jawa/2027/agustus/index.html (+2ms) 
+00:52:39   ├─ /id/kalender-jawa/2027/september/index.html (+2ms) 
+00:52:39   ├─ /id/kalender-jawa/2027/oktober/index.html (+2ms) 
+00:52:39   ├─ /id/kalender-jawa/2027/november/index.html (+2ms) 
+00:52:39   ├─ /id/kalender-jawa/2027/desember/index.html (+2ms) 
+00:52:39   ├─ /id/kalender-jawa/2026/index.html (+6ms) 
+00:52:39   ├─ /id/kalender-jawa/2027/index.html (+13ms) 
+00:52:39   ├─ /id/weton/hari-ini/index.html (+5ms) 
+00:52:39   ├─ /id/weton/jodoh/index.html (+6ms) 
+00:52:39   ├─ /id/weton/minggu-legi/index.html (+4ms) 
+00:52:39   ├─ /id/weton/minggu-pahing/index.html (+3ms) 
+00:52:39   ├─ /id/weton/minggu-pon/index.html (+4ms) 
+00:52:39   ├─ /id/weton/minggu-wage/index.html (+4ms) 
+00:52:39   ├─ /id/weton/minggu-kliwon/index.html (+4ms) 
+00:52:39   ├─ /id/weton/senin-legi/index.html (+3ms) 
+00:52:39   ├─ /id/weton/senin-pahing/index.html (+3ms) 
+00:52:39   ├─ /id/weton/senin-pon/index.html (+2ms) 
+00:52:39   ├─ /id/weton/senin-wage/index.html (+2ms) 
+00:52:39   ├─ /id/weton/senin-kliwon/index.html (+2ms) 
+00:52:39   ├─ /id/weton/selasa-legi/index.html (+7ms) 
+00:52:39   ├─ /id/weton/selasa-pahing/index.html (+4ms) 
+00:52:39   ├─ /id/weton/selasa-pon/index.html (+3ms) 
+00:52:39   ├─ /id/weton/selasa-wage/index.html (+3ms) 
+00:52:39   ├─ /id/weton/selasa-kliwon/index.html (+3ms) 
+00:52:39   ├─ /id/weton/rabu-legi/index.html (+2ms) 
+00:52:39   ├─ /id/weton/rabu-pahing/index.html (+2ms) 
+00:52:39   ├─ /id/weton/rabu-pon/index.html (+2ms) 
+00:52:39   ├─ /id/weton/rabu-wage/index.html (+3ms) 
+00:52:39   ├─ /id/weton/rabu-kliwon/index.html (+2ms) 
+00:52:39   ├─ /id/weton/kamis-legi/index.html (+3ms) 
+00:52:39   ├─ /id/weton/kamis-pahing/index.html (+3ms) 
+00:52:39   ├─ /id/weton/kamis-pon/index.html (+3ms) 
+00:52:39   ├─ /id/weton/kamis-wage/index.html (+2ms) 
+00:52:39   ├─ /id/weton/kamis-kliwon/index.html (+2ms) 
+00:52:39   ├─ /id/weton/jumat-legi/index.html (+2ms) 
+00:52:39   ├─ /id/weton/jumat-pahing/index.html (+4ms) 
+00:52:39   ├─ /id/weton/jumat-pon/index.html (+2ms) 
+00:52:39   ├─ /id/weton/jumat-wage/index.html (+2ms) 
+00:52:39   ├─ /id/weton/jumat-kliwon/index.html (+2ms) 
+00:52:39   ├─ /id/weton/sabtu-legi/index.html (+4ms) 
+00:52:39   ├─ /id/weton/sabtu-pahing/index.html (+3ms) 
+00:52:39   ├─ /id/weton/sabtu-pon/index.html (+2ms) 
+00:52:39   ├─ /id/weton/sabtu-wage/index.html (+2ms) 
+00:52:39   ├─ /id/weton/sabtu-kliwon/index.html (+2ms) 
+00:52:39   ├─ /id/weton/index.html (+5ms) 
+00:52:39   ├─ /id/index.html (+2ms) 
+00:52:39   ├─ /og/id/weton.png (+121ms) 
+00:52:39   ├─ /og/id/jodoh.png (+29ms) 
+00:52:39   ├─ /og/id/hari-ini.png (+34ms) 
+00:52:39   ├─ /og/id/minggu-legi.png (+41ms) 
+00:52:39   ├─ /og/id/minggu-pahing.png (+44ms) 
+00:52:39   ├─ /og/id/minggu-pon.png (+40ms) 
+00:52:39   ├─ /og/id/minggu-wage.png (+45ms) 
+00:52:39   ├─ /og/id/minggu-kliwon.png (+41ms) 
+00:52:39   ├─ /og/id/senin-legi.png (+45ms) 
+00:52:39   ├─ /og/id/senin-pahing.png (+41ms) 
+00:52:39   ├─ /og/id/senin-pon.png (+38ms) 
+00:52:39   ├─ /og/id/senin-wage.png (+40ms) 
+00:52:39   ├─ /og/id/senin-kliwon.png (+40ms) 
+00:52:39   ├─ /og/id/selasa-legi.png (+43ms) 
+00:52:39   ├─ /og/id/selasa-pahing.png (+37ms) 
+00:52:40   ├─ /og/id/selasa-pon.png (+41ms) 
+00:52:40   ├─ /og/id/selasa-wage.png (+37ms) 
+00:52:40   ├─ /og/id/selasa-kliwon.png (+40ms) 
+00:52:40   ├─ /og/id/rabu-legi.png (+36ms) 
+00:52:40   ├─ /og/id/rabu-pahing.png (+39ms) 
+00:52:40   ├─ /og/id/rabu-pon.png (+37ms) 
+00:52:40   ├─ /og/id/rabu-wage.png (+37ms) 
+00:52:40   ├─ /og/id/rabu-kliwon.png (+35ms) 
+00:52:40   ├─ /og/id/kamis-legi.png (+41ms) 
+00:52:40   ├─ /og/id/kamis-pahing.png (+37ms) 
+00:52:40   ├─ /og/id/kamis-pon.png (+38ms) 
+00:52:40   ├─ /og/id/kamis-wage.png (+35ms) 
+00:52:40   ├─ /og/id/kamis-kliwon.png (+42ms) 
+00:52:40   ├─ /og/id/jumat-legi.png (+36ms) 
+00:52:40   ├─ /og/id/jumat-pahing.png (+36ms) 
+00:52:40   ├─ /og/id/jumat-pon.png (+40ms) 
+00:52:40   ├─ /og/id/jumat-wage.png (+44ms) 
+00:52:40   ├─ /og/id/jumat-kliwon.png (+37ms) 
+00:52:40   ├─ /og/id/sabtu-legi.png (+37ms) 
+00:52:40   ├─ /og/id/sabtu-pahing.png (+35ms) 
+00:52:40   ├─ /og/id/sabtu-pon.png (+36ms) 
+00:52:40   ├─ /og/id/sabtu-wage.png (+34ms) 
+00:52:40   ├─ /og/id/sabtu-kliwon.png (+35ms) 
+00:52:40   ├─ /og/id/kalender-2026.png (+27ms) 
+00:52:40   ├─ /og/id/kalender-2026-januari.png (+27ms) 
+00:52:40   ├─ /og/id/kalender-2026-februari.png (+27ms) 
+00:52:40   ├─ /og/id/kalender-2026-maret.png (+27ms) 
+00:52:40   ├─ /og/id/kalender-2026-april.png (+31ms) 
+00:52:41   ├─ /og/id/kalender-2026-mei.png (+30ms) 
+00:52:41   ├─ /og/id/kalender-2026-juni.png (+28ms) 
+00:52:41   ├─ /og/id/kalender-2026-juli.png (+27ms) 
+00:52:41   ├─ /og/id/kalender-2026-agustus.png (+27ms) 
+00:52:41   ├─ /og/id/kalender-2026-september.png (+30ms) 
+00:52:41   ├─ /og/id/kalender-2026-oktober.png (+27ms) 
+00:52:41   ├─ /og/id/kalender-2026-november.png (+27ms) 
+00:52:41   ├─ /og/id/kalender-2026-desember.png (+27ms) 
+00:52:41   ├─ /og/id/kalender-2027.png (+28ms) 
+00:52:41   ├─ /og/id/kalender-2027-januari.png (+30ms) 
+00:52:41   ├─ /og/id/kalender-2027-februari.png (+29ms) 
+00:52:41   ├─ /og/id/kalender-2027-maret.png (+28ms) 
+00:52:41   ├─ /og/id/kalender-2027-april.png (+28ms) 
+00:52:41   ├─ /og/id/kalender-2027-mei.png (+28ms) 
+00:52:41   ├─ /og/id/kalender-2027-juni.png (+30ms) 
+00:52:41   ├─ /og/id/kalender-2027-juli.png (+28ms) 
+00:52:41   ├─ /og/id/kalender-2027-agustus.png (+28ms) 
+00:52:41   ├─ /og/id/kalender-2027-september.png (+29ms) 
+00:52:41   ├─ /og/id/kalender-2027-oktober.png (+26ms) 
+00:52:41   ├─ /og/id/kalender-2027-november.png (+28ms) 
+00:52:41   ├─ /og/id/kalender-2027-desember.png (+30ms) 
+00:52:41   ├─ /og/default.png (+31ms) 
+00:52:41   ├─ /og/aguinaldo.png (+26ms) 
+00:52:41   ├─ /og/finiquito.png (+31ms) 
+00:52:41   ├─ /og/liquidacion.png (+30ms) 
+00:52:41   ├─ /og/prima-vacacional.png (+27ms) 
+00:52:41   ├─ /og/vacaciones.png (+27ms) 
+00:52:41   ├─ /og/uma.png (+27ms) 
+00:52:41   ├─ /og/br.png (+29ms) 
+00:52:41   ├─ /og/alqueire-hectare.png (+30ms) 
+00:52:41   ├─ /og/alqueire-paulista.png (+27ms) 
+00:52:41   ├─ /og/alqueire-mineiro-goiano.png (+27ms) 
+00:52:41   ├─ /og/alqueire-baiano.png (+28ms) 
+00:52:41   ├─ /og/alqueire-do-norte.png (+29ms) 
+00:52:41   ├─ /og/tarefa-hectare.png (+29ms) 
+00:52:42   ├─ /og/litro-de-terra.png (+26ms) 
+00:52:42   ├─ /og/hectare-alqueire.png (+26ms) 
+00:52:42   ├─ /pt-br/conversor-alqueire-hectare/alqueire-baiano/index.html (+16ms) 
+00:52:42   ├─ /pt-br/conversor-alqueire-hectare/alqueire-do-norte/index.html (+8ms) 
+00:52:42   ├─ /pt-br/conversor-alqueire-hectare/alqueire-mineiro-goiano/index.html (+11ms) 
+00:52:42   ├─ /pt-br/conversor-alqueire-hectare/alqueire-paulista/index.html (+10ms) 
+00:52:42   ├─ /pt-br/conversor-alqueire-hectare/litro-de-terra/index.html (+7ms) 
+00:52:42   ├─ /pt-br/conversor-alqueire-hectare/tarefa-em-hectare/index.html (+6ms) 
+00:52:42   ├─ /pt-br/conversor-alqueire-hectare/index.html (+6ms) 
+00:52:42   ├─ /pt-br/hectare-para-alqueire/index.html (+10ms) 
+00:52:42   ├─ /pt-br/index.html (+3ms) 
+00:52:42   ├─ /robots.txt (+1ms) 
+00:52:42   ├─ /sitemap.xml (+2ms) 
+00:52:42   ├─ /index.html (+2ms) 
+00:52:42 ✓ Completed in 3.34s.
+
+00:52:42 [build] ✓ Completed in 4.99s.
+00:52:42 [build] 83 page(s) built in 5.10s
+00:52:42 [build] Complete!
+postbuild: OK
+
+▶ JS budget (≤ 70 KB gzip/page)
+JS shipped per page (gzip, KB) — budget 70.0
+✓ /                                               0.0   (+0.0 on demand)
+✓ /404.html                                       0.5   (+0.0 on demand)
+✓ /es-mx/                                         0.5   (+0.0 on demand)
+✓ /es-mx/calculadora-aguinaldo/                  28.5   (+4.7 on demand)
+✓ /es-mx/calculadora-finiquito/                  29.6   (+4.7 on demand)
+✓ /es-mx/calculadora-liquidacion/                29.6   (+4.7 on demand)
+✓ /es-mx/calculadora-prima-vacacional/           28.4   (+4.7 on demand)
+✓ /es-mx/calculadora-vacaciones/                 28.3   (+4.7 on demand)
+✓ /es-mx/uma-salario-minimo-2026/                 0.5   (+0.0 on demand)
+✓ /id/                                           23.2   (+2.9 on demand)
+✓ /id/kalender-jawa/2026/                        13.5   (+0.0 on demand)
+✓ /id/kalender-jawa/2026/agustus/                13.5   (+0.0 on demand)
+✓ /id/kalender-jawa/2026/april/                  13.5   (+0.0 on demand)
+✓ /id/kalender-jawa/2026/desember/               13.5   (+0.0 on demand)
+✓ /id/kalender-jawa/2026/februari/               13.5   (+0.0 on demand)
+✓ /id/kalender-jawa/2026/januari/                13.5   (+0.0 on demand)
+✓ /id/kalender-jawa/2026/juli/                   13.5   (+0.0 on demand)
+✓ /id/kalender-jawa/2026/juni/                   13.5   (+0.0 on demand)
+✓ /id/kalender-jawa/2026/maret/                  13.5   (+0.0 on demand)
+✓ /id/kalender-jawa/2026/mei/                    13.5   (+0.0 on demand)
+✓ /id/kalender-jawa/2026/november/               13.5   (+0.0 on demand)
+✓ /id/kalender-jawa/2026/oktober/                13.5   (+0.0 on demand)
+✓ /id/kalender-jawa/2026/september/              13.5   (+0.0 on demand)
+✓ /id/kalender-jawa/2027/                        13.5   (+0.0 on demand)
+✓ /id/kalender-jawa/2027/agustus/                13.5   (+0.0 on demand)
+✓ /id/kalender-jawa/2027/april/                  13.5   (+0.0 on demand)
+✓ /id/kalender-jawa/2027/desember/               13.5   (+0.0 on demand)
+✓ /id/kalender-jawa/2027/februari/               13.5   (+0.0 on demand)
+✓ /id/kalender-jawa/2027/januari/                13.5   (+0.0 on demand)
+✓ /id/kalender-jawa/2027/juli/                   13.5   (+0.0 on demand)
+✓ /id/kalender-jawa/2027/juni/                   13.5   (+0.0 on demand)
+✓ /id/kalender-jawa/2027/maret/                  13.5   (+0.0 on demand)
+✓ /id/kalender-jawa/2027/mei/                    13.5   (+0.0 on demand)
+✓ /id/kalender-jawa/2027/november/               13.5   (+0.0 on demand)
+✓ /id/kalender-jawa/2027/oktober/                13.5   (+0.0 on demand)
+✓ /id/kalender-jawa/2027/september/              13.5   (+0.0 on demand)
+✓ /id/weton/                                     32.5   (+4.7 on demand)
+✓ /id/weton/hari-ini/                            23.2   (+2.9 on demand)
+✓ /id/weton/jodoh/                               32.6   (+4.7 on demand)
+✓ /id/weton/jumat-kliwon/                         0.8   (+0.0 on demand)
+✓ /id/weton/jumat-legi/                           0.8   (+0.0 on demand)
+✓ /id/weton/jumat-pahing/                         0.8   (+0.0 on demand)
+✓ /id/weton/jumat-pon/                            0.8   (+0.0 on demand)
+✓ /id/weton/jumat-wage/                           0.8   (+0.0 on demand)
+✓ /id/weton/kamis-kliwon/                         0.8   (+0.0 on demand)
+✓ /id/weton/kamis-legi/                           0.8   (+0.0 on demand)
+✓ /id/weton/kamis-pahing/                         0.8   (+0.0 on demand)
+✓ /id/weton/kamis-pon/                            0.8   (+0.0 on demand)
+✓ /id/weton/kamis-wage/                           0.8   (+0.0 on demand)
+✓ /id/weton/minggu-kliwon/                        0.8   (+0.0 on demand)
+✓ /id/weton/minggu-legi/                          0.8   (+0.0 on demand)
+✓ /id/weton/minggu-pahing/                        0.8   (+0.0 on demand)
+✓ /id/weton/minggu-pon/                           0.8   (+0.0 on demand)
+✓ /id/weton/minggu-wage/                          0.8   (+0.0 on demand)
+✓ /id/weton/rabu-kliwon/                          0.8   (+0.0 on demand)
+✓ /id/weton/rabu-legi/                            0.8   (+0.0 on demand)
+✓ /id/weton/rabu-pahing/                          0.8   (+0.0 on demand)
+✓ /id/weton/rabu-pon/                             0.8   (+0.0 on demand)
+✓ /id/weton/rabu-wage/                            0.8   (+0.0 on demand)
+✓ /id/weton/sabtu-kliwon/                         0.8   (+0.0 on demand)
+✓ /id/weton/sabtu-legi/                           0.8   (+0.0 on demand)
+✓ /id/weton/sabtu-pahing/                         0.8   (+0.0 on demand)
+✓ /id/weton/sabtu-pon/                            0.8   (+0.0 on demand)
+✓ /id/weton/sabtu-wage/                           0.8   (+0.0 on demand)
+✓ /id/weton/selasa-kliwon/                        0.8   (+0.0 on demand)
+✓ /id/weton/selasa-legi/                          0.8   (+0.0 on demand)
+✓ /id/weton/selasa-pahing/                        0.8   (+0.0 on demand)
+✓ /id/weton/selasa-pon/                           0.8   (+0.0 on demand)
+✓ /id/weton/selasa-wage/                          0.8   (+0.0 on demand)
+✓ /id/weton/senin-kliwon/                         0.8   (+0.0 on demand)
+✓ /id/weton/senin-legi/                           0.8   (+0.0 on demand)
+✓ /id/weton/senin-pahing/                         0.8   (+0.0 on demand)
+✓ /id/weton/senin-pon/                            0.8   (+0.0 on demand)
+✓ /id/weton/senin-wage/                           0.8   (+0.0 on demand)
+✓ /pt-br/                                         0.5   (+0.0 on demand)
+✓ /pt-br/conversor-alqueire-hectare/             30.6   (+2.9 on demand)
+✓ /pt-br/conversor-alqueire-hectare/alqueire-baiano/   30.6   (+2.9 on demand)
+✓ /pt-br/conversor-alqueire-hectare/alqueire-do-norte/   30.6   (+2.9 on demand)
+✓ /pt-br/conversor-alqueire-hectare/alqueire-mineiro-goiano/   30.6   (+2.9 on demand)
+✓ /pt-br/conversor-alqueire-hectare/alqueire-paulista/   30.6   (+2.9 on demand)
+✓ /pt-br/conversor-alqueire-hectare/litro-de-terra/   30.6   (+2.9 on demand)
+✓ /pt-br/conversor-alqueire-hectare/tarefa-em-hectare/   30.6   (+2.9 on demand)
+✓ /pt-br/hectare-para-alqueire/                  30.6   (+2.9 on demand)
+
+▶ E2E + a11y + visual (Playwright)
+
+> calculadoras@0.1.0 test:e2e:docker
+> node scripts/playwright-docker.mjs
+
+Playwright image: mcr.microsoft.com/playwright:v1.64.0-noble
+
+Running 706 tests using 4 workers
+
+  ✓    2 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /es-mx/ (2.4s)
+  ✓    1 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /es-mx/calculadora-aguinaldo/ (3.8s)
+  ✓    3 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /es-mx/calculadora-finiquito/ (4.0s)
+  ✓    4 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /es-mx/calculadora-liquidacion/ (4.2s)
+  ✓    5 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /es-mx/calculadora-prima-vacacional/ (3.0s)
+  ✓    8 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /pt-br/ (2.2s)
+  ✓    6 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /es-mx/calculadora-vacaciones/ (3.1s)
+  ✓    7 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /es-mx/uma-salario-minimo-2026/ (3.1s)
+  ✓    9 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /pt-br/conversor-alqueire-hectare/ (6.1s)
+  ✓   10 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /pt-br/conversor-alqueire-hectare/alqueire-paulista/ (5.5s)
+  ✓   11 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /pt-br/conversor-alqueire-hectare/alqueire-mineiro-goiano/ (5.3s)
+  ✓   12 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /pt-br/conversor-alqueire-hectare/alqueire-baiano/ (5.3s)
+  ✓   13 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /pt-br/conversor-alqueire-hectare/alqueire-do-norte/ (4.8s)
+  ✓   15 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /pt-br/conversor-alqueire-hectare/litro-de-terra/ (4.7s)
+  ✓   14 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /pt-br/conversor-alqueire-hectare/tarefa-em-hectare/ (5.0s)
+  ✓   16 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /pt-br/hectare-para-alqueire/ (5.0s)
+  ✓   17 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/ (1.9s)
+  ✓   20 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/hari-ini/ (2.7s)
+  ✓   19 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/jodoh/ (3.6s)
+  ✓   18 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/ (4.1s)
+  ✓   21 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/minggu-legi/ (3.6s)
+  ✓   22 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/minggu-pahing/ (3.6s)
+  ✓   23 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/minggu-pon/ (3.4s)
+  ✓   24 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/minggu-wage/ (3.4s)
+  ✓   25 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/minggu-kliwon/ (3.5s)
+  ✓   26 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/senin-legi/ (3.7s)
+  ✓   27 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/senin-pahing/ (3.7s)
+  ✓   28 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/senin-pon/ (3.6s)
+  ✓   29 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/senin-wage/ (3.4s)
+  ✓   30 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/senin-kliwon/ (3.7s)
+  ✓   31 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/selasa-legi/ (3.7s)
+  ✓   32 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/selasa-pahing/ (3.6s)
+  ✓   33 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/selasa-pon/ (3.5s)
+  ✓   34 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/selasa-wage/ (3.4s)
+  ✓   35 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/selasa-kliwon/ (3.8s)
+  ✓   36 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/rabu-legi/ (3.5s)
+  ✓   37 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/rabu-pahing/ (3.5s)
+  ✓   38 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/rabu-pon/ (3.3s)
+  ✓   39 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/rabu-wage/ (3.7s)
+  ✓   40 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/rabu-kliwon/ (3.9s)
+  ✓   41 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/kamis-legi/ (3.7s)
+  ✓   42 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/kamis-pahing/ (3.7s)
+  ✓   43 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/kamis-pon/ (3.4s)
+  ✓   44 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/kamis-wage/ (3.5s)
+  ✓   45 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/kamis-kliwon/ (3.6s)
+  ✓   46 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/jumat-legi/ (3.6s)
+  ✓   47 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/jumat-pahing/ (3.5s)
+  ✓   48 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/jumat-pon/ (3.4s)
+  ✓   49 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/jumat-wage/ (3.5s)
+  ✓   50 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/jumat-kliwon/ (3.6s)
+  ✓   51 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/sabtu-legi/ (3.7s)
+  ✓   52 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/sabtu-pahing/ (3.7s)
+  ✓   53 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/sabtu-pon/ (3.7s)
+  ✓   54 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/sabtu-wage/ (3.8s)
+  ✓   55 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/sabtu-kliwon/ (3.8s)
+  ✓   57 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2026/januari/ (4.1s)
+  ✓   58 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2026/februari/ (3.9s)
+  ✓   59 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2026/maret/ (4.0s)
+  ✓   60 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2026/april/ (3.8s)
+  ✓   61 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2026/mei/ (4.0s)
+  ✓   62 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2026/juni/ (3.9s)
+  ✓   63 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2026/juli/ (4.0s)
+  ✓   56 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2026/ (13.4s)
+  ✓   64 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2026/agustus/ (4.0s)
+  ✓   65 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2026/september/ (4.0s)
+  ✓   66 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2026/oktober/ (4.0s)
+  ✓   67 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2026/november/ (4.1s)
+  ✓   68 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2026/desember/ (4.1s)
+  ✓   70 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2027/januari/ (4.2s)
+  ✓   71 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2027/februari/ (4.1s)
+  ✓   72 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2027/maret/ (3.9s)
+  ✓   73 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2027/april/ (3.9s)
+  ✓   74 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2027/mei/ (4.2s)
+  ✓   75 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2027/juni/ (4.0s)
+  ✓   76 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2027/juli/ (4.0s)
+  ✓   69 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2027/ (13.6s)
+  ✓   77 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2027/agustus/ (3.9s)
+  ✓   78 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2027/september/ (3.9s)
+  ✓   79 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2027/oktober/ (3.7s)
+  ✓   80 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2027/november/ (3.7s)
+  ✓   82 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /es-mx/ (1.9s)
+  ✓   81 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2027/desember/ (3.7s)
+  ✓   83 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /es-mx/calculadora-aguinaldo/ (3.0s)
+  ✓   84 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /es-mx/calculadora-finiquito/ (3.2s)
+  ✓   85 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /es-mx/calculadora-liquidacion/ (3.1s)
+  ✓   86 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /es-mx/calculadora-prima-vacacional/ (2.9s)
+  ✓   87 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /es-mx/calculadora-vacaciones/ (2.8s)
+  ✓   89 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /pt-br/ (2.2s)
+  ✓   88 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /es-mx/uma-salario-minimo-2026/ (2.9s)
+  ✓   90 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /pt-br/conversor-alqueire-hectare/ (5.3s)
+  ✓   91 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /pt-br/conversor-alqueire-hectare/alqueire-paulista/ (5.2s)
+  ✓   92 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /pt-br/conversor-alqueire-hectare/alqueire-mineiro-goiano/ (5.2s)
+  ✓   93 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /pt-br/conversor-alqueire-hectare/alqueire-baiano/ (5.2s)
+  ✓   94 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /pt-br/conversor-alqueire-hectare/alqueire-do-norte/ (5.2s)
+  ✓   95 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /pt-br/conversor-alqueire-hectare/tarefa-em-hectare/ (5.3s)
+  ✓   96 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /pt-br/conversor-alqueire-hectare/litro-de-terra/ (5.2s)
+  ✓   98 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/ (2.0s)
+  ✓   97 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /pt-br/hectare-para-alqueire/ (5.1s)
+  ✓  101 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/hari-ini/ (2.7s)
+  ✓   99 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/ (3.8s)
+  ✓  100 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/jodoh/ (3.7s)
+  ✓  102 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/minggu-legi/ (3.9s)
+  ✓  103 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/minggu-pahing/ (3.6s)
+  ✓  104 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/minggu-pon/ (3.7s)
+  ✓  105 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/minggu-wage/ (3.6s)
+  ✓  106 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/minggu-kliwon/ (3.7s)
+  ✓  107 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/senin-legi/ (3.7s)
+  ✓  109 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/senin-pon/ (3.6s)
+  ✓  108 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/senin-pahing/ (3.7s)
+  ✓  110 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/senin-wage/ (3.6s)
+  ✓  111 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/senin-kliwon/ (3.6s)
+  ✓  113 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/selasa-pahing/ (3.7s)
+  ✓  112 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/selasa-legi/ (3.8s)
+  ✓  114 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/selasa-pon/ (3.6s)
+  ✓  115 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/selasa-wage/ (3.5s)
+  ✓  116 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/selasa-kliwon/ (3.6s)
+  ✓  117 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/rabu-legi/ (3.8s)
+  ✓  118 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/rabu-pahing/ (3.6s)
+  ✓  119 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/rabu-pon/ (3.8s)
+  ✓  120 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/rabu-wage/ (3.6s)
+  ✓  121 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/rabu-kliwon/ (3.8s)
+  ✓  122 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/kamis-legi/ (3.7s)
+  ✓  123 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/kamis-pahing/ (3.5s)
+  ✓  124 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/kamis-pon/ (3.3s)
+  ✓  126 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/kamis-kliwon/ (3.5s)
+  ✓  125 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/kamis-wage/ (3.6s)
+  ✓  127 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/jumat-legi/ (3.9s)
+  ✓  128 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/jumat-pahing/ (3.6s)
+  ✓  129 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/jumat-pon/ (3.9s)
+  ✓  130 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/jumat-wage/ (3.9s)
+  ✓  131 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/jumat-kliwon/ (3.7s)
+  ✓  132 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/sabtu-legi/ (3.6s)
+  ✓  133 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/sabtu-pahing/ (3.6s)
+  ✓  134 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/sabtu-pon/ (3.5s)
+  ✓  135 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/sabtu-wage/ (3.6s)
+  ✓  136 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/sabtu-kliwon/ (3.8s)
+  ✓  138 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2026/januari/ (4.2s)
+  ✓  139 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2026/februari/ (4.0s)
+  ✓  140 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2026/maret/ (4.1s)
+  ✓  141 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2026/april/ (4.0s)
+  ✓  142 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2026/mei/ (4.1s)
+  ✓  143 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2026/juni/ (4.0s)
+  ✓  144 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2026/juli/ (4.0s)
+  ✓  137 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2026/ (13.5s)
+  ✓  145 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2026/agustus/ (4.0s)
+  ✓  146 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2026/september/ (4.0s)
+  ✓  147 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2026/oktober/ (4.1s)
+  ✓  148 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2026/november/ (4.0s)
+  ✓  149 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2026/desember/ (4.4s)
+  ✓  151 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2027/januari/ (4.4s)
+  ✓  152 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2027/februari/ (4.1s)
+  ✓  153 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2027/maret/ (4.3s)
+  ✓  154 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2027/april/ (3.9s)
+  ✓  155 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2027/mei/ (3.9s)
+  ✓  156 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2027/juni/ (4.0s)
+  ✓  150 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2027/ (13.7s)
+  ✓  157 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2027/juli/ (4.1s)
+  ✓  158 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2027/agustus/ (4.0s)
+  ✓  159 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2027/september/ (4.2s)
+  -  163 [mobile] › tests/e2e/a11y.spec.ts:23:3 › keyboard › skip link, visible focus and full form reachable by keyboard
+  ✓  160 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2027/oktober/ (3.9s)
+  ✓  164 [mobile] › tests/e2e/a11y.spec.ts:60:3 › keyboard › result is announced politely, not on every keystroke (1.1s)
+  ✓  161 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2027/november/ (4.0s)
+  ✓  165 [mobile] › tests/e2e/calculators.spec.ts:8:3 › aguinaldo › PROFEDET example: $500 diarios, año completo → neto $6,730.01 (684ms)
+  ✓  168 [mobile] › tests/e2e/calculators.spec.ts:46:3 › aguinaldo › explains invalid input instead of computing it (616ms)
+  ✓  166 [mobile] › tests/e2e/calculators.spec.ts:18:3 › aguinaldo › state lives in the URL and survives a reload (1.2s)
+  ✓  167 [mobile] › tests/e2e/calculators.spec.ts:29:3 › aguinaldo › keeps what was typed before the calculator finished loading (1.0s)
+  ✓  169 [mobile] › tests/e2e/calculators.spec.ts:53:3 › aguinaldo › shows the result instantly with reduced motion (483ms)
+  ✓  162 [mobile] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2027/desember/ (4.8s)
+  ✓  170 [mobile] › tests/e2e/calculators.spec.ts:67:3 › aguinaldo › downloads a valid PDF report (537ms)
+  ✓  171 [mobile] › tests/e2e/calculators.spec.ts:76:3 › aguinaldo › copies a plain-text summary (717ms)
+  ✓  172 [mobile] › tests/e2e/calculators.spec.ts:86:3 › aguinaldo › keeps the answer on screen on phones (sticky bar) (532ms)
+  ✓  174 [mobile] › tests/e2e/calculators.spec.ts:106:5 › worked examples open the calculator with the same result › /es-mx/calculadora-liquidacion/ (733ms)
+  ✓  173 [mobile] › tests/e2e/calculators.spec.ts:106:5 › worked examples open the calculator with the same result › /es-mx/calculadora-finiquito/ (854ms)
+  ✓  175 [mobile] › tests/e2e/calculators.spec.ts:106:5 › worked examples open the calculator with the same result › /es-mx/calculadora-prima-vacacional/ (775ms)
+  ✓  176 [mobile] › tests/e2e/calculators.spec.ts:106:5 › worked examples open the calculator with the same result › /es-mx/calculadora-vacaciones/ (864ms)
+  ✓  177 [mobile] › tests/e2e/calculators.spec.ts:106:5 › worked examples open the calculator with the same result › /es-mx/calculadora-aguinaldo/ (749ms)
+  ✓  179 [mobile] › tests/e2e/calculators.spec.ts:128:3 › finiquito y liquidación › refuses dates without published official values (616ms)
+  ✓  178 [mobile] › tests/e2e/calculators.spec.ts:116:3 › finiquito y liquidación › changing the cause changes the rights (976ms)
+  ✓  180 [mobile] › tests/e2e/calculators.spec.ts:135:3 › theme › toggle switches and remembers the theme (630ms)
+  ✓  183 [mobile] › tests/e2e/id.spec.ts:13:1 › home heading and today panel stay put while the web font loads (576ms)
+  ✓  182 [mobile] › tests/e2e/calculators.spec.ts:163:3 › privacy › loads no third-party resources (783ms)
+  ✓  184 [mobile] › tests/e2e/id.spec.ts:55:3 › cek weton › 17 Agustus 1945 is Jumat Legi, neptu 11, 9 Pasa 1876 (same as the worked example) (1.0s)
+  ✓  181 [mobile] › tests/e2e/calculators.spec.ts:146:3 › privacy › a calculation makes no network requests (1.6s)
+  ✓  185 [mobile] › tests/e2e/id.spec.ts:71:3 › cek weton › explains an impossible date instead of guessing (856ms)
+  ✓  186 [mobile] › tests/e2e/id.spec.ts:79:3 › cek weton › quick fill and the Aboge note (922ms)
+  ✓  187 [mobile] › tests/e2e/id.spec.ts:89:3 › cek weton › keeps a date typed before the calculator finished loading (897ms)
+  ✓  190 [mobile] › tests/e2e/id.spec.ts:131:3 › weton jodoh › from two birth dates (770ms)
+  ✓  189 [mobile] › tests/e2e/id.spec.ts:119:3 › weton jodoh › kumparan example: Selasa Legi + Minggu Pahing = 22 → Padu (sisa 8), Dana (sisa 5) (1.1s)
+  ✓  191 [mobile] › tests/e2e/id.spec.ts:141:3 › weton jodoh › a remainder of 0 counts as the divisor (Pesthi) (562ms)
+  ✓  192 [mobile] › tests/e2e/id.spec.ts:149:3 › weton hari ini is never stale › shows the weton of today in WIB, whatever day the HTML was built (417ms)
+  ✓  193 [mobile] › tests/e2e/id.spec.ts:157:3 › weton hari ini is never stale › switches at midnight WIB (386ms)
+  ✓  188 [mobile] › tests/e2e/id.spec.ts:103:3 › cek weton › computes on the device: no request carries the date (1.7s)
+  ✓  194 [mobile] › tests/e2e/id.spec.ts:168:3 › weton pages › marks the next date of the weton on the visitor clock (476ms)
+  -  198 [mobile] › tests/e2e/id.spec.ts:218:3 › kalender Jawa › keyboard: one Tab stop per month, arrows move between days
+  ✓  195 [mobile] › tests/e2e/id.spec.ts:176:3 › weton pages › shows a sourced note only where one exists (633ms)
+  ✓  197 [mobile] › tests/e2e/id.spec.ts:209:3 › kalender Jawa › each day has a full spoken label and 1 Suro 1961 is on 6 June 2027 (518ms)
+  ✓  199 [mobile] › tests/e2e/id.spec.ts:235:3 › kalender Jawa › holidays from the SKB are red and listed (450ms)
+  ✓  196 [mobile] › tests/e2e/id.spec.ts:185:3 › kalender Jawa › marks today, opens a day and prints (1.2s)
+  ✓  202 [mobile] › tests/e2e/land.spec.ts:10:3 › alqueire converter › answers the head query on load: 1 alqueire paulista = 2,42 ha (693ms)
+  ✓  200 [mobile] › tests/e2e/id.spec.ts:241:3 › kalender Jawa › the year page lazily renders months below the fold but prints them all (1.3s)
+  ✓  205 [mobile] › tests/e2e/land.spec.ts:45:3 › alqueire converter › does not pick a value where sources tie (Mato Grosso) (724ms)
+  ✓  204 [mobile] › tests/e2e/land.spec.ts:32:3 › alqueire converter › choosing a state switches to its alqueire and flags disagreement (1.3s)
+  ✓  203 [mobile] › tests/e2e/land.spec.ts:19:3 › alqueire converter › reads Brazilian numbers and keeps the state in the URL (1.6s)
+  ✓  206 [mobile] › tests/e2e/land.spec.ts:54:3 › alqueire converter › refuses a negative area instead of converting it (719ms)
+  ✓  207 [mobile] › tests/e2e/land.spec.ts:62:3 › alqueire converter › says when a state has no record of the unit (629ms)
+  ✓  208 [mobile] › tests/e2e/land.spec.ts:68:3 › alqueire converter › swaps direction and converts hectares into alqueires (850ms)
+  ✓  209 [mobile] › tests/e2e/land.spec.ts:76:3 › alqueire converter › normalises a price per alqueire to per hectare (640ms)
+  ✓  210 [mobile] › tests/e2e/land.spec.ts:85:3 › alqueire converter › worked examples open the converter on the same figure (936ms)
+  ✓  211 [mobile] › tests/e2e/land.spec.ts:92:3 › alqueire converter › keeps what was typed before the converter finished loading (951ms)
+  ✓  212 [mobile] › tests/e2e/land.spec.ts:106:3 › alqueire converter › copies a plain-text summary with the source (846ms)
+  ✓  213 [mobile] › tests/e2e/land.spec.ts:117:3 › alqueire converter › prints only the state table from its button (886ms)
+  ✓  215 [mobile] › tests/e2e/land.spec.ts:148:3 › alqueire converter › keeps the answer on screen on phones (539ms)
+  ✓  216 [mobile] › tests/e2e/land.spec.ts:158:3 › pt-BR chrome › skip link and theme toggle speak Portuguese (402ms)
+  -  218 [mobile] › tests/e2e/seo.spec.ts:10:3 › SEO contract (AGENTS.md §6) › root fallback canonical uses the configured origin
+  -  219 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /es-mx/ has unique metadata, canonical, hreflang and JSON-LD
+  -  220 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /es-mx/calculadora-aguinaldo/ has unique metadata, canonical, hreflang and JSON-LD
+  -  221 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /es-mx/calculadora-finiquito/ has unique metadata, canonical, hreflang and JSON-LD
+  -  222 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /es-mx/calculadora-liquidacion/ has unique metadata, canonical, hreflang and JSON-LD
+  -  223 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /es-mx/calculadora-prima-vacacional/ has unique metadata, canonical, hreflang and JSON-LD
+  -  224 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /es-mx/calculadora-vacaciones/ has unique metadata, canonical, hreflang and JSON-LD
+  -  225 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /es-mx/uma-salario-minimo-2026/ has unique metadata, canonical, hreflang and JSON-LD
+  -  226 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /pt-br/ has unique metadata, canonical, hreflang and JSON-LD
+  -  227 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /pt-br/conversor-alqueire-hectare/ has unique metadata, canonical, hreflang and JSON-LD
+  -  228 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /pt-br/conversor-alqueire-hectare/alqueire-paulista/ has unique metadata, canonical, hreflang and JSON-LD
+  -  229 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /pt-br/conversor-alqueire-hectare/alqueire-mineiro-goiano/ has unique metadata, canonical, hreflang and JSON-LD
+  -  230 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /pt-br/conversor-alqueire-hectare/alqueire-baiano/ has unique metadata, canonical, hreflang and JSON-LD
+  -  231 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /pt-br/conversor-alqueire-hectare/alqueire-do-norte/ has unique metadata, canonical, hreflang and JSON-LD
+  -  232 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /pt-br/conversor-alqueire-hectare/tarefa-em-hectare/ has unique metadata, canonical, hreflang and JSON-LD
+  -  233 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /pt-br/conversor-alqueire-hectare/litro-de-terra/ has unique metadata, canonical, hreflang and JSON-LD
+  -  234 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /pt-br/hectare-para-alqueire/ has unique metadata, canonical, hreflang and JSON-LD
+  -  235 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/ has unique metadata, canonical, hreflang and JSON-LD
+  -  236 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/ has unique metadata, canonical, hreflang and JSON-LD
+  -  237 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/jodoh/ has unique metadata, canonical, hreflang and JSON-LD
+  -  238 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/hari-ini/ has unique metadata, canonical, hreflang and JSON-LD
+  -  239 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/minggu-legi/ has unique metadata, canonical, hreflang and JSON-LD
+  -  240 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/minggu-pahing/ has unique metadata, canonical, hreflang and JSON-LD
+  -  241 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/minggu-pon/ has unique metadata, canonical, hreflang and JSON-LD
+  -  242 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/minggu-wage/ has unique metadata, canonical, hreflang and JSON-LD
+  -  243 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/minggu-kliwon/ has unique metadata, canonical, hreflang and JSON-LD
+  -  244 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/senin-legi/ has unique metadata, canonical, hreflang and JSON-LD
+  -  245 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/senin-pahing/ has unique metadata, canonical, hreflang and JSON-LD
+  -  246 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/senin-pon/ has unique metadata, canonical, hreflang and JSON-LD
+  -  247 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/senin-wage/ has unique metadata, canonical, hreflang and JSON-LD
+  -  248 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/senin-kliwon/ has unique metadata, canonical, hreflang and JSON-LD
+  -  249 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/selasa-legi/ has unique metadata, canonical, hreflang and JSON-LD
+  -  250 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/selasa-pahing/ has unique metadata, canonical, hreflang and JSON-LD
+  -  251 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/selasa-pon/ has unique metadata, canonical, hreflang and JSON-LD
+  -  252 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/selasa-wage/ has unique metadata, canonical, hreflang and JSON-LD
+  -  253 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/selasa-kliwon/ has unique metadata, canonical, hreflang and JSON-LD
+  -  254 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/rabu-legi/ has unique metadata, canonical, hreflang and JSON-LD
+  -  255 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/rabu-pahing/ has unique metadata, canonical, hreflang and JSON-LD
+  -  256 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/rabu-pon/ has unique metadata, canonical, hreflang and JSON-LD
+  -  257 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/rabu-wage/ has unique metadata, canonical, hreflang and JSON-LD
+  -  258 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/rabu-kliwon/ has unique metadata, canonical, hreflang and JSON-LD
+  -  259 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/kamis-legi/ has unique metadata, canonical, hreflang and JSON-LD
+  ✓  214 [mobile] › tests/e2e/land.spec.ts:133:3 › alqueire converter › a conversion makes no network requests (1.9s)
+  -  260 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/kamis-pahing/ has unique metadata, canonical, hreflang and JSON-LD
+  -  261 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/kamis-wage/ has unique metadata, canonical, hreflang and JSON-LD
+  -  262 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/kamis-kliwon/ has unique metadata, canonical, hreflang and JSON-LD
+  -  263 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/jumat-legi/ has unique metadata, canonical, hreflang and JSON-LD
+  -  264 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/jumat-pahing/ has unique metadata, canonical, hreflang and JSON-LD
+  -  265 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/jumat-pon/ has unique metadata, canonical, hreflang and JSON-LD
+  -  266 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/jumat-wage/ has unique metadata, canonical, hreflang and JSON-LD
+  -  267 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/jumat-kliwon/ has unique metadata, canonical, hreflang and JSON-LD
+  -  268 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/sabtu-legi/ has unique metadata, canonical, hreflang and JSON-LD
+  -  269 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/sabtu-pahing/ has unique metadata, canonical, hreflang and JSON-LD
+  -  270 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/kamis-pon/ has unique metadata, canonical, hreflang and JSON-LD
+  -  271 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/sabtu-pon/ has unique metadata, canonical, hreflang and JSON-LD
+  -  272 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/sabtu-wage/ has unique metadata, canonical, hreflang and JSON-LD
+  -  273 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/sabtu-kliwon/ has unique metadata, canonical, hreflang and JSON-LD
+  -  274 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2026/ has unique metadata, canonical, hreflang and JSON-LD
+  -  275 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2026/januari/ has unique metadata, canonical, hreflang and JSON-LD
+  -  276 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2026/februari/ has unique metadata, canonical, hreflang and JSON-LD
+  -  278 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2026/april/ has unique metadata, canonical, hreflang and JSON-LD
+  -  277 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2026/maret/ has unique metadata, canonical, hreflang and JSON-LD
+  -  279 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2026/mei/ has unique metadata, canonical, hreflang and JSON-LD
+  -  280 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2026/juni/ has unique metadata, canonical, hreflang and JSON-LD
+  -  281 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2026/juli/ has unique metadata, canonical, hreflang and JSON-LD
+  -  282 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2026/agustus/ has unique metadata, canonical, hreflang and JSON-LD
+  -  283 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2026/oktober/ has unique metadata, canonical, hreflang and JSON-LD
+  -  284 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2026/september/ has unique metadata, canonical, hreflang and JSON-LD
+  -  285 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2026/desember/ has unique metadata, canonical, hreflang and JSON-LD
+  -  286 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2026/november/ has unique metadata, canonical, hreflang and JSON-LD
+  -  287 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2027/ has unique metadata, canonical, hreflang and JSON-LD
+  -  289 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2027/januari/ has unique metadata, canonical, hreflang and JSON-LD
+  -  288 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2027/februari/ has unique metadata, canonical, hreflang and JSON-LD
+  -  290 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2027/maret/ has unique metadata, canonical, hreflang and JSON-LD
+  -  291 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2027/april/ has unique metadata, canonical, hreflang and JSON-LD
+  -  292 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2027/mei/ has unique metadata, canonical, hreflang and JSON-LD
+  -  294 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2027/juli/ has unique metadata, canonical, hreflang and JSON-LD
+  -  293 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2027/juni/ has unique metadata, canonical, hreflang and JSON-LD
+  -  295 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2027/agustus/ has unique metadata, canonical, hreflang and JSON-LD
+  -  296 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2027/september/ has unique metadata, canonical, hreflang and JSON-LD
+  -  297 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2027/oktober/ has unique metadata, canonical, hreflang and JSON-LD
+  -  298 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2027/november/ has unique metadata, canonical, hreflang and JSON-LD
+  -  299 [mobile] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2027/desember/ has unique metadata, canonical, hreflang and JSON-LD
+  -  301 [mobile] › tests/e2e/seo.spec.ts:70:3 › SEO contract (AGENTS.md §6) › sitemap lists every live page with hreflang alternates, and nothing else
+  -  302 [mobile] › tests/e2e/seo.spec.ts:91:3 › SEO contract (AGENTS.md §6) › robots.txt points to the sitemap
+  -  300 [mobile] › tests/e2e/seo.spec.ts:60:3 › SEO contract (AGENTS.md §6) › titles and descriptions are unique across pages
+  -  304 [mobile] › tests/e2e/seo.spec.ts:102:3 › SEO contract (AGENTS.md §6) › OG images are real 1200×630 PNGs, including one per weton and calendar
+  -  303 [mobile] › tests/e2e/seo.spec.ts:96:3 › SEO contract (AGENTS.md §6) › unpublished locales are not built
+  -  305 [mobile] › tests/e2e/seo.spec.ts:129:3 › SEO contract (AGENTS.md §6) › each BR page points to its own OG image
+  -  307 [mobile] › tests/e2e/seo.spec.ts:135:3 › SEO contract (AGENTS.md §6) › cross-locale links appear only where hreflang applies
+  -  306 [mobile] › tests/e2e/seo.spec.ts:120:3 › SEO contract (AGENTS.md §6) › every page links to an OG image that exists
+  ✓  217 [mobile] › tests/e2e/land.spec.ts:167:3 › pt-BR chrome › the sub-pages open on their own unit (1.8s)
+  ✓  308 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual light /es-mx/ (811ms)
+  ✓  309 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual light /es-mx/calculadora-aguinaldo/ (1.1s)
+  ✓  310 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual light /es-mx/calculadora-finiquito/ (1.1s)
+  ✓  311 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual light /es-mx/calculadora-liquidacion/ (897ms)
+  ✓  312 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual light /es-mx/calculadora-prima-vacacional/ (972ms)
+  ✓  313 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual light /es-mx/calculadora-vacaciones/ (931ms)
+  ✓  314 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual light /es-mx/uma-salario-minimo-2026/ (696ms)
+  ✓  315 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual light /pt-br/ (781ms)
+  ✓  316 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual light /pt-br/conversor-alqueire-hectare/ (925ms)
+  ✓  317 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual light /pt-br/conversor-alqueire-hectare/alqueire-paulista/ (877ms)
+  ✓  318 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual light /pt-br/conversor-alqueire-hectare/alqueire-mineiro-goiano/ (934ms)
+  ✓  319 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual light /pt-br/conversor-alqueire-hectare/alqueire-baiano/ (930ms)
+  ✓  320 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual light /pt-br/conversor-alqueire-hectare/alqueire-do-norte/ (1.0s)
+  ✓  321 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual light /pt-br/conversor-alqueire-hectare/tarefa-em-hectare/ (874ms)
+  ✓  322 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual light /pt-br/conversor-alqueire-hectare/litro-de-terra/ (956ms)
+  ✓  323 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual light /pt-br/hectare-para-alqueire/ (908ms)
+  ✓  324 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual light /id/ (756ms)
+  ✓  325 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual light /id/weton/ (859ms)
+  ✓  326 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual light /id/weton/jodoh/ (912ms)
+  ✓  327 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual light /id/weton/hari-ini/ (880ms)
+  ✓  328 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual light /id/weton/selasa-pon/ (727ms)
+  ✓  329 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual light /id/kalender-jawa/2026/oktober/ (874ms)
+  ✓  201 [mobile] › tests/e2e/id.spec.ts:261:3 › layout › no page scrolls sideways on a 390 px phone (13.8s)
+  ✓  331 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual dark /es-mx/ (772ms)
+  ✓  330 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual light /id/kalender-jawa/2027/ (1.1s)
+  ✓  332 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual dark /es-mx/calculadora-aguinaldo/ (807ms)
+  ✓  333 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual dark /es-mx/calculadora-finiquito/ (945ms)
+  ✓  334 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual dark /es-mx/calculadora-liquidacion/ (874ms)
+  ✓  335 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual dark /es-mx/calculadora-prima-vacacional/ (838ms)
+  ✓  336 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual dark /es-mx/calculadora-vacaciones/ (761ms)
+  ✓  337 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual dark /es-mx/uma-salario-minimo-2026/ (721ms)
+  ✓  338 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual dark /pt-br/ (698ms)
+  ✓  339 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual dark /pt-br/conversor-alqueire-hectare/ (879ms)
+  ✓  340 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual dark /pt-br/conversor-alqueire-hectare/alqueire-paulista/ (754ms)
+  ✓  341 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual dark /pt-br/conversor-alqueire-hectare/alqueire-mineiro-goiano/ (844ms)
+  ✓  342 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual dark /pt-br/conversor-alqueire-hectare/alqueire-baiano/ (857ms)
+  ✓  343 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual dark /pt-br/conversor-alqueire-hectare/alqueire-do-norte/ (868ms)
+  ✓  344 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual dark /pt-br/conversor-alqueire-hectare/tarefa-em-hectare/ (830ms)
+  ✓  345 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual dark /pt-br/conversor-alqueire-hectare/litro-de-terra/ (845ms)
+  ✓  346 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual dark /pt-br/hectare-para-alqueire/ (899ms)
+  ✓  347 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual dark /id/ (777ms)
+  ✓  348 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual dark /id/weton/ (765ms)
+  ✓  349 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual dark /id/weton/jodoh/ (734ms)
+  ✓  350 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual dark /id/weton/hari-ini/ (772ms)
+  ✓  351 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual dark /id/weton/selasa-pon/ (717ms)
+  ✓  352 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual dark /id/kalender-jawa/2026/oktober/ (730ms)
+  ✓  353 [mobile] › tests/e2e/visual.spec.ts:6:5 › visual dark /id/kalender-jawa/2027/ (958ms)
+  ✓  354 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /es-mx/ (2.5s)
+  ✓  356 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /es-mx/calculadora-aguinaldo/ (3.5s)
+  ✓  355 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /es-mx/calculadora-finiquito/ (4.1s)
+  ✓  357 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /es-mx/calculadora-liquidacion/ (3.9s)
+  ✓  358 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /es-mx/calculadora-prima-vacacional/ (3.2s)
+  ✓  361 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /pt-br/ (2.1s)
+  ✓  359 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /es-mx/calculadora-vacaciones/ (3.2s)
+  ✓  360 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /es-mx/uma-salario-minimo-2026/ (3.2s)
+  ✓  362 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /pt-br/conversor-alqueire-hectare/ (5.9s)
+  ✓  363 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /pt-br/conversor-alqueire-hectare/alqueire-paulista/ (5.7s)
+  ✓  364 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /pt-br/conversor-alqueire-hectare/alqueire-mineiro-goiano/ (5.8s)
+  ✓  365 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /pt-br/conversor-alqueire-hectare/alqueire-baiano/ (5.7s)
+  ✓  366 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /pt-br/conversor-alqueire-hectare/alqueire-do-norte/ (5.2s)
+  ✓  368 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /pt-br/conversor-alqueire-hectare/litro-de-terra/ (5.1s)
+  ✓  367 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /pt-br/conversor-alqueire-hectare/tarefa-em-hectare/ (5.4s)
+  ✓  369 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /pt-br/hectare-para-alqueire/ (5.2s)
+  ✓  370 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/ (1.9s)
+  ✓  373 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/hari-ini/ (2.7s)
+  ✓  372 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/jodoh/ (3.7s)
+  ✓  371 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/ (4.2s)
+  ✓  374 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/minggu-legi/ (3.7s)
+  ✓  375 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/minggu-pahing/ (3.8s)
+  ✓  376 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/minggu-pon/ (3.5s)
+  ✓  377 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/minggu-wage/ (3.6s)
+  ✓  378 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/minggu-kliwon/ (3.7s)
+  ✓  379 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/senin-legi/ (3.7s)
+  ✓  380 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/senin-pahing/ (3.8s)
+  ✓  381 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/senin-pon/ (3.5s)
+  ✓  382 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/senin-wage/ (3.6s)
+  ✓  383 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/senin-kliwon/ (3.5s)
+  ✓  384 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/selasa-legi/ (3.7s)
+  ✓  385 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/selasa-pahing/ (3.7s)
+  ✓  386 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/selasa-pon/ (3.4s)
+  ✓  387 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/selasa-wage/ (3.6s)
+  ✓  388 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/selasa-kliwon/ (3.7s)
+  ✓  389 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/rabu-legi/ (3.7s)
+  ✓  390 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/rabu-pahing/ (3.7s)
+  ✓  391 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/rabu-pon/ (4.0s)
+  ✓  392 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/rabu-wage/ (3.8s)
+  ✓  393 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/rabu-kliwon/ (3.7s)
+  ✓  394 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/kamis-legi/ (3.6s)
+  ✓  395 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/kamis-pahing/ (3.4s)
+  ✓  396 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/kamis-pon/ (3.6s)
+  ✓  397 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/kamis-wage/ (3.7s)
+  ✓  398 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/kamis-kliwon/ (3.7s)
+  ✓  399 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/jumat-legi/ (3.7s)
+  ✓  400 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/jumat-pahing/ (3.6s)
+  ✓  401 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/jumat-pon/ (3.5s)
+  ✓  402 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/jumat-wage/ (3.6s)
+  ✓  403 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/jumat-kliwon/ (3.9s)
+  ✓  404 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/sabtu-legi/ (3.7s)
+  ✓  405 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/sabtu-pahing/ (3.7s)
+  ✓  406 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/sabtu-pon/ (3.6s)
+  ✓  407 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/sabtu-wage/ (3.7s)
+  ✓  408 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/weton/sabtu-kliwon/ (3.7s)
+  ✓  410 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2026/januari/ (4.1s)
+  ✓  411 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2026/februari/ (3.8s)
+  ✓  412 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2026/maret/ (4.0s)
+  ✓  413 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2026/april/ (4.0s)
+  ✓  414 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2026/mei/ (4.0s)
+  ✓  415 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2026/juni/ (3.9s)
+  ✓  416 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2026/juli/ (4.0s)
+  ✓  409 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2026/ (13.6s)
+  ✓  417 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2026/agustus/ (4.3s)
+  ✓  418 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2026/september/ (4.0s)
+  ✓  419 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2026/oktober/ (4.1s)
+  ✓  420 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2026/november/ (4.2s)
+  ✓  421 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2026/desember/ (4.2s)
+  ✓  423 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2027/januari/ (4.2s)
+  ✓  424 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2027/februari/ (4.1s)
+  ✓  425 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2027/maret/ (4.2s)
+  ✓  426 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2027/april/ (4.0s)
+  ✓  427 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2027/mei/ (4.3s)
+  ✓  428 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2027/juni/ (4.1s)
+  ✓  429 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2027/juli/ (3.8s)
+  ✓  422 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2027/ (13.6s)
+  ✓  430 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2027/agustus/ (4.0s)
+  ✓  431 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2027/september/ (4.1s)
+  ✓  432 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2027/oktober/ (4.2s)
+  ✓  433 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2027/november/ (4.1s)
+  ✓  435 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /es-mx/ (1.9s)
+  ✓  434 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (light) › /id/kalender-jawa/2027/desember/ (4.1s)
+  ✓  436 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /es-mx/calculadora-aguinaldo/ (3.1s)
+  ✓  437 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /es-mx/calculadora-finiquito/ (3.2s)
+  ✓  438 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /es-mx/calculadora-liquidacion/ (3.2s)
+  ✓  439 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /es-mx/calculadora-prima-vacacional/ (2.9s)
+  ✓  442 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /pt-br/ (2.1s)
+  ✓  440 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /es-mx/calculadora-vacaciones/ (3.3s)
+  ✓  441 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /es-mx/uma-salario-minimo-2026/ (3.0s)
+  ✓  443 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /pt-br/conversor-alqueire-hectare/ (5.3s)
+  ✓  444 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /pt-br/conversor-alqueire-hectare/alqueire-paulista/ (5.4s)
+  ✓  445 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /pt-br/conversor-alqueire-hectare/alqueire-mineiro-goiano/ (5.5s)
+  ✓  446 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /pt-br/conversor-alqueire-hectare/alqueire-baiano/ (5.9s)
+  ✓  447 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /pt-br/conversor-alqueire-hectare/alqueire-do-norte/ (5.1s)
+  ✓  448 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /pt-br/conversor-alqueire-hectare/tarefa-em-hectare/ (5.2s)
+  ✓  451 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/ (2.1s)
+  ✓  449 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /pt-br/conversor-alqueire-hectare/litro-de-terra/ (5.1s)
+  ✓  450 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /pt-br/hectare-para-alqueire/ (5.0s)
+  ✓  454 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/hari-ini/ (2.8s)
+  ✓  453 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/jodoh/ (3.6s)
+  ✓  452 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/ (4.0s)
+  ✓  455 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/minggu-legi/ (3.6s)
+  ✓  456 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/minggu-pahing/ (3.6s)
+  ✓  457 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/minggu-pon/ (3.7s)
+  ✓  458 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/minggu-wage/ (3.9s)
+  ✓  459 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/minggu-kliwon/ (3.8s)
+  ✓  460 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/senin-legi/ (3.6s)
+  ✓  461 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/senin-pahing/ (3.4s)
+  ✓  462 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/senin-pon/ (3.3s)
+  ✓  463 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/senin-wage/ (3.7s)
+  ✓  464 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/senin-kliwon/ (3.6s)
+  ✓  465 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/selasa-legi/ (3.6s)
+  ✓  466 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/selasa-pahing/ (3.6s)
+  ✓  467 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/selasa-pon/ (3.5s)
+  ✓  468 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/selasa-wage/ (3.7s)
+  ✓  469 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/selasa-kliwon/ (3.7s)
+  ✓  470 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/rabu-legi/ (3.7s)
+  ✓  471 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/rabu-pahing/ (3.9s)
+  ✓  472 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/rabu-pon/ (3.7s)
+  ✓  473 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/rabu-wage/ (3.6s)
+  ✓  474 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/rabu-kliwon/ (3.7s)
+  ✓  475 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/kamis-legi/ (3.5s)
+  ✓  476 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/kamis-pahing/ (3.6s)
+  ✓  477 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/kamis-pon/ (3.4s)
+  ✓  478 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/kamis-wage/ (3.6s)
+  ✓  479 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/kamis-kliwon/ (3.7s)
+  ✓  480 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/jumat-legi/ (3.7s)
+  ✓  481 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/jumat-pahing/ (3.7s)
+  ✓  482 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/jumat-pon/ (3.5s)
+  ✓  483 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/jumat-wage/ (3.6s)
+  ✓  484 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/jumat-kliwon/ (3.6s)
+  ✓  485 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/sabtu-legi/ (3.6s)
+  ✓  486 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/sabtu-pahing/ (3.4s)
+  ✓  487 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/sabtu-pon/ (3.4s)
+  ✓  488 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/sabtu-wage/ (3.7s)
+  ✓  489 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/weton/sabtu-kliwon/ (3.6s)
+  ✓  491 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2026/januari/ (4.2s)
+  ✓  492 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2026/februari/ (4.2s)
+  ✓  493 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2026/maret/ (4.2s)
+  ✓  494 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2026/april/ (4.2s)
+  ✓  495 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2026/mei/ (4.3s)
+  ✓  496 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2026/juni/ (4.2s)
+  ✓  497 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2026/juli/ (4.2s)
+  ✓  490 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2026/ (13.8s)
+  ✓  498 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2026/agustus/ (4.1s)
+  ✓  499 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2026/september/ (4.4s)
+  ✓  500 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2026/oktober/ (3.8s)
+  ✓  501 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2026/november/ (4.1s)
+  ✓  502 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2026/desember/ (4.2s)
+  ✓  504 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2027/januari/ (4.1s)
+  ✓  505 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2027/februari/ (4.3s)
+  ✓  506 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2027/maret/ (4.2s)
+  ✓  507 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2027/april/ (3.9s)
+  ✓  508 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2027/mei/ (4.4s)
+  ✓  509 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2027/juni/ (4.1s)
+  ✓  510 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2027/juli/ (4.3s)
+  ✓  503 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2027/ (13.6s)
+  ✓  511 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2027/agustus/ (4.1s)
+  ✓  512 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2027/september/ (3.9s)
+  ✓  516 [desktop] › tests/e2e/a11y.spec.ts:23:3 › keyboard › skip link, visible focus and full form reachable by keyboard (977ms)
+  ✓  513 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2027/oktober/ (4.3s)
+  ✓  514 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2027/november/ (4.3s)
+  ✓  518 [desktop] › tests/e2e/calculators.spec.ts:8:3 › aguinaldo › PROFEDET example: $500 diarios, año completo → neto $6,730.01 (507ms)
+  ✓  517 [desktop] › tests/e2e/a11y.spec.ts:60:3 › keyboard › result is announced politely, not on every keystroke (1.1s)
+  ✓  521 [desktop] › tests/e2e/calculators.spec.ts:46:3 › aguinaldo › explains invalid input instead of computing it (593ms)
+  ✓  519 [desktop] › tests/e2e/calculators.spec.ts:18:3 › aguinaldo › state lives in the URL and survives a reload (1.2s)
+  ✓  520 [desktop] › tests/e2e/calculators.spec.ts:29:3 › aguinaldo › keeps what was typed before the calculator finished loading (1.1s)
+  ✓  515 [desktop] › tests/e2e/a11y.spec.ts:9:7 › axe: zero violations (dark) › /id/kalender-jawa/2027/desember/ (4.7s)
+  -  525 [desktop] › tests/e2e/calculators.spec.ts:86:3 › aguinaldo › keeps the answer on screen on phones (sticky bar)
+  ✓  522 [desktop] › tests/e2e/calculators.spec.ts:53:3 › aguinaldo › shows the result instantly with reduced motion (512ms)
+  ✓  523 [desktop] › tests/e2e/calculators.spec.ts:67:3 › aguinaldo › downloads a valid PDF report (606ms)
+  ✓  524 [desktop] › tests/e2e/calculators.spec.ts:76:3 › aguinaldo › copies a plain-text summary (740ms)
+  ✓  526 [desktop] › tests/e2e/calculators.spec.ts:106:5 › worked examples open the calculator with the same result › /es-mx/calculadora-finiquito/ (740ms)
+  ✓  527 [desktop] › tests/e2e/calculators.spec.ts:106:5 › worked examples open the calculator with the same result › /es-mx/calculadora-liquidacion/ (758ms)
+  ✓  528 [desktop] › tests/e2e/calculators.spec.ts:106:5 › worked examples open the calculator with the same result › /es-mx/calculadora-prima-vacacional/ (751ms)
+  ✓  529 [desktop] › tests/e2e/calculators.spec.ts:106:5 › worked examples open the calculator with the same result › /es-mx/calculadora-vacaciones/ (901ms)
+  ✓  530 [desktop] › tests/e2e/calculators.spec.ts:106:5 › worked examples open the calculator with the same result › /es-mx/calculadora-aguinaldo/ (966ms)
+  ✓  532 [desktop] › tests/e2e/calculators.spec.ts:128:3 › finiquito y liquidación › refuses dates without published official values (618ms)
+  ✓  531 [desktop] › tests/e2e/calculators.spec.ts:116:3 › finiquito y liquidación › changing the cause changes the rights (1.1s)
+  ✓  533 [desktop] › tests/e2e/calculators.spec.ts:135:3 › theme › toggle switches and remembers the theme (646ms)
+  ✓  536 [desktop] › tests/e2e/id.spec.ts:13:1 › home heading and today panel stay put while the web font loads (575ms)
+  ✓  535 [desktop] › tests/e2e/calculators.spec.ts:163:3 › privacy › loads no third-party resources (913ms)
+  ✓  537 [desktop] › tests/e2e/id.spec.ts:55:3 › cek weton › 17 Agustus 1945 is Jumat Legi, neptu 11, 9 Pasa 1876 (same as the worked example) (1.0s)
+  ✓  534 [desktop] › tests/e2e/calculators.spec.ts:146:3 › privacy › a calculation makes no network requests (1.6s)
+  ✓  538 [desktop] › tests/e2e/id.spec.ts:71:3 › cek weton › explains an impossible date instead of guessing (1.2s)
+  ✓  539 [desktop] › tests/e2e/id.spec.ts:79:3 › cek weton › quick fill and the Aboge note (1.2s)
+  ✓  540 [desktop] › tests/e2e/id.spec.ts:89:3 › cek weton › keeps a date typed before the calculator finished loading (1.0s)
+  ✓  543 [desktop] › tests/e2e/id.spec.ts:131:3 › weton jodoh › from two birth dates (894ms)
+  ✓  542 [desktop] › tests/e2e/id.spec.ts:119:3 › weton jodoh › kumparan example: Selasa Legi + Minggu Pahing = 22 → Padu (sisa 8), Dana (sisa 5) (1.0s)
+  ✓  544 [desktop] › tests/e2e/id.spec.ts:141:3 › weton jodoh › a remainder of 0 counts as the divisor (Pesthi) (711ms)
+  ✓  541 [desktop] › tests/e2e/id.spec.ts:103:3 › cek weton › computes on the device: no request carries the date (1.6s)
+  ✓  545 [desktop] › tests/e2e/id.spec.ts:149:3 › weton hari ini is never stale › shows the weton of today in WIB, whatever day the HTML was built (408ms)
+  ✓  546 [desktop] › tests/e2e/id.spec.ts:157:3 › weton hari ini is never stale › switches at midnight WIB (485ms)
+  ✓  547 [desktop] › tests/e2e/id.spec.ts:168:3 › weton pages › marks the next date of the weton on the visitor clock (556ms)
+  ✓  548 [desktop] › tests/e2e/id.spec.ts:176:3 › weton pages › shows a sourced note only where one exists (762ms)
+  ✓  550 [desktop] › tests/e2e/id.spec.ts:209:3 › kalender Jawa › each day has a full spoken label and 1 Suro 1961 is on 6 June 2027 (600ms)
+  ✓  552 [desktop] › tests/e2e/id.spec.ts:235:3 › kalender Jawa › holidays from the SKB are red and listed (436ms)
+  ✓  549 [desktop] › tests/e2e/id.spec.ts:185:3 › kalender Jawa › marks today, opens a day and prints (1.1s)
+  ✓  551 [desktop] › tests/e2e/id.spec.ts:218:3 › kalender Jawa › keyboard: one Tab stop per month, arrows move between days (925ms)
+  -  554 [desktop] › tests/e2e/id.spec.ts:261:3 › layout › no page scrolls sideways on a 390 px phone
+  ✓  555 [desktop] › tests/e2e/land.spec.ts:10:3 › alqueire converter › answers the head query on load: 1 alqueire paulista = 2,42 ha (790ms)
+  ✓  553 [desktop] › tests/e2e/id.spec.ts:241:3 › kalender Jawa › the year page lazily renders months below the fold but prints them all (1.4s)
+  ✓  558 [desktop] › tests/e2e/land.spec.ts:45:3 › alqueire converter › does not pick a value where sources tie (Mato Grosso) (921ms)
+  ✓  557 [desktop] › tests/e2e/land.spec.ts:32:3 › alqueire converter › choosing a state switches to its alqueire and flags disagreement (1.7s)
+  ✓  556 [desktop] › tests/e2e/land.spec.ts:19:3 › alqueire converter › reads Brazilian numbers and keeps the state in the URL (2.0s)
+  ✓  559 [desktop] › tests/e2e/land.spec.ts:54:3 › alqueire converter › refuses a negative area instead of converting it (1.3s)
+  ✓  560 [desktop] › tests/e2e/land.spec.ts:62:3 › alqueire converter › says when a state has no record of the unit (815ms)
+  ✓  562 [desktop] › tests/e2e/land.spec.ts:76:3 › alqueire converter › normalises a price per alqueire to per hectare (793ms)
+  ✓  561 [desktop] › tests/e2e/land.spec.ts:68:3 › alqueire converter › swaps direction and converts hectares into alqueires (1.1s)
+  ✓  563 [desktop] › tests/e2e/land.spec.ts:85:3 › alqueire converter › worked examples open the converter on the same figure (1.4s)
+  ✓  564 [desktop] › tests/e2e/land.spec.ts:92:3 › alqueire converter › keeps what was typed before the converter finished loading (1.1s)
+  -  568 [desktop] › tests/e2e/land.spec.ts:148:3 › alqueire converter › keeps the answer on screen on phones
+  ✓  565 [desktop] › tests/e2e/land.spec.ts:106:3 › alqueire converter › copies a plain-text summary with the source (1.2s)
+  ✓  566 [desktop] › tests/e2e/land.spec.ts:117:3 › alqueire converter › prints only the state table from its button (1.2s)
+  ✓  571 [desktop] › tests/e2e/seo.spec.ts:10:3 › SEO contract (AGENTS.md §6) › root fallback canonical uses the configured origin (54ms)
+  ✓  569 [desktop] › tests/e2e/land.spec.ts:158:3 › pt-BR chrome › skip link and theme toggle speak Portuguese (499ms)
+  ✓  572 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /es-mx/ has unique metadata, canonical, hreflang and JSON-LD (462ms)
+  ✓  567 [desktop] › tests/e2e/land.spec.ts:133:3 › alqueire converter › a conversion makes no network requests (1.7s)
+  ✓  573 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /es-mx/calculadora-aguinaldo/ has unique metadata, canonical, hreflang and JSON-LD (717ms)
+  ✓  574 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /es-mx/calculadora-finiquito/ has unique metadata, canonical, hreflang and JSON-LD (829ms)
+  ✓  575 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /es-mx/calculadora-prima-vacacional/ has unique metadata, canonical, hreflang and JSON-LD (863ms)
+  ✓  570 [desktop] › tests/e2e/land.spec.ts:167:3 › pt-BR chrome › the sub-pages open on their own unit (2.3s)
+  ✓  577 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /es-mx/calculadora-vacaciones/ has unique metadata, canonical, hreflang and JSON-LD (676ms)
+  ✓  576 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /es-mx/calculadora-liquidacion/ has unique metadata, canonical, hreflang and JSON-LD (1.0s)
+  ✓  581 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /pt-br/ has unique metadata, canonical, hreflang and JSON-LD (495ms)
+  ✓  578 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /es-mx/uma-salario-minimo-2026/ has unique metadata, canonical, hreflang and JSON-LD (731ms)
+  ✓  580 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /pt-br/conversor-alqueire-hectare/alqueire-paulista/ has unique metadata, canonical, hreflang and JSON-LD (950ms)
+  ✓  579 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /pt-br/conversor-alqueire-hectare/ has unique metadata, canonical, hreflang and JSON-LD (1.2s)
+  ✓  583 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /pt-br/conversor-alqueire-hectare/alqueire-baiano/ has unique metadata, canonical, hreflang and JSON-LD (1.3s)
+  ✓  582 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /pt-br/conversor-alqueire-hectare/alqueire-mineiro-goiano/ has unique metadata, canonical, hreflang and JSON-LD (1.3s)
+  ✓  584 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /pt-br/conversor-alqueire-hectare/alqueire-do-norte/ has unique metadata, canonical, hreflang and JSON-LD (1.1s)
+  ✓  585 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /pt-br/conversor-alqueire-hectare/tarefa-em-hectare/ has unique metadata, canonical, hreflang and JSON-LD (997ms)
+  ✓  586 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /pt-br/conversor-alqueire-hectare/litro-de-terra/ has unique metadata, canonical, hreflang and JSON-LD (851ms)
+  ✓  588 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/ has unique metadata, canonical, hreflang and JSON-LD (642ms)
+  ✓  589 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/ has unique metadata, canonical, hreflang and JSON-LD (802ms)
+  ✓  587 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /pt-br/hectare-para-alqueire/ has unique metadata, canonical, hreflang and JSON-LD (1.1s)
+  ✓  591 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/hari-ini/ has unique metadata, canonical, hreflang and JSON-LD (528ms)
+  ✓  590 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/jodoh/ has unique metadata, canonical, hreflang and JSON-LD (930ms)
+  ✓  593 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/minggu-pahing/ has unique metadata, canonical, hreflang and JSON-LD (824ms)
+  ✓  592 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/minggu-legi/ has unique metadata, canonical, hreflang and JSON-LD (1.0s)
+  ✓  594 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/minggu-pon/ has unique metadata, canonical, hreflang and JSON-LD (905ms)
+  ✓  595 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/minggu-wage/ has unique metadata, canonical, hreflang and JSON-LD (723ms)
+  ✓  596 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/minggu-kliwon/ has unique metadata, canonical, hreflang and JSON-LD (824ms)
+  ✓  597 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/senin-legi/ has unique metadata, canonical, hreflang and JSON-LD (863ms)
+  ✓  598 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/senin-pahing/ has unique metadata, canonical, hreflang and JSON-LD (890ms)
+  ✓  599 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/senin-pon/ has unique metadata, canonical, hreflang and JSON-LD (820ms)
+  ✓  600 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/senin-wage/ has unique metadata, canonical, hreflang and JSON-LD (763ms)
+  ✓  601 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/senin-kliwon/ has unique metadata, canonical, hreflang and JSON-LD (987ms)
+  ✓  603 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/selasa-pahing/ has unique metadata, canonical, hreflang and JSON-LD (838ms)
+  ✓  602 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/selasa-legi/ has unique metadata, canonical, hreflang and JSON-LD (1.0s)
+  ✓  604 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/selasa-pon/ has unique metadata, canonical, hreflang and JSON-LD (915ms)
+  ✓  605 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/selasa-wage/ has unique metadata, canonical, hreflang and JSON-LD (736ms)
+  ✓  607 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/rabu-legi/ has unique metadata, canonical, hreflang and JSON-LD (808ms)
+  ✓  606 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/selasa-kliwon/ has unique metadata, canonical, hreflang and JSON-LD (929ms)
+  ✓  608 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/rabu-pahing/ has unique metadata, canonical, hreflang and JSON-LD (999ms)
+  ✓  609 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/rabu-pon/ has unique metadata, canonical, hreflang and JSON-LD (777ms)
+  ✓  610 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/rabu-wage/ has unique metadata, canonical, hreflang and JSON-LD (927ms)
+  ✓  611 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/rabu-kliwon/ has unique metadata, canonical, hreflang and JSON-LD (942ms)
+  ✓  613 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/kamis-pahing/ has unique metadata, canonical, hreflang and JSON-LD (742ms)
+  ✓  612 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/kamis-legi/ has unique metadata, canonical, hreflang and JSON-LD (1.1s)
+  ✓  614 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/kamis-pon/ has unique metadata, canonical, hreflang and JSON-LD (883ms)
+  ✓  615 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/kamis-wage/ has unique metadata, canonical, hreflang and JSON-LD (869ms)
+  ✓  616 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/kamis-kliwon/ has unique metadata, canonical, hreflang and JSON-LD (841ms)
+  ✓  617 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/jumat-legi/ has unique metadata, canonical, hreflang and JSON-LD (987ms)
+  ✓  618 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/jumat-pahing/ has unique metadata, canonical, hreflang and JSON-LD (808ms)
+  ✓  619 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/jumat-pon/ has unique metadata, canonical, hreflang and JSON-LD (816ms)
+  ✓  620 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/jumat-wage/ has unique metadata, canonical, hreflang and JSON-LD (889ms)
+  ✓  621 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/jumat-kliwon/ has unique metadata, canonical, hreflang and JSON-LD (878ms)
+  ✓  622 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/sabtu-legi/ has unique metadata, canonical, hreflang and JSON-LD (883ms)
+  ✓  623 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/sabtu-pahing/ has unique metadata, canonical, hreflang and JSON-LD (942ms)
+  ✓  624 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/sabtu-pon/ has unique metadata, canonical, hreflang and JSON-LD (869ms)
+  ✓  625 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/sabtu-wage/ has unique metadata, canonical, hreflang and JSON-LD (834ms)
+  ✓  626 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/weton/sabtu-kliwon/ has unique metadata, canonical, hreflang and JSON-LD (842ms)
+  ✓  628 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2026/januari/ has unique metadata, canonical, hreflang and JSON-LD (842ms)
+  ✓  629 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2026/februari/ has unique metadata, canonical, hreflang and JSON-LD (698ms)
+  ✓  630 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2026/maret/ has unique metadata, canonical, hreflang and JSON-LD (726ms)
+  ✓  627 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2026/ has unique metadata, canonical, hreflang and JSON-LD (1.7s)
+  ✓  631 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2026/april/ has unique metadata, canonical, hreflang and JSON-LD (679ms)
+  ✓  632 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2026/mei/ has unique metadata, canonical, hreflang and JSON-LD (753ms)
+  ✓  633 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2026/juni/ has unique metadata, canonical, hreflang and JSON-LD (866ms)
+  ✓  634 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2026/juli/ has unique metadata, canonical, hreflang and JSON-LD (720ms)
+  ✓  635 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2026/agustus/ has unique metadata, canonical, hreflang and JSON-LD (800ms)
+  ✓  636 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2026/september/ has unique metadata, canonical, hreflang and JSON-LD (763ms)
+  ✓  637 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2026/oktober/ has unique metadata, canonical, hreflang and JSON-LD (772ms)
+  ✓  638 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2026/november/ has unique metadata, canonical, hreflang and JSON-LD (736ms)
+  ✓  639 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2026/desember/ has unique metadata, canonical, hreflang and JSON-LD (872ms)
+  ✓  642 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2027/februari/ has unique metadata, canonical, hreflang and JSON-LD (770ms)
+  ✓  641 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2027/januari/ has unique metadata, canonical, hreflang and JSON-LD (857ms)
+  ✓  643 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2027/maret/ has unique metadata, canonical, hreflang and JSON-LD (752ms)
+  ✓  640 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2027/ has unique metadata, canonical, hreflang and JSON-LD (1.7s)
+  ✓  645 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2027/mei/ has unique metadata, canonical, hreflang and JSON-LD (692ms)
+  ✓  644 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2027/april/ has unique metadata, canonical, hreflang and JSON-LD (765ms)
+  ✓  646 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2027/juni/ has unique metadata, canonical, hreflang and JSON-LD (730ms)
+  ✓  647 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2027/juli/ has unique metadata, canonical, hreflang and JSON-LD (716ms)
+  ✓  648 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2027/agustus/ has unique metadata, canonical, hreflang and JSON-LD (686ms)
+  ✓  649 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2027/september/ has unique metadata, canonical, hreflang and JSON-LD (807ms)
+  ✓  650 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2027/oktober/ has unique metadata, canonical, hreflang and JSON-LD (788ms)
+  ✓  654 [desktop] › tests/e2e/seo.spec.ts:70:3 › SEO contract (AGENTS.md §6) › sitemap lists every live page with hreflang alternates, and nothing else (152ms)
+  ✓  655 [desktop] › tests/e2e/seo.spec.ts:91:3 › SEO contract (AGENTS.md §6) › robots.txt points to the sitemap (23ms)
+  ✓  656 [desktop] › tests/e2e/seo.spec.ts:96:3 › SEO contract (AGENTS.md §6) › unpublished locales are not built (113ms)
+  ✓  651 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2027/november/ has unique metadata, canonical, hreflang and JSON-LD (784ms)
+  ✓  657 [desktop] › tests/e2e/seo.spec.ts:102:3 › SEO contract (AGENTS.md §6) › OG images are real 1200×630 PNGs, including one per weton and calendar (64ms)
+  ✓  652 [desktop] › tests/e2e/seo.spec.ts:16:5 › SEO contract (AGENTS.md §6) › /id/kalender-jawa/2027/desember/ has unique metadata, canonical, hreflang and JSON-LD (789ms)
+  ✓  659 [desktop] › tests/e2e/seo.spec.ts:129:3 › SEO contract (AGENTS.md §6) › each BR page points to its own OG image (739ms)
+  ✓  660 [desktop] › tests/e2e/seo.spec.ts:135:3 › SEO contract (AGENTS.md §6) › cross-locale links appear only where hreflang applies (1.4s)
+  ✓  661 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual light /es-mx/ (1.4s)
+  ✓  662 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual light /es-mx/calculadora-aguinaldo/ (1.4s)
+  ✓  663 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual light /es-mx/calculadora-finiquito/ (1.4s)
+  ✓  664 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual light /es-mx/calculadora-liquidacion/ (1.4s)
+  ✓  665 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual light /es-mx/calculadora-prima-vacacional/ (1.6s)
+  ✓  666 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual light /es-mx/calculadora-vacaciones/ (1.5s)
+  ✓  667 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual light /es-mx/uma-salario-minimo-2026/ (1.2s)
+  ✓  668 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual light /pt-br/ (1.1s)
+  ✓  669 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual light /pt-br/conversor-alqueire-hectare/ (1.4s)
+  ✓  670 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual light /pt-br/conversor-alqueire-hectare/alqueire-paulista/ (1.4s)
+  ✓  671 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual light /pt-br/conversor-alqueire-hectare/alqueire-mineiro-goiano/ (1.3s)
+  ✓  672 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual light /pt-br/conversor-alqueire-hectare/alqueire-baiano/ (1.3s)
+  ✓  673 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual light /pt-br/conversor-alqueire-hectare/alqueire-do-norte/ (1.4s)
+  ✓  674 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual light /pt-br/conversor-alqueire-hectare/tarefa-em-hectare/ (1.5s)
+  ✓  675 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual light /pt-br/conversor-alqueire-hectare/litro-de-terra/ (1.4s)
+  ✓  676 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual light /pt-br/hectare-para-alqueire/ (1.3s)
+  ✓  677 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual light /id/ (1.3s)
+  ✓  678 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual light /id/weton/ (1.4s)
+  ✓  679 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual light /id/weton/jodoh/ (1.3s)
+  ✓  680 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual light /id/weton/hari-ini/ (1.1s)
+  ✓  681 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual light /id/weton/selasa-pon/ (949ms)
+  ✓  682 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual light /id/kalender-jawa/2026/oktober/ (1.2s)
+  ✓  683 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual light /id/kalender-jawa/2027/ (1.2s)
+  ✓  684 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual dark /es-mx/ (1.1s)
+  ✓  685 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual dark /es-mx/calculadora-aguinaldo/ (1.2s)
+  ✓  686 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual dark /es-mx/calculadora-finiquito/ (1.1s)
+  ✓  687 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual dark /es-mx/calculadora-liquidacion/ (1.1s)
+  ✓  688 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual dark /es-mx/calculadora-prima-vacacional/ (1.2s)
+  ✓  689 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual dark /es-mx/calculadora-vacaciones/ (1.1s)
+  ✓  690 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual dark /es-mx/uma-salario-minimo-2026/ (928ms)
+  ✓  691 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual dark /pt-br/ (1.0s)
+  ✓  653 [desktop] › tests/e2e/seo.spec.ts:60:3 › SEO contract (AGENTS.md §6) › titles and descriptions are unique across pages (22.0s)
+  ✓  692 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual dark /pt-br/conversor-alqueire-hectare/ (1.2s)
+  ✓  658 [desktop] › tests/e2e/seo.spec.ts:120:3 › SEO contract (AGENTS.md §6) › every page links to an OG image that exists (22.2s)
+  ✓  693 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual dark /pt-br/conversor-alqueire-hectare/alqueire-paulista/ (1.2s)
+  ✓  694 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual dark /pt-br/conversor-alqueire-hectare/alqueire-mineiro-goiano/ (1.2s)
+  ✓  695 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual dark /pt-br/conversor-alqueire-hectare/alqueire-baiano/ (1.0s)
+  ✓  696 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual dark /pt-br/conversor-alqueire-hectare/alqueire-do-norte/ (1.1s)
+  ✓  697 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual dark /pt-br/conversor-alqueire-hectare/tarefa-em-hectare/ (935ms)
+  ✓  698 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual dark /pt-br/conversor-alqueire-hectare/litro-de-terra/ (1.0s)
+  ✓  699 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual dark /pt-br/hectare-para-alqueire/ (1.2s)
+  ✓  700 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual dark /id/ (1.1s)
+  ✓  701 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual dark /id/weton/ (1.1s)
+  ✓  702 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual dark /id/weton/jodoh/ (1.1s)
+  ✓  704 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual dark /id/weton/selasa-pon/ (881ms)
+  ✓  703 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual dark /id/weton/hari-ini/ (961ms)
+  ✓  705 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual dark /id/kalender-jawa/2026/oktober/ (915ms)
+  ✓  706 [desktop] › tests/e2e/visual.spec.ts:6:5 › visual dark /id/kalender-jawa/2027/ (1.1s)
+
+  95 skipped
+  611 passed (7.0m)
+npm notice
+npm notice New major version of npm available! 11.19.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice
+
+▶ Lighthouse CI (budgets)
+✅  .lighthouseci/ directory writable
+✅  Configuration file found
+✅  Chrome installation found
+⚠️   GitHub token not set
+Healthcheck passed!
+
+Started a web server on port 38273...
+Running Lighthouse 3 time(s) on http://localhost:38273/es-mx/
+Run #1...done.
+Run #2...done.
+Run #3...done.
+Running Lighthouse 3 time(s) on http://localhost:38273/es-mx/calculadora-aguinaldo/
+Run #1...done.
+Run #2...done.
+Run #3...done.
+Running Lighthouse 3 time(s) on http://localhost:38273/es-mx/calculadora-finiquito/
+Run #1...done.
+Run #2...done.
+Run #3...done.
+Running Lighthouse 3 time(s) on http://localhost:38273/es-mx/calculadora-liquidacion/
+Run #1...done.
+Run #2...done.
+Run #3...done.
+Running Lighthouse 3 time(s) on http://localhost:38273/es-mx/calculadora-prima-vacacional/
+Run #1...done.
+Run #2...done.
+Run #3...done.
+Running Lighthouse 3 time(s) on http://localhost:38273/es-mx/calculadora-vacaciones/
+Run #1...done.
+Run #2...done.
+Run #3...done.
+Running Lighthouse 3 time(s) on http://localhost:38273/es-mx/uma-salario-minimo-2026/
+Run #1...done.
+Run #2...done.
+Run #3...done.
+Running Lighthouse 3 time(s) on http://localhost:38273/id/
+Run #1...done.
+Run #2...done.
+Run #3...done.
+Running Lighthouse 3 time(s) on http://localhost:38273/id/weton/
+Run #1...done.
+Run #2...done.
+Run #3...done.
+Running Lighthouse 3 time(s) on http://localhost:38273/id/weton/jodoh/
+Run #1...done.
+Run #2...done.
+Run #3...done.
+Running Lighthouse 3 time(s) on http://localhost:38273/id/weton/hari-ini/
+Run #1...done.
+Run #2...done.
+Run #3...done.
+Running Lighthouse 3 time(s) on http://localhost:38273/id/weton/selasa-pon/
+Run #1...done.
+Run #2...done.
+Run #3...done.
+Running Lighthouse 3 time(s) on http://localhost:38273/id/kalender-jawa/2026/
+Run #1...done.
+Run #2...done.
+Run #3...done.
+Running Lighthouse 3 time(s) on http://localhost:38273/id/kalender-jawa/2027/
+Run #1...done.
+Run #2...done.
+Run #3...done.
+Running Lighthouse 3 time(s) on http://localhost:38273/id/kalender-jawa/2027/desember/
+Run #1...done.
+Run #2...done.
+Run #3...done.
+Running Lighthouse 3 time(s) on http://localhost:38273/pt-br/
+Run #1...done.
+Run #2...done.
+Run #3...done.
+Running Lighthouse 3 time(s) on http://localhost:38273/pt-br/conversor-alqueire-hectare/
+Run #1...done.
+Run #2...done.
+Run #3...done.
+Running Lighthouse 3 time(s) on http://localhost:38273/pt-br/conversor-alqueire-hectare/alqueire-paulista/
+Run #1...done.
+Run #2...done.
+Run #3...done.
+Running Lighthouse 3 time(s) on http://localhost:38273/pt-br/conversor-alqueire-hectare/alqueire-mineiro-goiano/
+Run #1...done.
+Run #2...done.
+Run #3...done.
+Running Lighthouse 3 time(s) on http://localhost:38273/pt-br/conversor-alqueire-hectare/alqueire-baiano/
+Run #1...done.
+Run #2...done.
+Run #3...done.
+Running Lighthouse 3 time(s) on http://localhost:38273/pt-br/conversor-alqueire-hectare/alqueire-do-norte/
+Run #1...done.
+Run #2...done.
+Run #3...done.
+Running Lighthouse 3 time(s) on http://localhost:38273/pt-br/conversor-alqueire-hectare/tarefa-em-hectare/
+Run #1...done.
+Run #2...done.
+Run #3...done.
+Running Lighthouse 3 time(s) on http://localhost:38273/pt-br/conversor-alqueire-hectare/litro-de-terra/
+Run #1...done.
+Run #2...done.
+Run #3...done.
+Running Lighthouse 3 time(s) on http://localhost:38273/pt-br/hectare-para-alqueire/
+Run #1...done.
+Run #2...done.
+Run #3...done.
+Done running Lighthouse!
+
+Checking assertions against 24 URL(s), 72 total run(s)
+
+All results processed!
+
+Dumping 72 reports to disk at /mnt/bigdisk/azureuser/Mexico/.lighthouseci...
+Done writing reports to disk.
+
+Done running autorun.
+
+──────── npm run check ────────
+Commit: b6ae34d
+Date: 2026-10-17T01:13:54.315Z
+Node: v22.23.3
+PASS  Types (astro check)                  9.5s
+PASS  Lint (ESLint)                        4.3s
+PASS  Format (Prettier)                    4.6s
+PASS  Unit + golden (Vitest)               1.4s
+PASS  Build                                5.9s
+PASS  JS budget (≤ 70 KB gzip/page)        0.1s
+PASS  E2E + a11y + visual (Playwright)     422.3s
+PASS  Lighthouse CI (budgets)              849.6s
+Log: docs/check-reports/fix-id-heading-font-b6ae34d.log
+
+All checks passed.

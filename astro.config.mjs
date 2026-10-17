@@ -161,7 +161,8 @@ export default defineConfig({
       provider: local,
       name: 'Archivo',
       cssVariable: '--font-archivo',
-      fallbacks: ['Arial', 'sans-serif'],
+      fallbacks: ['Archivo Fallback', 'Arial', 'sans-serif'],
+      optimizedFallbacks: false,
       options: {
         variants: [
           {
