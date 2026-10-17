@@ -9,6 +9,7 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "node --env-file-if-exists=.env scripts/fetch-udis.mjs",
     "build": "astro build && node scripts/postbuild.mjs",
     "build:lab": "LAB=1 astro build && node scripts/postbuild.mjs",
     "preview": "astro preview --port 4321",

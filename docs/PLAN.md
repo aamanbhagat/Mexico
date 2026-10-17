@@ -4,6 +4,19 @@ Source of truth for priorities: `docs/research/REPORT.md` (MX-01 is opportunity 
 be live before the November–December peak; ID-01 is #4, kalender Jawa 2027 must be indexable by
 mid-November). Rules: `AGENTS.md`.
 
+## MX-03 — UDIS ↔ pesos, Banxico SP68257 (`feat/mx-03-udis`)
+
+- [x] Recheck clean `main`, matching `origin/main`, Node 22, required environment keys, and the docs-only baseline diff.
+- [x] Verify Banxico's reuse terms, UDI publication calendar, endpoint, and rate limits; keep an attributed source record.
+- [x] Fetch the entire dated SP68257 series at build time; save raw responses and normalized provenance, reject missing dates or a stale build.
+- [x] Add fixed-point conversions, six dated official golden examples, boundary/clock/staleness/parser tests.
+- [ ] Build the two accessible es-MX converters, real monthly chart, mortgage estimate, sources, and UMA cross-links.
+- [ ] Build yearly daily tables grouped by month, unique OG/metadata, sitemap lastmod, and all route fixtures.
+- [ ] Configure an authenticated Vercel Cron endpoint that triggers the production deploy hook and test its failure cases.
+- [ ] Add delayed-font/SEO/privacy/a11y/visual coverage and screenshot instructions without running Playwright in this session.
+- [ ] Run Node 22 typecheck, ESLint, Prettier check, Vitest, build, gzip budget, and Lighthouse (no Docker tests).
+- [ ] Commit and push small milestones on this branch; stop without a PR, merge, or push to `main`.
+
 ## Project 0 follow-up — Indonesian heading and font loading (`fix/id-heading-font`)
 
 - [x] Verify the pinned-container screenshot font state, effective h1 font, and font-loading wait.
