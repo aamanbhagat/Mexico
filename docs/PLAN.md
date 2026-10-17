@@ -14,7 +14,10 @@ mid-November). Rules: `AGENTS.md`.
       or the existing visual direction; remeasure CLS and heading lines.
 - [x] Regenerate only affected visual baselines after checking every changed image for unexpected
       content or layout movement; stop if any change is not attributable to the font fix.
-- [ ] Run the full Node 22 `npm run check`, commit the SHA-keyed log, and open a PR to `main` (no merge).
+- [x] Run the full Node 22 `npm run check` (eight steps pass on `b6ae34d`) and commit its
+      SHA-keyed log: `docs/check-reports/fix-id-heading-font-b6ae34d.log`.
+- [ ] Open a PR to `main` without merging; include the root cause, font/CLS measurements, and
+      the passing check summary.
 
 ## Project 0 — Pin visual test rendering (`fix/visual-env`)
 

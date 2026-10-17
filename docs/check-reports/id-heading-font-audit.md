@@ -61,6 +61,8 @@ generated adjusted Arial fallback *before* the fix. **40** of them (the rows whe
 fallback” differs from “Archivo”) also differed from the actual unadjusted Liberation Sans
 fallback on the pinned Linux image. Five rows matched with Liberation Sans but would mismatch
 with the generated adjusted Arial face on hosts where Arial exists.
+The only other built HTML files are the root redirect (no h1) and `/404.html` (two lines with
+loaded Archivo and with either fallback at 390 px).
 
 | URL | Archivo | Linux fallback | Generated Arial fallback |
 | --- | ---: | ---: | ---: |
@@ -131,3 +133,11 @@ Only `tests/e2e/__screenshots__/mobile/id-light.png` and
 and diff images before regenerating: all text and controls remain, the heading becomes three lines
 and the content beneath moves up by its removed line. All 92 pinned-browser visual tests pass; no
 other baseline or budget was changed.
+
+## Local quality gate
+
+`npm run check` passed all eight steps on Node 22.23.3 for code commit `b6ae34d`:
+237 unit/golden tests, 611 Playwright tests passed (95 existing skips), 92 visual snapshots passed,
+and 72 Lighthouse runs passed the unchanged budgets. The full transcript and timestamped per-step
+summary are in `docs/check-reports/fix-id-heading-font-b6ae34d.log`. GitHub Actions remains
+unavailable due to account billing, so this local run is the quality gate.
