@@ -21,9 +21,9 @@ por mes. Este lenguaje remite a una cotización y su fecha de vigencia, no a una
 - [x] Fetch the entire dated SP68257 series at build time; save raw responses and normalized provenance, reject missing dates or a stale build.
 - [x] Add fixed-point conversions, six dated official golden examples, boundary/clock/staleness/parser tests.
 - [x] Build the two accessible es-MX converters, real monthly chart, mortgage estimate, sources, and UMA cross-links.
-- [ ] Build yearly daily tables grouped by month, unique OG/metadata, sitemap lastmod, and all route fixtures (pages and metadata complete; browser fixtures next).
+- [x] Build yearly daily tables grouped by month, unique OG/metadata, sitemap lastmod, and all route fixtures.
 - [ ] Configure an authenticated Vercel Cron endpoint that triggers the production deploy hook and test its failure cases.
-- [ ] Add delayed-font/SEO/privacy/a11y/visual coverage and screenshot instructions without running Playwright in this session.
+- [x] Add delayed-font/SEO/privacy/a11y/visual coverage and screenshot instructions without running Playwright in this session.
 - [ ] Run Node 22 typecheck, ESLint, Prettier check, Vitest, build, gzip budget, and Lighthouse (no Docker tests).
 - [ ] Commit and push small milestones on this branch; stop without a PR, merge, or push to `main`.
 

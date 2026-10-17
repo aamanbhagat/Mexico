@@ -3,13 +3,14 @@
 //   npm run build && npm run screenshots            (es-MX set → docs/screenshots/<page>/)
 //   npm run build && npm run screenshots -- br-01   (BR-01 set → docs/screenshots/br-01/)
 //   npm run build && npm run screenshots -- id-01   (ID-01 set → docs/screenshots/id-01/)
+//   npm run build && npm run screenshots -- mx-03   (all UDI pages → docs/screenshots/mx-03/)
 //   npm run build && npm run screenshots -- all     (every set)
 // Template pages get an above-the-fold PNG and a full-page JPEG per variant; in the id-01 set every
 // other page gets an above-the-fold JPEG per variant (same templates, different data).
 // Starts `astro preview` itself if needed. The sticky mobile bar is hidden in full-page shots,
 // since a fixed element would otherwise be painted mid-page.
 import { spawn } from 'node:child_process';
-import { mkdirSync } from 'node:fs';
+import { mkdirSync, readFileSync } from 'node:fs';
 import { chromium } from '@playwright/test';
 
 const BASE = 'http://localhost:4321';
@@ -18,6 +19,14 @@ const SET = process.argv[2] ?? 'es-mx';
 const DINA = ['minggu', 'senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu'];
 const PASARAN = ['legi', 'pahing', 'pon', 'wage', 'kliwon'];
 const BULAN = ['januari', 'februari', 'maret', 'april', 'mei', 'juni', 'juli', 'agustus', 'september', 'oktober', 'november', 'desember'];
+const udiArchive = JSON.parse(readFileSync(new URL('../public/data/mx/udis.json', import.meta.url), 'utf8'));
+const udiSnapshotDay = new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'America/Mexico_City',
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+}).format(new Date(udiArchive.retrieved_at));
+const udiYears = [...new Set(udiArchive.rates.filter(([day]) => day <= udiSnapshotDay).map(([day]) => day.slice(0, 4)))];
 
 const SETS = {
   'es-mx': {
@@ -33,6 +42,22 @@ const SETS = {
       { path: '/es-mx/calculadora-prima-vacacional/', slug: 'prima-vacacional', query: '?s=15000&i=2022-05-02' },
       { path: '/es-mx/calculadora-vacaciones/', slug: 'vacaciones', query: '?s=15000&i=2019-03-04' },
       { path: '/es-mx/uma-salario-minimo-2026/', slug: 'uma-salario-minimo', query: '' },
+    ],
+    rest: [],
+  },
+  'mx-03': {
+    out: 'docs/screenshots/mx-03',
+    locale: 'es-MX',
+    timezoneId: 'America/Mexico_City',
+    now: udiArchive.retrieved_at,
+    pages: [
+      { path: '/es-mx/udis-a-pesos/', slug: 'udis-a-pesos', query: '' },
+      { path: '/es-mx/pesos-a-udis/', slug: 'pesos-a-udis', query: '' },
+      ...udiYears.map((year) => ({
+        path: `/es-mx/udis-a-pesos/historico/${year}/`,
+        slug: `udis-historico-${year}`,
+        query: '',
+      })),
     ],
     rest: [],
   },

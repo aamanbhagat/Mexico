@@ -1,5 +1,5 @@
 import AxeBuilder from '@axe-core/playwright';
-import { FILLED, ROUTES, expect, test } from './fixtures';
+import { FILLED, ROUTES, UDI_TEST_NOW, expect, test } from './fixtures';
 
 const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
 
@@ -8,6 +8,7 @@ for (const scheme of ['light', 'dark'] as const) {
     for (const route of ROUTES) {
       test(`${route.path}`, async ({ page }) => {
         await page.emulateMedia({ colorScheme: scheme, reducedMotion: 'reduce' });
+        if (route.path.includes('/udis-a-pesos/') || route.path === '/es-mx/pesos-a-udis/') await page.clock.setFixedTime(UDI_TEST_NOW);
         await page.goto(route.path + (FILLED[route.path] ?? ''));
         await page.waitForLoadState('networkidle');
         // Open every disclosure so hidden controls are audited too.

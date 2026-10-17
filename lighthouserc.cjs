@@ -11,6 +11,10 @@ const pages = [
   '/es-mx/calculadora-prima-vacacional/',
   '/es-mx/calculadora-vacaciones/',
   '/es-mx/uma-salario-minimo-2026/',
+  '/es-mx/udis-a-pesos/',
+  '/es-mx/pesos-a-udis/',
+  '/es-mx/udis-a-pesos/historico/1995/',
+  '/es-mx/udis-a-pesos/historico/2026/',
   // ID-01: one page per template, plus both full-year calendars (the heaviest pages).
   '/id/',
   '/id/weton/',
