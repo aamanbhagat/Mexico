@@ -1,7 +1,7 @@
 // Quick one-off screenshot helper: node scripts/shot.mjs <url> <out.png> [width] [height] [theme] [fullPage]
 import { chromium } from '@playwright/test';
 const [url, out, w = '390', h = '844', theme = 'light', full = '1'] = process.argv.slice(2);
-const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || '/opt/pw-browsers/chromium' });
+const browser = await chromium.launch();
 const page = await browser.newPage({
   viewport: { width: Number(w), height: Number(h) },
   deviceScaleFactor: 1,

@@ -4,6 +4,17 @@ Source of truth for priorities: `docs/research/REPORT.md` (MX-01 is opportunity 
 be live before the November–December peak; ID-01 is #4, kalender Jawa 2027 must be indexable by
 mid-November). Rules: `AGENTS.md`.
 
+## Project 0 — Pin visual test rendering (`fix/visual-env`)
+
+- [x] Compare the local and clean login-shell Chromium, fonts, and Playwright environment before
+      changing baselines; inspect failing diffs in es-MX, pt-BR, and id for real content changes.
+- [x] Move Docker and containerd image storage to the existing large disk so the pinned image fits.
+- [x] Run visual tests in the official Docker image matching `package-lock.json`; regenerate all
+      92 baselines there once, then verify all 92 without relaxing visual thresholds.
+- [x] Preflight the unchanged full browser suite in the image (609 passed, 95 pre-existing skips).
+- [x] Run the complete check detached past the previous 15-minute interruption: all eight steps
+      passed on `7728a2a`; report: `docs/check-reports/fix-visual-env-7728a2a.log`.
+
 ## Project 0 — Green baseline and Vercel deployment
 
 - [x] Sync `main` and confirm es-MX, pt-BR and id home pages and routes exist.

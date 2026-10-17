@@ -9,7 +9,7 @@
 // Starts `astro preview` itself if needed. The sticky mobile bar is hidden in full-page shots,
 // since a fixed element would otherwise be painted mid-page.
 import { spawn } from 'node:child_process';
-import { existsSync, mkdirSync } from 'node:fs';
+import { mkdirSync } from 'node:fs';
 import { chromium } from '@playwright/test';
 
 const BASE = 'http://localhost:4321';
@@ -106,11 +106,10 @@ if (!(await up())) {
   for (let i = 0; i < 60 && !(await up()); i += 1) await new Promise((r) => setTimeout(r, 500));
 }
 
-const executablePath = existsSync('/opt/pw-browsers/chromium') ? '/opt/pw-browsers/chromium' : undefined;
 let count = 0;
 for (const name of names) {
   const set = SETS[name];
-  const browser = await chromium.launch({ ...(executablePath ? { executablePath } : {}), args: [`--lang=${set.locale}`] });
+  const browser = await chromium.launch({ args: [`--lang=${set.locale}`] });
 
   async function open(w, h, scheme) {
     const context = await browser.newContext({

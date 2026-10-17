@@ -2,11 +2,10 @@
 // then prints one summary table and exits non-zero if anything failed.
 //   types → lint + format → unit/golden → build → JS budget → e2e + a11y + visual → Lighthouse
 import { execFileSync, spawn } from 'node:child_process';
-import { closeSync, existsSync, mkdirSync, openSync, writeSync } from 'node:fs';
+import { closeSync, mkdirSync, openSync, writeSync } from 'node:fs';
 import { join } from 'node:path';
 
-const chromium = process.env.CHROME_PATH ?? (existsSync('/opt/pw-browsers/chromium') ? '/opt/pw-browsers/chromium' : undefined);
-const env = { ...process.env, ASTRO_TELEMETRY_DISABLED: '1', ...(chromium ? { CHROME_PATH: chromium } : {}) };
+const env = { ...process.env, ASTRO_TELEMETRY_DISABLED: '1' };
 
 const steps = [
   { name: 'Types (astro check)', cmd: 'npx', args: ['astro', 'check'] },
@@ -15,7 +14,7 @@ const steps = [
   { name: 'Unit + golden (Vitest)', cmd: 'npx', args: ['vitest', 'run'] },
   { name: 'Build', cmd: 'npm', args: ['run', 'build'] },
   { name: 'JS budget (≤ 70 KB gzip/page)', cmd: 'node', args: ['scripts/js-budget.mjs'] },
-  { name: 'E2E + a11y + visual (Playwright)', cmd: 'npx', args: ['playwright', 'test'] },
+  { name: 'E2E + a11y + visual (Playwright)', cmd: 'npm', args: ['run', 'test:e2e:docker'] },
   { name: 'Lighthouse CI (budgets)', cmd: 'npx', args: ['lhci', 'autorun'] },
 ];
 

@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       update_snapshots:
-        description: Regenerate the Playwright visual baselines with CI's Chromium and upload them
+        description: Regenerate the visual baselines in the pinned Playwright Docker image and upload them
         type: boolean
         default: false
 
@@ -34,7 +34,7 @@ jobs:
 
       - run: npm ci
 
-      - name: Install Playwright Chromium
+      - name: Install Chromium for Lighthouse
         run: npx playwright install --with-deps chromium
 
       - name: Point Lighthouse at Playwright's Chromium
@@ -44,7 +44,7 @@ jobs:
         if: ${{ inputs.update_snapshots }}
         run: |
           npm run build
-          npx playwright test visual.spec.ts --update-snapshots
+          npm run test:e2e:docker -- visual.spec.ts --update-snapshots
       - name: Upload visual baselines
         if: ${{ inputs.update_snapshots }}
         uses: actions/upload-artifact@v4

@@ -18,6 +18,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
+    "test:e2e:docker": "node scripts/playwright-docker.mjs",
     "lhci": "lhci autorun",
     "budget": "node scripts/js-budget.mjs",
     "params:report": "node scripts/params-report.mjs",

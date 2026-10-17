@@ -1,15 +1,7 @@
-import { existsSync } from 'node:fs';
 import { defineConfig, devices } from '@playwright/test';
 
-/**
- * E2E, accessibility (axe) and visual tests against the production build served by
- * `astro preview`. In this container Chromium is pre-installed at /opt/pw-browsers; in CI
- * Playwright's own browser is installed by the workflow.
- */
-const preinstalled = process.env['CHROMIUM_PATH'] ?? '/opt/pw-browsers/chromium';
-const executablePath = existsSync(preinstalled) ? preinstalled : undefined;
 // --lang makes native controls (date inputs) render in es-MX, like a Mexican visitor's browser.
-const launchOptions = { ...(executablePath ? { executablePath } : {}), args: ['--lang=es-MX'] };
+const launchOptions = { args: ['--lang=es-MX'] };
 const previewPort = Number(process.env['PLAYWRIGHT_PORT'] ?? '4329');
 if (!Number.isInteger(previewPort) || previewPort < 1 || previewPort > 65535) {
   throw new Error('PLAYWRIGHT_PORT must be an integer between 1 and 65535');
