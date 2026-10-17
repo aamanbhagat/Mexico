@@ -3,6 +3,8 @@ node_modules
 .astro
 docs/research
 docs/screenshots
+public/data/mx/udis.json
+src/data/parameters/mx/udis.json
 playwright-report
 test-results
 .lighthouseci

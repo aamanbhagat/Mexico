@@ -4,7 +4,7 @@ import { formatPesos, formatScaled, pesosToMicroUdis, udisToCents } from '../../
 import { mexicoDay, todayStatus } from '../../src/lib/udis/date';
 import { parseRange, validateSeries } from '../../scripts/fetch-udis.mjs';
 
-const archive = JSON.parse(readFileSync('docs/sources/mx-03/series.json', 'utf8')) as {
+const archive = JSON.parse(readFileSync('src/data/parameters/mx/udis.json', 'utf8')) as {
   rates: { effective_from: string; value: string; source_url: string; verified: boolean }[];
 };
 const dated = new Map(archive.rates.map(({ effective_from, value }) => [effective_from, value]));
@@ -77,6 +77,9 @@ describe('UDI fixed-decimal conversions', () => {
     const response = (idSerie: string, datos: { fecha: string; dato: string }[]) => ({ bmx: { series: [{ idSerie, datos }] } });
     expect(() => parseRange(response('wrong', []), '1995-04-04', '1995-04-05')).toThrow(/wrong series/);
     expect(() => parseRange(response('SP68257', [{ fecha: '04/04/1995', dato: 'N/E' }]), '1995-04-04', '1995-04-05')).toThrow(/nonnumeric/);
+    expect(() => parseRange(response('SP68257', [{ fecha: '04/04/1995', dato: '0.000000' }]), '1995-04-04', '1995-04-05')).toThrow(
+      /nonnumeric/,
+    );
     expect(() =>
       validateSeries(
         [

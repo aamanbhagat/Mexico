@@ -1,0 +1,108 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import ExampleCard from '../../../components/page/ExampleCard.astro';
+import UdiConverter from '../../../components/calc/UdiConverter';
+import UdiChart from '../../../components/page/mx/UdiChart.astro';
+import { udiFaq, udiSources } from '../../../content/es-mx/udis';
+import { UDIS_EDITORIAL_UPDATED } from '../../../content/es-mx/meta';
+import { UDI_BUILD_DAY, UDI_FIRST_DAY, UDI_RETRIEVED_AT, monthEndChart, udiFor } from '../../../lib/udis/series';
+import { formatPesos, udisToCents } from '../../../lib/udis/convert';
+import { consultedAt } from '../../../lib/udis/date';
+import { formatDateLong } from '../../../lib/ui/format';
+import { pathFor, UDI_YEARS } from '../../../i18n/routes';
+
+const today = udiFor(UDI_BUILD_DAY);
+const sources = udiSources(today);
+const exampleDay = udiFor('2026-10-17');
+const exampleAmount = '123.456789';
+const exampleResult = formatPesos(udisToCents(exampleAmount, exampleDay.value)!);
+---
+
+<CalculatorLayout
+  pageKey="mx.udis-a-pesos"
+  locale="es-mx"
+  tool="udis"
+  title="UDIS a pesos: calculadora con valor diario de Banxico"
+  description="Convierte UDIS a pesos mexicanos con la tasa oficial de Banxico fechada al día que elijas. Consulta el valor diario, el historial por año y la fuente."
+  h1="UDIS a pesos"
+  lede="Escribe tus UDIS y elige una fecha: usamos el valor diario exacto de Banxico. También puedes consultar un saldo hipotecario denominado en UDIS."
+  updated={UDI_BUILD_DAY > UDIS_EDITORIAL_UPDATED ? UDI_BUILD_DAY : UDIS_EDITORIAL_UPDATED}
+  appName="Calculadora de UDIS a pesos mexicanos"
+  faq={udiFaq(today)}
+  sourceItems={sources.sourceItems}
+  extraSources={sources.extraSources}
+  ogSlug="udis-a-pesos"
+>
+  <UdiConverter
+    client:load
+    direction="udis-to-pesos"
+    buildDay={UDI_BUILD_DAY}
+    buildRate={today.value}
+    buildRetrievedAt={UDI_RETRIEVED_AT}
+    firstDay={UDI_FIRST_DAY}
+    sourceUrl={today.source_url}
+    sourceTitle={today.source_title}
+  />
+  <p class="udi-links">
+    ¿Tienes el monto en pesos? <a href={pathFor('mx.pesos-a-udis', 'es-mx')}>Convierte pesos a UDIS</a>.
+  </p>
+
+  <Fragment slot="how">
+    <p>
+      <strong>UDIS × tasa diaria = pesos.</strong> Guardamos las seis cifras decimales de la tasa SP68257 de Banxico y hacemos la multiplicación
+      con aritmética entera. Solo al final redondeamos los pesos a centavos (mitad hacia arriba).
+    </p>
+    <p>
+      La fecha va del {formatDateLong(UDI_FIRST_DAY)} hasta el día actual en Ciudad de México. Banxico puede publicar tasas para días futuros
+      por adelantado; el convertidor nunca las presenta como vigentes antes de su fecha. Si falta el registro de hoy, conserva las conversiones
+      históricas pero no calcula el saldo hipotecario «de hoy».
+    </p>
+    <p>
+      La tasa y la hora de consulta de Banxico se indican junto al resultado. El archivo se descarga por separado al abrir la página, sin
+      transmitir lo que escribes en los campos.
+    </p>
+  </Fragment>
+
+  <div class="examples" slot="examples">
+    <ExampleCard
+      title="UDIS a pesos con fecha verificada"
+      story={`En el registro de Banxico del ${formatDateLong(exampleDay.effective_from)}, ${exampleAmount} UDIS se convierten con la tasa exacta de ese día.`}
+      rows={[
+        { label: 'UDIS', value: exampleAmount },
+        { label: `Tasa del ${formatDateLong(exampleDay.effective_from)}`, value: `${exampleDay.value} MXN/UDI` },
+        { label: 'Total al centavo', value: `${exampleResult} MXN` },
+        { label: 'Consulta oficial', value: consultedAt(exampleDay.retrieved_at) },
+      ]}
+      source={{ label: exampleDay.source_title, url: exampleDay.source_url }}
+    />
+  </div>
+
+  <Fragment slot="extra">
+    <section class="section" aria-labelledby="udi-evolucion">
+      <h2 id="udi-evolucion">Evolución de la UDI: 12 valores mensuales reales</h2>
+      <UdiChart
+        points={monthEndChart(UDI_BUILD_DAY)}
+        title="Valores observados en el último día disponible de cada mes"
+        id="udi-convertidor"
+      />
+    </section>
+    <section class="section" aria-labelledby="udi-historico">
+      <h2 id="udi-historico">Histórico de UDIS por año</h2>
+      <p>Consulta la tasa diaria de Banxico, agrupada por mes y sin estimaciones:</p>
+      <nav aria-label="Años del histórico de UDIS" class="udi-year-nav">
+        {[...UDI_YEARS].reverse().map((listedYear) => <a href={pathFor(`mx.udis.historico.${listedYear}`, 'es-mx')}>{listedYear}</a>)}
+      </nav>
+    </section>
+  </Fragment>
+
+  <p slot="sources-intro" class="prose">
+    Fuente original: Banco de México, serie diaria SP68257. Valor del {formatDateLong(today.effective_from)}; consultado el{' '}
+    {consultedAt(today.retrieved_at)} (hora de Ciudad de México). Solo los registros recibidos y validados tienen verificación de datos; la revisión
+    humana de esta página permanece pendiente.
+  </p>
+  <Fragment slot="disclaimer">
+    <p>
+      Referencia informativa, no cotización ni asesoría financiera. El saldo real de un crédito depende de tu contrato y cargos asociados.
+    </p>
+  </Fragment>
+</CalculatorLayout>

@@ -6,7 +6,7 @@ import { toolsFor } from '../../i18n/tools';
 import { absoluteUrl, SITE } from '../../config/site';
 import { mxParam } from '../../lib/params/mx';
 import { formatDateLong, formatMoney } from '../../lib/ui/format';
-import { UPDATED } from '../../content/es-mx/meta';
+import { UDIS_EDITORIAL_UPDATED } from '../../content/es-mx/meta';
 
 const AS_OF = '2026-12-20';
 const uma = mxParam('mx.uma', AS_OF);
@@ -45,7 +45,9 @@ const jsonLd = [
         Aguinaldo, finiquito, liquidación, prima vacacional y vacaciones con la Ley Federal del Trabajo, la Ley del ISR y los valores
         oficiales de 2026. Cada resultado cita el artículo y la fuente.
       </p>
-      <p class="hero__meta"><span>Actualizado el <time datetime={UPDATED}>{formatDateLong(UPDATED)}</time></span></p>
+      <p class="hero__meta">
+        <span>Actualizado el <time datetime={UDIS_EDITORIAL_UPDATED}>{formatDateLong(UDIS_EDITORIAL_UPDATED)}</time></span>
+      </p>
     </header>
 
     <nav aria-labelledby="lineas">
@@ -66,6 +68,14 @@ const jsonLd = [
         }
       </ol>
     </nav>
+
+    <section class="section" aria-labelledby="otras-equivalencias">
+      <h2 id="otras-equivalencias">También: valor diario de las UDIS</h2>
+      <p>
+        Convierte <a href={pathFor('mx.udis-a-pesos', 'es-mx')}>UDIS a pesos</a> o{' '}
+        <a href={pathFor('mx.pesos-a-udis', 'es-mx')}>pesos a UDIS</a> con la tasa fechada de Banxico. No es el valor de la UMA.
+      </p>
+    </section>
 
     <section class="section" aria-labelledby="valores">
       <h2 id="valores">Valores oficiales que usamos</h2>

@@ -21,7 +21,8 @@ function allParamFiles(): { path: string; json: unknown }[] {
 }
 
 describe('parameter registry contract (AGENTS.md §1)', () => {
-  const files = allParamFiles();
+  const allFiles = allParamFiles();
+  const files = allFiles.filter((file) => file.path !== 'mx/udis.json');
 
   it('finds parameter files', () => {
     expect(files.length).toBeGreaterThanOrEqual(12);
@@ -29,6 +30,33 @@ describe('parameter registry contract (AGENTS.md §1)', () => {
 
   it.each(files.map((f) => [f.path, f.json] as const))('%s has value, dates, source, verified flag and notes', (path, json) => {
     expect(() => validateParamFile(json, path)).not.toThrow();
+  });
+
+  it('validates every UDI observation without registering 11,000 dates in shared calculator JS', () => {
+    const archive = allFiles.find(({ path }) => path === 'mx/udis.json')?.json as {
+      id: string;
+      rates: {
+        value: string;
+        effective_from: string;
+        source_url: string;
+        source_title: string;
+        retrieved_on: string;
+        verified: boolean;
+        notes: string;
+      }[];
+    };
+    expect(archive.id).toBe('SP68257');
+    expect(archive.rates.length).toBeGreaterThan(11_000);
+    expect(Object.keys(MX_PARAM_FILES)).not.toContain(archive.id);
+    for (const record of archive.rates) {
+      expect(record.value).toMatch(/^\d+\.\d{6}$/);
+      expect(record.effective_from).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      expect(record.source_url).toMatch(/^https:\/\/www\.banxico\.org\.mx\//);
+      expect(record.source_title).toContain('Banco de México');
+      expect(record.retrieved_on).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      expect(record.verified).toBe(true);
+      expect(record.notes.length).toBeGreaterThan(0);
+    }
   });
 
   it('registers every mx JSON file in the typed registry', () => {

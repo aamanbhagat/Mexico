@@ -6,7 +6,8 @@
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import { MX_PARAM_FILES, mxParam } from '../../../lib/params/mx';
 import { formatDateLong, formatMoney, formatPct } from '../../../lib/ui/format';
-import { UPDATED } from '../../../content/es-mx/meta';
+import { UDIS_EDITORIAL_UPDATED } from '../../../content/es-mx/meta';
+import { pathFor } from '../../../i18n/routes';
 import type { FaqItem } from '../../../lib/seo/jsonld';
 
 const AS_OF = '2026-10-13';
@@ -99,7 +100,7 @@ const faq: FaqItem[] = [
   description={`UMA 2026: ${formatMoney(uma.value.daily)} diaria, ${formatMoney(uma.value.monthly)} mensual. Salario mínimo 2026: ${formatMoney(smG.value)} y ${formatMoney(smZ.value)} en la frontera norte. Tabla ISR mensual 2026 y montos exentos.`}
   h1="UMA y salario mínimo 2026"
   lede={`La UMA 2026 es de ${formatMoney(uma.value.daily)} diarios (desde el 1 de febrero) y el salario mínimo de ${formatMoney(smG.value)} diarios, o ${formatMoney(smZ.value)} en la frontera norte (desde el 1 de enero). Aquí están todos los valores que usan nuestras calculadoras, con su fuente oficial.`}
-  updated={UPDATED}
+  updated={UDIS_EDITORIAL_UPDATED}
   appName="Valores oficiales México 2026: UMA, salarios mínimos y tarifa de ISR"
   faq={faq}
   sourceParams={[
@@ -275,6 +276,15 @@ const faq: FaqItem[] = [
       <span class:list={['verify', tariff.verified ? 'verify--ok' : 'verify--pending']}>
         {tariff.verified ? 'Verificado contra el DOF' : 'Cotejo renglón por renglón contra el DOF pendiente'}
       </span>
+    </p>
+  </section>
+
+  <section class="section" aria-labelledby="uma-udis">
+    <h2 id="uma-udis">UMA y UDIS no son lo mismo</h2>
+    <p>
+      Aquí encuentras los valores de UMA y salarios mínimos. Para equivalencias con la unidad de inversión y el valor diario publicado por
+      Banxico, usa <a href={pathFor('mx.udis-a-pesos', 'es-mx')}>UDIS a pesos</a> o{' '}
+      <a href={pathFor('mx.pesos-a-udis', 'es-mx')}>pesos a UDIS</a>.
     </p>
   </section>
 

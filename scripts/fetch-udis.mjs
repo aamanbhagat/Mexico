@@ -45,7 +45,7 @@ export function parseRange(body, start, end) {
     if (!match) throw new Error('Banxico returned an invalid date');
     const iso = `${match[3]}-${match[2]}-${match[1]}`;
     if (!validISO(iso) || iso < start || iso > end) throw new Error(`Banxico returned an out-of-range date: ${iso}`);
-    if (typeof row?.dato !== 'string' || !/^(?:0|[1-9]\d*)\.\d{6}$/.test(row.dato)) {
+    if (typeof row?.dato !== 'string' || !/^(?:0|[1-9]\d*)\.\d{6}$/.test(row.dato) || row.dato === '0.000000') {
       throw new Error(`Banxico returned a nonnumeric or non-six-decimal rate for ${iso}`);
     }
     records.push([iso, row.dato]);
@@ -147,7 +147,7 @@ export async function runFetch(now = new Date()) {
     last_date: records.at(-1)[0],
     rates: records,
   };
-  await writeAtomic(join('docs', 'sources', 'mx-03', 'series.json'), `${JSON.stringify(canonical)}\n`);
+  await writeAtomic(join('src', 'data', 'parameters', 'mx', 'udis.json'), `${JSON.stringify(canonical)}\n`);
   await writeAtomic(join(publicDir, 'udis.json'), `${JSON.stringify(compact)}\n`);
   console.log(`Banxico ${SERIES_ID}: ${records.length} dated values, ${records[0][0]}–${records.at(-1)[0]}; retrieved ${retrievedAt}`);
 }

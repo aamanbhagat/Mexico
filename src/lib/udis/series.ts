@@ -1,4 +1,4 @@
-import archive from '../../../docs/sources/mx-03/series.json';
+import archive from '../../data/parameters/mx/udis.json';
 import { mexicoDay } from './date';
 
 export interface UdiRecord {

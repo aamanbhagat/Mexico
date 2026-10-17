@@ -19,6 +19,7 @@ export type Tool =
   | 'prima-vacacional'
   | 'vacaciones'
   | 'uma'
+  | 'udis'
   | 'terra'
   | 'weton'
   | 'jodoh'
@@ -109,6 +110,22 @@ export const TOOLS: Record<UiLocale, ToolEntry[]> = {
       name: 'UMA y salario mínimo 2026',
       label: 'UMA y salario mínimo 2026',
       what: 'Valores oficiales vigentes, tabla de ISR y montos exentos.',
+    },
+    {
+      key: 'mx.udis-a-pesos',
+      tool: 'udis',
+      icon: 'udis',
+      name: 'UDIS a pesos',
+      label: 'Convertir UDIS a pesos',
+      what: 'Cuántos pesos representan tus UDIS en una fecha exacta, con el valor de Banxico.',
+    },
+    {
+      key: 'mx.pesos-a-udis',
+      tool: 'udis',
+      icon: 'udis',
+      name: 'Pesos a UDIS',
+      label: 'Convertir pesos a UDIS',
+      what: 'Cuántas UDIS equivalen a tus pesos según la fecha de Banxico que elijas.',
     },
   ],
   'pt-br': [

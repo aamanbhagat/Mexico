@@ -2,6 +2,7 @@ import { absoluteUrl } from '../config/site';
 import { LOCALES, type LocaleCode } from './locales';
 import { DINA, PASARAN, wetonSlug } from '../lib/calendar/javanese/names';
 import { BULAN_SLUGS, KALENDER_YEARS, type BulanSlug } from '../content/id/meta';
+import { BUILD_DAY } from '../content/es-mx/meta';
 
 /**
  * Route registry: every page has a stable key and a native slug per locale.
@@ -9,7 +10,16 @@ import { BULAN_SLUGS, KALENDER_YEARS, type BulanSlug } from '../content/id/meta'
  * same page has different paths per locale. A locale/page pair is live only
  * when the locale is published AND the page lists a path for it.
  */
-type MxKey = 'mx.aguinaldo' | 'mx.finiquito' | 'mx.liquidacion' | 'mx.prima-vacacional' | 'mx.vacaciones' | 'mx.uma-salario-minimo';
+type MxKey =
+  | 'mx.aguinaldo'
+  | 'mx.finiquito'
+  | 'mx.liquidacion'
+  | 'mx.prima-vacacional'
+  | 'mx.vacaciones'
+  | 'mx.uma-salario-minimo'
+  | 'mx.udis-a-pesos'
+  | 'mx.pesos-a-udis'
+  | `mx.udis.historico.${number}`;
 type BrKey =
   | 'br.alqueire-hectare'
   | 'br.alqueire-paulista'
@@ -30,6 +40,11 @@ type IdKey =
 export type PageKey = 'home' | MxKey | BrKey | IdKey;
 
 type RouteDef = Partial<Record<LocaleCode, string>> & { default?: LocaleCode };
+
+export const UDI_YEARS = Array.from({ length: Number(BUILD_DAY.slice(0, 4)) - 1994 }, (_, index) => index + 1995);
+const udiRoutes: Record<string, RouteDef> = Object.fromEntries(
+  UDI_YEARS.map((year) => [`mx.udis.historico.${year}`, { 'es-mx': `/es-mx/udis-a-pesos/historico/${year}/`, default: 'es-mx' }]),
+);
 
 const idRoutes: Record<string, RouteDef> = {
   'id.weton': { id: '/id/weton/', default: 'id' },
@@ -66,6 +81,9 @@ export const ROUTES: Readonly<Record<string, RouteDef>> = {
   'mx.prima-vacacional': { 'es-mx': '/es-mx/calculadora-prima-vacacional/', default: 'es-mx' },
   'mx.vacaciones': { 'es-mx': '/es-mx/calculadora-vacaciones/', default: 'es-mx' },
   'mx.uma-salario-minimo': { 'es-mx': '/es-mx/uma-salario-minimo-2026/', default: 'es-mx' },
+  'mx.udis-a-pesos': { 'es-mx': '/es-mx/udis-a-pesos/', default: 'es-mx' },
+  'mx.pesos-a-udis': { 'es-mx': '/es-mx/pesos-a-udis/', default: 'es-mx' },
+  ...udiRoutes,
   // pt-BR land units (BR-01). No other locale has an equivalent page yet, so hreflang is self-only.
   'br.alqueire-hectare': { 'pt-br': '/pt-br/conversor-alqueire-hectare/', default: 'pt-br' },
   'br.alqueire-paulista': { 'pt-br': '/pt-br/conversor-alqueire-hectare/alqueire-paulista/', default: 'pt-br' },

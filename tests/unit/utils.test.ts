@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { buildPdf } from '../../src/lib/ui/pdf';
 import { formatDateLong, formatMoney, parseAmount, todayInMexico } from '../../src/lib/ui/format';
 import { bool, buildSearch, isoDate, nullableNum, oneOf, readState, type Codec } from '../../src/lib/ui/url-state';
-import { alternatesFor, isLive, liveRoutes, pathFor } from '../../src/i18n/routes';
+import { alternatesFor, isLive, liveRoutes, pathFor, UDI_YEARS } from '../../src/i18n/routes';
 import { LOCALES, publishedLocales } from '../../src/i18n/locales';
 import { reviewFor } from '../../src/lib/reviews';
 import { round2 } from '../../src/lib/engine/money';
@@ -94,8 +94,9 @@ describe('locales, routes and hreflang', () => {
     expect(isLive('home', 'ja')).toBe(false);
     const published = new Set(['es-mx', 'pt-br', 'id']);
     expect(liveRoutes().every((r) => published.has(r.locale))).toBe(true);
-    // es-MX: home + 6 tools. pt-BR: home + 8 land pages.
-    expect(liveRoutes().filter((r) => r.locale === 'es-mx')).toHaveLength(7);
+    // es-MX: home + 6 original tools + 2 UDI converters + one page per year with observations.
+    expect(liveRoutes().filter((r) => r.locale === 'es-mx')).toHaveLength(9 + UDI_YEARS.length);
+    expect(pathFor('mx.udis.historico.1995', 'es-mx')).toBe('/es-mx/udis-a-pesos/historico/1995/');
     expect(liveRoutes().filter((r) => r.locale === 'pt-br')).toHaveLength(9);
     // id: home + weton, jodoh, hari ini, 35 weton, 2 years × (1 + 12 months).
     expect(liveRoutes().filter((r) => r.locale === 'id')).toHaveLength(1 + 3 + 35 + 2 * 13);

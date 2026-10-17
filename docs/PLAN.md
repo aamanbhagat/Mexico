@@ -6,12 +6,22 @@ mid-November). Rules: `AGENTS.md`.
 
 ## MX-03 — UDIS ↔ pesos, Banxico SP68257 (`feat/mx-03-udis`)
 
+**Diseño antes de implementar:** personas con un crédito o saldo denominado en UDIS y quienes
+necesitan reconstruir su equivalencia histórica. La tarea principal es escribir una cantidad y
+elegir el día exacto; en una pantalla de 390 px, el valor oficial fechado, la entrada y la
+respuesta deben preceder al gráfico y al contenido explicativo. Mantener Archivo y su escala
+compartida, fondo y tinta existentes, y un solo acento verde jade (`--line-udis`) para la
+equivalencia UDI ↔ MXN: números tabulares sobre una línea tipo estado de cuenta, no tarjetas
+decorativas. En oscuro se invierte la luminancia sin cambiar jerarquía. El gráfico usa 12
+observaciones mensuales reales, con tabla/etiquetas accesibles; el histórico agrupa datos diarios
+por mes. Este lenguaje remite a una cotización y su fecha de vigencia, no a una nómina.
+
 - [x] Recheck clean `main`, matching `origin/main`, Node 22, required environment keys, and the docs-only baseline diff.
 - [x] Verify Banxico's reuse terms, UDI publication calendar, endpoint, and rate limits; keep an attributed source record.
 - [x] Fetch the entire dated SP68257 series at build time; save raw responses and normalized provenance, reject missing dates or a stale build.
 - [x] Add fixed-point conversions, six dated official golden examples, boundary/clock/staleness/parser tests.
-- [ ] Build the two accessible es-MX converters, real monthly chart, mortgage estimate, sources, and UMA cross-links.
-- [ ] Build yearly daily tables grouped by month, unique OG/metadata, sitemap lastmod, and all route fixtures.
+- [x] Build the two accessible es-MX converters, real monthly chart, mortgage estimate, sources, and UMA cross-links.
+- [ ] Build yearly daily tables grouped by month, unique OG/metadata, sitemap lastmod, and all route fixtures (pages and metadata complete; browser fixtures next).
 - [ ] Configure an authenticated Vercel Cron endpoint that triggers the production deploy hook and test its failure cases.
 - [ ] Add delayed-font/SEO/privacy/a11y/visual coverage and screenshot instructions without running Playwright in this session.
 - [ ] Run Node 22 typecheck, ESLint, Prettier check, Vitest, build, gzip budget, and Lighthouse (no Docker tests).
