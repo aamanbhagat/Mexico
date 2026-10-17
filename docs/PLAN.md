@@ -16,7 +16,7 @@ mid-November). Rules: `AGENTS.md`.
       content or layout movement; stop if any change is not attributable to the font fix.
 - [x] Run the full Node 22 `npm run check` (eight steps pass on `b6ae34d`) and commit its
       SHA-keyed log: `docs/check-reports/fix-id-heading-font-b6ae34d.log`.
-- [ ] Open a PR to `main` without merging; include the root cause, font/CLS measurements, and
+- [x] Open PR #7 to `main` without merging; include the root cause, font/CLS measurements, and
       the passing check summary.
 
 ## Project 0 — Pin visual test rendering (`fix/visual-env`)
