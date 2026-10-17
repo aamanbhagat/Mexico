@@ -3,8 +3,8 @@
   "framework": "astro",
   "installCommand": "npm ci",
   "buildCommand": "npm run build",
-  "outputDirectory": "dist",
   "trailingSlash": true,
+  "crons": [{ "path": "/api/refresh-udis/", "schedule": "0 18 * * *" }],
   "redirects": [
     {
       "source": "/",
@@ -34,6 +34,14 @@
     {
       "source": "/og/(.*)",
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }]
+    },
+    {
+      "source": "/data/mx/udis.json",
+      "headers": [{ "key": "Cache-Control", "value": "no-store" }]
+    },
+    {
+      "source": "/api/refresh-udis/",
+      "headers": [{ "key": "Cache-Control", "value": "no-store" }]
     }
   ]
 }

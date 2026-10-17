@@ -1,9 +1,17 @@
 import { test as base, expect } from '@playwright/test';
+import { readFileSync } from 'node:fs';
+import { UDI_YEARS } from '../../src/i18n/routes';
 
 /** Freeze "today" so date-dependent defaults (aguinaldo year, último día) are deterministic. */
 export const FIXED_NOW = new Date('2026-10-13T12:00:00-06:00');
 /** The same instant is already 14 October in Jakarta (WIB, UTC+7). */
 export const FIXED_TODAY_WIB = '2026-10-14';
+
+const udiArchive = JSON.parse(readFileSync(new URL('../../public/data/mx/udis.json', import.meta.url), 'utf8')) as {
+  retrieved_at: string;
+};
+/** Keep UDI pages on their snapshot date; other fixtures retain the existing frozen date. */
+export const UDI_TEST_NOW = new Date(udiArchive.retrieved_at);
 
 export const test = base.extend({
   page: async ({ page }, use) => {
@@ -38,6 +46,12 @@ function route(locale: Locale, path: string, kind: RouteKind, h1: string): Route
   return { path, kind, h1, locale, lang: HTML_LANG[locale], hreflang };
 }
 
+export const UDI_ROUTES: Route[] = [
+  route('es-mx', '/es-mx/udis-a-pesos/', 'calculator', 'UDIS a pesos'),
+  route('es-mx', '/es-mx/pesos-a-udis/', 'calculator', 'Pesos a UDIS'),
+  ...UDI_YEARS.map((year) => route('es-mx', `/es-mx/udis-a-pesos/historico/${year}/`, 'calculator', `Valor de la UDI en ${year}`)),
+];
+
 const MX: Route[] = [
   route('es-mx', '/es-mx/', 'home', 'Tus pagos laborales'),
   route('es-mx', '/es-mx/calculadora-aguinaldo/', 'calculator', 'Calculadora de aguinaldo 2026'),
@@ -46,6 +60,7 @@ const MX: Route[] = [
   route('es-mx', '/es-mx/calculadora-prima-vacacional/', 'calculator', 'Calculadora de prima vacacional 2026'),
   route('es-mx', '/es-mx/calculadora-vacaciones/', 'calculator', 'Calculadora de vacaciones 2026'),
   route('es-mx', '/es-mx/uma-salario-minimo-2026/', 'reference', 'UMA y salario mínimo 2026'),
+  ...UDI_ROUTES,
 ];
 
 const BR: Route[] = [

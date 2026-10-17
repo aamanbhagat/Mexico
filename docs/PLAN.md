@@ -4,6 +4,29 @@ Source of truth for priorities: `docs/research/REPORT.md` (MX-01 is opportunity 
 be live before the November–December peak; ID-01 is #4, kalender Jawa 2027 must be indexable by
 mid-November). Rules: `AGENTS.md`.
 
+## MX-03 — UDIS ↔ pesos, Banxico SP68257 (`feat/mx-03-udis`)
+
+**Diseño antes de implementar:** personas con un crédito o saldo denominado en UDIS y quienes
+necesitan reconstruir su equivalencia histórica. La tarea principal es escribir una cantidad y
+elegir el día exacto; en una pantalla de 390 px, el valor oficial fechado, la entrada y la
+respuesta deben preceder al gráfico y al contenido explicativo. Mantener Archivo y su escala
+compartida, fondo y tinta existentes, y un solo acento verde jade (`--line-udis`) para la
+equivalencia UDI ↔ MXN: números tabulares sobre una línea tipo estado de cuenta, no tarjetas
+decorativas. En oscuro se invierte la luminancia sin cambiar jerarquía. El gráfico usa 12
+observaciones mensuales reales, con tabla/etiquetas accesibles; el histórico agrupa datos diarios
+por mes. Este lenguaje remite a una cotización y su fecha de vigencia, no a una nómina.
+
+- [x] Recheck clean `main`, matching `origin/main`, Node 22, required environment keys, and the docs-only baseline diff.
+- [x] Verify Banxico's reuse terms, UDI publication calendar, endpoint, and rate limits; keep an attributed source record.
+- [x] Fetch the entire dated SP68257 series at build time; save raw responses and normalized provenance, reject missing dates or a stale build.
+- [x] Add fixed-point conversions, six dated official golden examples, boundary/clock/staleness/parser tests.
+- [x] Build the two accessible es-MX converters, real monthly chart, mortgage estimate, sources, and UMA cross-links.
+- [x] Build yearly daily tables grouped by month, unique OG/metadata, sitemap lastmod, and all route fixtures.
+- [x] Configure an authenticated Vercel Cron endpoint that triggers the production deploy hook and test its failure cases.
+- [x] Add delayed-font/SEO/privacy/a11y/visual coverage and screenshot instructions without running Playwright in this session.
+- [x] Run Node 22 typecheck, ESLint, Prettier check, Vitest (257 pass), build, gzip budget, and Lighthouse (28/28 routes, 84 runs; no Docker or Playwright tests).
+- [x] Commit and push small milestones on this branch; stop without a PR, merge, or push to `main`.
+
 ## Project 0 follow-up — Indonesian heading and font loading (`fix/id-heading-font`)
 
 - [x] Verify the pinned-container screenshot font state, effective h1 font, and font-loading wait.

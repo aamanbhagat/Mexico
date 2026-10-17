@@ -78,6 +78,7 @@
   --line-prima-vacacional: #007a44;
   --line-vacaciones: #8a6400;
   --line-uma: #6b4423;
+  --line-udis: #00685c;
   /* Indonesia (ID-01): batik dyes — nila (indigo), soga (brown) and a deep rose for jodoh. */
   --line-weton: #2b3990;
   --line-jodoh: #9c1f4f;
@@ -145,6 +146,7 @@
     --line-prima-vacacional: #43c987;
     --line-vacaciones: #e5b53a;
     --line-uma: #d5a37a;
+    --line-udis: #6dd6bd;
     --line-weton: #9aa6ff;
     --line-jodoh: #ff8fb6;
     --line-kalender: #e0a46a;
@@ -181,6 +183,7 @@
   --line-prima-vacacional: #43c987;
   --line-vacaciones: #e5b53a;
   --line-uma: #d5a37a;
+  --line-udis: #6dd6bd;
   --line-weton: #9aa6ff;
   --line-jodoh: #ff8fb6;
   --line-kalender: #e0a46a;
@@ -209,6 +212,9 @@
 }
 [data-tool='uma'] {
   --tool: var(--line-uma);
+}
+[data-tool='udis'] {
+  --tool: var(--line-udis);
 }
 [data-tool='weton'],
 [data-tool='hari-ini'] {

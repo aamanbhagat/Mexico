@@ -1,0 +1,12 @@
+{
+  "value": {
+    "first_period": { "from_day": 11, "through_day": 25, "published_by_day": 10 },
+    "second_period": { "from_day": 26, "through_next_month_day": 10, "published_by_day": 25 }
+  },
+  "effective_from": "1995-04-04",
+  "source_url": "https://www.banxico.org.mx/marco-normativo/marco-juridico/unidades-de-inversion/%7B3F494B65-C242-20DA-A8E3-47FEBBF94C9D%7D.pdf",
+  "source_title": "Banco de México — Procedimiento para el cálculo y publicación del valor de las UDIS",
+  "retrieved_on": "2026-10-17",
+  "verified": true,
+  "notes": "La fecha de entrada en uso de la UDI es 1995-04-04. Los valores de un periodo se publican a más tardar el 10 y el 25, respectivamente; la tasa aplicable siempre es la fechada al día consultado."
+}

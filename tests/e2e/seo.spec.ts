@@ -1,6 +1,9 @@
 import { ROUTES, WORDS, expect, test } from './fixtures';
 import { loadEnv } from 'vite';
 import { requireSiteUrl } from '../../scripts/site-url.mjs';
+import { UDIS_EDITORIAL_UPDATED } from '../../src/content/es-mx/meta';
+import { readFileSync } from 'node:fs';
+import { mexicoDay } from '../../src/lib/udis/date';
 
 const siteUrl = requireSiteUrl(loadEnv('production', process.cwd(), 'SITE_URL').SITE_URL);
 
@@ -48,7 +51,9 @@ test.describe('SEO contract (AGENTS.md §6)', () => {
 
       if (route.kind !== 'home') {
         await expect(page.getByText(words.updated, { exact: false }).first()).toBeVisible();
-        await expect(page.getByText(words.review).first()).toBeVisible();
+        const review =
+          route.path.includes('/udis-a-pesos/') || route.path === '/es-mx/pesos-a-udis/' ? 'Revisión técnica: pendiente' : words.review;
+        await expect(page.getByText(review).first()).toBeVisible();
         await expect(page.getByRole('heading', { name: words.sources, exact: true })).toBeVisible();
         expect(await page.locator('.sources a[href^="https://"]').count()).toBeGreaterThanOrEqual(3);
         await expect(page.getByRole('heading', { name: words.faq })).toBeVisible();
@@ -88,6 +93,29 @@ test.describe('SEO contract (AGENTS.md §6)', () => {
     }
   });
 
+  test('UDI lastmod uses the applicable dated rate, not the build timestamp or a future value', async ({ request }) => {
+    const archive = JSON.parse(readFileSync(new URL('../../public/data/mx/udis.json', import.meta.url), 'utf8')) as {
+      retrieved_at: string;
+      rates: [string, string][];
+    };
+    const day = mexicoDay(new Date(archive.retrieved_at));
+    const year = day.slice(0, 4);
+    const last = archive.rates.filter(([date]) => date.startsWith(`${year}-`) && date <= day).at(-1)?.[0];
+    const xml = await (await request.get('/sitemap.xml')).text();
+    const entries = new Map(
+      [...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)].map(([, body]) => [
+        new URL(body!.match(/<loc>([^<]+)<\/loc>/)![1]!).pathname,
+        body!.match(/<lastmod>([^<]+)<\/lastmod>/)![1],
+      ]),
+    );
+    expect(entries.get('/es-mx/udis-a-pesos/')).toBe(day > UDIS_EDITORIAL_UPDATED ? day : UDIS_EDITORIAL_UPDATED);
+    expect(entries.get('/es-mx/pesos-a-udis/')).toBe(day > UDIS_EDITORIAL_UPDATED ? day : UDIS_EDITORIAL_UPDATED);
+    expect(entries.get('/es-mx/udis-a-pesos/historico/1995/')).toBe(UDIS_EDITORIAL_UPDATED);
+    expect(entries.get(`/es-mx/udis-a-pesos/historico/${year}/`)).toBe(
+      last && last > UDIS_EDITORIAL_UPDATED ? last : UDIS_EDITORIAL_UPDATED,
+    );
+  });
+
   test('robots.txt points to the sitemap', async ({ request }) => {
     const txt = await (await request.get('/robots.txt')).text();
     expect(txt).toContain(`Sitemap: ${siteUrl}/sitemap.xml`);
@@ -107,6 +135,10 @@ test.describe('SEO contract (AGENTS.md §6)', () => {
       '/og/id/selasa-pon.png',
       '/og/id/kalender-2027.png',
       '/og/id/kalender-2027-desember.png',
+      '/og/udis-a-pesos.png',
+      '/og/pesos-a-udis.png',
+      '/og/udis-historico-1995.png',
+      '/og/udis-historico-2026.png',
     ]) {
       const res = await request.get(path);
       expect(res.headers()['content-type'], path).toContain('image/png');

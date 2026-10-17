@@ -3,7 +3,7 @@
 Multi-country, multi-language calculator site. Live locales:
 
 - **es-MX** — Mexico's payroll-payout suite (aguinaldo, finiquito, liquidación, prima vacacional,
-  vacaciones) plus a reference page of official 2026 values.
+  vacaciones), 2026 reference values, and Banxico UDI ↔ MXN conversions with dated annual history.
 - **pt-BR** — BR-01, the land-unit converter: alqueire (paulista, mineiro/goiano, baiano, do Norte,
   alqueirão…), tarefa, litro de terra, quadra and braça² ↔ hectare, m², acre, with the value used
   in each state and its source.
@@ -17,11 +17,12 @@ page in [`docs/research/`](docs/research/REPORT.md).
 npm ci
 npm run dev        # http://localhost:4321/es-mx/  ·  /pt-br/  ·  /id/
 npx playwright install --with-deps chromium  # one-time local setup for browser tests
-SITE_URL=https://ci.tabula.test npm run build  # static site in dist/
+SITE_URL=https://ci.tabula.test npm run build  # static pages in .vercel/output/static/ + one function
 SITE_URL=https://ci.tabula.test npm run check  # full quality gate
 ```
 
-Node 22. A build requires `SITE_URL` to be a valid HTTPS origin; an unset value or the old
+Node 22. A build requires `SITE_URL` to be a valid HTTPS origin and `BANXICO_TOKEN` to fetch official
+SP68257 rates by date on the server. No secret belongs in the browser. An unset `SITE_URL` or the old
 `calculadoras.example` placeholder fails immediately. For local checks, use a reserved `.test`
 origin (`SITE_URL=https://ci.tabula.test npm run check`), or copy `.env.example` to `.env` and set
 its `SITE_URL`. The production domain is not set in this repository. On Vercel, go to
@@ -40,7 +41,7 @@ The PR workflow sets a reserved `.test` origin for checks; it does not configure
 | Motion (`spring` generator) | Critically damped spring for the number roll (≈2 KB instead of 19 KB for the full `animate`). |
 | Native cross-document View Transitions | Page transitions with zero JavaScript. |
 | Vitest, Playwright + axe-core, Lighthouse CI | Golden tests, e2e/a11y/visual, performance budgets. |
-| Vercel static deployment | `vercel.json`: directory URLs, 302 root redirect, security headers and asset caching. |
+| Vercel adapter (static pages + one on-demand function) | `vercel.json`: directory URLs, 302 root redirect, security headers, daily authenticated UDI refresh and asset caching. |
 
 ## Layout
 
@@ -100,8 +101,12 @@ Types (`astro check`) → ESLint → Prettier → Vitest (unit + golden) → bui
 → Lighthouse CI (≥ 95 in every category, LCP < 1.8 s, CLS < 0.05, TBT < 200 ms as the lab proxy
 for INP, JS < 70 KB).
 
-Playwright starts its own preview on port 4329 and refuses to reuse an occupied port. Set
+Playwright starts an isolated server for the Vercel adapter's static output on port 4329 and refuses to reuse an occupied port. Set
 `PLAYWRIGHT_PORT` to another free port when needed; the development server remains on 4321.
+`npm run preview` likewise serves the built static pages locally; it cannot invoke Vercel's
+on-demand `/api/refresh-udis/` function. Its authentication and hook handling have Vitest coverage.
+For MX-03 screenshots after a build, run `npm run screenshots -- mx-03` to save 390/1440 px,
+light/dark above-the-fold and full-page images for both converters and every annual page.
 `npm run check` runs Playwright through `npm run test:e2e:docker` in the official
 `mcr.microsoft.com/playwright:v1.64.0-noble` image; the exact image version is read from
 `package-lock.json`. Install Docker and run `npm ci` on the host before checking. To regenerate

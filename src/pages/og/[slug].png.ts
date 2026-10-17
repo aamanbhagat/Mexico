@@ -4,6 +4,10 @@ import { mxValue } from '../../lib/params/mx';
 import { formatMoney } from '../../lib/ui/format';
 import { renderOg } from '../../lib/seo/og';
 import { brHa, brM2 } from '../../i18n/tools';
+import { UDI_BUILD_DAY, yearDates, udiFor } from '../../lib/udis/series';
+import { UDI_YEARS } from '../../i18n/routes';
+import { formatDateShort } from '../../lib/ui/format';
+import { formatRate } from '../../lib/udis/convert';
 
 const AS_OF = '2026-12-20';
 
@@ -42,6 +46,18 @@ const SPECS: Record<string, Spec> = {
     color: '#8a6400',
   },
   uma: { title: 'UMA y salario mínimo 2026', subtitle: 'Valores oficiales vigentes y tabla de ISR mensual.', color: '#6b4423' },
+  'udis-a-pesos': {
+    title: 'UDIS a pesos · Banxico',
+    subtitle: 'Valor diario oficial para una fecha exacta; histórico desde 1995.',
+    color: '#00685c',
+    footer: `Banxico SP68257 · ${formatDateShort(UDI_BUILD_DAY)} · ${formatRate(udiFor(UDI_BUILD_DAY).value)} MXN/UDI`,
+  },
+  'pesos-a-udis': {
+    title: 'Pesos a UDIS · Banxico',
+    subtitle: 'Convierte pesos con la tasa oficial fechada de la UDI.',
+    color: '#00685c',
+    footer: `Banxico SP68257 · ${formatDateShort(UDI_BUILD_DAY)} · ${formatRate(udiFor(UDI_BUILD_DAY).value)} MXN/UDI`,
+  },
 
   // pt-BR land units
   br: {
@@ -99,6 +115,17 @@ const SPECS: Record<string, Spec> = {
     footer: BR_FOOTER,
   },
 };
+
+for (const year of UDI_YEARS) {
+  const last = yearDates(year).at(-1);
+  if (!last) throw new Error(`No dated Banxico records for ${year}`);
+  SPECS[`udis-historico-${year}`] = {
+    title: `Valor de la UDI en ${year}`,
+    subtitle: 'Histórico diario de UDIS a pesos con fechas y fuente oficiales.',
+    color: '#00685c',
+    footer: `Banxico SP68257 · ${formatDateShort(last.effective_from)} · ${formatRate(last.value)} MXN/UDI`,
+  };
+}
 
 export const getStaticPaths = (() => Object.keys(SPECS).map((slug) => ({ params: { slug } }))) satisfies GetStaticPaths;
 

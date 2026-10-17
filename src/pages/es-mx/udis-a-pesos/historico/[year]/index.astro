@@ -1,0 +1,181 @@
+---
+import type { GetStaticPaths } from 'astro';
+import CalculatorLayout from '../../../../../layouts/CalculatorLayout.astro';
+import ExampleCard from '../../../../../components/page/ExampleCard.astro';
+import UdiChart from '../../../../../components/page/mx/UdiChart.astro';
+import { udiPublicationSummary, udiSources } from '../../../../../content/es-mx/udis';
+import { UDIS_EDITORIAL_UPDATED } from '../../../../../content/es-mx/meta';
+import { UDI_YEARS, pathFor } from '../../../../../i18n/routes';
+import { yearDates, type UdiRecord } from '../../../../../lib/udis/series';
+import { formatPesos, formatRate, udisToCents } from '../../../../../lib/udis/convert';
+import { consultedAt } from '../../../../../lib/udis/date';
+import { formatDateLong, formatMonthName } from '../../../../../lib/ui/format';
+import type { FaqItem } from '../../../../../lib/seo/jsonld';
+
+export const getStaticPaths = (() =>
+  UDI_YEARS.filter((year) => yearDates(year).length > 0).map((year) => ({ params: { year: String(year) } }))) satisfies GetStaticPaths;
+
+const year = Number(Astro.params.year);
+const days = yearDates(year);
+if (!days.length) throw new Error(`No official UDI rates for ${year}`);
+const first = days[0]!;
+const last = days.at(-1)!;
+const sources = udiSources(last);
+const key = `mx.udis.historico.${year}` as const;
+const months = Array.from({ length: 12 }, (_, index) => ({
+  month: index + 1,
+  entries: days.filter((row) => Number(row.effective_from.slice(5, 7)) === index + 1),
+})).filter(({ entries }) => entries.length > 0);
+const monthlyPoints: UdiRecord[] = months.map(({ entries }) => entries.at(-1)!);
+const exampleAmount = '100';
+const exampleResult = formatPesos(udisToCents(exampleAmount, first.value)!);
+const faq: FaqItem[] = [
+  {
+    q: `¿Cuál fue el valor de la UDI al comenzar ${year}?`,
+    a: `El primer registro disponible de ${year} en Banxico está fechado el ${formatDateLong(first.effective_from)} y marca ${first.value} pesos por UDI. Esta página solo muestra días cubiertos por los datos oficiales.`,
+  },
+  {
+    q: `¿Cuál fue la última tasa publicada de ${year}?`,
+    a: `La última tasa de ${year} incluida aquí corresponde al ${formatDateLong(last.effective_from)}: ${last.value} pesos por UDI. Este año puede seguir en curso; nunca se muestran tasas futuras como vigentes.`,
+  },
+  {
+    q: '¿Cómo convierto UDIS a pesos de una fecha histórica?',
+    a: 'Busca el día exacto en el mes correspondiente y multiplica tus UDIS por el valor de ese renglón. Redondea solo el resultado final a centavos (mitad hacia arriba).',
+  },
+  {
+    q: '¿Son promedios mensuales los valores del gráfico?',
+    a: 'No. Cada punto corresponde al último día con valor oficial de su mes dentro del año mostrado. La tabla contiene todas las tasas diarias: no interpolamos ni promediamos valores.',
+  },
+  {
+    q: '¿De dónde provienen las tasas diarias?',
+    a: 'De la serie SP68257 del Sistema de Información Económica del Banco de México, consultada por rangos anuales. Cada renglón muestra su fecha de vigencia, fuente y hora de consulta.',
+  },
+];
+---
+
+<CalculatorLayout
+  pageKey={key}
+  locale="es-mx"
+  tool="udis"
+  title={`Valor de la UDI en ${year}: histórico diario de Banxico`}
+  description={`Consulta la tabla de valores diarios de la UDI en ${year}, mes por mes. Fechas exactas, seis decimales, fuente y hora de consulta en Banxico.`}
+  h1={`Valor de la UDI en ${year}`}
+  lede={`Tabla diaria oficial de la UDI en ${year}, agrupada por mes. Del ${formatDateLong(first.effective_from)} al ${formatDateLong(last.effective_from)}; no incluye tasas de días futuros.`}
+  updated={last.effective_from > UDIS_EDITORIAL_UPDATED ? last.effective_from : UDIS_EDITORIAL_UPDATED}
+  appName={`Histórico de la UDI a pesos en ${year}`}
+  faq={faq}
+  sourceItems={sources.sourceItems}
+  extraSources={sources.extraSources}
+  ogSlug={`udis-historico-${year}`}
+  reviewKey="mx.udis.historico"
+  parents={[{ name: 'UDIS a pesos', path: pathFor('mx.udis-a-pesos', 'es-mx') }]}
+  crumb={`Histórico ${year}`}
+>
+  <nav class="udi-year-nav" aria-label="Elegir otro año del histórico de UDIS">
+    {
+      [...UDI_YEARS].reverse().map((listedYear) => (
+        <a href={pathFor(`mx.udis.historico.${listedYear}`, 'es-mx')} aria-current={year === listedYear ? 'page' : undefined}>
+          {listedYear}
+        </a>
+      ))
+    }
+  </nav>
+
+  <p class="udi-links">
+    ¿Necesitas una equivalencia? <a href={pathFor('mx.udis-a-pesos', 'es-mx')}>Calculadora de UDIS a pesos</a> ·{' '}
+    <a href={pathFor('mx.pesos-a-udis', 'es-mx')}>Pesos a UDIS</a>.
+  </p>
+
+  <section class="section udi-history" aria-labelledby="udi-tabla">
+    <h2 id="udi-tabla">Valores diarios de la UDI en {year}</h2>
+    <p class="udi-history__foot">
+      {days.length} registros oficiales · Consultado el {consultedAt(last.retrieved_at)} (hora de Ciudad de México) ·{' '}
+      <a href={last.source_url} rel="noopener" target="_blank">Banxico SIE, serie SP68257</a>.
+    </p>
+    <div class="udi-history__months">
+      {
+        months.map(({ month, entries }) => (
+          <section class="udi-history__month" aria-labelledby={`udi-mes-${month}`}>
+            <h3 id={`udi-mes-${month}`}>
+              {formatMonthName(month)} de {year}
+            </h3>
+            <div class="table-scroll" tabindex="0" role="region" aria-label={`Valores diarios de ${formatMonthName(month)} de ${year}`}>
+              <table class="data-table">
+                <caption class="sr-only">
+                  UDIS a pesos: valores del mes {formatMonthName(month)} de {year}, Banxico SP68257
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Fecha de vigencia</th>
+                    <th scope="col" class="num">
+                      Pesos por UDI
+                    </th>
+                    <th scope="col">Fuente y consulta</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {entries.map((record) => (
+                    <tr>
+                      <th scope="row">
+                        <time datetime={record.effective_from}>{formatDateLong(record.effective_from)}</time>
+                      </th>
+                      <td class="num money">{formatRate(record.value)} MXN</td>
+                      <td>
+                        <a href={record.source_url} rel="noopener" target="_blank">
+                          Banxico SIE
+                        </a>{' '}
+                        · Consultado el {consultedAt(record.retrieved_at)} ·{' '}
+                        <span class:list={['verify', record.verified ? 'verify--ok' : 'verify--pending']}>
+                          {record.verified ? 'Dato verificado' : 'Dato pendiente de verificar'}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        ))
+      }
+    </div>
+  </section>
+
+  <Fragment slot="how">
+    <p>
+      Cada fila corresponde a una fecha exacta de la serie SP68257 de Banxico. Para convertir UDIS a pesos de ese día, multiplica tu
+      cantidad por la tasa con seis decimales y redondea el resultado final a centavos (mitad hacia arriba). Para calcular UDIS desde pesos,
+      divide y redondea a seis decimales de UDIS.
+    </p>
+    <p>
+      {udiPublicationSummary} Esta tabla llega solamente hasta la fecha actual de Ciudad de México: una tasa publicada para mañana no sustituye
+      la de hoy.
+    </p>
+  </Fragment>
+
+  <div class="examples" slot="examples">
+    <ExampleCard
+      title={`100 UDIS al inicio de los registros de ${year}`}
+      story={`Calculamos la equivalencia con la tasa exacta del ${formatDateLong(first.effective_from)}, no con el promedio de ${formatMonthName(Number(first.effective_from.slice(5, 7)))}.`}
+      rows={[
+        { label: 'UDIS', value: exampleAmount },
+        { label: 'Tasa oficial', value: `${first.value} MXN/UDI` },
+        { label: 'Pesos redondeados', value: `${exampleResult} MXN` },
+        { label: 'Fecha y consulta', value: `${formatDateLong(first.effective_from)} · ${consultedAt(first.retrieved_at)}` },
+      ]}
+      source={{ label: first.source_title, url: first.source_url }}
+    />
+  </div>
+
+  <section class="section" aria-labelledby="udi-grafico" slot="extra">
+    <h2 id="udi-grafico">Observaciones mensuales de {year}</h2>
+    <UdiChart points={monthlyPoints} title={`Valores reales de la UDI en ${year}; un dato por mes disponible`} id={`udi-chart-${year}`} />
+  </section>
+
+  <p slot="sources-intro" class="prose">
+    Todos los renglones proceden de Banxico SP68257, del {formatDateLong(first.effective_from)} al {formatDateLong(last.effective_from)}.
+    Consultado el {consultedAt(last.retrieved_at)}. El cotejo de serie es automático; la revisión humana está pendiente.
+  </p>
+  <Fragment slot="disclaimer">
+    <p>Valores informativos de Banxico por fecha. No equivalen a una oferta de crédito ni a una liquidación contractual.</p>
+  </Fragment>
+</CalculatorLayout>

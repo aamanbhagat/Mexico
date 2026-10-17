@@ -3,6 +3,7 @@
  * and used in dateModified; bump it whenever page content or parameters change.
  */
 export const UPDATED = '2026-10-13';
+export const UDIS_EDITORIAL_UPDATED = '2026-10-17';
 
 /** Day the static HTML is generated; the calculators replace it with the visitor's date on load. */
 export const BUILD_DAY = new Intl.DateTimeFormat('en-CA', {

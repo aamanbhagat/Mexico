@@ -36,6 +36,27 @@
     "credentials": null,
     "reviewed_on": null
   },
+  "mx.udis-a-pesos": {
+    "status": "pending",
+    "kind": "technical",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
+  "mx.pesos-a-udis": {
+    "status": "pending",
+    "kind": "technical",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
+  "mx.udis.historico": {
+    "status": "pending",
+    "kind": "technical",
+    "reviewer": null,
+    "credentials": null,
+    "reviewed_on": null
+  },
   "br.alqueire-hectare": {
     "status": "pending",
     "kind": "technical",

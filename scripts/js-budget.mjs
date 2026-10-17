@@ -5,7 +5,7 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
 import { join, dirname, resolve } from 'node:path';
 
-const DIST = resolve('dist');
+const DIST = resolve('.vercel/output/static');
 const BUDGET = 70 * 1024;
 
 const walk = (dir) =>

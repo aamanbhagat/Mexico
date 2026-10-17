@@ -9,9 +9,10 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "node --env-file-if-exists=.env scripts/fetch-udis.mjs",
     "build": "astro build && node scripts/postbuild.mjs",
     "build:lab": "LAB=1 astro build && node scripts/postbuild.mjs",
-    "preview": "astro preview --port 4321",
+    "preview": "node scripts/preview-static.mjs --port 4321",
     "typecheck": "astro check",
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
@@ -30,6 +31,7 @@
   },
   "dependencies": {
     "@astrojs/preact": "6.0.6",
+    "@astrojs/vercel": "11.0.15",
     "astro": "7.3.8",
     "motion": "14.1.0",
     "preact": "10.29.8"

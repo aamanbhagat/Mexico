@@ -59,6 +59,14 @@ const { tool } = Astro.props;
       )
     }
     {
+      tool === 'udis' && (
+        <>
+          <path d="M3 8h18M3 16h18M7 4v16M17 4v16" />
+          <circle cx="12" cy="12" r="2" fill="currentColor" stroke="none" />
+        </>
+      )
+    }
+    {
       /* A plot split into four quartas: the alqueire. */
       (tool === 'alqueire' || tool === 'terra') && (
         <>

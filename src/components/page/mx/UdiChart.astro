@@ -1,0 +1,59 @@
+---
+import type { UdiRecord } from '../../../lib/udis/series';
+import { consultedAt } from '../../../lib/udis/date';
+import { formatDateShort } from '../../../lib/ui/format';
+import { formatRate } from '../../../lib/udis/convert';
+
+interface Props {
+  points: UdiRecord[];
+  title: string;
+  id: string;
+}
+
+const { points, title, id } = Astro.props;
+const values = points.map((record) => Number(record.value));
+const min = Math.min(...values);
+const span = Math.max(...values) - min || 1;
+const coords = points.map((record, index) => ({
+  record,
+  x: 22 + (index * 516) / Math.max(1, points.length - 1),
+  y: 132 - ((values[index]! - min) / span) * 110,
+}));
+---
+
+<figure class="udi-chart">
+  <svg viewBox="0 0 560 154" role="img" aria-labelledby={`${id}-title ${id}-description`} preserveAspectRatio="xMidYMid meet">
+    <title id={`${id}-title`}>{title}</title>
+    <desc id={`${id}-description`}>
+      {points.length} observaciones mensuales reales de la serie SP68257. Cada punto tiene fecha, tasa de Banxico y hora de consulta; los mismos
+      datos se ofrecen en la lista.
+    </desc>
+    <path d="M22 132H538" class="udi-chart__axis"></path>
+    <polyline points={coords.map(({ x, y }) => `${x},${y}`).join(' ')} class="udi-chart__line"></polyline>
+    {
+      coords.map(({ record, x, y }) => (
+        <circle cx={x} cy={y} r="5" class="udi-chart__point">
+          <title>
+            {formatDateShort(record.effective_from)}: {formatRate(record.value)} MXN por UDI · Consultado el{' '}
+            {consultedAt(record.retrieved_at)}
+          </title>
+        </circle>
+      ))
+    }
+  </svg>
+  <figcaption>{title}. Solo registros fechados de Banxico; sin promedios ni valores calculados entre fechas.</figcaption>
+  <ol class="udi-chart__data">
+    {
+      points.map((record) => (
+        <li>
+          <time datetime={record.effective_from}>{formatDateShort(record.effective_from)}</time>:{' '}
+          <strong>{formatRate(record.value)} MXN/UDI</strong> ·{' '}
+          <a href={record.source_url} rel="noopener" target="_blank">
+            Banxico SIE
+          </a>{' '}
+          · Consultado el {consultedAt(record.retrieved_at)}
+        </li>
+      ))
+    }
+  </ol>
+</figure>
