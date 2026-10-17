@@ -22,10 +22,10 @@ por mes. Este lenguaje remite a una cotización y su fecha de vigencia, no a una
 - [x] Add fixed-point conversions, six dated official golden examples, boundary/clock/staleness/parser tests.
 - [x] Build the two accessible es-MX converters, real monthly chart, mortgage estimate, sources, and UMA cross-links.
 - [x] Build yearly daily tables grouped by month, unique OG/metadata, sitemap lastmod, and all route fixtures.
-- [ ] Configure an authenticated Vercel Cron endpoint that triggers the production deploy hook and test its failure cases.
+- [x] Configure an authenticated Vercel Cron endpoint that triggers the production deploy hook and test its failure cases.
 - [x] Add delayed-font/SEO/privacy/a11y/visual coverage and screenshot instructions without running Playwright in this session.
-- [ ] Run Node 22 typecheck, ESLint, Prettier check, Vitest, build, gzip budget, and Lighthouse (no Docker tests).
-- [ ] Commit and push small milestones on this branch; stop without a PR, merge, or push to `main`.
+- [x] Run Node 22 typecheck, ESLint, Prettier check, Vitest (257 pass), build, gzip budget, and Lighthouse (28/28 routes, 84 runs; no Docker or Playwright tests).
+- [x] Commit and push small milestones on this branch; stop without a PR, merge, or push to `main`.
 
 ## Project 0 follow-up — Indonesian heading and font loading (`fix/id-heading-font`)
 

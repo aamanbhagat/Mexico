@@ -4,6 +4,7 @@
 - [BR-01 — pt-BR land-unit converter](#7-br-01--pt-br-land-unit-converter-pt-br) (section 7)
 - [ID-01 — weton and kalender Jawa (/id/)](#launch-checklist--id-01-weton-and-kalender-jawa-id) — **deadline: kalender Jawa
   2027 live and indexable by 15 November 2026**
+- [MX-03 — UDIS ↔ pesos (Banxico)](#mx-03--udis--pesos-banxico-sp68257) — no publicar sin revisar derechos de uso y la ejecución real del Cron
 
 # Launch checklist — MX-01 (es-MX payroll-payout suite)
 
@@ -385,3 +386,88 @@ must stay consecutive with 29/30-day months.
 - **Privacy notice** in Bahasa Indonesia (UU PDP No. 27/2022): no data is stored server-side; shared
   links contain the dates typed.
 - **Error reports**: a contact for wrong dates (REPORT.md KPI "error reports per 1,000 uses").
+
+# MX-03 — UDIS ↔ pesos (Banxico SP68257)
+
+Estado al **17 de octubre de 2026**, antes de producción: la instantánea inicial contiene 11 528
+tasas continuas desde el 4 de abril de 1995 hasta el 25 de octubre de 2026 (Banxico ya publicó
+valores futuros). Las 11 528 tasas recibidas y validadas tienen `verified: true`; **no hay tasas
+`verified: false`** en MX-03. El distintivo de revisión humana permanece **«Revisión técnica:
+pendiente»**. No se han ejecutado aquí Playwright, las capturas ni `npm run check` completo;
+el propietario debe ejecutarlos con Docker antes de un PR. Tampoco se ha desplegado la función,
+por lo que **no existe una ejecución del Cron «de ayer» que se pueda comprobar**: en particular,
+el 16 de octubre de 2026 no había ejecución de MX-03 en producción.
+
+**Controles locales con Node v22.23.3 (17 de octubre de 2026):** `npm ci`,
+`npm run typecheck` (0 errores, 0 advertencias, un aviso preexistente de deprecación),
+`npm run lint` (ESLint y Prettier check), `npm test` (257/257 pruebas Vitest),
+`npm run build` (32 páginas anuales y función Cron separada) y `npm run budget`
+pasaron. JS gzip por convertidor: **13,5 KB**; históricos: **0,5 KB**. Lighthouse CI
+pasó en **28/28 rutas y 84 ejecuciones**: puntuación mínima 100 en rendimiento,
+accesibilidad, buenas prácticas y SEO; LCP mediano máximo 1,66 s; CLS mediano máximo
+0; TBT mediano máximo 1,5 ms. Las cuatro rutas MX-03 medidas obtuvieron 100 en
+cada categoría. Lighthouse no mide INP real ni reemplaza Playwright/axe y la
+revisión visual del propietario; no afirmar que esos controles pendientes pasaron.
+
+## MX-03.1 Derechos y revisión (🔴 antes de publicar)
+
+1. Volver a revisar la [salvedad de Banxico](https://www.banxico.org.mx/salvedad/salvedad.html)
+   y las [condiciones de la consulta por rango](https://www.banxico.org.mx/SieAPIRest/service/v1/doc/consultaDatosSerieRango).
+   La salvedad general permite reproducir información publicada con atribución y dirección de
+   origen, pero **si una condición específica prohíbe guardar o republicar SP68257, detener el
+   lanzamiento y solicitar autorización**. Fuentes, límites y fechas se documentan en
+   `docs/sources/mx-03/USAGE.md`.
+2. Encargar la revisión técnica de fórmulas, redondeos, ejemplos y avisos hipotecarios. Solo
+   registrar la revisión en `src/data/reviews.json` con identidad, credenciales y fecha reales;
+   `verified: true` comprueba el dato descargado, **no** acredita una revisión humana.
+3. Comprobar el informe de parámetros: todo dato de MX-03 que aparezca como `verified: false`
+   bloquea su distintivo y requiere anotación explícita; nunca sustituirlo por una tasa estimada.
+
+## MX-03.2 Vercel y conservación (🔴 antes de publicar)
+
+1. Configurar `SITE_URL` con el origen HTTPS canónico y `BANXICO_TOKEN` como secretos de **build**;
+   añadir `CRON_SECRET` para la función y `VERCEL_DEPLOY_HOOK` con el URL del **hook de la rama de
+   producción**. Confirmar personalmente en Vercel que ambos existen y que el hook corresponde a
+   producción. No imprimir valores ni pasarlos a URL públicas, páginas o JavaScript. El token
+   Banxico solo viaja en `Bmx-Token` desde el build a Banxico.
+2. Mantener `@astrojs/vercel`: las páginas y `/data/mx/udis.json` salen estáticas; únicamente
+   `/api/refresh-udis/` es una función. No restaurar `outputDirectory: "dist"` en `vercel.json`.
+   El Cron hace GET autenticado con `Authorization: Bearer <CRON_SECRET>` una vez al día a las
+   **18:00 UTC** (aproximadamente 12:00 en Ciudad de México); Vercel Hobby puede ejecutar una
+   tarea diaria sin garantizar el minuto exacto. La barra final evita el redirect del adaptador.
+   Un 202 significa que el hook **aceptó una petición**, no que el build terminó.
+3. Si el plan real de Vercel no admite funciones o Cron, detener esta configuración antes del
+   lanzamiento; como alternativa, un planificador externo como cron-job.org puede llamar **al
+   hook privado directamente**. Mantener el hook como secreto del planificador, nunca en el
+   sitio ni en solicitudes del navegador.
+4. Decidir si hace falta conservar **todas** las respuestas diarias permanentemente. Solo la
+   instantánea inicial de `docs/sources/mx-03/raw/` se versiona; las respuestas de cada build
+   posterior en Vercel son efímeras, aunque la fecha/hora de consulta queda en los datos
+   publicados. La conservación permanente exige almacenamiento adicional y aprobación previa.
+   Un build local vuelve a generar los dos JSON de tasas versionados con otra hora de consulta:
+   no mezclar ese cambio de metadatos con una modificación editorial de la instantánea inicial.
+5. Confirmar en la salida de Vercel una ruta `^/api/refresh-udis/$` hacia la función, sin
+   redirección; probar 401 sin credenciales en producción sin exponer la cabecera de Cron. El
+   preview estático local devuelve 404 en esa ruta por diseño; las respuestas y fallos de la
+   función se prueban en Vitest.
+
+## MX-03.3 Calidad y «ayer» (🔴 antes del PR / después del deploy)
+
+1. En Node 22: `npm ci`, `npm run typecheck`, `npm run lint`, `npm test`, `npm run build` y
+   `npm run budget`. Correr `npm run screenshots -- mx-03` y después el **`npm run check`
+   completo en Docker**: Playwright, axe WCAG 2.2 AA y Lighthouse incluidos. Revisar capturas
+   de ambas calculadoras y cada histórico, 390/1440 px, claro/oscuro; contrastar H1 con la
+   fuente cargada y la reserva a 360/390/430 px. Exigir JS <70 KB gzip, LCP <1,8 s,
+   CLS <0,05, INP <200 ms y puntuación Lighthouse ≥95 por categoría. **No abrir PR sin un
+   `npm run check` aprobado del propietario.**
+2. **Solo después de un despliegue en producción y al día siguiente**: revisar en Vercel la
+   invocación autorizada del GET `/api/refresh-udis/` alrededor de las 18:00 UTC **del día
+   anterior**, la aceptación de su POST al hook y, **por separado**, un deployment de la rama
+   de producción terminado correctamente. Verificar en la página publicada el «Consultado el…»
+   esperado y la tasa fechada de hoy en Ciudad de México. Si el hook devolvió 202 pero el build
+   falló o no llegó a producción, la comprobación **falla**. Registrar fecha, identificador
+   de deployment, resultado y hora publicada sin copiar secretos a incidencias.
+3. Vigilar fallos o retrasos de Banxico: `npm run build` rechaza respuestas incompletas y la
+   tasa de hoy ausente; el deployment anterior se mantiene y el cliente muestra «Datos
+   pendientes de actualizar» si falta el día exacto, ocultando la hipoteca «de hoy» sin
+   borrar conversiones históricas fechadas. No alterar ni inventar tasas para eludir el fallo.
