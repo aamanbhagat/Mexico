@@ -1,6 +1,28 @@
 @import 'tailwindcss';
 @import './tokens.css';
 
+@font-face {
+  font-family: 'Archivo Fallback';
+  src: local('Arial'), local('Liberation Sans');
+  font-weight: 400 800;
+  font-stretch: 100% 109%;
+  size-adjust: 102.2878%;
+  ascent-override: 85.8362%;
+  descent-override: 20.5303%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Archivo Fallback';
+  src: local('Arial'), local('Liberation Sans');
+  font-weight: 400 800;
+  font-stretch: 110% 125%;
+  size-adjust: 128%;
+  ascent-override: 68.594%;
+  descent-override: 16.406%;
+  line-gap-override: 0%;
+}
+
 /* Expose tokens to Tailwind utilities (bg-surface, text-ink-2, …) without duplicating values. */
 @theme inline {
   --color-bg: var(--bg);
@@ -331,6 +353,11 @@
   font-stretch: var(--display-stretch);
   line-height: var(--leading-tight);
   letter-spacing: -0.02em;
+}
+@media (max-width: 26.875rem) {
+  [data-locale='id'] .home-hero h1 {
+    font-stretch: 100%;
+  }
 }
 .hero__lede {
   font-size: var(--text-md);

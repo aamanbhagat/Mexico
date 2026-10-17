@@ -4,6 +4,18 @@ Source of truth for priorities: `docs/research/REPORT.md` (MX-01 is opportunity 
 be live before the November–December peak; ID-01 is #4, kalender Jawa 2027 must be indexable by
 mid-November). Rules: `AGENTS.md`.
 
+## Project 0 follow-up — Indonesian heading and font loading (`fix/id-heading-font`)
+
+- [x] Verify the pinned-container screenshot font state, effective h1 font, and font-loading wait.
+- [x] Record five cold-cache Lighthouse mobile CLS values and inspect font-swap shift sources.
+- [x] Compare fallback/loaded h1 line counts at 390 px across every built route; measure /id/ at
+      360, 390, and 430 px before editing.
+- [x] Correct the delayed font-swap layout shift and make the /id/ heading robust without changing its copy
+      or the existing visual direction; remeasure CLS and heading lines.
+- [x] Regenerate only affected visual baselines after checking every changed image for unexpected
+      content or layout movement; stop if any change is not attributable to the font fix.
+- [ ] Run the full Node 22 `npm run check`, commit the SHA-keyed log, and open a PR to `main` (no merge).
+
 ## Project 0 — Pin visual test rendering (`fix/visual-env`)
 
 - [x] Compare the local and clean login-shell Chromium, fonts, and Playwright environment before

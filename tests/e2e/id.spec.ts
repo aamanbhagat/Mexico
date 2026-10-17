@@ -10,6 +10,47 @@ async function fillDate(page: Page, legend: string, d: string, m: string, y: str
   await group.getByLabel('Tahun').fill(y);
 }
 
+test('home heading and today panel stay put while the web font loads', async ({ page }) => {
+  let releaseFont: () => void = () => {};
+  const fontGate = new Promise<void>((resolve) => (releaseFont = resolve));
+  await page.route('**/*.woff2', async (route) => {
+    await fontGate;
+    await route.continue();
+  });
+
+  await page.goto('/id/', { waitUntil: 'domcontentloaded' });
+  const lines = () =>
+    page.locator('h1').evaluate((heading) => {
+      const computed = getComputedStyle(heading);
+      return Math.round(heading.getBoundingClientRect().height / Number.parseFloat(computed.lineHeight));
+    });
+  const panelTop = () => page.locator('.home-today').evaluate((panel) => panel.getBoundingClientRect().top);
+
+  for (const width of [360, 390, 430]) {
+    await page.setViewportSize({ width, height: 844 });
+    expect(await lines()).toBe(3);
+  }
+  await page.setViewportSize({ width: 390, height: 844 });
+  const before = await panelTop();
+
+  releaseFont();
+  await page.evaluate(() => document.fonts.ready);
+  expect(
+    await page.locator('h1').evaluate((heading) => {
+      const family = getComputedStyle(heading).fontFamily.split(',')[0]?.trim();
+      return family
+        ? document.fonts.check(`800 32px ${family}`) &&
+            [...document.fonts].some((font) => font.family === family && font.status === 'loaded')
+        : false;
+    }),
+  ).toBe(true);
+  expect(Math.abs((await panelTop()) - before)).toBeLessThan(1);
+  for (const width of [360, 390, 430]) {
+    await page.setViewportSize({ width, height: 844 });
+    expect(await lines()).toBe(3);
+  }
+});
+
 test.describe('cek weton', () => {
   test('17 Agustus 1945 is Jumat Legi, neptu 11, 9 Pasa 1876 (same as the worked example)', async ({ page }) => {
     await page.goto('/id/weton/');
