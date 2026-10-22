@@ -3,9 +3,21 @@
 //   types → lint + format → unit/golden → build → JS budget → e2e + a11y + visual → Lighthouse
 import { execFileSync, spawn } from 'node:child_process';
 import { closeSync, mkdirSync, openSync, writeSync } from 'node:fs';
+import { existsSync } from 'node:fs';
+import { createRequire } from 'node:module';
 import { join } from 'node:path';
 
 const env = { ...process.env, ASTRO_TELEMETRY_DISABLED: '1' };
+// Lighthouse runs on the host: point it at the Chromium that `npx playwright install chromium` put there
+// (the same thing .github/workflows/ci.yml does) unless CHROME_PATH is already set.
+if (!env.CHROME_PATH) {
+  try {
+    const path = createRequire(import.meta.url)('@playwright/test').chromium.executablePath();
+    if (existsSync(path)) env.CHROME_PATH = path;
+  } catch {
+    // No Playwright install: Lighthouse reports its own "Chrome installation not found".
+  }
+}
 
 const steps = [
   { name: 'Types (astro check)', cmd: 'npx', args: ['astro', 'check'] },
