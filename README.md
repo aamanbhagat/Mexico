@@ -115,6 +115,14 @@ all visual baselines in that same browser/font environment, run
 `npx playwright test` remains available for local debugging, but do not use it to update
 committed baselines. On hosts where Docker requires passwordless sudo, set
 `PLAYWRIGHT_DOCKER_SUDO=1` for the Docker test step.
+
+On macOS (or any non-Linux host) the container installs its own Linux `node_modules` into a named
+Docker volume (`calculadoras-node-modules-<platform>`, refreshed when `package-lock.json` changes), so
+the host install and its macOS binaries are never mounted into Linux. The visual baselines were made
+in the amd64 image: on Apple Silicon run with `PLAYWRIGHT_DOCKER_PLATFORM=linux/amd64` (Colima:
+`colima start --vm-type vz --vz-rosetta`) and never regenerate baselines just because the Mac is arm64.
+Lighthouse needs Chrome on the host; `npm run check` uses the Chromium from
+`npx playwright install chromium` unless `CHROME_PATH` is set.
 Lighthouse runs every configured route three times with simulated mobile throttling and evaluates
 the median, without changing any performance budgets. A full `npm run check` records all step
 output and its dated summary (tested commit SHA, Node version, pass/fail per step) in
